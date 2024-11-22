@@ -125,3 +125,8 @@ margin: 0;
     font-weight: 300;
     fill: white;
 }
+
+
+.addMarginToOverlay{
+    margin-left: -11px;
+}

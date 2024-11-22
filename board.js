@@ -49,18 +49,18 @@ function generateToDoHTML(element) {
         <p class= "open-sans-bold">${element['title']}</p>
         <p class="inter-font">${element['description']}</p>
         <div class="userNameCircles">
-        <svg width="100" height="100">
-            <circle cx="50" cy="50" r="16" stroke="white" stroke-width="1" fill="rgb(147,39,255)" />
-            <text class="fontInNameCircle" x="50" y="50" text-anchor="middle" alignment-baseline="central">DL</text>
-        </svg>
-        <svg width="100" height="100">
-            <circle cx="50" cy="50" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
-            <text class="fontInNameCircle" x="50" y="50" text-anchor="middle" alignment-baseline="central">EN</text>
-        </svg>
-        <svg width="100" height="100">
-            <circle cx="50" cy="50" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
-            <text class="fontInNameCircle" x="50" y="50" text-anchor="middle" alignment-baseline="central">AR</text>
-        </svg>
+<svg width="34" height="34">
+    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(147,39,255)" />
+    <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">DL</text>
+</svg>
+<svg class="addMarginToOverlay" width="34" height="34">
+    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
+    <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">EN</text>
+</svg>
+<svg class="addMarginToOverlay" width="34" height="34">
+    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
+    <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">AR</text>
+</svg>
         </div>
         </div>
     `;
