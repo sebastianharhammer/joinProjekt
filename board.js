@@ -41,28 +41,34 @@ function init() {
 
 
 function generateToDoHTML(element) {
-    return /*html*/`
-        <div draggable="true" class="todo" ondragstart="startDragging(${element['id']})">
-        <div id="taskButton-${element['id']}">
-        <p class="open-sans">${element['taskCategory']}</p>
-        </div>
-        <p class= "open-sans-bold">${element['title']}</p>
-        <p class="inter-font">${element['description']}</p>
-        <div class="userNameCircles">
+return /*html*/`
+<div draggable="true" class="todo" ondragstart="startDragging(${element['id']})">
+<div id="taskButton-${element['id']}">
+<p class="open-sans">${element['taskCategory']}</p>
+</div>
+<p class= "open-sans-bold">${element['title']}</p>
+<p class="inter-font">${element['description']}</p>
+<progress value="32" max="100"> 32% </progress>
+<section class="namesAndPrio">
+<div class="userNameCircles">
 <svg width="34" height="34">
-    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(147,39,255)" />
+    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(255,122,0)" />
     <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">DL</text>
 </svg>
 <svg class="addMarginToOverlay" width="34" height="34">
-    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
+    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(31,215,193)" />
     <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">EN</text>
 </svg>
 <svg class="addMarginToOverlay" width="34" height="34">
-    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
+    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(110,82,255)" />
     <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">AR</text>
 </svg>
         </div>
-        </div>
+        <div class="prio">
+    <img src="./img/prio-mid.png" alt="">
+</div>
+</section>
+</div>
     `;
 }
 

@@ -130,3 +130,9 @@ margin: 0;
 .addMarginToOverlay{
     margin-left: -11px;
 }
+
+.namesAndPrio{
+    display: flex;
+    justify-content: space-between;
+}
+
