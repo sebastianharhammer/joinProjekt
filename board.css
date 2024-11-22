@@ -1,0 +1,120 @@
+body{
+margin: 0;
+}
+
+.content{
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+}
+
+.dragarea-todo{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 252px;
+    height: 700px;
+    margin-top: 50px;
+    background-color: bisque;
+}
+
+.dragarea-inProgress{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 252px;
+    height: 700px;
+    margin-top: 50px;
+    background-color: bisque;
+}
+
+.dragarea-feedback{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 252px;
+    height: 700px;
+    margin-top: 50px;
+    background-color: bisque;
+}
+
+.dragarea-done{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 252px;
+    height: 700px;
+    margin-top: 50px;
+    background-color: bisque;
+}
+
+.todo{
+    width: 252px;
+    height: 250px;
+    max-height: 280px;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.22);
+}
+
+.dragAreaHighlight{
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.task-category-userExperience{
+    height: 27px;
+    width: 110px;
+    background-color: #FF7A00;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.task-category-technicalTask{
+    height: 27px;
+    width: 110px;
+    background-color: #4000ff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.open-sans{
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 14px;
+}
+
+.inter-font{
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-size: 12px;
+    color: gray;
+}
+
+.open-sans-bold{
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 16px;
+    color: rgb(69,137,255);
+}
+
+.userNameCircles{
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+}
