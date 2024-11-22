@@ -3,7 +3,7 @@ let todos = [{
     'title': 'HTML verbessern',
     'category': 'todo',
     'taskCategory': 'Technical Tasc',
-    'description': 'test0'
+    'description': 'Dieser Text dient zur visuellen Veranschaulichung, wie es aussieht wenn viel Text in der Beschreibung steht. Ich glaube ich muss hier noch ein bisschen was anpassen'
 }, {
     'id': 1,
     'title': 'Code kürzer gestalten',
@@ -51,15 +51,15 @@ function generateToDoHTML(element) {
         <div class="userNameCircles">
         <svg width="100" height="100">
             <circle cx="50" cy="50" r="16" stroke="white" stroke-width="1" fill="rgb(147,39,255)" />
-            <text x="50" y="50" text-anchor="middle" alignment-baseline="central" font-size="11" fill="black">Text</text>
+            <text class="fontInNameCircle" x="50" y="50" text-anchor="middle" alignment-baseline="central">DL</text>
         </svg>
         <svg width="100" height="100">
             <circle cx="50" cy="50" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
-            <text x="50" y="50" text-anchor="middle" alignment-baseline="central" font-size="11" fill="black">Text</text>
+            <text class="fontInNameCircle" x="50" y="50" text-anchor="middle" alignment-baseline="central">EN</text>
         </svg>
         <svg width="100" height="100">
             <circle cx="50" cy="50" r="16" stroke="white" stroke-width="1" fill="rgb(252,113,255)" />
-            <text x="50" y="50" text-anchor="middle" alignment-baseline="central" font-size="11" fill="black">Text</text>
+            <text class="fontInNameCircle" x="50" y="50" text-anchor="middle" alignment-baseline="central">AR</text>
         </svg>
         </div>
         </div>

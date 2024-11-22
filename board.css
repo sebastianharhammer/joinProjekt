@@ -66,7 +66,7 @@ margin: 0;
 .task-category-userExperience{
     height: 27px;
     width: 110px;
-    background-color: #FF7A00;
+    background-color: rgb(0,56,255);
     border-radius: 8px;
     display: flex;
     justify-content: center;
@@ -78,7 +78,7 @@ margin: 0;
 .task-category-technicalTask{
     height: 27px;
     width: 110px;
-    background-color: #4000ff;
+    background-color: rgb(31,215,193);
     border-radius: 8px;
     display: flex;
     justify-content: center;
@@ -109,7 +109,7 @@ margin: 0;
     font-weight: 700;
     font-style: normal;
     font-size: 16px;
-    color: rgb(69,137,255);
+    color: black;
 }
 
 .userNameCircles{
@@ -117,4 +117,11 @@ margin: 0;
     flex-direction: row;
     padding: 0;
     margin: 0;
+}
+
+.fontInNameCircle{
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    fill: white;
 }
