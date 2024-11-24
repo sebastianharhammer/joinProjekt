@@ -8,6 +8,7 @@ margin: 0;
     flex-direction: row;
     justify-content: center;
     gap: 50px;
+    background-color: rgb(246,247,248);
 }
 
 .dragarea-todo{
@@ -136,3 +137,123 @@ margin: 0;
     justify-content: space-between;
 }
 
+.headInfos{
+    height: 96px;
+    width: 100%;
+    padding-right: 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.helpAndNameCircleHead{
+    display: flex;
+    justify-content: row;
+    gap: 16px;
+    align-items: center;
+}
+
+.helpAndNameCircleHead img{
+    height: 32px;
+    width: 32px;
+}
+
+.interFontHead{
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: 20px;
+    padding-left: 150px;
+}
+
+
+.customCircle {
+    width: 56px;
+    height: 56px;
+    padding-right: 24px;
+}
+
+.circleBorder {
+    stroke: rgb(42,54,71);
+    stroke-width: 4px;
+    fill: white;
+}
+
+.textInCircle {
+    font-family: "Inter", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    fill: rgb(41,171,226);
+    text-anchor: middle;
+}
+
+.boardNavigator{
+    height: 232px;
+    width: 100%;
+    background-color: rgb(246,247,248);
+    border: 1px solid black;
+}
+
+.searchAndAddTasks{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boardFont{
+    font-family: "Inter";
+    font-weight: 700;
+    font-size: 61px;
+    color: black;
+}
+
+.inputAndButtonBoard{
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+}
+
+.addTaskButtonBoard{
+    height: 48px;
+    width: 160px;
+    border: 1px solid;
+    background-color: rgb(42,54,71);
+}
+
+.inputBoard{
+    width: 260px;
+    height: 49px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 8px;
+}
+
+.inputBoard:focus {
+    border: none;
+    outline: none; 
+}
+
+.searchAreaBoard{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    height: 53px;
+    border-radius: 10px;
+    border: 1px solid rgb(168,168,168);
+}
+
+.searchAreaBoard img{
+    cursor: pointer;
+    height: 32px;
+    width: 32px;
+    padding-right: 8px;
+}
+
+.verticalLine{
+    font-family: "Inter";
+    font-size: 32px;
+    color: rgb(168,168,168);
+    font-weight: 300;
+}

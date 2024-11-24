@@ -12,6 +12,38 @@
     <script src="./board.js"></script>
 </head>
 <body onload="init()">
+    <div class="headInfos">
+        <p class="interFontHead">Kanban Project Management Tool</p>
+        <div class ="helpAndNameCircleHead">
+            <img src="./img/help.png" alt="">
+            <div>
+                <svg class="customCircle" width="50" height="50">
+                    <circle class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white" />
+                    <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">EN</text>
+                </svg>                
+            </div>
+        </div>
+    </div>
+
+
+<section class="boardNavigator">
+    <div class="searchAndAddTasks">
+        <p class="boardFont">BOARD</p>
+        <div class="inputAndButtonBoard">
+            <div class="searchAreaBoard">
+            <input class="inputBoard" type="text" placeholder="Find Task">
+            <span class="verticalLine">|</span>
+            <img src="./img/search.png" alt="">
+            </div>
+            <div class="addTaskButtonBoard">
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 <div class="content">
     <div class="dragarea-todo" id="todo" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo')" ondragover="allowDrop(event); highlight('todo')"></div>
     <div class="dragarea-inProgress" id="inProgress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"></div>
