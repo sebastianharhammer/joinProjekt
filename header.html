@@ -3,7 +3,10 @@
         <h3 id="headline-top">Kanban Project Management Tool</h3>
         <div id="header-nav">
             <img src="./img/help.png">
-            <span id="current-user">${user}</span>
+            <svg class="customCircle" width="50" height="50">
+                <circle class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
+                <text id="current-user" class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">`${user}`</text>
+            </svg>
         </div>
     </div>
 </header>
