@@ -41,6 +41,7 @@ let todos = [{
 let currentDraggedElement;
 
 function init() {
+    includeHTML();
     updateHTML()
 }
 

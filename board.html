@@ -8,23 +8,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kodchasan:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kodchasan:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="board.css">
-    <script src="./board.js"></script>
+    <link rel="stylesheet" href="./styles/board.css">
+    <link rel="stylesheet" href="./styles/nav.css">
+    <link rel="stylesheet" href="./styles/standard.css">
+    <link rel="stylesheet" href="./styles/header.css">
+    <link rel="stylesheet" href="./fonts.css">
+    <script src="./scripts/board.js"></script>
+    <script src="./scripts/w3-include.js"></script>
 </head>
 <body onload="init()">
-    <div class="headInfos">
-        <p class="interFontHead">Kanban Project Management Tool</p>
-        <div class ="helpAndNameCircleHead">
-            <img src="./img/help.png" alt="">
-            <div>
-                <svg class="customCircle" width="50" height="50">
-                    <circle class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white" />
-                    <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">EN</text>
-                </svg>                
-            </div>
-        </div>
-    </div>
-
+    <div w3-include-html="./header.html"></div>
+    <div w3-include-html="./nav.html"></div>
 
 <section class="boardNavigator">
     <div class="searchAndAddTasks">
