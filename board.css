@@ -9,6 +9,7 @@ margin: 0;
     justify-content: center;
     gap: 50px;
     background-color: rgb(246,247,248);
+    padding-top: 16px;
 }
 
 .dragarea-todo{
@@ -17,8 +18,8 @@ margin: 0;
     flex-direction: column;
     width: 252px;
     height: 700px;
-    margin-top: 50px;
-    background-color: bisque;
+    margin-top: 0;
+    background-color: rgb(246,247,248);
 }
 
 .dragarea-inProgress{
@@ -27,8 +28,8 @@ margin: 0;
     flex-direction: column;
     width: 252px;
     height: 700px;
-    margin-top: 50px;
-    background-color: bisque;
+    margin-top: 0;
+    background-color: rgb(246,247,248);
 }
 
 .dragarea-feedback{
@@ -37,8 +38,8 @@ margin: 0;
     flex-direction: column;
     width: 252px;
     height: 700px;
-    margin-top: 50px;
-    background-color: bisque;
+    margin-top: 0;
+    background-color: rgb(246,247,248);
 }
 
 .dragarea-done{
@@ -47,8 +48,8 @@ margin: 0;
     flex-direction: column;
     width: 252px;
     height: 700px;
-    margin-top: 50px;
-    background-color: bisque;
+    margin-top: 0;
+    background-color: rgb(246,247,248);
 }
 
 .todo{
@@ -191,7 +192,6 @@ margin: 0;
     height: 232px;
     width: 100%;
     background-color: rgb(246,247,248);
-    border: 1px solid black;
 }
 
 .searchAndAddTasks{
@@ -275,4 +275,56 @@ margin: 0;
     color: rgb(255,255,255);
     font-weight: 700;
     margin: 0 auto;
+}
+
+.titleOfBoardColumns{
+    height: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 50px;
+    background-color: rgb(246,247,248);
+}
+
+.titleOfBoardColumns img:hover{
+    cursor: pointer;
+}
+
+.columntitleToDo{
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    width: 252px;
+    align-items: center;
+}
+
+.columntitleInProgress{
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    width: 252px;
+    align-items: center;
+}
+
+.columntitleAwaitFeedback{
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    width: 252px;
+    align-items: center;
+}
+
+.columntitleDone{
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+    width: 252px;
+    align-items: center;
+}
+
+.columnTitleFont{
+    font-family: "Inter";
+    font-size: 21px;
+    color: rgb(66,82,110);
+    font-weight: 700;
 }
