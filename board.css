@@ -53,9 +53,9 @@ margin: 0;
 }
 
 .todo{
-    width: 252px;
-    height: 250px;
-    max-height: 280px;
+    padding: 8px;
+    width: 234px;
+    max-height: 400px;
     background-color: #FFFFFF;
     border-radius: 8px;
     box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.22);

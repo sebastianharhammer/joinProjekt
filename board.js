@@ -3,34 +3,39 @@ let todos = [{
     'title': 'HTML verbessern',
     'category': 'todo',
     'taskCategory': 'Technical Tasc',
-    'description': 'Dieser Text dient zur visuellen Veranschaulichung, wie es aussieht wenn viel Text in der Beschreibung steht. Ich glaube ich muss hier noch ein bisschen was anpassen'
+    'description': 'Dieser Text dient zur visuellen Veranschaulichung, wie es aussieht wenn viel Text in der Beschreibung steht. Ich glaube ich muss hier noch ein bisschen was anpassen',
+    'prio': 'low'
 }, {
     'id': 1,
     'title': 'Code kürzer gestalten',
     'category': 'inProgress',
     'taskCategory': 'User Story',
-    'description': 'test1'
+    'description': 'test1',
+    'prio': 'medium'
 },
 {
     'id': 2,
     'title': 'CSS anpassen',
     'category': 'inProgress',
     'taskCategory': 'Technical Tasc',
-    'description': 'test2'
+    'description': 'test2',
+    'prio': 'medium'
 },
 {
     'id': 3,
     'title': 'Header gestalten',
     'category': 'feedback',
     'taskCategory': 'Technical Tasc',
-    'description': 'test3'
+    'description': 'test3',
+    'prio': 'high'
 },
 {
     'id': 4,
     'title': 'Schriften hinzufügen',
     'category': 'done',
     'taskCategory': 'User Story',
-    'description': 'test4'
+    'description': 'test4',
+    'prio': 'high'
 }];
 
 let currentDraggedElement;
@@ -64,8 +69,10 @@ return /*html*/`
     <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">AR</text>
 </svg>
         </div>
-        <div class="prio">
-    <img src="./img/prio-mid.png" alt="">
+<div id="prio-${element['id']}">
+        <p>${element['prio']}</p>
+        <div id = "prioIcon"></div>
+<img src="./img/prio-mid.png" alt="">
 </div>
 </section>
 </div>
@@ -74,7 +81,7 @@ return /*html*/`
 
 
 function updateHTML() {
-    const categories = ['todo', 'inProgress', 'feedback', 'done',];
+    const categories = ['todo', 'inProgress', 'feedback', 'done'];
     for (let category of categories) {
         let filteredTodos = todos.filter(t => t['category'] === category);
         document.getElementById(category).innerHTML = '';
@@ -83,6 +90,7 @@ function updateHTML() {
         }
     }
     findClassOfTaskCat();
+    setPriorityIcon();
 }
 
 
@@ -97,6 +105,30 @@ function findClassOfTaskCat() {
         }
     }
 }
+
+function setPriorityIcon() {
+    for (let prio of todos) {
+        let prioDiv = document.getElementById(`prio-${prio.id}`);
+        if (prioDiv) {
+            if (prio.prio === "low") {
+                prioDiv.innerHTML = /*html*/`
+                    <img src="./img/prio-low.png" alt="">
+                `;
+            }
+            else if (prio.prio === "medium") {
+                prioDiv.innerHTML = /*html*/`
+                    <img src="./img/prio-mid.png" alt="">
+                `;
+            }
+            else if (prio.prio === "high") {
+                prioDiv.innerHTML = /*html*/`
+                    <img src="./img/prio-high.png" alt="">
+                `;
+            }
+    }
+}
+}
+
 
 
 function startDragging(id) {
