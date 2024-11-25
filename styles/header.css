@@ -1,23 +1,35 @@
 header {
     display: flex;
     justify-content: center;
-    width: 100vw;
+    width: 100%;
 }
 #overlay-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: absolute;
-    width: 80vw;
-    height: 10vh;
-    padding-left: 20vw;
-    text-align: center;
+    width: 90vw;
+    margin-left: 10vw;
+    height: 100px;
     background-color: #FFFFFF;
     filter: drop-shadow(1px 2px 3px rgba(174, 173, 173, 0.5));
 }
 #headline-top {
     position: relative;
-    top: 3vh;
+    padding-top: 85px;
+    text-align: center;
     font-size: 12px;
     font-weight: 300;
-    vertical-align: middle;
     height: 100%;
-    width: 100%;
+    padding-left: 10vw;
+}
+#header-nav {
+    display: flex;
+    align-items: center;
+    padding-right: 25px;
+}
+#current-user {
+    border: solid 2px black;
+    border-radius: 45px;
+    padding: 10px;
 }
