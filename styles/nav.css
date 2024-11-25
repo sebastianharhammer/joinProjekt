@@ -10,7 +10,10 @@
     padding-top: 5vh;
     background-color: #2B3647;
 }
-
+#logo-container {
+    height: 100px;
+    width: 100px;
+}
 #join-logo-big {
     width: 100%;
     height: 100%;
