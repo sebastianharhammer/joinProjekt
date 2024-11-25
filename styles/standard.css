@@ -1,6 +1,7 @@
 body {
   margin: 0;
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 a {
   text-decoration: none;
