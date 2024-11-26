@@ -64,3 +64,77 @@
 d-none{
     display: none;
 }
+
+.loginNameInput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    background-color: white;
+    height: 53px;
+    border-radius: 10px;
+    border: 1px solid rgb(168,168,168);
+}
+
+.loginNameInput img{
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+    padding-right: 8px;
+}
+
+.inputMailPw{
+    width: 260px;
+    height: 49px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 8px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 20px;
+    color: gray;
+}
+
+.inputMailPw:focus {
+    border: none;
+    outline: none; 
+}
+
+
+.loginButtons{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.logInButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 49px;
+    width: 91px;
+    border-radius: 8px;
+    background-color: rgba(42,54,71,1);
+}
+
+.guestLogInUpButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 49px;
+    width: 140px;
+    border-radius: 8px;
+    background-color: white; 
+}
+
+.guestLogInButtonFont{
+    font-family: "Inter";
+    font-weight: 700;
+    font-size: 16px;
+    color:rgba(42,54,71,1);
+}
+
+button:hover{
+    cursor:pointer;
+}

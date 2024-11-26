@@ -24,9 +24,18 @@
         </div>
 
         <form class="loginForm" onsubmit="login(); return false;">
-            <input id="loginMail" type="email" required>
-            <input id="loginPassword" type="password" required>
-            <button>Login</button>
+            <div class="loginNameInput">
+                <input id="loginMail" class="inputMailPw" type="email" placeholder="Email" required>
+                <img src="./img/login-mail.png" alt="">
+            </div>
+            <div class="loginNameInput">
+                <input id="loginPassword" class="inputMailPw" type="password" placeholder="Password" required>
+                <img src="./img/login-lock.png" alt="">
+            </div>
+            <div class="loginButtons">
+                <button class="logInButton interFontLoginButton">Log in</button>
+                <button class="guestLogInUpButton guestLogInButtonFont">Guest Log in</button>
+            </div>
         </form>
         <div id="msgBox"></div>
     </section>    
