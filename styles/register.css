@@ -1,0 +1,15 @@
+.signUpForm{
+    height: 40vh;
+    width: 38vh;
+    background-color: white;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+}
+
+d-none{
+    display: none;
+}
