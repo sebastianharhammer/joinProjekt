@@ -4,6 +4,4 @@ const msgBox = document.getElementById('msgBox')
 if (msg) {
 msgBox.innerHTML = msg;
 }
-else{
-msgBox.classList.add('d-none')
-}
+
