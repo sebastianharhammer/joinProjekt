@@ -13,15 +13,45 @@
     <script src="./scripts/register.js"></script>
 </head>
 <body onload="onloadFunc()">
+
+
+
     <section class="loginContent">
         <div class="headAreaOfLogin">
             <img src="./img/logo-join-blue-big.png" alt="">      
         </div>
 
         <form class="signUpForm" onsubmit="addUser(); return false;">
-            <input id="loginMail" type="email" required>
-            <input id="loginPassword" type="password" required>
-            <button>Registrieren</button>
+            <h1 class="FontOfOfLogin">Sign up</h1>
+            <hr class="horizontalLine">
+            <div class="loginNameInput">
+                <input id="loginFirstName" class="inputMailPw" type="text" placeholder="First Name" required>
+                <img src="./img/person.png" alt="">
+            </div>
+            <div class="loginNameInput">
+                <input id="loginLastName" class="inputMailPw" type="text" placeholder="Last Name" required>
+                <img src="./img/person.png" alt="">
+            </div>
+            <div class="loginNameInput">
+                <input id="loginMail" class="inputMailPw" type="email" placeholder="Email" required>
+                <img src="./img/login-mail.png" alt="">
+            </div>
+            <div class="loginNameInput">
+                <input id="loginPassword" class="inputMailPw" type="password" placeholder="Password" required>
+                <img src="./img/login-lock.png" alt="">
+            </div>
+            <div class="loginNameInput">
+                <input id="loginPasswordConfirm" class="inputMailPw" type="password" placeholder="Confirm Password" required>
+                <img src="./img/login-lock.png" alt="">
+            </div>
+            <div class="privacyPolicyCheckbox">
+                <input type="checkbox" class="checkBoxSignUp">
+                <p class="fontPrivacyPolicy">I accept the <a class="privPolicyLink" href=""> Privacy Policy</a></p>
+                
+            </div>
+            <div class="loginButtons">
+                <button class="logInButton interFontLoginButton">Sign Up</button>
+            </div>
         </form>
     </section>  
 </body>

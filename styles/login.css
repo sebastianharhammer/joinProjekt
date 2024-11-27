@@ -153,4 +153,5 @@ button:hover{
     height: 3px;
     background-color: rgb(41,171,226);
     border: none;
+    border-radius: 8px;
 }

@@ -1,15 +1,70 @@
 .signUpForm{
-    height: 40vh;
-    width: 38vh;
+    height: 60vh;
+    width: 45vh;
     background-color: white;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 32px;
+    gap: 20px;
 }
 
 d-none{
     display: none;
 }
+
+.privacyPolicyCheckbox{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.fontPrivacyPolicy{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 16px;
+    color: rgb(168,168,168)
+}
+
+.privPolicyLink{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 16px;
+    color: rgb(41,171,226);
+}
+
+.checkBoxSignUp {
+    height: 20px;
+    width: 20px;
+    border: 2px solid rgba(42, 54, 71, 1);
+    background-color: transparent;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.checkBoxSignUp:checked {
+    background-color: white;
+    border-color: rgba(42, 54, 71, 1);
+}
+
+
+.checkBoxSignUp:checked::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 6px;
+    width: 7px;
+    height: 20px;
+    border: solid rgba(42, 54, 71, 1);
+    border-width: 0 3px 3px 0;
+    transform: rotate(37deg);
+}
+
+.checkBoxSignUp:hover {
+    background-color: rgba(42, 54, 71, 0.1);
+}
+
