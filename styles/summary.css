@@ -1,6 +1,10 @@
 /* Allgemeine Stile */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-size: 12px;
+  color: gray;
   background-color: #f5f5f5;
   margin: 0;
   padding: 0;
@@ -15,13 +19,14 @@ body {
 .main-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  align-items: flex-start; /* Links ausgerichtet */
+  justify-content: flex-start;
+  padding: 180px;
   background-color: #f5f5f5;
   width: 100%;
   height: calc(100vh - 60px);
   box-sizing: border-box;
+  margin-left: 120px; /* Abstand vom linken Rand */
 }
 
 /* Überschrift und Untertitel */
@@ -77,30 +82,48 @@ body {
   text-align: center;
   padding: 30px;
   flex: 1;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  position: relative;
 }
 
 .panel:hover {
-  transform: scale(1.05); /* Vergrößert das Panel */
-  background-color: #2a3647; /* Blaue Farbe für den Hover-Effekt */
-  color: white; /* Textfarbe wird weiß */
+  transform: scale(1.05);
+  background-color: #2a3647; /* Hintergrund wird dunkelblau */
+  color: white; /* Textfarbe wechselt zu Weiß */
 }
 
 .panel img {
   width: 60px;
   height: 60px;
   margin-bottom: 10px;
+  filter: brightness(100%); /* Standardbild ohne Farbänderung */
+  transition: filter 0.2s ease;
+}
+
+.panel:hover img {
+  filter: brightness(0); /* Bild wird schwarz */
 }
 
 .panel p {
   font-size: 56px;
   font-weight: bold;
   margin: 0;
+  color: #222;
+  transition: color 0.2s ease;
+}
+
+.panel:hover p {
+  color: white; /* Textfarbe wird weiß */
 }
 
 .panel span {
   font-size: 14px;
   color: #555;
+  transition: color 0.2s ease;
+}
+
+.panel:hover span {
+  color: white; /* Textfarbe wird weiß */
 }
 
 /* Panel-Größen */
@@ -113,7 +136,9 @@ body {
 }
 
 .panel.large .panel-content {
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
 }
 
@@ -126,6 +151,11 @@ body {
   background-color: #ddd;
   margin: 0 20px;
   align-self: stretch;
+  transition: background-color 0.2s ease;
+}
+
+.panel.large:hover .divider {
+  background-color: white; /* Divider wird weiß */
 }
 
 .panel.small {
