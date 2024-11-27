@@ -5,9 +5,9 @@ function renderContactContentHTML () {
     <div id="contact-side-panel">
         <div id="add-new-contact-button-container">
             
-            <button id="add-contact-btn">Add new contact<img id="add-contact-img" src="./img/person_add.png"></button>
+            <button onclick="addContact()" id="add-contact-btn">Add new contact<img id="add-contact-img" src="./img/person_add.png"></button>
         </div>`;
-        
+    
 
     content.innerHTML += /*html*/`
     </div>
