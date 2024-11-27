@@ -6,6 +6,7 @@
     flex-direction: column;
     left: 0vw;
     width: 10vw;
+    min-width: 100px;
     height: 95vh;
     padding-top: 5vh;
     background-color: #2B3647;
@@ -23,6 +24,7 @@
     flex-direction: column;
     width: 100%;
     vertical-align: middle;
+    margin-bottom: 20vh;
 }
 #policy-links-container {
     display: flex;
@@ -33,18 +35,21 @@
 .nav-icon {
     height: 15px;
     width: 15px;
-    margin-left: 3vw;
+    margin-left: 2vw;
 }
 .nav-links {
     color: white;
 }
 .nav-links-policy {
     color: #A8A8A8;
-    margin-left: 3vw;
+    margin-left: 2vw;
 }
 .nav-links-container {
-    height: 25px;
+    height: 35px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     width: 100%;
+    align-items: center;
 }
 .nav-links-container:hover {
     background-color: #091931;

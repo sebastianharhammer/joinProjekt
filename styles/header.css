@@ -18,7 +18,7 @@ header {
     position: relative;
     padding-top: 85px;
     text-align: center;
-    font-size: 12px;
+    font-size: 24px;
     font-weight: 300;
     height: 100%;
     padding-left: 10vw;
@@ -29,7 +29,12 @@ header {
     padding-right: 25px;
 }
 #current-user {
-    border: solid 2px black;
-    border-radius: 45px;
     padding: 10px;
+    color: blue;
+}
+#user-overlay {
+    position: static;
+    padding-top: 10vh;
+    right: 1vw;
+    background-color: #2B3647;
 }

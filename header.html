@@ -2,13 +2,20 @@
     <div id="overlay-top">
         <h3 id="headline-top">Kanban Project Management Tool</h3>
         <div id="header-nav">
-            <a id="help-btn" src="./help.html">
+            <a id="help-btn" href="./help.html">
             <img  src="./img/help.png">
             </a>
+            <div id="current-user">
             <svg class="customCircle" width="50" height="50">
                 <circle class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
-                <text id="current-user" class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">`${user}`</text>
+                <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">DA</text>
             </svg>
+            </div>
         </div>
+    </div>
+    <div id="user-overlay" class="d-none" onclick="showUserOptions()">
+        <a href="./legal_notice.html">Legal Notice</a>
+        <a href="./privacy_policy.html">Privacy Policy</a>
+        <a href="./login.html">Log out</a>
     </div>
 </header>
