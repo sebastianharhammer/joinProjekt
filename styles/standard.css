@@ -7,6 +7,12 @@ a {
   text-decoration: none;
 }
 
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter/static/Inter_24pt-Regular.ttf') format('truetype');
+}
+
+
 a:hover {
   cursor: pointer;
   text-decoration: none;
