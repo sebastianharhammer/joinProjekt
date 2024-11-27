@@ -36,8 +36,8 @@ async function loadUsers(path){
     let response = await fetch(BASE_URL + path + ".json");
     let responseToJson = await response.json();
     if (responseToJson) {
-        signedUsersArray = Object.values(responseToJson);  // Umwandeln in Array
-        console.log(signedUsersArray);  // Ausgabe des Benutzerdaten-Arrays
+        signedUsersArray = Object.values(responseToJson);  
+        console.log(signedUsersArray); 
     }
 }
 
