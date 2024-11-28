@@ -2,6 +2,7 @@ function getAddContactHTML() {
     return /*html*/`
     <div id="contact-panel">
         <div id="add-contact-side-panel">
+            <div id="add-contact-logo">
             <svg width="50" height="50" viewBox="0 0 102 122" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M72.655 0H50.4972V25.4923H72.655V0Z" fill="white"/>
                 <path d="M50.4971 46.2251H72.655V82.1779C72.7562 90.8292 70.2941 99.3153 65.5815 106.557C60.9284 113.594 51.9459 121.966 35.3275 121.966C17.2263 121.966 6.67577 113.406 0.98291 108.715L14.9594 91.4743C20.5159 96.0112 25.8679 99.7435 35.4128 99.7435C42.6396 99.7435 45.5202 96.7988 47.2076 94.2307C49.5015 90.6637 50.6881 86.4923 50.6165 82.2464L50.4971 46.2251Z" fill="white"/>
@@ -10,8 +11,10 @@ function getAddContactHTML() {
                 <path d="M88.6597 104.76V118.593H86.2053V104.76H88.6597Z" fill="white"/>
                 <path d="M91.3187 118.593V104.76H94.0458L96.9775 110.461C97.7322 111.952 98.4036 113.483 98.9887 115.049C98.8353 113.337 98.7672 111.368 98.7672 109.177V104.76H101.017V118.593H98.4774L95.5117 112.772C94.7265 111.243 94.0266 109.671 93.4152 108.064C93.4152 109.776 93.5345 111.711 93.5345 114.09V118.576L91.3187 118.593Z" fill="white"/>
             </svg>
-            <h2 id="add-contact-headline">Add contact</h2>
-            <h3 id="add-contact-second">Task are better with a team!</h3>
+            </div>
+            <span id="add-contact-headline">Add contact</span>
+            <span id="add-contact-second">Task are better with a team!</span>
+            <img src="../img/vector5.png" id="vector-line">
         </div>
         <div id="add-contact-interactions-container">
             <div id="add-contact-btn-close-container">
@@ -24,21 +27,32 @@ function getAddContactHTML() {
             </div>
             <div id="add-contact-interactions">
                 <div id="add-contact-icon-container">
-                    <img src="../img/add_contact.png">
+                    <img id="add-contact-icon" src="../img/add_contact.png">
                 </div>
-                <form>
-                <div id="input-fields">
-                    <input required class="add-contact-input" id="add-contact-first-name" placeholder="Name">
-                    <input required class="add-contact-input" id="add-contact-last-name" placeholder="Email">
-                    <input required class="add-contact-input" id="add-contact-email" placeholder="Phone">
+                <form id="input-fields">
+                    <div class="input-wrapper">
+                        <input required class="add-contact-input" id="add-contact-first-name" placeholder="Name">
+                        <img src="../img/login-person.png" class="add-contact-input-icon">
+                    </div>
+                    <div class="input-wrapper">
+                        <input required class="add-contact-input" id="add-contact-last-name" placeholder="Email">
+                        <img src="../img/login-mail.png" class="add-contact-input-icon">
+                    </div>
+                    <div class="input-wrapper">
+                        <input required class="add-contact-input" id="add-contact-email" placeholder="Phone">
+                        <img src="../img/call.png" class="add-contact-input-icon">
+                    </div>
+</form>
+
+            </div>
+            <div id="add-contact-btn-wrapper">
+            <div id="add-contact-btn-placeholder"></div>
+                <div id="add-contact-btn-container">
+                    <button id="add-contact-cancel" onclick="hideAddContact()">Cancel X</button>
+                    <button id="add-contact-create" onclick="processContactInfo()">Create contact ✓</button>
                 </div>
-                </form>
-            </div>
-            <div id="add-contact-btn-container">
-                <button id="add-contact-cancel" onclick="hideAddContact()">Cancel</button>
-                <button id="add-contact-create" onclick="processContactInfo()">Create contact</button>
-                <button id="test-btn" onclick="testing()">TEST</button>
-            </div>
+            </div>  
+            <button id="test-btn" onclick="testing()">TEST</button>
         </div>
     </div>`;
 }
