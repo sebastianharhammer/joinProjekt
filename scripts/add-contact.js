@@ -2,7 +2,7 @@ function getAddContactHTML() {
     return /*html*/`
     <div id="contact-panel">
         <div id="add-contact-side-panel">
-            <svg width="102" height="122" viewBox="0 0 102 122" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="50" height="50" viewBox="0 0 102 122" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M72.655 0H50.4972V25.4923H72.655V0Z" fill="white"/>
                 <path d="M50.4971 46.2251H72.655V82.1779C72.7562 90.8292 70.2941 99.3153 65.5815 106.557C60.9284 113.594 51.9459 121.966 35.3275 121.966C17.2263 121.966 6.67577 113.406 0.98291 108.715L14.9594 91.4743C20.5159 96.0112 25.8679 99.7435 35.4128 99.7435C42.6396 99.7435 45.5202 96.7988 47.2076 94.2307C49.5015 90.6637 50.6881 86.4923 50.6165 82.2464L50.4971 46.2251Z" fill="white"/>
                 <path d="M39.1967 30.1318H17.0388V52.3884H39.1967V30.1318Z" fill="#29ABE2"/>
@@ -13,19 +13,30 @@ function getAddContactHTML() {
             <h2 id="add-contact-headline">Add contact</h2>
             <h3 id="add-contact-second">Task are better with a team!</h3>
         </div>
-        <div id="add-contact-interactions">
-            <div src="../img/close.svg" id="add-contact-btn-close">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+        <div id="add-contact-interactions-container">
+            <div id="add-contact-btn-close-container">
+                <div src="../img/close.svg" id="add-contact-btn-close" onclick="hideAddContact()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
             </div>
-            <input id="add-contact-first-name">
-            <input id="add-contact-last-name">
-            <input id="add-contact-email">
+            <div id="add-contact-interactions">
+                <div id="add-contact-icon-container">
+                    <img src="../img/add_contact.png">
+                </div>
+                <form>
+                <div id="input-fields">
+                    <input required class="add-contact-input" id="add-contact-first-name" placeholder="Name">
+                    <input required class="add-contact-input" id="add-contact-last-name" placeholder="Email">
+                    <input required class="add-contact-input" id="add-contact-email" placeholder="Phone">
+                </div>
+                </form>
+            </div>
             <div id="add-contact-btn-container">
-                <button id="add-contact-cancel">Cancel</button>
-                <button id="add-contact-create">Create contact</button>
+                <button id="add-contact-cancel" onclick="hideAddContact()">Cancel</button>
+                <button id="add-contact-create" onclick="processContactInfo()">Create contact</button>
             </div>
         </div>
     </div>`;
@@ -33,6 +44,24 @@ function getAddContactHTML() {
 
 function addContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
-    addContactTemplate.classList.remove('d-none');
+    addContactTemplate.classList.add('show-add-contact');
     addContactTemplate.innerHTML = getAddContactHTML();
+}
+function hideAddContact() {
+    let addContactTemplate = document.getElementById('add-contact-content');
+    addContactTemplate.classList.remove('show-add-contact');
+}
+
+function processContactInfo() {
+    let name = document.getElementById('add-contact-first-name');
+    let email = document.getElementById('add-contact-last-name');
+    let phone = document.getElementById('add-contact-email');
+
+    if (name.value != "" && email.value != "" && phone.value != "") {
+        pushContactInfo(name.value, email.value, phone.value)
+    }
+}
+
+async function pushContactInfo(name, email, phone) {
+    
 }

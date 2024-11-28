@@ -36,6 +36,6 @@ function renderContactContentHTML() {
     </div>
     `;
     content.innerHTML += /*html*/`
-        <div id="add-contact-content" class="d-none"></div>
+        <div id="add-contact-content" class="hide-add-contact"></div>
     `;
 }
