@@ -20,7 +20,6 @@
         <div class="headAreaOfLogin">
             <img src="./img/logo-join-blue-big.png" alt="">      
         </div>
-
         <form class="signUpForm" onsubmit="postSignUpData('signed_users'); return false;">
             <h1 class="FontOfOfLogin">Sign up</h1>
             <hr class="horizontalLine">
@@ -40,20 +39,20 @@
                 <input id="loginPassword" class="inputMailPw" type="password" placeholder="Password" required>
                 <img src="./img/login-lock.png" alt="">
             </div>
-            <div class="loginNameInput">
-                <input id="loginPasswordConfirm" class="inputMailPw" type="password" placeholder="Confirm Password" required>
+            <div id="passWordBorder" class="signUpPasswordConfirmDiv defaultBorderInputSignUp">
+                <input onkeyup="comparePasswords()" id="loginPasswordConfirm" class="inputMailPw" type="password" placeholder="Confirm Password" required>
                 <img src="./img/login-lock.png" alt="">
             </div>
             <div class="privacyPolicyCheckbox">
-                <input type="checkbox" class="checkBoxSignUp">
-                <p class="fontPrivacyPolicy">I accept the <a class="privPolicyLink" href=""> Privacy Policy</a></p>
-                
+                <input id="registerCheckbox" type="checkbox" class="checkBoxSignUp">
+                <p class="fontPrivacyPolicy">I accept the <a class="privPolicyLink" href=""> Privacy Policy</a></p>    
             </div>
+            <div class="alert-password" id="alert-password"></div>
             <div class="loginButtons">
                 <button class="logInButton interFontLoginButton">Sign Up</button>
             </div>
         </form>
-    </section>  
+    </section>
 </body>
 <script src="./scripts/login.js"></script>
 </html>
