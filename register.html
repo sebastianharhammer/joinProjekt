@@ -24,32 +24,32 @@
             <h1 class="FontOfOfLogin">Sign up</h1>
             <hr class="horizontalLine">
             <div class="loginNameInput">
-                <input id="loginFirstName" class="inputMailPw" type="text" placeholder="First Name" required>
+                <input id="loginFirstName" class="inputMailPw" type="text" placeholder="First Name" required oninput="validateSignUpForm()">
                 <img src="./img/person.png" alt="">
             </div>
             <div class="loginNameInput">
-                <input id="loginLastName" class="inputMailPw" type="text" placeholder="Last Name" required>
+                <input id="loginLastName" class="inputMailPw" type="text" placeholder="Last Name" required oninput="validateSignUpForm()">
                 <img src="./img/person.png" alt="">
             </div>
             <div class="loginNameInput">
-                <input id="loginMail" class="inputMailPw" type="email" placeholder="Email" required>
+                <input id="loginMail" class="inputMailPw" type="email" placeholder="Email" required oninput="validateSignUpForm()">
                 <img src="./img/login-mail.png" alt="">
             </div>
             <div class="loginNameInput">
-                <input id="loginPassword" class="inputMailPw" type="password" placeholder="Password" required>
+                <input id="loginPassword" class="inputMailPw" type="password" placeholder="Password" required oninput="validateSignUpForm()">
                 <img src="./img/login-lock.png" alt="">
             </div>
             <div id="passWordBorder" class="signUpPasswordConfirmDiv defaultBorderInputSignUp">
-                <input onkeyup="comparePasswords()" id="loginPasswordConfirm" class="inputMailPw" type="password" placeholder="Confirm Password" required>
+                <input onkeyup="comparePasswords()" id="loginPasswordConfirm" class="inputMailPw" type="password" placeholder="Confirm Password" required oninput="validateSignUpForm()">
                 <img src="./img/login-lock.png" alt="">
             </div>
+            <div class="alert-password" id="alert-password"></div>
             <div class="privacyPolicyCheckbox">
-                <input id="registerCheckbox" type="checkbox" class="checkBoxSignUp">
+                <input id="registerCheckbox" type="checkbox" class="checkBoxSignUp" onchange="validateSignUpForm()">
                 <p class="fontPrivacyPolicy">I accept the <a class="privPolicyLink" href=""> Privacy Policy</a></p>    
             </div>
-            <div class="alert-password" id="alert-password"></div>
             <div class="loginButtons">
-                <button class="logInButton interFontLoginButton">Sign Up</button>
+                <button class="logInButton interFontLoginButton" id="signUpButton" disabled>Sign Up</button>
             </div>
         </form>
     </section>

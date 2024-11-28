@@ -94,9 +94,38 @@ d-none{
 }
 
 .redBorder{
-    border: 1px solid red;
+    border: 2px solid rgb(238, 56, 56);
 }
 
 .greenBorder{
-    border: 1px solid green;
+    border: 2px solid green;
+}
+
+.alertPasswordFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    color: rgb(238, 56, 56);
+    margin: 0;
+}
+
+
+.correctPasswordFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    color: green;
+    margin: 0;
+}
+
+button.logInButton:disabled{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 49px;
+    width: 91px;
+    border-radius: 8px;
+    background-color: rgb(126, 126, 126);
+    border: none;
+    cursor: not-allowed;
 }

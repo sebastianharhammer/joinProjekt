@@ -63,6 +63,24 @@ function comparePasswords(){
     passWordBorder.classList.add('redBorder');
     }
 showResultsMessage(foundPassword)
+validateSignUpForm();
+}
+
+function validateSignUpForm(){
+    let userFirstName = document.getElementById('loginFirstName').value;
+    let userLastName = document.getElementById('loginLastName').value;
+    let userMail = document.getElementById('loginMail').value;
+    let userPassword = document.getElementById('loginPassword').value;
+    let userPasswordConfirmed = document.getElementById('loginPasswordConfirm').value;
+    let checkBox = document.getElementById('registerCheckbox').checked;
+    let signUpButton = document.getElementById('signUpButton');
+
+    if (userFirstName && userLastName && userMail && userPassword && userPasswordConfirmed &&
+        userPassword === userPasswordConfirmed && checkBox){
+            signUpButton.disabled = false;
+        }else{
+            signUpButton.disabled = true;
+        }
 }
 
 function showResultsMessage(foundPassword){
@@ -70,12 +88,12 @@ function showResultsMessage(foundPassword){
     alertDiv.innerHTML = '';
     if(foundPassword){
         alertDiv.innerHTML += /*html*/`
-            <p>Passswort stimmt</p>
+            <p class="correctPasswordFont">Your password matches and is correct.</p>
         `
     }
     else{
         alertDiv.innerHTML += /*html*/`
-            <p>Das Passwort stimmt nicht überein</p>
+            <p class="alertPasswordFont">Your passwords don't match, please try again</p>
         `
     }
 }
@@ -94,8 +112,6 @@ async function getNextUserId(path){
     }
     return nextId;
 }
-
-
 
 
 let users = [
