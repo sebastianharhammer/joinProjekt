@@ -37,6 +37,7 @@ function getAddContactHTML() {
             <div id="add-contact-btn-container">
                 <button id="add-contact-cancel" onclick="hideAddContact()">Cancel</button>
                 <button id="add-contact-create" onclick="processContactInfo()">Create contact</button>
+                <button id="test-btn" onclick="testing()">TEST</button>
             </div>
         </div>
     </div>`;
