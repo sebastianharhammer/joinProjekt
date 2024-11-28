@@ -24,7 +24,7 @@ async function postSignUpData(path){
     let userPasswordConfirmed = document.getElementById('loginPasswordConfirm').value
     let userId = await getNextUserId(path)
     let checkBox = document.getElementById('registerCheckbox')
-    if(userPasswordConfirmed === userPassword && checkBox){
+    if(userPasswordConfirmed === userPassword && checkBox.checked){
     let userData = {
         firstName: userFirstName,
         lastName: userLastName,
@@ -42,12 +42,34 @@ async function postSignUpData(path){
     const responseToJson = await response.json();
     signedUsersArray.push(responseToJson);
     console.log(signedUsersArray);
+    showSuccessOverlay();
+    setTimeout(function() {
+        window.location.href = 'login.html?msg=Du hast dich erfolgreich registriert';
+    }, 900);
 }
 else{
     console.log('Bitte akzeptiere die Privacy policy')
 }
     }
 
+function showSuccessOverlay(){
+    let overlay = document.getElementById('overlaySignUpSuccess');
+    overlay.classList.remove('d-none');
+    overlay.classList.add('overlaySignUpSuccess-show');
+    setTimeout(function(){
+        overlay.classList.remove('overlaySignUpSuccess-show');
+        overlay.classList.add('d-none');
+    },900)
+
+}
+
+    function addUser(){
+        let email = document.getElementById('loginMail');
+        let password = document.getElementById('loginPassword');
+        users.push({email: email.value, password: password.value});
+        window.location.href = 'login.html?msg=Du hast dich erfolgreich registriert'
+    }
+    
 
 function comparePasswords(){
     let paramToCompare = document.getElementById('loginPassword').value;
@@ -74,7 +96,6 @@ function validateSignUpForm(){
     let userPasswordConfirmed = document.getElementById('loginPasswordConfirm').value;
     let checkBox = document.getElementById('registerCheckbox').checked;
     let signUpButton = document.getElementById('signUpButton');
-
     if (userFirstName && userLastName && userMail && userPassword && userPasswordConfirmed &&
         userPassword === userPasswordConfirmed && checkBox){
             signUpButton.disabled = false;
@@ -118,11 +139,5 @@ let users = [
     {'email': 'daniel@test.de', 'password': 'test 123'}
 ]
 
-function addUser(){
-    let email = document.getElementById('loginMail');
-    let password = document.getElementById('loginPassword');
-    users.push({email: email.value, password: password.value});
-    window.location.href = 'login.html?msg=Du hast dich erfolgreich registriert'
-}
 
 

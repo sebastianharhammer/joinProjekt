@@ -129,3 +129,44 @@ button.logInButton:disabled{
     border: none;
     cursor: not-allowed;
 }
+
+.signUpSuccessDiv{
+    width: 312px;
+    height: 74px;
+    background-color:rgb(42,54,71);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.successSignUpFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 18px;
+    color: white;
+    margin: 0;
+}
+
+.overlaySignUpSuccess{
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(109 103 103 / 81%);
+    display: flex;
+    justify-content: center;
+    padding-top: 10vh;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.overlaySignUpSuccess-show {
+    opacity: 1;
+    transform: scale(1);
+}
