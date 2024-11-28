@@ -1,5 +1,5 @@
 function getAddContactHTML() {
-    return `
+    return /*html*/`
     <div id="contact-panel">
         <div id="add-contact-side-panel">
             <svg width="102" height="122" viewBox="0 0 102 122" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,11 +14,16 @@ function getAddContactHTML() {
             <h3 id="add-contact-second">Task are better with a team!</h3>
         </div>
         <div id="add-contact-interactions">
-            <img src="../img/close.svg" id="add-contact-btn-close">
-            <input id="add-contact-name">
+            <div src="../img/close.svg" id="add-contact-btn-close">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </div>
+            <input id="add-contact-first-name">
+            <input id="add-contact-last-name">
             <input id="add-contact-email">
-            <input id="add-contact-phone">
-            <div id="add-container-btn-container">
+            <div id="add-contact-btn-container">
                 <button id="add-contact-cancel">Cancel</button>
                 <button id="add-contact-create">Create contact</button>
             </div>
