@@ -53,15 +53,14 @@ function comparePasswords(){
     let paramToCompare = document.getElementById('loginPassword').value;
     let passwordConfirmValue = document.getElementById('loginPasswordConfirm').value;
     let passWordBorder = document.getElementById('passWordBorder');
+    passWordBorder.classList.remove('defaultBorderInputSignUp', 'greenBorder');
     let foundPassword = false;
     if(paramToCompare === passwordConfirmValue){
     foundPassword = true;
-    passWordBorder.classList.remove('defaultBorderInputSignUp');
-    passWordBorder.classList.add('greenBorder')
+    passWordBorder.classList.add('greenBorder');
     }else{
     foundPassword = false;
-    passWordBorder.classList.remove('defaultBorderInputSignUp');
-    passWordBorder.classList.add('redBorder')
+    passWordBorder.classList.add('redBorder');
     }
 showResultsMessage(foundPassword)
 }
