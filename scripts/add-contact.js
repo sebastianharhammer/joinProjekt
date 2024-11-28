@@ -1,5 +1,5 @@
-const BASE_URL = "https://test-e704d-default-rtdb.europe-west1.firebasedatabase.app/"
-//const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/"
+//const BASE_URL = "https://test-e704d-default-rtdb.europe-west1.firebasedatabase.app/"
+const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/"
 let localContacts = [];
 let testingContacts = [
     {
@@ -25,7 +25,7 @@ let testingContacts = [
 ];
 
 async function testing() {
-    let response = await fetch(BASE_URL + "/contacts/" + "/test/" + ".json", {
+    let response = await fetch(BASE_URL + "/contacts" + "/.json", {
         method: "PUT",
         header: {
             "Content-type":"application/json",
@@ -38,9 +38,6 @@ async function testing() {
 
 function addContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
-    let header = document.getElementById('header');
-    let nav = document.getElementById('nav');
-    let contact = document.getElementById('contact-content');
     let background = document.getElementById('add-contact-background');
     addContactTemplate.classList.add('show-add-contact');
     background.classList.remove('d-none');
@@ -49,9 +46,6 @@ function addContact() {
 }
 function hideAddContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
-    let header = document.getElementById('header');
-    let nav = document.getElementById('nav');
-    let contact = document.getElementById('contact-content');
     let background = document.getElementById('add-contact-background');
     addContactTemplate.classList.remove('show-add-contact');
     background.classList.add('d-none')
@@ -63,21 +57,37 @@ function processContactInfo() {
     let phone = document.getElementById('add-contact-email');
 
     if (name.value != "" && email.value != "" && phone.value != "") {
+        getContactInfo()
         pushContactInfo(name.value, email.value, phone.value)
     }
     else {
         console.log("nicht alles ausgefüllt");
     }
 }
+async function getContactInfo () {
+    let response = await fetch(BASE_URL + "/contacts" + "/.json", {
+        method: "GET",
+        header: {
+            "Content-type":"application/json",
+        },
+        //body: JSON.stringify(testingContacts)
+        });
+        let responseToJson = await response.json();
+        console.log(responseToJson);
+        localContacts = responseToJson;
+        
+}
+
 
  function pushContactInfo(name, email, phone) {
+    let path = "/contacts/"
     let localContact = {
         "firstName":name,
         "email":email,
         "phone":phone
     };
     localContacts.push(localContact);
-    loadData();
+    pushContactsToFirebase(path)
 }
 async function loadData() {
     let path = "/contacts/";
