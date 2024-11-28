@@ -35,7 +35,4 @@ function renderContactContentHTML() {
         </div>
     </div>
     `;
-    content.innerHTML += /*html*/`
-        <div id="add-contact-content" class="hide-add-contact"></div>
-    `;
 }

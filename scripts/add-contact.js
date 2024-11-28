@@ -38,12 +38,23 @@ async function testing() {
 
 function addContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
+    let header = document.getElementById('header');
+    let nav = document.getElementById('nav');
+    let contact = document.getElementById('contact-content');
+    let background = document.getElementById('add-contact-background');
     addContactTemplate.classList.add('show-add-contact');
+    background.classList.remove('d-none');
+
     addContactTemplate.innerHTML = getAddContactHTML();
 }
 function hideAddContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
+    let header = document.getElementById('header');
+    let nav = document.getElementById('nav');
+    let contact = document.getElementById('contact-content');
+    let background = document.getElementById('add-contact-background');
     addContactTemplate.classList.remove('show-add-contact');
+    background.classList.add('d-none')
 }
 
 function processContactInfo() {
