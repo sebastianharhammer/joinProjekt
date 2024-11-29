@@ -5,7 +5,7 @@ function init(){
     loadSignedUsers("/signed_users");
 }
 
-const urlParams = new URLSearchParams(window.location.search);
+let urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get('msg');
 const msgBox = document.getElementById('msgBox')
 if (msg) {
@@ -30,7 +30,8 @@ async function loadSignedUsers(path){
     }
 }
 
-function loginUser(){
+function loginUser(event){
+    event.preventDefault();
     console.log(signedUsersArrayLogin);
     let userMail = document.getElementById('loginMailUser');
     let userPassword = document.getElementById('loginPasswordUser');
@@ -38,7 +39,7 @@ function loginUser(){
     if(signedUser){
         console.log('user identified');
         console.log('Weiterleitung nach summary.html');
-        window.location.href = 'summary.html';
+        window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
     }else{
         console.log('user not found')
     }
