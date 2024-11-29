@@ -1,3 +1,10 @@
+let signedUsersArrayLogin="[]";
+
+function init(){
+    showStartSlide();
+    loadSignedUsers("/signed_users");
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get('msg');
 const msgBox = document.getElementById('msgBox')
@@ -11,4 +18,29 @@ function showStartSlide(){
     setTimeout(function() {
         startOverlay.classList.add('animate');
     }, 100);
+}
+
+
+async function loadSignedUsers(path){
+    let response = await fetch(BASE_URL + path + ".json");
+    let responseToJson = await response.json();
+    if (responseToJson) {
+        signedUsersArrayLogin = Object.values(responseToJson);  
+        console.log(signedUsersArrayLogin); 
+    }
+}
+
+function loginUser(){
+    console.log(signedUsersArrayLogin);
+    let userMail = document.getElementById('loginMailUser');
+    let userPassword = document.getElementById('loginPasswordUser');
+    let signedUser = signedUsersArrayLogin.find(u => u.email == userMail.value && u.password == userPassword.value)
+    if(signedUser){
+        console.log('user identified');
+        console.log('Weiterleitung nach summary.html');
+        window.location.href = 'summary.html';
+    }else{
+        console.log('user not found')
+    }
+
 }
