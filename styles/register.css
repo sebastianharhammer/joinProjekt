@@ -191,3 +191,17 @@ button.logInButton:disabled{
     padding-right: 6px;
 }
 
+.footerFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 16px;
+    color: #A8A8A8;
+    margin: 0;
+    width: 120px;
+}
+
+.footerFont:hover{
+    font-weight: bold;
+    color: rgb(41,171,226);
+}
+
