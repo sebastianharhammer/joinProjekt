@@ -59,8 +59,8 @@ function showContactDetailsHTML(id, firstname, lastname, email, phone) {
     <div id="contact-detail-contact-interactions">
         <span id="contact-detail-email">${email}</span>
         <div id="contact-detail-btn-container">
-            <button class="contact-detail-btn" id="contact-detail-delete-btn">Delete</button>
-            <button class="contact-detail-btn" id="contact-detail-edit-btn">Edit</button>
+            <button class="contact-detail-btn" id="contact-detail-delete-btn" onclick="deleteContact('${id}')">Delete</button>
+            <button class="contact-detail-btn" id="contact-detail-edit-btn"onclick="editConctact('${id}')">Edit</button>
         </div>
     </div>
     `;

@@ -83,14 +83,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f5f5f5; /* Light gray background */
-            border-radius: 50%; /* Make it circular */
-            border: 1px solid #ccc; /* Optional border */
+            background-color: #f5f5f5; 
+            border-radius: 50%;
+            border: 1px solid #ccc; 
             cursor: pointer;
             transition: background-color 0.3s;
 }
 #add-contact-btn-close:hover {
-    background-color: #e0e0e0; /* Slightly darker background on hover */
+    background-color: #e0e0e0;
+    transition: background-color 0.3s;
 }
 #add-contact-btn-close svg {
     width: 20px;
@@ -148,7 +149,7 @@
     transform: translateY(-50%);
     font-size: 16px;
     color: #888;
-    pointer-events: none; /* Prevent the icon from blocking input clicks */
+    pointer-events: none;
 }
 .input-wrapper {
     position: relative;
@@ -175,6 +176,8 @@
     color:#0B8CE9;
     border-color: #0B8CE9;
     cursor: pointer;
+    transition: background-color 0.3s;
+    transition: color 0.3s;
 }
 #add-contact-create {
     height: 5vh;

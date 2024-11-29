@@ -59,3 +59,10 @@ function showContactDetails(id) {
     showContactDetailsHTML(contact.id, contact.firstName, contact.lastName, contact.email, contact.phone);
 }
 
+function deleteContact() {
+    alert("Theoretisch gelöscht")
+}
+
+function editConctact() {
+    alert("Theoretisch geändert")
+}
