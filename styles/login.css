@@ -1,6 +1,6 @@
 .loginContent{
     background-color: rgb(246,247,248);
-    height: 100vh;
+    height: 95vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,9 @@
 .headAreaOfLogin{
     display: flex;
     justify-content: space-between;
-    width: 100vw;
+    width: 95vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
 }
 
 .signUpArea{
@@ -172,4 +174,12 @@ button:hover{
     background-color: rgb(41,171,226);
     border: none;
     border-radius: 8px;
+}
+
+.footerRegisterLogin{
+    font-family: 'Inter';
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    height: 5vh;
 }
