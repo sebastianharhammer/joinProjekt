@@ -48,20 +48,14 @@ function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
 }
 
-function contactHTML(id, firstname, lastname, email, phone) {
-    let contactsContainer = document.getElementById('contacts');
-    contactsContainer.innerHTML += `
-        <div class="contact-item">
-        <div class="full-name-short">
-            <svg class="customCircle" width="50" height="50">
-                <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
-                <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(firstname)}${getFirstLetter(lastname)}</text>
-            </svg>
-        </div>
-        <div class="contact-info">
-            <span>${firstname}${lastname}</span>
-            <span>${email}
-            </div>
-        </div>        
-    `;
+function showContactDetails(id) {
+    let contact = contacts[id];
+
+    if (!contact) {
+        console.error(`Contact with ID ${id} not found.`);
+        return;
+    }
+
+    showContactDetailsHTML(contact.id, contact.firstName, contact.lastName, contact.email, contact.phone);
 }
+

@@ -26,3 +26,42 @@ function renderContactContentHTML() {
     </div>
     `;
 }
+
+
+function contactHTML(id, firstname, lastname, email, phone) {
+    let contactsContainer = document.getElementById('contacts');
+    contactsContainer.innerHTML += /*html*/`
+        <div class="contact-item" onclick="showContactDetails('${id}')">
+            <div class="full-name-short">
+                <svg class="customCircle" width="50" height="50">
+                    <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
+                    <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(firstname)}${getFirstLetter(lastname)}</text>
+                </svg>
+            </div>
+            <div class="contact-info">
+                <span>${firstname}${lastname}</span>
+                <span>${email}
+            </div>
+        </div>        
+    `;
+}
+
+function showContactDetailsHTML(id, firstname, lastname, email, phone) {
+    console.log(id, firstname, lastname, email, phone);
+    let contactDetailContent = document.getElementById('detailed-contact-info');
+    contactDetailContent.innerHTML = /*html*/`
+    <div id="contact-detail-short-name>
+        <svg class="customCircle" width="50" height="50">
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
+            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(firstname)}${getFirstLetter(lastname)}</text>
+        </svg>
+    </div>
+    <div id="contact-detail-contact-interactions">
+        <span id="contact-detail-email">${email}</span>
+        <div id="contact-detail-btn-container">
+            <button class="contact-detail-btn" id="contact-detail-delete-btn">Delete</button>
+            <button class="contact-detail-btn" id="contact-detail-edit-btn">Edit</button>
+        </div>
+    </div>
+    `;
+}
