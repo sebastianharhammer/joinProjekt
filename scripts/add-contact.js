@@ -108,7 +108,7 @@ async function pushContactsToFirebase(path) {
     let response = await fetch(BASE_URL + path + ".json", {
         method: "PUT",
         header: {
-            "Content-type":"application/json",
+            "Content-Type":"application/json",
         },
         body: JSON.stringify(localContacts)
         });
