@@ -29,8 +29,128 @@ let testingContacts = [
         lastName: "Eisenberg",
         email: "davidberg@gmail.com",
         phone: "012345"
-    } 
+    },
+    {   
+        id: 4,
+        firstName: "Eva",
+        lastName: "Klein",
+        email: "eva.klein@yahoo.com",
+        phone: "678901"
+    },
+    {   
+        id: 5,
+        firstName: "Felix",
+        lastName: "Schmidt",
+        email: "felixsch@gmail.com",
+        phone: "234567"
+    },
+    {   
+        id: 6,
+        firstName: "Greta",
+        lastName: "Müller",
+        email: "greta.mueller@outlook.com",
+        phone: "345678"
+    },
+    {   
+        id: 7,
+        firstName: "Hannah",
+        lastName: "Weber",
+        email: "hannah.weber@gmail.com",
+        phone: "123456"
+    },
+    {   
+        id: 8,
+        firstName: "Isabella",
+        lastName: "Fischer",
+        email: "isabella.f@gmail.com",
+        phone: "987654"
+    },
+    {   
+        id: 9,
+        firstName: "Jakob",
+        lastName: "Hoffmann",
+        email: "jakobh@gmail.com",
+        phone: "765432"
+    },
+    {   
+        id: 10,
+        firstName: "Klara",
+        lastName: "Bauer",
+        email: "klara.bauer@yahoo.com",
+        phone: "543210"
+    },
+    {   
+        id: 11,
+        firstName: "Lukas",
+        lastName: "Meier",
+        email: "lukas.meier@gmail.com",
+        phone: "432109"
+    },
+    {   
+        id: 12,
+        firstName: "Maria",
+        lastName: "Schneider",
+        email: "maria.s@gmail.com",
+        phone: "890123"
+    },
+    {   
+        id: 13,
+        firstName: "Nina",
+        lastName: "Wagner",
+        email: "nina.wagner@outlook.com",
+        phone: "321098"
+    },
+    {   
+        id: 14,
+        firstName: "Oscar",
+        lastName: "Brückner",
+        email: "oscarb@gmail.com",
+        phone: "210987"
+    },
+    {   
+        id: 15,
+        firstName: "Paul",
+        lastName: "Becker",
+        email: "paulb@hotmail.com",
+        phone: "789012"
+    },
+    {   
+        id: 16,
+        firstName: "Quentin",
+        lastName: "Koch",
+        email: "quentink@yahoo.com",
+        phone: "654321"
+    },
+    {   
+        id: 17,
+        firstName: "Sophia",
+        lastName: "Krüger",
+        email: "sophiakruger@gmail.com",
+        phone: "456789"
+    },
+    {   
+        id: 18,
+        firstName: "Tom",
+        lastName: "Lange",
+        email: "tomlange@outlook.com",
+        phone: "987321"
+    },
+    {   
+        id: 19,
+        firstName: "Ulrike",
+        lastName: "Vogel",
+        email: "ulrike.vogel@gmail.com",
+        phone: "654789"
+    },
+    {   
+        id: 20,
+        firstName: "Valentin",
+        lastName: "Seidel",
+        email: "valentin.s@gmail.com",
+        phone: "321654"
+    }
 ];
+
 
 async function testing() {
     for (let i = 0; i < testingContacts.length; i++) {

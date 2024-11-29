@@ -52,8 +52,8 @@ function showContactDetailsHTML(id, firstname, lastname, email, phone) {
     contactDetailContent.innerHTML = /*html*/`
     <div id="contact-detail-short-name">
         <svg class="customCircle" width="200" height="200">
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(firstname)}${getFirstLetter(lastname)}</text>
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="75" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
+            <text class="textInCircle-big" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(firstname)}${getFirstLetter(lastname)}</text>
         </svg>
     </div>
     <div id="contact-detail-contact-interactions">

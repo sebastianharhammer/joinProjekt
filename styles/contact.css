@@ -163,7 +163,11 @@
   font-size: 18px;
   font-weight: bold;
   fill: white;
-  dominant-baseline: middle;
+}
+.textInCircle-big {
+  font-size: 48px;
+  font-weight: bold;
+  fill: white;
 }
 
 /* Contact name */
