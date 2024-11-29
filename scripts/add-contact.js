@@ -166,6 +166,7 @@ async function testing() {
 
             let responseToJson = await response.json();
             console.log(`Contact with ID ${key} added:`, responseToJson);
+            hideAddContact();
         } catch (error) {
             console.error(`Failed to add contact with ID ${key}:`, error);
         }
