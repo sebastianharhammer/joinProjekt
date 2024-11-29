@@ -163,6 +163,21 @@ body {
   height: 120px;
 }
 
+
+/* Willkomensnachricht*/
+.welcomeMsg{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 40vh;
+    background-color: rgba(41, 170, 226, 0.541);
+    font-family: 'Inter';
+    color: white;
+    font-size: 64px;
+    border-radius: 12px;
+}
+
 /* Responsives Design */
 @media (max-width: 768px) {
   .panel-row {
@@ -192,3 +207,5 @@ body {
 .panel.small {
   height: 90px;
 }
+
+

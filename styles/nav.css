@@ -39,17 +39,20 @@
 }
 .nav-links {
     color: white;
+    padding-left: 1vh;
 }
 .nav-links-policy {
     color: #A8A8A8;
     margin-left: 2vw;
 }
 .nav-links-container {
+    display: flex;
     height: 35px;
     margin-top: 15px;
     margin-bottom: 15px;
     width: 100%;
     align-items: center;
+    z-index: 10;
 }
 .nav-links-container:hover {
     background-color: #091931;

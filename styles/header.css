@@ -28,11 +28,12 @@ header {
     align-items: center;
     padding-right: 25px;
 }
-#current-user {
+#header-current-user {
     padding: 10px;
     color: blue;
+    z-index: 999;
 }
-#current-user:hover {
+#header-current-user:hover {
     cursor: pointer;
 }
 #user-circle:hover {

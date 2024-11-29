@@ -1,5 +1,5 @@
 .signUpForm{
-    height: 60vh;
+    height: 64vh;
     width: 45vh;
     background-color: white;
     border-radius: 30px;
@@ -25,7 +25,8 @@ d-none{
     font-family: "Inter";
     font-weight: 400;
     font-size: 16px;
-    color: rgb(168,168,168)
+    color: rgb(168,168,168);
+    margin: 0;
 }
 
 .privPolicyLink{
@@ -66,5 +67,141 @@ d-none{
 
 .checkBoxSignUp:hover {
     background-color: rgba(42, 54, 71, 0.1);
+}
+
+.overlay-alert-password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top : 10vh;
+    height: 500px;
+    width: 500px;
+}
+
+.signUpPasswordConfirmDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    height: 53px;
+    border-radius: 10px;
+    gap: 8px;
+}
+
+.defaultBorderInputSignUp{
+    border: 1px solid rgb(168,168,168);
+}
+
+.redBorder{
+    border: 2px solid rgb(238, 56, 56);
+}
+
+.greenBorder{
+    border: 2px solid green;
+}
+
+.alertPasswordFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    color: rgb(238, 56, 56);
+    margin: 0;
+}
+
+
+.correctPasswordFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    color: green;
+    margin: 0;
+}
+
+button.logInButton:disabled{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 49px;
+    width: 91px;
+    border-radius: 8px;
+    background-color: rgb(126, 126, 126);
+    border: none;
+    cursor: not-allowed;
+}
+
+.signUpSuccessDiv{
+    width: 312px;
+    height: 74px;
+    background-color:rgb(42,54,71);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.successSignUpFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 18px;
+    color: white;
+    margin: 0;
+}
+
+.overlaySignUpSuccess{
+    height: 100vh;
+    width: 100vw;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(109 103 103 / 81%);
+    display: flex;
+    justify-content: center;
+    padding-top: 10vh;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.overlaySignUpSuccess-show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.alert-password{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 30px;
+}
+
+.correctPasswordFontNotice{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    color: #A8A8A8;
+    margin: 0;
+}
+
+.lock{
+    padding-right: 6px;
+}
+
+.footerFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 16px;
+    color: #A8A8A8;
+    margin: 0;
+    width: 120px;
+}
+
+.footerFont:hover{
+    font-weight: bold;
+    color: rgb(41,171,226);
 }
 
