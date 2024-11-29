@@ -30,6 +30,10 @@
     background-color: rgba(42,54,71,1);
 }
 
+.signUpButton:hover{
+    background-color: rgb(41,171,226);
+}
+
 .headAreaOfLogin img{
     height: 121px;
     width: 100px;
@@ -118,6 +122,11 @@ d-none{
     background-color: rgba(42,54,71,1);
 }
 
+.logInButton:hover{
+    background-color: rgb(41,171,226);
+    border: unset;
+}
+
 .guestLogInUpButton{
     display: flex;
     justify-content: center;
@@ -125,7 +134,12 @@ d-none{
     height: 49px;
     width: 140px;
     border-radius: 8px;
-    background-color: white; 
+    background-color: white;
+    border: 2px solid rgba(42,54,71,1);
+}
+
+.guestLogInUpButton:hover{
+    border-color: rgb(41,171,226);
 }
 
 .guestLogInButtonFont{
@@ -133,6 +147,10 @@ d-none{
     font-weight: 700;
     font-size: 16px;
     color:rgba(42,54,71,1);
+}
+
+.guestLogInButtonFont:hover{
+    color: rgb(41,171,226);
 }
 
 button:hover{

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 let contacts = [
   {
     "id": 0,
@@ -60,6 +61,9 @@ let contacts = [
     "email": "jim.powell@gmx.com",
   },
 ];
+=======
+let contacts = [];
+>>>>>>> 73f89e16c5932f6f626273b0241b8b71164ca770
 
 function renderContactContent() {
   includeHTML();
@@ -109,4 +113,66 @@ function getInitials(forename, surname) {
 function getRandomColor() {
   const colors = ["orange", "purple", "blue", "red", "green", "teal"];
   return colors[Math.floor(Math.random() * colors.length)];
+}
+
+async function getContacts() {
+    try {
+        let response = await fetch(BASE_URL + "/contacts/.json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+        let responseToJson = await response.json();
+        console.log(responseToJson);
+        contacts = responseToJson;
+        returnArrayContacts();
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+    }
+}
+
+function returnArrayContacts() {
+    if (!contacts) {
+        console.error("No contacts found.");
+        return;
+    }
+
+    let contactsContainer = document.getElementById('contacts');
+    contactsContainer.innerHTML = ''; 
+
+    for (let key in contacts) {
+        let contact = contacts[key];
+        if (!contact) continue;
+
+        let firstname = contact.firstName;
+        let lastname = contact.lastName;
+        let email = contact.email;
+        let phone = contact.phone;
+        let id = contact.id;
+
+        contactHTML(id, firstname, lastname, email, phone);
+    }
+}
+function getFirstLetter(name) {
+    return name.trim().charAt(0).toUpperCase();
+}
+
+function showContactDetails(id) {
+    let contact = contacts[id];
+
+    if (!contact) {
+        console.error(`Contact with ID ${id} not found.`);
+        return;
+    }
+
+    showContactDetailsHTML(contact.id, contact.firstName, contact.lastName, contact.email, contact.phone);
+}
+
+function deleteContact() {
+    alert("Theoretisch gelöscht")
+}
+
+function editConctact() {
+    alert("Theoretisch geändert")
 }
