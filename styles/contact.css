@@ -1,8 +1,8 @@
 #contact-content {
   position: relative;
   display: flex;
-  padding-top: 10vh;
-  padding-left: 10vw;
+  padding-top: 12vh;
+  padding-left: 12vw;
   width: 100%;
   height: 100vh;
 }
@@ -65,8 +65,11 @@
   background: white;
   border-radius: 8px;
   padding: 20px;
+  padding-bottom: 100px;
   margin: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-height: 88vh; /* Adjust the height as needed */
+  overflow-y: auto; /* Enables vertical scrolling */
 }
 
 #contacts-header h2 {
