@@ -108,39 +108,135 @@
   cursor: pointer;
   filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
 }
-
-[id^="contact-item-"] {
+#detailed-contact-info {
   display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-[id^="avatar-"] {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  color: white;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  margin-right: 15px;
-  text-transform: uppercase;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#contact-detail-short-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
 }
 
-[id^="contact-name-"] {
-  margin: 0;
-  font-size: 1rem;
+/* Container for the contact card */
+#contact-detail-contact-interactions {
+  width: 70%;
+  padding: 20px;
+  
+}
+
+/* Heading styles for the main title */
+#contact-detail-short-name h1 {
+  font-size: 2rem;
   font-weight: bold;
+  margin: 0;
 }
 
-[id^="contact-email-"] {
+#contact-detail-short-name p {
+  color: #6c757d;
   margin: 0;
-  color: #007bff;
+}
+
+/* Circle styling for initials */
+.customCircle {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+#user-circle {
+  fill: #ff8c42;
+  stroke: white;
+  stroke-width: 3;
+  border-radius: 50%;
+}
+
+.textInCircle {
+  font-family: 'Arial', sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  fill: white;
+  dominant-baseline: middle;
+}
+
+/* Contact name */
+#contact-detail-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+/* Buttons styling */
+#contact-detail-btn-container {
+  margin-top: 10px;
+  display: flex;
+  gap: 15px;
+}
+.contact-detail-btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+#edit-pencil-icon {
+  width: 20px;
+  height: 20px;
+}
+#delete-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.contact-detail-btn {
+  background-color: transparent;
+  border: none;
   font-size: 0.9rem;
+  color: #007bff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.contact-detail-btn:hover {
+  color: #0056b3;
+}
+
+/* Contact Information section */
+#contact-detail-more-info-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: start;
+  margin-top: 20px;
+}
+
+#ci-headline {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+#email-description,
+#phone-description {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #555;
+}
+
+#contact-detail-email a,
+#contact-detail-phone {
+  font-size: 1rem;
+  color: #007bff;
   text-decoration: none;
 }
 
-[id^="contact-email-"]:hover {
+#contact-detail-email a:hover {
   text-decoration: underline;
 }
