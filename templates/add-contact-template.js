@@ -35,11 +35,15 @@ function getAddContactHTML() {
                         <img src="../img/login-person.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-last-name" placeholder="Email">
+                        <input required class="add-contact-input" id="add-contact-last-name" placeholder="Last name">
+                        <img src="../img/login-person.png" class="add-contact-input-icon">
+                    </div>
+                    <div class="input-wrapper">
+                        <input required class="add-contact-input" id="add-contact-email" placeholder="Email">
                         <img src="../img/login-mail.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-email" placeholder="Phone">
+                        <input required class="add-contact-input" id="add-contact-phone" placeholder="Phone">
                         <img src="../img/call.png" class="add-contact-input-icon">
                     </div>
 </form>
