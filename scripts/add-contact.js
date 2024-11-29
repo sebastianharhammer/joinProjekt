@@ -1,5 +1,4 @@
-//const BASE_URL = "https://test-e704d-default-rtdb.europe-west1.firebasedatabase.app/"
-const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/"
+const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let localContacts = [];
 let testingContacts = [
     {   
@@ -65,7 +64,7 @@ let testingContacts = [
         email: "isabella.f@gmail.com",
         phone: "987654"
     },
-    {   
+    /*{   
         id: 9,
         firstName: "Jakob",
         lastName: "Hoffmann",
@@ -148,7 +147,7 @@ let testingContacts = [
         lastName: "Seidel",
         email: "valentin.s@gmail.com",
         phone: "321654"
-    }
+    }*/
 ];
 
 
