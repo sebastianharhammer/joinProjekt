@@ -1,4 +1,165 @@
 #add-task-content {
     padding-top: 110px;
     padding-left: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+#add-task-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 80vw;
+    height: 90vh;
+    max-width: 1920px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#headline-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 25px;
+    margin: 25px;
+}
+  .container {
+    
+    
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #task-right {
+    width: 100%;
+    margin: 25px;
+    padding: 25px;
+  }
+  #task-left {
+    width: 100%;
+    margin: 25px;
+    padding: 25px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .required {
+    color: red;
+  }
+  
+  input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  textarea {
+    resize: none;
+    height: 80px;
+  }
+  
+  .prio-options {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .prio-button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #f4f4f4;
+  }
+  
+  .prio-button.selected {
+    border-color: #ffaa00;
+    background-color: #ffaa00;
+    color: #fff;
+  }
+  
+  .prio-button.urgent {
+    border-color: #ff4d4d;
+    background-color: #ff4d4d;
+    color: #fff;
+  }
+  
+  .prio-button.low {
+    border-color: #00cc66;
+    background-color: #00cc66;
+    color: #fff;
+  }
+  
+  .subtasks {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .subtasks input {
+    flex: 1;
+  }
+  
+  .add-subtask {
+    padding: 10px;
+    background-color: #ffaa00;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-subtask:hover {
+    background-color: #e69900;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .clear-button, .create-task-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .clear-button {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  .create-task-button {
+    background-color: #00cc66;
+    color: white;
+  }
+  
+  .create-task-button:hover {
+    background-color: #00994d;
+  }
+  
