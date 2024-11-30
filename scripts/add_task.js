@@ -49,7 +49,7 @@ function returnArrayContacts() {
     contacts.forEach(contact => {
         const option = document.createElement('option'); // Create a new option element
         option.value = contact.id; // Set the value to the contact's ID
-        option.text = `${contact.firstName} ${contact.lastName}`; // Combine first and last name as the displayed text
+        option.text = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}${contact.firstName} ${contact.lastName}`; // Combine first and last name as the displayed text
         
         selectElement.appendChild(option); // Append the option to the select element
     });
