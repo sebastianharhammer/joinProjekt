@@ -42,32 +42,16 @@ function returnArrayContacts() {
         console.error("No contacts found.");
         return;
     }
-
     const selectElement = document.getElementById('assigned-to');
-
-    // Populate the dropdown
     contacts.forEach(contact => {
         const option = document.createElement('option'); // Create a new option element
         option.value = contact.id; // Set the value to the contact's ID
-        option.text = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}${contact.firstName} ${contact.lastName}`; // Combine first and last name as the displayed text
-        
+        option.innerHTML = assignUserHTML(contact);
         selectElement.appendChild(option); // Append the option to the select element
     });
-    
-
-    for (let key in contacts) {
-        let contact = contacts[key];
-        if (!contact) continue;
-
-        let firstname = contact.firstName;
-        let lastname = contact.lastName;
-        let email = contact.email;
-        let phone = contact.phone;
-        let id = contact.id;
-
-        //contactHTML(id, firstname, lastname, email, phone);
-    }
 }
+
+
 function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
 }

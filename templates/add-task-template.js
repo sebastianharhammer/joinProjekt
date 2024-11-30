@@ -65,3 +65,16 @@ function renderAddTaskHTML() {
   </div>
   </div>`;
 }
+
+function assignUserHTML(contact) {
+    return `
+    <div class="assigned-user">
+        <svg class="customCircle" width="10" height="10">
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
+            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+        </svg>
+        <span>${contact.firstName}</span>
+        <span>${contact.lastName}</span>
+        <input type="checkbox">
+    </div>`;
+}
