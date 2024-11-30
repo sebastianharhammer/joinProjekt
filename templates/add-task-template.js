@@ -21,7 +21,7 @@ function renderAddTaskHTML() {
 
       <div class="form-group">
         <label for="assigned-to">Assigned to</label>
-        <select id="assigned-to">
+        <select id="assigned-to" class="form-control" name="type" id="select-types">
           <option value="">Select contacts to assign</option>
         </select>
       </div>
@@ -58,7 +58,7 @@ function renderAddTaskHTML() {
 
       <div class="form-actions">
         <button type="reset" class="clear-button">Clear</button>
-        <button type="submit" class="create-task-button">Create Task</button>
+        <button type="submit" class="create-task-button" onclick="createTask()">Create Task</button>
       </div>
     </form>
   </div>

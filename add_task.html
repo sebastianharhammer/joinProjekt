@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>add_task</title>
+    <script src="./scripts/add_task.js"></script>
+    <script src="./templates/add-task-template.js"></script>
     <script src="./scripts/w3-include.js"></script>
     <script src="./scripts/header.js"></script>
-    <script src="./templates/add-task-template.js"></script>
-    
     <link rel="stylesheet" href="./styles/header.css">
     <link rel="stylesheet" href="./styles/nav.css">
     <link rel="stylesheet" href="./styles/add_task.css">
     <link rel="stylesheet" href="./styles/standard.css">
 </head>
-<body onload="includeHTML(), renderAddTaskHTML()">
+<body onload="init()">
     <div w3-include-html="./header.html"></div>
     <div w3-include-html="./nav.html"></div>
     <div id="add-task-content"></div>
