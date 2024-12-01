@@ -22,9 +22,10 @@
     padding: 25px;
     margin: 25px;
 }
+#add-task-headline {
+    font-size: 48px;
+}
   .container {
-    
-    
     padding: 20px;
     width: 100%;
     display: flex;
@@ -94,19 +95,19 @@
     background-color: #f4f4f4;
   }
   
-  .prio-button.selected {
+  .yellow {
     border-color: #ffaa00;
     background-color: #ffaa00;
     color: #fff;
   }
   
-  .prio-button.urgent {
+  .red {
     border-color: #ff4d4d;
     background-color: #ff4d4d;
     color: #fff;
   }
   
-  .prio-button.low {
+  .green {
     border-color: #00cc66;
     background-color: #00cc66;
     color: #fff;

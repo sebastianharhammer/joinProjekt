@@ -1,5 +1,7 @@
 const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
+let selectedPriority = "";
+let subtasksArr = [];
 
 function init() {
     getUsers();
@@ -44,10 +46,10 @@ function returnArrayContacts() {
     }
     const selectElement = document.getElementById('assigned-to');
     contacts.forEach(contact => {
-        const option = document.createElement('option'); // Create a new option element
-        option.value = contact.id; // Set the value to the contact's ID
+        const option = document.createElement('option');
+        option.value = contact.id;
         option.innerHTML = assignUserHTML(contact);
-        selectElement.appendChild(option); // Append the option to the select element
+        selectElement.appendChild(option);
     });
 }
 
@@ -55,3 +57,26 @@ function returnArrayContacts() {
 function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
 }
+
+function getCategory() {
+    const category = document.getElementById('category');
+    return category.value;
+}
+
+function setPriority(priority) {
+    const priorities = ['urgent', 'medium', 'low'];
+    priorities.forEach((prio) => {
+        const btn = document.getElementById(`prio-${prio}`);
+        btn.classList.remove(prio === 'urgent' ? 'red' : prio === 'medium' ? 'yellow' : 'green');
+    });
+    const selectedButton = document.getElementById(`prio-${priority}`);
+    selectedButton.classList.add(priority === 'urgent' ? 'red' : priority === 'medium' ? 'yellow' : 'green');
+    selectedPriority = priority;
+}
+
+function addSubtask() {
+    let subtask = document.getElementById('subtasks');
+    let tempSub = document.getElementById('temp-subtasks-container');
+    
+}
+
