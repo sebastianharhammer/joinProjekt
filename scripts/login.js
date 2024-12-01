@@ -40,6 +40,7 @@ function loginUser(event){
         console.log('user identified');
         console.log('Weiterleitung nach summary.html');
         window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
+        getUser(signedUser);
     }else{
         console.log('user not found')
     }
