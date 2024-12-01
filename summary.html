@@ -19,29 +19,17 @@
     <link rel="stylesheet" href="../styles/nav.css" />
     <link rel="stylesheet" href="./fonts.css" />
     <script src="https://www.w3schools.com/lib/w3.js"></script>
-    <!-- W3.js -->
+
     <script src="./scripts/w3-include.js"></script>
     <script src="./scripts/summary.js"></script>
     <title>Dashboard</title>
   </head>
   <body onload="includeHTML()">
-    <!-- Header und Navigation -->
     <div w3-include-html="./header.html"></div>
     <div w3-include-html="./nav.html"></div>
 
-    <!-- Hauptinhalt -->
     <section class="main-content">
-      <h1>Good morning,</h1>
-      <h2>Guest User</h2>
-      <div class="header-container">
-        <h1>Join 360</h1>
-        <div class="divider-line"></div>
-        <!-- Trennlinie -->
-        <span>Key Metrics at a Glance</span>
-      </div>
-
       <div class="panels">
-        <!-- Erste Reihe! -->
         <div class="panel-row">
           <div class="panel">
             <img src="./img/edit-pencil.png" alt="To-do Icon" />
@@ -59,7 +47,6 @@
           </div>
         </div>
 
-        <!-- Zweite Reihe! -->
         <div class="panel-row">
           <div class="panel large">
             <img src="./img/up-scale-orange.png" alt="Urgent Icon" />
@@ -76,7 +63,6 @@
           </div>
         </div>
 
-        <!-- Dritte Reihe mit drei kleinen Panels -->
         <div class="panel-row">
           <div class="panel small">
             <div class="panel-content">
@@ -97,6 +83,11 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="greeting-text">
+        <h1>Good morning,</h1>
+        <h2>Guest User</h2>
       </div>
     </section>
 
