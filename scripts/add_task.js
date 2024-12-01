@@ -53,6 +53,11 @@ function returnArrayContacts() {
     });
 }
 
+function showAssignedUsers() {
+    let user = document.getElementById('assigned-to')
+    let assignUsers = document.getElementById('assigned-user');
+}
+
 
 function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
@@ -77,6 +82,9 @@ function setPriority(priority) {
 function addSubtask() {
     let subtask = document.getElementById('subtasks');
     let tempSub = document.getElementById('temp-subtasks-container');
+    tempSub.innerHTML += `<span class="subtasks">- ${subtask.value}</span><br>`;
+    subtasksArr.push(subtask.value);
+    subtask.value = "";
     
 }
 

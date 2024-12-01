@@ -121,7 +121,11 @@
   .subtasks input {
     flex: 1;
   }
-  
+  #temp-subtasks-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
   .add-subtask {
     padding: 10px;
     background-color: #ffaa00;

@@ -24,6 +24,9 @@ function renderAddTaskHTML() {
         <select id="assigned-to" class="form-control" name="type" id="select-types">
           <option value="">Select contacts to assign</option>
         </select>
+        <button>assing</button>
+        <div id="assinged-user"></div>
+        
       </div>
       </div>
     <div id="task-right">
@@ -54,8 +57,8 @@ function renderAddTaskHTML() {
         <div class="subtasks">
           <input type="text" id="subtasks" placeholder="Add new subtask">
           <button type="button" class="add-subtask" onclick="addSubtask()">+</button>
-          <div id="temp-subtasks-container"></div>
         </div>
+        <div id="temp-subtasks-container"></div>
       </div>
 
       <div class="form-actions">
@@ -70,7 +73,7 @@ function renderAddTaskHTML() {
 
 function assignUserHTML(contact) {
     return `
-    <div class="assigned-user">
+    <div id="assigned-user${contact.id}">
         <svg class="customCircle" width="10" height="10">
             <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
             <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
