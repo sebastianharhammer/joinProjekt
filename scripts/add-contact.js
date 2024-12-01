@@ -64,7 +64,7 @@ let testingContacts = [
         email: "isabella.f@gmail.com",
         phone: "987654"
     },
-    /*{   
+    {   
         id: 9,
         firstName: "Jakob",
         lastName: "Hoffmann",
@@ -147,7 +147,7 @@ let testingContacts = [
         lastName: "Seidel",
         email: "valentin.s@gmail.com",
         phone: "321654"
-    }*/
+    }
 ];
 
 
@@ -215,7 +215,6 @@ async function getContactInfo() {
             },
         });
         let responseToJson = await response.json();
-        //localContacts = responseToJson ? Object.values(responseToJson) : [];
         localContacts = responseToJson;
         console.log("Fetched contacts:", localContacts);
     } catch (error) {
