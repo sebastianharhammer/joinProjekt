@@ -5,7 +5,7 @@ let todos = [
     "category": "todo",
     "taskCategory": "Technical Tasc",
     "description":
-      "Dieser Text dient zur visuellen Veranschaulichung, wie es aussieht wenn viel Text in der Beschreibung steht. Ich glaube ich muss hier noch ein bisschen was anpassen",
+    "Dieser Text dient zur visuellen Veranschaulichung, wie es aussieht wenn viel Text in der Beschreibung steht. Ich glaube ich muss hier noch ein bisschen was anpassen",
     "prio": "low",
   },
   {
