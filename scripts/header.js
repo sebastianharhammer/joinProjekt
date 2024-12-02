@@ -4,5 +4,5 @@ function showUserOptions() {
 }
 
 async function getUser(user) {
-    console.log(user);
+    console.log("headerUser ist:" + user);
 }
