@@ -1,7 +1,7 @@
 function init(){
     includeHTML();
     fetchTasks("/tasks");
-    loadBoardNavigator()
+    loadBoardNavigator();
 }
 
 const BASE_URL= "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -15,6 +15,7 @@ async function fetchTasks(path=""){
         taskArray = Object.values(responseToJson);
     }
     console.log(taskArray)
+    updateTaskHTML();
 }
 
 function loadBoardNavigator(){
@@ -89,25 +90,57 @@ function getColumnsHTML(){
 
 
 function updateTaskHTML(){
-let tasks = taskArray
-console.log(tasks);
-let tasksContent = document.getElementById('tasksContent');
-tasksContent.innerHTML = '';
-for(let i = 0; i < taskArray.length; i++){
-    let taskTitle = taskArray[i].title;
-    let taskDescription = taskArray[i].description;
-    let dueDate = taskArray[i].dueDate;
-    let taskstatus = taskArray[i].taskstatus;
-    let taskCategory = taskArray[i].taskCategory;
-    let priority = taskArray[i].prio;
+let todoColumn = document.getElementById("todo");
+let inProgressColumn = document.getElementById("inProgress");
+let feedbackColumn = document.getElementById("feedback");
+let doneColumn = document.getElementById("done");
+todoColumn.innerHTML = '';
+inProgressColumn.innerHTML = '';
+feedbackColumn.innerHTML = '';
+doneColumn.innerHTML = '';
+let todos = taskArray.filter(task => task.status === "todo");
+let inProgress = taskArray.filter(task => task.status === "inProgress");
+let feedback = taskArray.filter(task => task.status === "feedback");
+let done = taskArray.filter(task => task.status === "done");
+for (const task of todos) {
+    todoColumn.innerHTML += createTaskHTML(task);
+}
+for (const task of inProgress) {
+    inProgressColumn.innerHTML += createTaskHTML(task);
+}
+for (const task of feedback) {
+    feedbackColumn.innerHTML += createTaskHTML(task);
+}
+for (const task of done) {
+    doneColumn.innerHTML += createTaskHTML(task);
 }
 }
 
-function filterTasksByCategory(taskTitle, taskDescription, dueDate, taskstatus, taskCategory, priority){
-const categories = ["todo", "inProgress", "feedback","done"]
-for(task of taskArray){
-    let filteredTodos = todos.filter((t) => t["category"] === taskCategory);
-    document.getElementById(category).innerHTML = "";
-}
-}
 
+function createTaskHTML(task){
+    return /*html*/`
+        <div class="todo" draggable ="true">
+        <div id="taskButton-${task.id}">
+        <p class="open-sans">${task.taskCategory}</p>
+        </div>
+        <p class= "open-sans-bold">${task.title}</p>
+        <p class="inter-font">${task.description}</p>
+        <section class="namesAndPrio">
+        <div class="userNameCircles">
+            <svg width="34" height="34">
+                <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(255,122,0)" />
+                <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">DL</text>
+            </svg>
+            <svg class="addMarginToOverlay" width="34" height="34">
+                <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(31,215,193)" />
+                <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">EN</text>
+            </svg>
+            <svg class="addMarginToOverlay" width="34" height="34">
+                <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(110,82,255)" />
+                <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">AR</text>
+            </svg>
+        </div>
+        </section>
+        </div>
+    `
+}
