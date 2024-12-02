@@ -2,6 +2,7 @@ const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.
 let contacts = [];
 let selectedPriority = "";
 let subtasksArr = [];
+let assignedUser = [];
 
 function init() {
     getUsers();
@@ -10,19 +11,81 @@ function init() {
 }
 
 function createTask() {
-    let title = document.getElementById('title');
-    let description = document.getElementById('description');
-    let date = document.getElementById('date');
-    // let assingedUser = getUsers();
-    // let category = getCategory();
-    // let prio = getPrio();
-    // let subtasks = getSubtasks();
-    processTaskInformation(title.value, description.value, date.value)
+    let title = document.getElementById('title').value;
+    let description = document.getElementById('description').value;
+    let date = document.getElementById('due-date').value;
+
+    const category = getCategory();
+    const priority = selectedPriority;
+    const subtasks = [...subtasksArr];
+    const assignedUsers = assignedUser;
+
+    if (!title || !description || !date || !priority || assignedUsers.length === 0) {
+        console.error("All fields are required!");
+        return;
+    }
+
+    let newTask = {
+        title,
+        description,
+        date,
+        category,
+        priority,
+        subtasks,
+        assignedUsers,
+    };
+    pushTaskToFirebase(newTask);
+    console.log('Task created:', newTask);
 }
 
-function processTaskInformation(title, description, date) {
-
+async function pushTaskToFirebase(task) {
+    try {
+        let key = task.title;  
+        let response = await fetch(BASE_URL + `/testingTasks/${key}.json`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(task),
+        });
+        let responseToJson = await response.json();
+        console.log("Task added or updated:", responseToJson);
+    } catch (error) {
+        console.error("Failed to add task:", error);
+    }
 }
+
+
+
+
+function handleDropdownInteraction() {
+    const dropdown = document.getElementById('custom-dropdown');
+    const optionsContainer = dropdown.querySelector('.dropdown-options');
+    const selectedUsers = [];
+
+    dropdown.addEventListener('click', () => {
+        const isOpen = optionsContainer.style.display === 'block';
+        optionsContainer.style.display = isOpen ? 'none' : 'block';
+    });
+
+    // Eventlistener für Checkboxen
+    optionsContainer.addEventListener('change', (event) => {
+        const checkbox = event.target;
+        const userName = checkbox.parentElement.querySelector('span').textContent;
+
+        if (checkbox.checked) {
+            selectedUsers.push(userName);
+        } else {
+            const index = selectedUsers.indexOf(userName);
+            if (index > -1) {
+                selectedUsers.splice(index, 1);
+            }
+        }
+
+        console.log('Selected users:', selectedUsers);
+    });
+}
+
 
 async function getUsers() {
     try {
@@ -32,6 +95,9 @@ async function getUsers() {
                 "Content-type": "application/json",
             },
         });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         let responseToJson = await response.json();
         contacts = responseToJson;
         returnArrayContacts();
@@ -40,22 +106,52 @@ async function getUsers() {
     }
 }
 function returnArrayContacts() {
-    if (!contacts) {
+    if (!contacts || contacts.length === 0) {
         console.error("No contacts found.");
         return;
     }
-    const selectElement = document.getElementById('assigned-to');
+
+    const dropdown = document.getElementById('custom-dropdown');
+    if (!dropdown) {
+        console.error("Dropdown element not found.");
+        return;
+    }
+
+    const optionsContainer = dropdown.querySelector('.dropdown-options');
+    optionsContainer.innerHTML = ""; 
+
     contacts.forEach(contact => {
-        const option = document.createElement('option');
-        option.value = contact.id;
+
+        if (!contact || !contact.firstName || !contact.lastName) {
+            console.warn('Skipping invalid contact:', contact);
+            return;
+        }
+
+        const option = document.createElement('div');
+        option.classList.add('assigned-user');
         option.innerHTML = assignUserHTML(contact);
-        selectElement.appendChild(option);
+        optionsContainer.appendChild(option);
+    });
+
+    dropdown.addEventListener('click', () => {
+        const isOpen = optionsContainer.style.display === 'block';
+        optionsContainer.style.display = isOpen ? 'none' : 'block';
+    });
+
+
+}
+function assignUser(firstName, lastName) {
+    assignedUser.push({
+        "Firstname":firstName,
+        "Lastname":lastName
     });
 }
 
 function showAssignedUsers() {
-    let user = document.getElementById('assigned-to')
-    let assignUsers = document.getElementById('assigned-user');
+    let assignUsers = document.getElementById('assigned-users-short');
+    for (let i=0; i < assignedUser.length; i++) {
+        assignUsers.innerHTML += showAssignedUsersHTML(assignUsers[i]);
+    }
 }
 
 

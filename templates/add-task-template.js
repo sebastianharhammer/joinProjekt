@@ -2,33 +2,31 @@ function renderAddTaskHTML() {
     let content = document.getElementById('add-task-content');
     content.innerHTML = /*html*/`
     <div id="add-task-content-wrapper">
-    <div id="headline-container">
-    <h1 id="add-task-headline">Add Task</h1>
-    </div>
-    <div class="container">
+      <div id="headline-container">
+        <h1 id="add-task-headline">Add Task</h1>
+      </div>
+      <div class="container">
     
-    <div id="task-left">
-    <form class="task-form">
-      <div class="form-group">
-        <label for="title">Title <span class="required">*</span></label>
-        <input type="text" id="title" placeholder="Enter a title" required>
-      </div>
+      <div id="task-left">
+        <form class="task-form">
+          <div class="form-group">
+            <label for="title">Title <span class="required">*</span></label>
+            <input type="text" id="title" placeholder="Enter a title" required>
+          </div>
 
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="description" placeholder="Enter a Description"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="assigned-to">Assigned to</label>
-        <select id="assigned-to" class="form-control" name="type" id="select-types">
-          <option value="">Select contacts to assign</option>
-        </select>
-        <button>assing</button>
-        <div id="assinged-user"></div>
-        
-      </div>
-      </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" placeholder="Enter a Description"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="assigned-to">Assigned to</label>
+              <div id="custom-dropdown" class="custom-dropdown">
+                <div class="dropdown-placeholder">Select contacts to assign</div>
+                <div class="dropdown-options"></div>
+              </div>
+              <div id="assigned-users-short"></div>
+            </div>
+          </div>
     <div id="task-right">
       <div class="form-group">
         <label for="due-date">Due date <span class="required">*</span></label>
@@ -80,6 +78,13 @@ function assignUserHTML(contact) {
         </svg>
         <span>${contact.firstName}</span>
         <span>${contact.lastName}</span>
-        <input id="checkbox${contact.id}" type="checkbox">
+        <input id="checkbox${contact.id}" onclick="assignUser('${contact.firstName}', '${contact.lastName}')" type="checkbox">
     </div>`;
+}
+
+function showAssignedUsersHTML(contact) {
+  return `<svg class="customCircle" width="10" height="10">
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
+            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+        </svg>`;
 }
