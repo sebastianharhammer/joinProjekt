@@ -3,6 +3,6 @@ function showUserOptions() {
     userOption.classList.toggle('d-none')
 }
 
-async function getUser() {
-    
+async function getUser(user) {
+    console.log(user);
 }
