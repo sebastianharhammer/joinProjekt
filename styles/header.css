@@ -30,7 +30,7 @@ header {
 }
 #header-current-user {
     padding: 10px;
-    color: blue;
+    color: rgba(18, 18, 232, 0.997);
     z-index: 999;
 }
 #header-current-user:hover {
