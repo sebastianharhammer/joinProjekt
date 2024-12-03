@@ -108,21 +108,25 @@ function updateTaskHTML() {
         todoColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
+        findPrioIcon(task)
     }
     for (const task of inProgress) {
         inProgressColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
+        findPrioIcon(task)
     }
     for (const task of feedback) {
         feedbackColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
+        findPrioIcon(task)
     }
     for (const task of done) {
         doneColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
+        findPrioIcon(task)
     }
 }
 
@@ -147,6 +151,17 @@ function findClassOfTaskCat(task) {
         } else if (task.taskCategory === "User Story") {
             taskButton.classList.add("task-category-userExperience");
         }
+}
+
+function findPrioIcon(task){
+    let prioIcon = document.getElementById(`priority-${task.id}`);
+    if(task.prio === "medium"){
+        prioIcon.src = "./img/prio-mid.png"
+    }else if(task.prio === "high"){
+        prioIcon.src = "./img/prio-high.png"
+    }else{
+        prioIcon.src = "./img/prio-low.png"
+    }
 }
 
 function getOwners(task) {
@@ -182,7 +197,14 @@ function createTaskHTML(task) {
         <section class="namesAndPrio">
         <div class="userNameCircles" id="userNameCircles-${task.id}">
         </div>
+
+        <div >
+        <img id="priority-${task.id}"  src="./img/prio-mid.png" alt="">
+        </div>
+
+
         </section>
         </div>
+        
     `
 }
