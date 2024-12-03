@@ -18,6 +18,8 @@ async function fetchTasks(path=""){
     updateTaskHTML();
 }
 
+
+
 function loadBoardNavigator(){
     let content = document.getElementById('wholeBoard');
     content.innerHTML = '';
@@ -116,8 +118,28 @@ for (const task of done) {
 }
 }
 
+function getOwners(task){
+let owners = [];
+for(let i = 0; i < task.owner.length; i++){
+    let owner = task.owner[i];
+    owners.push(`${owner.firstName} ${owner.lastName}`);
+}
+return owners.join(", ")
+}
+
+function getSubTasks(task) {
+    let subtasks = [];
+    for (let i = 0; i < task.subtasks.length; i++) {
+        let subtask = task.subtasks[i];
+        subtasks.push(subtask);
+    }
+    return subtasks.join(", ");
+}
+
 
 function createTaskHTML(task){
+    const owners = getOwners(task);
+    const subtasks = getSubTasks(task)
     return /*html*/`
         <div class="todo" draggable ="true">
         <div id="taskButton-${task.id}">
@@ -125,6 +147,8 @@ function createTaskHTML(task){
         </div>
         <p class= "open-sans-bold">${task.title}</p>
         <p class="inter-font">${task.description}</p>
+        <p class="inter-font">${subtasks}</p>
+        <p class="inter-font">${owners}</p>
         <section class="namesAndPrio">
         <div class="userNameCircles">
             <svg width="34" height="34">

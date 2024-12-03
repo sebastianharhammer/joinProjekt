@@ -72,7 +72,7 @@ function generateToDoHTML(element) {
     <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(110,82,255)" />
     <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">AR</text>
 </svg>
-        </div>
+</div>
 <div id="prio-${element["id"]}">
         <p>${element["prio"]}</p>
         <div id = "prioIcon"></div>
