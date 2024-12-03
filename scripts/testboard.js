@@ -97,15 +97,31 @@ function getColumns(content) {
 }
 
 function getColumnsHTML() {
-    return /*html*/`
-    <section class="tasksContent">
-    <div class="dragarea-todo" id="todo" ondrop="moveTo('todo')" ondragleave="removeHighlight('todo')" ondragover="allowDrop(event); highlight('todo')"></div>
-    <div class="dragarea-inProgress" id="inProgress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"></div>
-    <div class="dragarea-feedback" id="feedback" ondrop="moveTo('feedback')" ondragleave="removeHighlight('feedback')" ondragover="allowDrop(event); highlight('feedback')"></div>
-    <div class="dragarea-done" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>
-    </section>
-    `
+    return /*html*/ `
+        <section class="tasksContent">
+            <div class="dragarea-todo" id="todo" 
+                ondrop="moveTo('todo')" 
+                ondragleave="removeHighlight('todo')" 
+                ondragover="allowDrop(event); highlight('todo')"></div>
+            
+            <div class="dragarea-inProgress" id="inProgress" 
+                ondrop="moveTo('inProgress')" 
+                ondragleave="removeHighlight('inProgress')" 
+                ondragover="allowDrop(event); highlight('inProgress')"></div>
+            
+            <div class="dragarea-feedback" id="feedback" 
+                ondrop="moveTo('feedback')" 
+                ondragleave="removeHighlight('feedback')" 
+                ondragover="allowDrop(event); highlight('feedback')"></div>
+            
+            <div class="dragarea-done" id="done" 
+                ondrop="moveTo('done')" 
+                ondragleave="removeHighlight('done')" 
+                ondragover="allowDrop(event); highlight('done')"></div>
+        </section>
+    `;
 }
+
 
 
 function updateTaskHTML() {
@@ -204,7 +220,7 @@ function createTaskHTML(task) {
     const owners = getOwners(task);
     const subtasks = getSubTasks(task)
     return /*html*/`
-        <div class="todo" draggable ="true">
+        <div class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
         <p class="open-sans">${task.taskCategory}</p>
         </div>
