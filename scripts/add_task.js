@@ -14,7 +14,7 @@ function init() {
 
 
 
-function createTask() {
+function createTask(status) {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('due-date').value;
@@ -31,6 +31,7 @@ function createTask() {
 
     let newTask = {
         id: localTasks.length,
+        status: status,
         title: title,
         description:description,
         date:date,

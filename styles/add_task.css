@@ -11,19 +11,18 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 80vw;
-    height: 90vh;
+    width: 90vw;
     max-width: 1920px;
 }
 #headline-container {
     display: flex;
     justify-content: flex-start;
-    width: 80%;
-    padding: 25px;
-    margin: 25px;
+    width: 100%;
 }
 #add-task-headline {
     font-size: 48px;
+    padding-left: 5vw;
+    padding-top: 5vh;
 }
   .container {
     padding: 20px;
@@ -34,13 +33,17 @@
   }
   #task-right {
     width: 100%;
-    margin: 25px;
-    padding: 25px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
   }
   #task-left {
     width: 100%;
-    margin: 25px;
-    padding: 25px;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
   }
   
   h1 {
@@ -69,7 +72,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 8px;
-    width: 300px;
+    width: 20vw;
     cursor: pointer;
     background-color: #fff;
     font-family: Arial, sans-serif;
