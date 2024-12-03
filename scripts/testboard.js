@@ -6,6 +6,23 @@ function init() {
 
 const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let taskArray = [];
+let currentDraggedElement;
+
+function startDragging(id) {
+    currentDraggedElement = id;
+}
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function moveTo(category) {
+    const taskIndex = taskArray.findIndex(task => task.id === currentDraggedElement);
+    if (taskIndex !== -1) {
+        taskArray[taskIndex].status = category;
+        updateTaskHTML();
+    }
+}
 
 async function fetchTasks(path = "") {
     let response = await fetch(BASE_URL + path + ".json");
