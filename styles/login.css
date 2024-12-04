@@ -1,185 +1,313 @@
-.loginContent{
-    background-color: rgb(246,247,248);
-    height: 95vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.loginContent {
+  background-color: rgb(246, 247, 248);
+  height: 95vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.headAreaOfLogin{
-    display: flex;
-    justify-content: space-between;
-    width: 95vw;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+.headAreaOfLogin {
+  display: flex;
+  justify-content: space-between;
+  width: 95vw;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
 }
 
-.signUpArea{
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    align-items: center;
+.signUpArea {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
 }
 
-.signUpButton{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 49px;
-    width: 91px;
-    border-radius: 8px;
-    background-color: rgba(42,54,71,1);
+.signUpButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 49px;
+  width: 91px;
+  border-radius: 8px;
+  background-color: rgba(42, 54, 71, 1);
 }
 
-.signUpButton:hover{
-    background-color: rgb(41,171,226);
+.signUpButton:hover {
+  background-color: rgb(41, 171, 226);
 }
 
-.headAreaOfLogin img{
-    height: 121px;
-    width: 100px;
+.headAreaOfLogin img {
+  height: 121px;
+  width: 100px;
 }
 
-.interFontLogin{
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 20px;
-    color: black;
+.interFontLogin {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 20px;
+  color: black;
 }
 
-.interFontLoginButton{
-    font-family: "Inter";
-    font-weight: 700;
-    font-size: 16px;
-    color: white;
+.interFontLoginButton {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 16px;
+  color: white;
 }
 
-.loginForm{
-    height: 449px;
-    width: 652px;
-    background-color: white;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
+.loginForm {
+  height: 449px;
+  width: 652px;
+  background-color: white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
 }
 
-d-none{
-    display: none;
+d-none {
+  display: none;
 }
 
-.loginNameInput{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    background-color: white;
-    height: 53px;
-    border-radius: 10px;
-    border: 1px solid rgb(168,168,168);
+.loginNameInput {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  background-color: white;
+  height: 53px;
+  border-radius: 10px;
+  border: 1px solid rgb(168, 168, 168);
 }
 
-.loginNameInput img{
-    cursor: pointer;
-    height: 24px;
-    width: 24px;
-    padding-right: 8px;
+.loginNameInput img {
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
+  padding-right: 8px;
 }
 
-.inputMailPw{
-    width: 260px;
-    height: 49px;
-    border: none;
-    border-radius: 10px;
-    padding-left: 8px;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-size: 20px;
-    color: gray;
+.inputMailPw {
+  width: 260px;
+  height: 49px;
+  border: none;
+  border-radius: 10px;
+  padding-left: 8px;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 20px;
+  color: gray;
 }
 
 .inputMailPw:focus {
-    border: none;
-    outline: none; 
+  border: none;
+  outline: none;
 }
 
+.loginButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
 
-.loginButtons{
-    display: flex;
+.logInButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 49px;
+  width: 91px;
+  border-radius: 8px;
+  background-color: rgba(42, 54, 71, 1);
+}
+
+.logInButton:hover {
+  background-color: rgb(41, 171, 226);
+  border: unset;
+}
+
+.guestLogInUpButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 49px;
+  width: 140px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgba(42, 54, 71, 1);
+}
+
+.guestLogInUpButton:hover {
+  border-color: rgb(41, 171, 226);
+}
+
+.guestLogInButtonFont {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 16px;
+  color: rgba(42, 54, 71, 1);
+}
+
+.guestLogInButtonFont:hover {
+  color: rgb(41, 171, 226);
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.FontOfOfLogin {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 61px;
+  color: black;
+  margin: 0;
+}
+
+.horizontalLine {
+  margin: 0;
+  width: 120px;
+  height: 3px;
+  background-color: rgb(41, 171, 226);
+  border: none;
+  border-radius: 8px;
+}
+
+.footerRegisterLogin {
+  font-family: "Inter";
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  height: 5vh;
+}
+
+@media (max-width: 768px) {
+  .loginContent {
+    height: 100%;
+    padding-bottom: 20px;
+  }
+
+  .loginForm {
+    width: 65vw;
+    height: auto;
+    padding: 20px;
+  }
+
+  .loginNameInput {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .inputMailPw {
+    width: 100%;
+  }
+
+  .loginButtons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logInButton,
+  .guestLogInUpButton {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .headAreaOfLogin {
+    align-items: center;
+    width: 100%;
+  }
+
+  .headAreaOfLogin img {
+    height: 80px;
+    width: 80px;
+  }
+
+  .FontOfOfLogin {
+    font-size: 36px;
+  }
+
+  .horizontalLine {
+    width: 80px;
+  }
+
+  .footerRegisterLogin {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .signUpArea {
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
     flex-direction: row;
-    gap: 16px;
-}
+    gap: 10px;
+  }
 
-.logInButton{
-    display: flex;
+  .signUpArea {
+    margin-top: 20px;
     justify-content: center;
-    align-items: center;
-    height: 49px;
-    width: 91px;
-    border-radius: 8px;
-    background-color: rgba(42,54,71,1);
+    width: 100%;
+  }
+
+  .signUpButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .loginForm {
+    margin-bottom: 30px;
+  }
 }
 
-.logInButton:hover{
-    background-color: rgb(41,171,226);
-    border: unset;
-}
+@media (max-width: 480px) {
+  .loginForm {
+    width: 85vw;
+  }
 
-.guestLogInUpButton{
-    display: flex;
+  .inputMailPw {
+    font-size: 18px;
+  }
+
+  .FontOfOfLogin {
+    font-size: 28px;
+  }
+
+  .headAreaOfLogin img {
+    height: 70px;
+    width: 70px;
+  }
+
+  .loginButtons {
+    flex-direction: column;
+  }
+
+  .logInButton,
+  .guestLogInUpButton {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .signUpButton {
+    width: 100%;
+  }
+
+  .horizontalLine {
+    width: 70px;
+  }
+
+  .footerRegisterLogin {
+    font-size: 12px;
+  }
+
+  .signUpArea {
     justify-content: center;
-    align-items: center;
-    height: 49px;
-    width: 140px;
-    border-radius: 8px;
-    background-color: white;
-    border: 2px solid rgba(42,54,71,1);
-}
+    margin-top: 20px;
+  }
 
-.guestLogInUpButton:hover{
-    border-color: rgb(41,171,226);
-}
-
-.guestLogInButtonFont{
-    font-family: "Inter";
-    font-weight: 700;
-    font-size: 16px;
-    color:rgba(42,54,71,1);
-}
-
-.guestLogInButtonFont:hover{
-    color: rgb(41,171,226);
-}
-
-button:hover{
-    cursor:pointer;
-}
-
-.FontOfOfLogin{
-    font-family: "Inter";
-    font-weight: 700;
-    font-size: 61px;
-    color: black;
-    margin: 0;
-}
-
-.horizontalLine{
-    margin: 0;
-    width: 120px;
-    height: 3px;
-    background-color: rgb(41,171,226);
-    border: none;
-    border-radius: 8px;
-}
-
-.footerRegisterLogin{
-    font-family: 'Inter';
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    height: 5vh;
+  .loginForm {
+    margin-bottom: 30px;
+  }
 }

@@ -1,207 +1,293 @@
-.signUpForm{
-    height: 64vh;
-    width: 45vh;
-    background-color: white;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+.signUpForm {
+  height: 64vh;
+  width: 45vh;
+  background-color: white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-d-none{
-    display: none;
+d-none {
+  display: none;
 }
 
-.privacyPolicyCheckbox{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.privacyPolicyCheckbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-.fontPrivacyPolicy{
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 16px;
-    color: rgb(168,168,168);
-    margin: 0;
+.fontPrivacyPolicy {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
+  color: rgb(168, 168, 168);
+  margin: 0;
 }
 
-.privPolicyLink{
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 16px;
-    color: rgb(41,171,226);
+.privPolicyLink {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
+  color: rgb(41, 171, 226);
 }
 
 .checkBoxSignUp {
-    height: 20px;
-    width: 20px;
-    border: 2px solid rgba(42, 54, 71, 1);
-    background-color: transparent;
-    appearance: none;
-    position: relative;
-    cursor: pointer;
-    border-radius: 4px;
+  height: 20px;
+  width: 20px;
+  border: 2px solid rgba(42, 54, 71, 1);
+  background-color: transparent;
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
 .checkBoxSignUp:checked {
-    background-color: white;
-    border-color: rgba(42, 54, 71, 1);
+  background-color: white;
+  border-color: rgba(42, 54, 71, 1);
 }
 
-
 .checkBoxSignUp:checked::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    left: 6px;
-    width: 7px;
-    height: 20px;
-    border: solid rgba(42, 54, 71, 1);
-    border-width: 0 3px 3px 0;
-    transform: rotate(37deg);
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 6px;
+  width: 7px;
+  height: 20px;
+  border: solid rgba(42, 54, 71, 1);
+  border-width: 0 3px 3px 0;
+  transform: rotate(37deg);
 }
 
 .checkBoxSignUp:hover {
-    background-color: rgba(42, 54, 71, 0.1);
+  background-color: rgba(42, 54, 71, 0.1);
 }
 
-.overlay-alert-password{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top : 10vh;
-    height: 500px;
-    width: 500px;
+.overlay-alert-password {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10vh;
+  height: 500px;
+  width: 500px;
 }
 
-.signUpPasswordConfirmDiv{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    background-color: white;
-    height: 53px;
-    border-radius: 10px;
-    gap: 8px;
+.signUpPasswordConfirmDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  height: 53px;
+  border-radius: 10px;
+  gap: 8px;
 }
 
-.defaultBorderInputSignUp{
-    border: 1px solid rgb(168,168,168);
+.defaultBorderInputSignUp {
+  border: 1px solid rgb(168, 168, 168);
 }
 
-.redBorder{
-    border: 2px solid rgb(238, 56, 56);
+.redBorder {
+  border: 2px solid rgb(238, 56, 56);
 }
 
-.greenBorder{
-    border: 2px solid green;
+.greenBorder {
+  border: 2px solid green;
 }
 
-.alertPasswordFont{
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 12px;
-    color: rgb(238, 56, 56);
-    margin: 0;
+.alertPasswordFont {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  color: rgb(238, 56, 56);
+  margin: 0;
 }
 
-
-.correctPasswordFont{
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 12px;
-    color: green;
-    margin: 0;
+.correctPasswordFont {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  color: green;
+  margin: 0;
 }
 
-button.logInButton:disabled{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 49px;
-    width: 91px;
-    border-radius: 8px;
-    background-color: rgb(126, 126, 126);
-    border: none;
-    cursor: not-allowed;
+button.logInButton:disabled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 49px;
+  width: 91px;
+  border-radius: 8px;
+  background-color: rgb(126, 126, 126);
+  border: none;
+  cursor: not-allowed;
 }
 
-.signUpSuccessDiv{
-    width: 312px;
-    height: 74px;
-    background-color:rgb(42,54,71);
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.signUpSuccessDiv {
+  width: 312px;
+  height: 74px;
+  background-color: rgb(42, 54, 71);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.successSignUpFont{
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 18px;
-    color: white;
-    margin: 0;
+.successSignUpFont {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 18px;
+  color: white;
+  margin: 0;
 }
 
-.overlaySignUpSuccess{
-    height: 100vh;
-    width: 100vw;
-    z-index: 999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgb(109 103 103 / 81%);
-    display: flex;
-    justify-content: center;
-    padding-top: 10vh;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+.overlaySignUpSuccess {
+  height: 100vh;
+  width: 100vw;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(109 103 103 / 81%);
+  display: flex;
+  justify-content: center;
+  padding-top: 10vh;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .overlaySignUpSuccess-show {
-    opacity: 1;
-    transform: scale(1);
+  opacity: 1;
+  transform: scale(1);
 }
 
-.alert-password{
-    display: flex;
-    justify-content: center;
+.alert-password {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 30px;
+}
+
+.correctPasswordFontNotice {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  color: #a8a8a8;
+  margin: 0;
+}
+
+.lock {
+  padding-right: 6px;
+}
+
+.footerFont {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
+  color: #a8a8a8;
+  margin: 0;
+  width: 120px;
+}
+
+.footerFont:hover {
+  font-weight: bold;
+  color: rgb(41, 171, 226);
+}
+
+@media (max-width: 768px) {
+  .signUpForm {
+    width: 60vw;
+    height: fit-content;
+    padding: 20px;
+  }
+
+  .loginNameInput {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .inputMailPw {
+    width: 100%;
+  }
+
+  .privacyPolicyCheckbox {
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+
+  .loginButtons {
     flex-direction: column;
-    align-items: center;
-    height: 30px;
+    gap: 10px;
+  }
+
+  .logInButton {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .FontOfOfLogin {
+    font-size: 58px;
+  }
+
+  .horizontalLine {
+    width: 80px;
+  }
+
+  .footerRegisterLogin {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .footerRegisterLogin a {
+    font-size: 14px;
+  }
 }
 
-.correctPasswordFontNotice{
-    font-family: "Inter";
-    font-weight: 400;
+@media (max-width: 480px) {
+  .signUpForm {
+    width: 55vw;
+  }
+
+  .inputMailPw {
+    font-size: 18px;
+  }
+
+  .FontOfOfLogin {
+    font-size: 232x;
+  }
+
+  .loginButtons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logInButton {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .horizontalLine {
+    width: 70px;
+  }
+
+  .footerRegisterLogin {
     font-size: 12px;
-    color: #A8A8A8;
-    margin: 0;
-}
+  }
 
-.lock{
-    padding-right: 6px;
-}
+  .footerRegisterLogin a {
+    font-size: 12px;
+  }
 
-.footerFont{
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 16px;
-    color: #A8A8A8;
-    margin: 0;
-    width: 120px;
+  .privacyPolicyCheckbox {
+    margin-top: 15px;
+  }
 }
-
-.footerFont:hover{
-    font-weight: bold;
-    color: rgb(41,171,226);
-}
-

@@ -1,218 +1,350 @@
 #add-task-content {
-    padding-top: 110px;
-    padding-left: 10vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #F6F7F8;
+  padding-top: 110px;
+  padding-left: 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f6f7f8;
 }
 #add-task-content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 80vw;
-    height: 90vh;
-    max-width: 1920px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80vw;
+  height: 90vh;
+  max-width: 1920px;
 }
 #headline-container {
-    display: flex;
-    justify-content: flex-start;
-    width: 80%;
-    padding: 25px;
-    margin: 25px;
+  display: flex;
+  justify-content: flex-start;
+  width: 80%;
+  padding: 25px;
+  margin: 25px;
 }
 #add-task-headline {
-    font-size: 48px;
+  font-size: 48px;
 }
-  .container {
-    padding: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  #task-right {
-    width: 100%;
-    margin: 25px;
-    padding: 25px;
-  }
-  #task-left {
-    width: 100%;
-    margin: 25px;
-    padding: 25px;
-  }
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-  }
-  
-  .custom-dropdown {
-    position: relative;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 8px;
-    width: 300px;
-    cursor: pointer;
-    background-color: #fff;
-    font-family: Arial, sans-serif;
+.container {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#task-right {
+  width: 100%;
+  margin: 25px;
+  padding: 25px;
+}
+#task-left {
+  width: 100%;
+  margin: 25px;
+  padding: 25px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.custom-dropdown {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 300px;
+  cursor: pointer;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
 }
 
 .dropdown-placeholder {
-    color: #888;
+  color: #888;
 }
 
 .dropdown-options {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    max-height: 200px;
-    overflow-y: auto;
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .dropdown-options .assigned-user {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
 }
 
 .dropdown-options .assigned-user:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .customCircle {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .textInCircle {
-    font-size: 10px;
-    font-family: Arial, sans-serif;
-    fill: black;
+  font-size: 10px;
+  font-family: Arial, sans-serif;
+  fill: black;
 }
-  
-  .required {
-    color: red;
+
+.required {
+  color: red;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+.prio-options {
+  display: flex;
+  gap: 10px;
+}
+
+.prio-button {
+  padding: 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  background-color: #f4f4f4;
+}
+
+.yellow {
+  border-color: #ffaa00;
+  background-color: #ffaa00;
+  color: #fff;
+}
+
+.red {
+  border-color: #ff4d4d;
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+.green {
+  border-color: #00cc66;
+  background-color: #00cc66;
+  color: #fff;
+}
+
+.subtasks {
+  display: flex;
+  gap: 10px;
+}
+
+.subtasks input {
+  flex: 1;
+}
+#temp-subtasks-container {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.add-subtask {
+  padding: 10px;
+  background-color: #ffaa00;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-subtask:hover {
+  background-color: #e69900;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.clear-button,
+.create-task-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.clear-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.create-task-button {
+  background-color: #00cc66;
+  color: white;
+}
+
+.create-task-button:hover {
+  background-color: #00994d;
+}
+
+@media (max-width: 1024px) {
+  #add-task-content {
+    padding-left: 5vw;
   }
-  
-  input, textarea, select {
+
+  #add-task-content-wrapper {
+    width: 65vw;
+    height: auto;
+  }
+
+  #headline-container {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  textarea {
-    resize: none;
-    height: 80px;
-  }
-  
-  .prio-options {
+    margin: 15px;
     display: flex;
-    gap: 10px;
+    justify-content: center;
   }
-  
-  .prio-button {
-    padding: 8px 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    background-color: #f4f4f4;
+
+  #add-task-headline {
+    font-size: 36px;
   }
-  
-  .yellow {
-    border-color: #ffaa00;
-    background-color: #ffaa00;
-    color: #fff;
-  }
-  
-  .red {
-    border-color: #ff4d4d;
-    background-color: #ff4d4d;
-    color: #fff;
-  }
-  
-  .green {
-    border-color: #00cc66;
-    background-color: #00cc66;
-    color: #fff;
-  }
-  
-  .subtasks {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .subtasks input {
-    flex: 1;
-  }
-  #temp-subtasks-container {
-    display: flex;
-    justify-content: flex-start;
+
+  .container {
+    width: 80%;
     flex-direction: column;
   }
-  .add-subtask {
+
+  #task-right,
+  #task-left {
+    width: 100%;
+    margin: 10px;
     padding: 10px;
-    background-color: #ffaa00;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
   }
-  
-  .add-subtask:hover {
-    background-color: #e69900;
+
+  .form-group {
+    width: 100%;
   }
-  
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+  }
+
+  .prio-options {
+    flex-direction: column;
+  }
+
+  .prio-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .subtasks {
+    flex-direction: column;
+  }
+
+  .subtasks input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .add-subtask {
+    width: 100%;
+  }
+
   .form-actions {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  .clear-button, .create-task-button {
-    padding: 10px 20px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  #add-task-content {
+    padding-top: 80px;
+    padding-left: 3vw;
   }
-  
-  .clear-button {
-    background-color: #ccc;
-    color: #333;
+
+  #add-task-content-wrapper {
+    width: 95vw;
+    height: auto;
   }
-  
-  .create-task-button {
-    background-color: #00cc66;
-    color: white;
+
+  #headline-container {
+    padding: 5px;
+    margin: 10px;
   }
-  
-  .create-task-button:hover {
-    background-color: #00994d;
+
+  #add-task-headline {
+    font-size: 28px;
   }
-  
+
+  .container {
+    flex-direction: column;
+    width: 65%;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .prio-button {
+    width: 100%;
+  }
+
+  .subtasks {
+    flex-direction: column;
+  }
+
+  .subtasks input {
+    width: 100%;
+  }
+
+  .add-subtask {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .custom-dropdown {
+    width: 260px;
+  }
+}
+
+@media (max-width: 350px) {
+  .custom-dropdown {
+    width: 170px;
+  }
+}
