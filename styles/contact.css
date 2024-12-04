@@ -28,13 +28,13 @@
 }
 
 #contact-side-panel::-webkit-scrollbar {
-    width: 8px; 
-  }
-  
-  #contact-side-panel::-webkit-scrollbar-thumb {
-    background-color: #bbb; 
-    border-radius: 10px; 
-  }
+  width: 8px;
+}
+
+#contact-side-panel::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 10px;
+}
 
 #add-contact-btn {
   position: relative;

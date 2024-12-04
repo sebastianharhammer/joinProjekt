@@ -1,8 +1,3 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
-
-let contactsData = []; // Globale Variable für Kontakte
-
 // Firebase-Konfiguration
 const firebaseConfig = {
   databaseURL:
@@ -10,19 +5,25 @@ const firebaseConfig = {
 };
 
 // Firebase initialisieren
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+const app = firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// Globale Variable für Kontakte
+let contactsData = [];
 
 // Kontakte aus Firebase abrufen
 function fetchContactsFromFirebase() {
-  const contactsRef = ref(database, "contacts");
+  const contactsRef = database.ref("contacts");
 
-  onValue(contactsRef, (snapshot) => {
+  contactsRef.on("value", (snapshot) => {
     const data = snapshot.val();
+    console.log("Daten aus Firebase:", data);
 
     if (data) {
-      contactsData = Object.values(data); // Konvertiere die Firebase-Daten in ein Array
+      contactsData = Object.values(data); // Firebase-Daten in ein Array umwandeln
+      console.log("Konvertiertes Array:", contactsData);
       renderSortedContacts(contactsData); // Kontakte anzeigen
+      renderRightSideContainer(); // Rechten Container anzeigen
     } else {
       console.log("Keine Kontakte gefunden.");
     }
@@ -34,12 +35,10 @@ function renderSortedContacts(contacts) {
   const content = document.getElementById("contact-content");
   content.innerHTML = "";
 
-  // Kontakte nach Nachnamen sortieren
   const sortedContacts = contacts.sort((a, b) =>
     a.lastName.localeCompare(b.lastName)
   );
 
-  // Kontakte nach Anfangsbuchstaben gruppieren
   const groupedContacts = sortedContacts.reduce((groups, contact) => {
     const firstLetter = contact.lastName[0].toUpperCase();
     if (!groups[firstLetter]) {
@@ -49,7 +48,6 @@ function renderSortedContacts(contacts) {
     return groups;
   }, {});
 
-  // HTML-Struktur erstellen
   let contactsHTML = `<div id="contact-side-panel">
     <div id="add-new-contact-button-container">
         <button onclick="addContact()" id="add-contact-btn">
@@ -76,6 +74,29 @@ function renderSortedContacts(contacts) {
   content.innerHTML = contactsHTML;
 }
 
+function getRandomColor() {
+  const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function getInitials(firstName, lastName) {
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
+}
+
+function renderRightSideContainer() {
+  const content = document.getElementById("contact-content");
+
+  // Füge den rechten Container hinzu
+  content.innerHTML += `
+    <div id="contact-big">
+        <div id="contact-headline-container">
+            <h3 id="contact-headline">Contacts</h3>
+            <h2 id="bwat-headline">Better with a team</h2>
+        </div>
+    </div>
+  `;
+}
+
 // Detailansicht anzeigen
 function showContactDetails(contactId) {
   const selectedContact = contactsData.find(
@@ -94,17 +115,8 @@ function showContactDetails(contactId) {
   }
 }
 
-// Initialen und zufällige Farbe generieren
-function getInitials(firstName, lastName) {
-  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-}
-
-function getRandomColor() {
-  const colors = ["orange", "purple", "blue", "red", "green", "teal"];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
-
 // Seite laden und Kontakte abrufen
 document.addEventListener("DOMContentLoaded", () => {
+  includeHTML(); // Lade Header und Navigation
   fetchContactsFromFirebase();
 });
