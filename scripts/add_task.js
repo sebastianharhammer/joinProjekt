@@ -3,14 +3,18 @@ let contacts = [];
 let selectedPriority = "";
 let subtasksArr = [];
 let assignedUser = [];
+let localTasks = [];
 
 function init() {
+    getTasks();
     getUsers();
     includeHTML(); 
     renderAddTaskHTML();
 }
 
-function createTask() {
+
+
+function createTask(status) {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('due-date').value;
@@ -26,27 +30,30 @@ function createTask() {
     }
 
     let newTask = {
-        title,
-        description,
-        date,
-        category,
-        priority,
-        subtasks,
-        assignedUsers,
+        id: localTasks.length,
+        status: status,
+        title: title,
+        description:description,
+        date:date,
+        taskCategory:category,
+        priority:priority,
+        subtasks:subtasks,
+        owner:assignedUser,
     };
+    localTasks.push(newTask);
     pushTaskToFirebase(newTask);
     console.log('Task created:', newTask);
 }
 
-async function pushTaskToFirebase(task) {
+async function pushTaskToFirebase(newTask) {
     try {
-        let key = task.title;  
+        let key = newTask.id;  
         let response = await fetch(BASE_URL + `/testingTasks/${key}.json`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(task),
+            body: JSON.stringify(newTask),
         });
         let responseToJson = await response.json();
         console.log("Task added or updated:", responseToJson);
@@ -67,8 +74,6 @@ function handleDropdownInteraction() {
         const isOpen = optionsContainer.style.display === 'block';
         optionsContainer.style.display = isOpen ? 'none' : 'block';
     });
-
-    // Eventlistener für Checkboxen
     optionsContainer.addEventListener('change', (event) => {
         const checkbox = event.target;
         const userName = checkbox.parentElement.querySelector('span').textContent;
@@ -86,6 +91,24 @@ function handleDropdownInteraction() {
     });
 }
 
+async function getTasks() {
+    try {
+        let response = await fetch(BASE_URL + "/testingTasks/.json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        let responseToJson = await response.json();
+        localTasks = responseToJson;
+        console.log("Array Tasks: " + localTasks)
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+    }
+}
 
 async function getUsers() {
     try {
@@ -105,6 +128,7 @@ async function getUsers() {
         console.error("Error fetching contacts:", error);
     }
 }
+
 function returnArrayContacts() {
     if (!contacts || contacts.length === 0) {
         console.error("No contacts found.");

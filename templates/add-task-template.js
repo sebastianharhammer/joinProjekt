@@ -61,7 +61,7 @@ function renderAddTaskHTML() {
 
       <div class="form-actions">
         <button type="reset" class="clear-button">Clear</button>
-        <button type="submit" class="create-task-button" onclick="createTask()">Create Task</button>
+        <button type="submit" class="create-task-button" onclick="createTask('to-do')">Create Task</button>
       </div>
     </form>
   </div>
