@@ -10,6 +10,7 @@
   height: 95vh;
   padding-top: 5vh;
   background-color: #2b3647;
+  z-index: 5;
 }
 #logo-container {
   height: 100px;
