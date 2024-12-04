@@ -15,26 +15,13 @@ function renderAddTaskHTML() {
                   <span style="color: #ff8190">*</span>
                 </label>
                 <div id="errorMassageTitle"></div>
-                <input
-                  class="input-addtask"
-                  id="title"
-                  type="text"
-                  placeholder="Enter a title"
-                  maxlength="40"
-                />
+                <input class="input-addtask" id="title" type="text" placeholder="Enter a title" maxlength="40"/>
                 <span id="addTitleError" class="validSpanTitle"></span>
               </div>
-
               <div class="field-text-flex" id="addTaskDiscription">
                 <label>Description</label>
-                <textarea
-                  id="description"
-                  placeholder="Enter a Description"
-                  cols="30"
-                  rows="10"
-                ></textarea>
+                <textarea id="description" placeholder="Enter a Description" cols="30" rows="10"></textarea>
               </div>
-
               <div class="field-text-flex" id="addTaskAssignedTo">
                   <div class="form-group">
                     <label for="assigned-to">Assigned to</label>
@@ -54,15 +41,9 @@ function renderAddTaskHTML() {
                   <span style="color: #ff8190">*</span>
                 </label>
                 <div id="errorMassageTitle"></div>
-                <input
-                  class="input-addtask"
-                  id="addTaskInputDueDate"
-                  type="date"
-                  min="2024-12-01"
-                />
+                <input class="input-addtask" id="addTaskInputDueDate" type="date" min="2024-12-01"/>
                 <span id="addDateError" class="validSpanDate"></span>
               </div>
-
               <div class="prio-content field-text-flex">
                 <label>Prio</label>
                 <div class="prio-btn-content">
@@ -80,7 +61,6 @@ function renderAddTaskHTML() {
                   </button>
                 </div>
               </div>
-
               <div class="field-text-flex" id="addTaskCategory">
                 <label>
                   Category
@@ -91,7 +71,6 @@ function renderAddTaskHTML() {
                 <div id="dropDownCategoryMenu"></div>
                 <span id="addCategoryError" class="validSpanCategory"></span>
               </div>
-
               <div class="field-text-flex" id="addTaskSubtasks">
                 <label>
                   Subtasks
@@ -100,23 +79,11 @@ function renderAddTaskHTML() {
                   <input class="input-addtask plus-minus-drop-menu" id="subtaskInput" type="text" placeholder="Add a new subtask"  maxlength="40" onfocus="showClearButton()"/>
                   <div class="input-icons">
                     <div id="clear-add-icons" class="d-none">
-                      <img
-                        onclick="clearSubtaskInput()"
-                        src="../img/close.svg"
-                        alt=""
-                      />
+                      <img onclick="clearSubtaskInput()" src="../img/close.svg"/>
                       <div class="divider"></div>
-                      <img
-                        onclick="addSubtask()"
-                        src="../img/check.svg"
-                      />
+                      <img onclick="addSubtask()" src="../img/check.svg"/>
                     </div>
-                    <img
-                      id="subtasks-plus-icon"
-                      src="../img/add.png"
-                      type="button"
-                      onclick="addSubtask()"
-                    />
+                    <img id="subtasks-plus-icon" src="../img/add.png" type="button" onclick="addSubtask()"/>
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
@@ -132,95 +99,20 @@ function renderAddTaskHTML() {
               <button id="add-task-close" class="btn-cancel">
                 Clear<img class="btn-cancel-icon" src="../img/iconoir_cancel.svg"/>
               </button>
-              <button onclick="createTask();" id="add-task-create" class="btn-create">
-                Create task<img src="../img/check.svg" />
+              <button onclick="createTask('to-do', event)" id="add-task-create" class="btn-create" type="button">
+                 Create task
+                 <img src="../img/check.svg" />
               </button>
+
             </div>
           </div>
         </form>
       </div>
     </div>
-
     <div id="render-task-details"></div>
     <div id="task-success" class="task-success">
       Task successfully created
     </div>`;
-
-  /* `
-    <div id="add-task-content-wrapper">
-      <div id="headline-container">
-        <h1 id="add-task-headline">Add Task</h1>
-      </div>
-      <div class="container">
-    
-      <div id="task-left">
-        <form class="task-form">
-          <div class="form-group">
-            <label for="title">Title <span class="required">*</span></label>
-            <input type="text" id="title" placeholder="Enter a title" required>
-          </div>
-
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" placeholder="Enter a Description"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="assigned-to">Assigned to</label>
-              <div id="custom-dropdown" class="custom-dropdown">
-                <div class="dropdown-placeholder">Select contacts to assign</div>
-                <div class="dropdown-options"></div>
-              </div>
-              <div id="assigned-users-short"></div>
-            </div>
-          </div>
-    <div id="task-right">
-      <div class="form-group">
-        <label for="due-date">Due date <span class="required">*</span></label>
-        <input type="date" id="due-date" required>
-      </div>
-
-      <div class="form-group">
-        <span id="prio-label">Prio:</span>
-        <div class="prio-options">
-          <button id="prio-urgent" onclick="setPriority('urgent')" type="button" class="prio-button">Urgent</button>
-          <button id="prio-medium" onclick="setPriority('medium')" type="button" class="prio-button">Medium</button>
-          <button id="prio-low" onclick="setPriority('low')" type="button" class="prio-button">Low</button>
-        </div>
-      </div>
-
-    <div class="form-group">
-        <label for="category">Category <span class="required">*</span></label>
-        <select id="category">
-            <option value="" disabled selected>Select a category</option>
-            <option value="user-story">User Story</option>
-            <option value="technical-task">Technical Task</option>
-        </select>
-    </div>
-      <div class="form-group">
-        <label for="subtasks">Subtasks</label>
-        <div class="subtasks">
-          <input type="text" id="subtasks" placeholder="Add new subtask">
-          <button type="button" class="add-subtask" onclick="addSubtask()">+</button>
-        </div>
-        <div id="temp-subtasks-container"></div>
-      </div>
-
-      
-    </form>
-  </div>
-  
-  </div>
-  
-  <div class="form-actions">
-    <div id="afar-container">
-      <span>* All filds are requiered</span>
-  </div>
-    <div id="btn-container">
-        <button type="reset" class="clear-button">Clear</button>
-        <button type="submit" class="create-task-button" onclick="createTask('to-do')">Create Task</button>
-      </div>
-</div>
-  </div>`;*/
 }
 
 function assignUserHTML(contact) {

@@ -5,11 +5,11 @@ let selectedPriority = "";
 let subtasksArr = [];
 let assignedUser = [];
 let localTasks = [];
-let categoryArr = [];
 let subtaskIdCounter = 0;
 let subtasksEdit = [];
 let subtasksEdit_done = [];
 let subtasksArr_done = [];
+let categoryArr = [];
 let categories = [
     {
       category: "User Story",
@@ -29,13 +29,12 @@ function init() {
     renderAddTaskHTML();
 }
 
+function createTask(status, event) {
+    event.preventDefault(); // Prevent the default form behavior
 
-
-function createTask(status) {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
-    let date = document.getElementById('due-date').value;
-
+    let date = document.getElementById('addTaskInputDueDate').value;
     const category = getCategory();
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
@@ -50,17 +49,25 @@ function createTask(status) {
         id: localTasks.length,
         status: status,
         title: title,
-        description:description,
-        date:date,
-        taskCategory:category,
-        priority:priority,
-        subtasks:subtasks,
-        owner:assignedUser,
+        description: description,
+        date: date,
+        taskCategory: category,
+        priority: priority,
+        subtasks: subtasks,
+        owner: assignedUser,
     };
+
     localTasks.push(newTask);
     pushTaskToFirebase(newTask);
     console.log('Task created:', newTask);
+
+    // Optionally, reset the form here if needed
+    document.querySelector('form').reset();
+    selectedPriority = "";
+    assignedUser = [];
+    subtasksArr = [];
 }
+
 
 async function pushTaskToFirebase(newTask) {
     try {
@@ -284,9 +291,9 @@ function addSubtask() {
                   <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${subtaskInput.value}</span>
               </div>
               <div class="subtask-icon">
-                  <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../assets/img/edit.svg" alt="edit">
+                  <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
                   <div class="divider"></div>
-                  <img onclick="deleteSubtask('${liId}')" src="../assets/img/delete.svg" alt="delete">
+                  <img onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
               </div>
           </li>
       `;
@@ -305,6 +312,29 @@ function addSubtask() {
         document.getElementById("subtasks-plus-icon").classList.remove("d-none");
       
 }
+
+function editSubtask(liId, spanId, inputId) {
+    const spanElement = document.getElementById(spanId);
+    const li = document.getElementById(liId);
+    const currentText = spanElement.textContent;
+  
+    const editSubtaskHTML = /*html*/ `
+          <div class="subtask-input-wrapper edit-mode">
+              <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
+              <div class="input-icons-edit">
+                  <img src ="../assets/img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
+                  <div class="divider"></div>
+                  <img src="../assets/img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
+              </div>
+          </div>
+      `;
+}
+
+function deleteSubtask(liId) {
+    const li = document.getElementById(liId);
+    li.remove();
+  }
+
 
 function showClearButton() {
     document.getElementById("clear-add-icons").classList.remove("d-none");
