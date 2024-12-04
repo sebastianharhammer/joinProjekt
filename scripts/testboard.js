@@ -77,9 +77,10 @@ function filterTaskFunction(){
     }
     for (let i = 0; i < taskArray.length; i++) {
         let paramToFind = document.getElementById(`title${taskArray[i].id}`);
+        let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
         let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
-        if (paramToFind && wholeTask) {
-            if (paramToFind.innerText.toLowerCase().includes(myFilter)) {
+        if (paramToFind || param2ToFind && wholeTask) {
+            if (paramToFind.innerText.toLowerCase().includes(myFilter) || param2ToFind.innerText.toLowerCase().includes(myFilter)) {
                 wholeTask.style.display = '';
             } else {
                 wholeTask.style.display = 'none';
@@ -289,7 +290,7 @@ function createTaskHTML(task) {
         <p class="open-sans">${task.taskCategory}</p>
         </div>
         <p id="title${task.id}" class= "open-sans-bold">${task.title}</p>
-        <p class="inter-font">${task.description}</p>
+        <p id="description${task.id}" class="inter-font">${task.description}</p>
         <div class="progressBarDiv">
         <progress value="32" max="100"> 32% </progress>
         <p id="amountOfSubtasks-${task.id}" class="inter-font">0</p>
@@ -298,7 +299,6 @@ function createTaskHTML(task) {
         <div class="subtasksList" id="subtaskslist-${task.id}">
             <div>${subtasks}
             </div>
-        <button id="save-checklist-button-${task.id}">save checklist</button>
         </div>
         <section class="namesAndPrio">
         <div class="userNameCircles" id="userNameCircles-${task.id}">
