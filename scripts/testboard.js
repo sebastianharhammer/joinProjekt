@@ -142,26 +142,31 @@ function updateTaskHTML() {
         createOwnerCircles(task);
         findClassOfTaskCat(task);
         findPrioIcon(task)
+        findAmountOfSubtasks(task)
     }
     for (const task of inProgress) {
         inProgressColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
         findPrioIcon(task)
+        findAmountOfSubtasks(task)
     }
     for (const task of feedback) {
         feedbackColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
         findPrioIcon(task)
+        findAmountOfSubtasks(task)
     }
     for (const task of done) {
         doneColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
         findPrioIcon(task)
+        findAmountOfSubtasks(task)
     }
 }
+
 
 function createOwnerCircles(task) {
     let userNameCircles = document.getElementById(`userNameCircles-${task.id}`);
@@ -207,18 +212,28 @@ function getOwners(task) {
 }
 
 function getSubTasks(task) {
-    let subtasks = [];
-    for (let i = 0; i < task.subtasks.length; i++) {
-        let subtask = task.subtasks[i];
-        subtasks.push(subtask);
-    }
-    return subtasks.join(", ");
+let subtTasksHTML = "";
+for(let i=0; i < task.subtasks.length; i++){
+    let subtask = task.subtasks[i];
+    subtTasksHTML += /*html*/`
+        <div class="eachSubtaskBox">
+            <input type="checkbox" id="subtask-${task.id}-${i}">
+            <label for="subtask-${task.id}-${i}">${subtask}</label>
+        </div>
+    `
+}
+return subtTasksHTML;
+}
+
+function findAmountOfSubtasks(task){
+    return task.subtasks.length;
 }
 
 
 function createTaskHTML(task) {
     const owners = getOwners(task);
     const subtasks = getSubTasks(task)
+    const amountOfSubtasks = findAmountOfSubtasks(task)
     return /*html*/`
         <div class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
@@ -226,18 +241,31 @@ function createTaskHTML(task) {
         </div>
         <p class= "open-sans-bold">${task.title}</p>
         <p class="inter-font">${task.description}</p>
-        <p class="inter-font">${subtasks}</p>
+        <div class="progressBarDiv">
+        <progress value="32" max="100"> 32% </progress>
+        <p id="amountOfSubtasks-${task.id}" class="inter-font"></p>
+        <p class="inter-font">x/${amountOfSubtasks} Subtasks</p>
+        </div>
+        <div class="subtasksList">
+        <div>${subtasks}</div>
+        <button id="save-checklist-button-${task.id}">save checklist</button>
+        </div>
         <section class="namesAndPrio">
         <div class="userNameCircles" id="userNameCircles-${task.id}">
         </div>
-
         <div >
         <img id="priority-${task.id}"  src="./img/prio-mid.png" alt="">
         </div>
-
-
         </section>
         </div>
         
     `
+}
+
+function highlight(id) {
+    document.getElementById(id).classList.add("dragAreaHighlight");
+}
+
+function removeHighlight(id) {
+    document.getElementById(id).classList.remove("dragAreaHighlight");
 }

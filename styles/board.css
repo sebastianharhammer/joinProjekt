@@ -338,3 +338,9 @@
     color: rgb(66,82,110);
     font-weight: 700;
 }
+
+.progressBarDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
