@@ -344,3 +344,25 @@
     flex-direction: row;
     align-items: center;
 }
+
+.noTasks{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(231,231,231);
+    height: 6vh;
+    border-radius: 12px;
+    border: 1px dashed gray;
+    margin-top: 0.5vh;
+    margin-left: 0.5vh;
+    margin-right: 0.5vh;
+}
+
+.font-no-tasks{
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 16px;
+    color: gray;
+}

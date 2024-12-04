@@ -51,7 +51,7 @@ function getBoardNavigatorHTML() {
         <p class="boardFont">BOARD</p>
         <div class="inputAndButtonBoard">
             <div class="searchAreaBoard">
-            <input class="inputBoard" type="text" placeholder="Find Task">
+            <input id="filterTask" onkeyup="filterTaskFunction()" class="inputBoard" type="text" placeholder="Find Task">
             <span class="verticalLine">|</span>
             <img src="./img/search.png" alt="">
             </div>
@@ -62,6 +62,31 @@ function getBoardNavigatorHTML() {
     </div>
 </section>
     `
+}
+
+function filterTaskFunction(){
+    let myFilter = document.getElementById('filterTask').value.toLowerCase();
+    if (myFilter.length < 1){
+        for(let i = 0; i < taskArray.length; i++){
+            let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
+            if (wholeTask) {
+                wholeTask.style.display = '';
+            }
+        }
+        return;
+    }
+    for (let i = 0; i < taskArray.length; i++) {
+        let paramToFind = document.getElementById(`title${taskArray[i].id}`);
+        let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
+        let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
+        if (paramToFind || param2ToFind && wholeTask) {
+            if (paramToFind.innerText.toLowerCase().includes(myFilter) || param2ToFind.innerText.toLowerCase().includes(myFilter)) {
+                wholeTask.style.display = '';
+            } else {
+                wholeTask.style.display = 'none';
+            }
+        }
+    }
 }
 
 function loadTitleOfBoardColumns(content) {
@@ -165,8 +190,18 @@ function updateTaskHTML() {
         findPrioIcon(task)
         findAmountOfSubtasks(task)
     }
+    if(todoColumn.children.length === 0){
+        createNoToDosdiv()
+    }
 }
 
+function createNoToDosdiv(){
+    document.getElementById('todo').innerHTML += /*html*/`
+        <div class="noTasks">
+            <p class="font-no-tasks">NO TASKS TO DO</p>
+        </div>
+    `
+}
 
 function createOwnerCircles(task) {
     let userNameCircles = document.getElementById(`userNameCircles-${task.id}`);
@@ -217,12 +252,27 @@ for(let i=0; i < task.subtasks.length; i++){
     let subtask = task.subtasks[i];
     subtTasksHTML += /*html*/`
         <div class="eachSubtaskBox">
-            <input type="checkbox" id="subtask-${task.id}-${i}">
+            <input type="checkbox" id="subtask-${task.id}-${i}" onchange="updateCompletedSubtasks(${task.id})">
             <label for="subtask-${task.id}-${i}">${subtask}</label>
         </div>
     `
 }
 return subtTasksHTML;
+}
+
+function updateCompletedSubtasks(taskId){
+let tasksCompleted = 0;
+const subtasksList = document.getElementById(`subtaskslist-${taskId}`);
+for(let i=0; i < subtasksList.querySelectorAll('input[type="checkbox"]').length; i++){
+    const checkbox = document.getElementById(`subtask-${taskId}-${i}`);
+    if(checkbox && checkbox.checked){
+        tasksCompleted++;
+    }
+}
+const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
+if(renderCompleted){
+    renderCompleted.innerHTML = tasksCompleted;
+}
 }
 
 function findAmountOfSubtasks(task){
@@ -235,20 +285,20 @@ function createTaskHTML(task) {
     const subtasks = getSubTasks(task)
     const amountOfSubtasks = findAmountOfSubtasks(task)
     return /*html*/`
-        <div class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
+        <div id="boardTask${task.id}" class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
         <p class="open-sans">${task.taskCategory}</p>
         </div>
-        <p class= "open-sans-bold">${task.title}</p>
-        <p class="inter-font">${task.description}</p>
+        <p id="title${task.id}" class= "open-sans-bold">${task.title}</p>
+        <p id="description${task.id}" class="inter-font">${task.description}</p>
         <div class="progressBarDiv">
         <progress value="32" max="100"> 32% </progress>
-        <p id="amountOfSubtasks-${task.id}" class="inter-font"></p>
-        <p class="inter-font">x/${amountOfSubtasks} Subtasks</p>
+        <p id="amountOfSubtasks-${task.id}" class="inter-font">0</p>
+        <p class="inter-font">/${amountOfSubtasks} Subtasks</p>
         </div>
-        <div class="subtasksList">
-        <div>${subtasks}</div>
-        <button id="save-checklist-button-${task.id}">save checklist</button>
+        <div class="subtasksList" id="subtaskslist-${task.id}">
+            <div>${subtasks}
+            </div>
         </div>
         <section class="namesAndPrio">
         <div class="userNameCircles" id="userNameCircles-${task.id}">

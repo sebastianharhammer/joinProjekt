@@ -136,9 +136,6 @@ async function getNextUserId(path){
 }
 
 
-let users = [
-    {'email': 'daniel@test.de', 'password': 'test 123'}
-]
 
 
 
