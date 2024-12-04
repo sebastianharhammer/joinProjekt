@@ -163,3 +163,36 @@
 [id^="contact-email-"]:hover {
   text-decoration: underline;
 }
+
+/*Detail */
+
+.letter-section {
+  margin-top: 20px;
+}
+
+.letter-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+hr {
+  border: 0.5px solid #ddd;
+  margin-bottom: 10px;
+}
+
+.contact-detail {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-detail h2 {
+  margin-bottom: 10px;
+}
+
+.contact-detail p {
+  margin: 5px 0;
+}
