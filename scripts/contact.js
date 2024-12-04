@@ -1,65 +1,31 @@
-let contacts = [
-  {
-    "id": 0,
-    "forename": "Axel",
-    "surname": "Fowler",
-    "email": "axel.fowler@gmail.com",
-  },
-  {
-    "id": 1,
-    "forename": "Leonardo",
-    "surname": "Tornado",
-    "email": "leonardo.tornado@gmx.de",
-  },
-  {
-    "id": 2,
-    "forename": "Frank",
-    "surname": "Hoppla",
-    "email": "frank.hoppla@web.de",
-  },
-  {
-    "id": 4,
-    "forename": "Alexandra",
-    "surname": "Goldschmidt",
-    "email": "alexandra.goldschmidt@yahoo.com",
-  },
-  {
-    "id": 5,
-    "forename": "Rick",
-    "surname": "James",
-    "email": "rick.james@yahoo.com",
-  },
-  {
-    "id": 6,
-    "forename": "Hulk",
-    "surname": "Hogan",
-    "email": "hulk.hogan@icloud.com",
-  },
-  {
-    "id": 7,
-    "forename": "Joe",
-    "surname": "Biden",
-    "email": "joe.biden@icloud.com",
-  },
-  {
-    "id": 8,
-    "forename": "Kamala",
-    "surname": "Harris",
-    "email": "kamala.harris@me.com",
-  },
-  {
-    "id": 9,
-    "forename": "June",
-    "surname": "Rider",
-    "email": "june.rider@yahoo.com",
-  },
-  {
-    "id": 10,
-    "forename": "Jim",
-    "surname": "Powell",
-    "email": "jim.powell@gmx.com",
-  },
-];
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+
+const firebaseConfig = {
+  databaseURL:
+    "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
+};
+
+// Firebase initialisieren
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+import { ref, onValue } from "firebase/database";
+
+function fetchContactsFromFirebase() {
+  const contactsRef = ref(database, "contacts"); // Realtime-Datenbank-Pfad
+
+  onValue(contactsRef, (snapshot) => {
+    const data = snapshot.val();
+
+    if (data) {
+      const contacts = Object.values(data); // Konvertiere die Firebase-Daten in ein Array
+      renderSortedContacts(contacts); // Kontakte in der Liste darstellen
+    } else {
+      console.log("Keine Kontakte gefunden.");
+    }
+  });
+}
 
 function renderContactContent() {
   includeHTML();
@@ -109,4 +75,45 @@ function getInitials(forename, surname) {
 function getRandomColor() {
   const colors = ["orange", "purple", "blue", "red", "green", "teal"];
   return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function renderSortedContacts(contacts) {
+  const content = document.getElementById("contact-content");
+  content.innerHTML = "";
+
+  // Kontakte nach Nachnamen sortieren
+  const sortedContacts = contacts.sort((a, b) =>
+    a.lastName.localeCompare(b.lastName)
+  );
+
+  // Kontakte nach Anfangsbuchstaben gruppieren
+  const groupedContacts = sortedContacts.reduce((groups, contact) => {
+    const firstLetter = contact.lastName[0].toUpperCase();
+    if (!groups[firstLetter]) {
+      groups[firstLetter] = [];
+    }
+    groups[firstLetter].push(contact);
+    return groups;
+  }, {});
+
+  // HTML-Struktur für die Kontaktliste erstellen
+  let contactsHTML = `<div id="contact-side-panel">`;
+
+  for (const letter in groupedContacts) {
+    contactsHTML += `
+      <div class="letter-section">
+        <h2 class="letter-header">${letter}</h2>
+        <hr />
+        <ul class="contact-list">
+    `;
+
+    groupedContacts[letter].forEach((contact) => {
+      contactsHTML += contactsTemplate(contact);
+    });
+
+    contactsHTML += `</ul></div>`;
+  }
+
+  contactsHTML += `</div>`;
+  content.innerHTML = contactsHTML;
 }
