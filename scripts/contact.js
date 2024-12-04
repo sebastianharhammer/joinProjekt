@@ -1,17 +1,13 @@
-// Firebase-Konfiguration
 const firebaseConfig = {
   databaseURL:
     "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
-// Firebase initialisieren
 const app = firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// Globale Variable für Kontakte
 let contactsData = [];
 
-// Kontakte aus Firebase abrufen
 function fetchContactsFromFirebase() {
   const contactsRef = database.ref("contacts");
 
@@ -20,17 +16,16 @@ function fetchContactsFromFirebase() {
     console.log("Daten aus Firebase:", data);
 
     if (data) {
-      contactsData = Object.values(data); // Firebase-Daten in ein Array umwandeln
+      contactsData = Object.values(data);
       console.log("Konvertiertes Array:", contactsData);
-      renderSortedContacts(contactsData); // Kontakte anzeigen
-      renderRightSideContainer(); // Rechten Container anzeigen
+      renderSortedContacts(contactsData);
+      renderRightSideContainer();
     } else {
       console.log("Keine Kontakte gefunden.");
     }
   });
 }
 
-// Kontakte alphabetisch sortieren und rendern
 function renderSortedContacts(contacts) {
   const content = document.getElementById("contact-content");
   content.innerHTML = "";
@@ -86,7 +81,6 @@ function getInitials(firstName, lastName) {
 function renderRightSideContainer() {
   const content = document.getElementById("contact-content");
 
-  // Füge den rechten Container hinzu
   content.innerHTML += `
     <div id="contact-big">
         <div id="contact-headline-container">
@@ -97,7 +91,6 @@ function renderRightSideContainer() {
   `;
 }
 
-// Detailansicht anzeigen
 function showContactDetails(contactId) {
   const selectedContact = contactsData.find(
     (contact) => contact.id === contactId
@@ -115,8 +108,7 @@ function showContactDetails(contactId) {
   }
 }
 
-// Seite laden und Kontakte abrufen
 document.addEventListener("DOMContentLoaded", () => {
-  includeHTML(); // Lade Header und Navigation
+  includeHTML();
   fetchContactsFromFirebase();
 });
