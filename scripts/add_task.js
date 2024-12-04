@@ -1,9 +1,26 @@
 const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+let categoriesContainerClick = false;
 let contacts = [];
 let selectedPriority = "";
 let subtasksArr = [];
 let assignedUser = [];
 let localTasks = [];
+let categoryArr = [];
+let subtaskIdCounter = 0;
+let subtasksEdit = [];
+let subtasksEdit_done = [];
+let subtasksArr_done = [];
+let categories = [
+    {
+      category: "User Story",
+      "bg-color": "#0038FF",
+    },
+    {
+      category: "Technical Task",
+      "bg-color": "#1FD7C1",
+    },
+  ];
+
 
 function init() {
     getTasks();
@@ -184,9 +201,60 @@ function getFirstLetter(name) {
 }
 
 function getCategory() {
-    const category = document.getElementById('category');
-    return category.value;
+    return categoryArr[0];
 }
+
+function openCategories() {
+    let categoryList = document.getElementById("dropDownCategoryMenu");
+    let icon = document.getElementById("arrowDropMenuCategory");
+    icon.style.transform = "rotate(180deg)";
+    categoryList.innerHTML = "";
+    if (!categoriesContainerClick) {
+      categoriesContainerClick = true;
+      categoryList.style.border = "1px solid #CDCDCD";
+      renderCategories();
+    } else {
+      categoriesContainerClick = false;
+      categoryList.style.border = "0px";
+      hideCategories();
+    }
+    document.getElementById("categoryInput").classList.toggle("outline");
+  }
+
+  function hideCategories() {
+    categoriesContainerClick = false;
+    let categoryList = document.getElementById("dropDownCategoryMenu");
+    let icon = document.getElementById("arrowDropMenuCategory");
+    icon.style.transform = "rotate(0deg)";
+    categoryList.innerHTML = "";
+  }
+
+  function renderCategories() {
+    let categoryContainer = document.getElementById("dropDownCategoryMenu");
+    categoryContainer.innerHTML = "";
+  
+    for (let i = 0; i < categories.length; i++) {
+      const category = categories[i]["category"];
+      const catColor = categories[i]["bg-color"];
+  
+      categoryContainer.innerHTML += `
+          <div class="addtask-category" onclick="selectCategory('${category}', '${catColor}')">
+            ${category}
+          </div>
+        `;
+    }
+  }
+  function selectCategory(categoryTask, catColor) {
+    let categoryInput = document.getElementById("categoryInput");
+    let categoryList = document.getElementById("dropDownCategoryMenu");
+  
+    categoryInput.value = categoryTask;
+    hideCategories();
+    categoryList.style.border = "0px";
+    categoryArr = [];
+    categoryArr.push(categoryTask);
+    categoryArr.push(catColor);
+  }
 
 function setPriority(priority) {
     const priorities = ['urgent', 'medium', 'low'];
@@ -200,11 +268,49 @@ function setPriority(priority) {
 }
 
 function addSubtask() {
-    let subtask = document.getElementById('subtasks');
-    let tempSub = document.getElementById('temp-subtasks-container');
-    tempSub.innerHTML += `<span class="subtasks">- ${subtask.value}</span><br>`;
-    subtasksArr.push(subtask.value);
-    subtask.value = "";
     
+        const subtaskInput = document.getElementById("subtaskInput");
+        const subtasksContent = document.getElementById("subtasksContent");
+      
+        if (subtaskInput.value.trim() !== "") {
+          subtaskIdCounter++;
+          const liId = "subtask-" + subtaskIdCounter;
+          const spanId = "span-" + subtaskIdCounter;
+          const inputId = "input-" + subtaskIdCounter;
+          const newSubtaskHTML = /*html*/ `
+          <li id="${liId}" class="subtask-item">
+              <div class="dot"></div>
+              <div class="subtask-text">
+                  <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${subtaskInput.value}</span>
+              </div>
+              <div class="subtask-icon">
+                  <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../assets/img/edit.svg" alt="edit">
+                  <div class="divider"></div>
+                  <img onclick="deleteSubtask('${liId}')" src="../assets/img/delete.svg" alt="delete">
+              </div>
+          </li>
+      `;
+          subtasksArr.push({
+            checkbox_img: "../assets/img/checkbox-empty.svg",
+            subtask: `${subtaskInput.value}`,
+          });
+          subtasksEdit.push({
+            checkbox_img: "../assets/img/checkbox-empty.svg",
+            subtask: `${subtaskInput.value}`,
+          });
+          subtasksContent.innerHTML += newSubtaskHTML;
+          subtaskInput.value = "";
+        }
+        document.getElementById("clear-add-icons").classList.add("d-none");
+        document.getElementById("subtasks-plus-icon").classList.remove("d-none");
+      
 }
 
+function showClearButton() {
+    document.getElementById("clear-add-icons").classList.remove("d-none");
+    document.getElementById("subtasks-plus-icon").classList.add("d-none");
+  }
+
+function clearSubtaskInput() {
+    document.getElementById("subtaskInput").value = "";
+}
