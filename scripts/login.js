@@ -43,6 +43,21 @@ function loginUser(event){
         getUser(signedUser);
     }else{
         console.log('user not found')
+        showDomOfFailedLogin()
     }
+}
 
+function showDomOfFailedLogin(){
+let failedLoginDiv = document.getElementById('failedLoginDiv');
+let changeBorders = document.getElementsByClassName('loginNameInput');
+failedLoginDiv.classList.remove('d-none')
+for (let i = 0; i < changeBorders.length; i++) {
+    changeBorders[i].style.border = '1px solid red';
+}
+setTimeout(function() {
+    failedLoginDiv.classList.add('d-none');
+    for (let i = 0; i < changeBorders.length; i++) {
+        changeBorders[i].style.border = '1px solid rgb(168, 168, 168)';
+    }
+}, 1200);
 }
