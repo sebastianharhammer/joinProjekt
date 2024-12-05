@@ -311,3 +311,20 @@ button:hover {
     margin-bottom: 30px;
   }
 }
+
+.failedLoginDiv {
+  
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.failedLoginFont{
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 11px;
+  color: red;
+  margin: 0;
+}
