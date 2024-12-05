@@ -82,10 +82,12 @@ d-none {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 8px;
   background-color: white;
   height: 53px;
   border-radius: 10px;
-  gap: 8px;
+  width: 350px;
+  justify-content: space-between;
 }
 
 .defaultBorderInputSignUp {
@@ -213,6 +215,9 @@ button.logInButton:disabled {
   .loginNameInput {
     width: 100%;
     margin-bottom: 15px;
+  }
+  .signUpPasswordConfirmDiv{
+    width: 100%
   }
 
   .inputMailPw {

@@ -91,9 +91,12 @@ d-none {
   padding-right: 8px;
 }
 
+input:-webkit-autofill {
+  background-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
 .inputMailPw {
-  width: 20vw;
-  height: 49px;
   border: none;
   border-radius: 10px;
   padding-left: 8px;
@@ -201,9 +204,7 @@ button:hover {
     padding: 20px;
   }
 
-  .loginNameInput {
-    width: 100%;
-  }
+
 
   .inputMailPw {
     width: 100%;
@@ -330,11 +331,12 @@ button:hover {
 .failedLoginFont{
   font-family: "Inter";
   font-weight: 400;
-  font-size: 11px;
+  font-size: 12px;
   color: red;
   margin: 0;
-  margin-bottom: 2px;
+  margin-bottom: 16px;
 }
+
 
 .footerRegisterLogin {
   font-size: 14px;
