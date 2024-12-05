@@ -203,7 +203,6 @@ button:hover {
 
   .loginNameInput {
     width: 100%;
-    margin-bottom: 15px;
   }
 
   .inputMailPw {
@@ -319,12 +318,13 @@ button:hover {
 }
 
 .failedLoginDiv {
-  height: 12px;
+  height: 16px;
   background-color: white;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
+  align-content: center;
 }
 
 .failedLoginFont{
@@ -333,6 +333,7 @@ button:hover {
   font-size: 11px;
   color: red;
   margin: 0;
+  margin-bottom: 2px;
 }
 
 .footerRegisterLogin {
@@ -387,7 +388,7 @@ button:hover {
   content: "";
   position: absolute;
   top: -5px;
-  left: 4px;
+  left: 3px;
   width: 5px;
   height: 12px;
   border: solid rgba(42, 54, 71, 1);
