@@ -31,15 +31,11 @@ function getAddContactHTML() {
                 </div>
                 <form id="input-fields">
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-first-name" placeholder="Name">
+                        <input required class="add-contact-input" id="add-contact-name" placeholder="Name" required>
                         <img src="../img/person.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-last-name" placeholder="Last name">
-                        <img src="../img/person.png" class="add-contact-input-icon">
-                    </div>
-                    <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-email" placeholder="Email">
+                        <input required class="add-contact-input" id="add-contact-email" placeholder="Email" type="email" required>
                         <img src="../img/login-mail.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
@@ -58,5 +54,25 @@ function getAddContactHTML() {
             </div>  
             <button id="test-btn" onclick="testing()">Fügt 20 Kontakte zu Firebase hinzu (Wenn Sie schon bestehen werden die vorhandenen überschrieben)</button>
         </div>
+        <div id="add-contact-message" class="d-none"></div>
     </div>`;
+}
+
+function showErrorMessageHTML() {
+    let content = document.getElementById('add-contact-message');
+    content.innerHTML = `
+    <div id="add-contact-error-message-container">
+    <span id="add-contact-error-message">Vor- und nachname sowie Email sind notwendig</span>
+    </div>
+    `;
+}
+
+
+function showSuccesMessageHTML() {
+    let content = document.getElementById('add-contact-message');
+    content.innerHTML = `
+    <div id="add-contact-succes-message-container">
+    <span id="add-contact-succes-message">Kontakt erfolgreich erstellt</span>
+    </div>
+    `;
 }

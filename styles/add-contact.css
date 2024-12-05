@@ -200,7 +200,54 @@
 #test-btn {
     height: 2vh;
 }
+#add-contact-message {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#add-contact-error-message-container {
+    height: 20%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    background-color: #860002;
+}
+#add-contact-error-message {
+    color: white;
+    font-size: 16px;
+}
+
+#add-contact-succes-message-container {
+    height: 20%;
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    background-color: #2A3647;
+}
+#add-contact-succes-message {
+    color: white;
+    font-size: 16px;
+}
 
 @media (max-width: 1050px) {
-
+    #contact-panel {
+        flex-direction: column;
+    }
+    #add-contact-side-panel {
+        width: 100%;
+        border-radius: 20px 20px 0 0;
+    }
+    #add-contact-interactions-container {
+        border-radius: 0 0 20px 20px;
+    }
 }

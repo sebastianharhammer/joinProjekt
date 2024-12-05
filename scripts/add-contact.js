@@ -52,7 +52,6 @@ async function testing() {
 }
 
 
-
 function addContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
     let background = document.getElementById('add-contact-background');
@@ -60,6 +59,7 @@ function addContact() {
     background.classList.remove('d-none');
     addContactTemplate.innerHTML = getAddContactHTML();
 }
+
 
 function hideAddContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
@@ -69,20 +69,57 @@ function hideAddContact() {
     getContactInfo();
 }
 
+
 async function processContactInfo() {
-    let name = document.getElementById('add-contact-first-name').value.trim();
-    let lastName = document.getElementById('add-contact-last-name').value.trim();
+    const { firstName, lastName } = extractNameParts();
     let email = document.getElementById('add-contact-email').value.trim();
     let phone = document.getElementById('add-contact-phone').value.trim();
-
-    if (name && lastName && email && phone) {
+    if (firstName && lastName && email) {
+        showSuccesMessage();
         await getContactInfo();
-        await pushContactInfo(name, lastName, email, phone);
+        await pushContactInfo(firstName, lastName, email, phone);
         hideAddContact();
     } else {
-        console.log("Not all fields are filled.");
+        showErrorMessage();
+        //clearAddContactInput();
     }
 }
+function showSuccesMessage() {
+    let content = document.getElementById('add-contact-message');
+    content.classList.remove('d-none');
+    showSuccesMessageHTML();
+    setTimeout(() => {
+        content.classList.add('d-none');
+    }, 2500);    
+}
+function showErrorMessage() {
+    let content = document.getElementById('add-contact-message');
+    content.classList.remove('d-none');
+    showErrorMessageHTML();
+    setTimeout(() => {
+        content.classList.add('d-none');
+    }, 2500);    
+}
+
+function clearAddContactInput() {
+    let content = document.getElementById('add-contact-message');
+    let nameInput = document.getElementById('add-contact-name');
+    let emailInput = document.getElementById('add-contact-email');
+    let phoneInput = document.getElementById('add-contact-phone');
+    content.classList.remove('d-none');
+    nameInput.value = "";
+    emailInput.value = "";
+    phoneInput.value = "";
+}
+
+function extractNameParts() {
+    const input = document.getElementById('add-contact-name').value;
+    const nameParts = input.trim().split(' ');
+    const firstName = nameParts[0] || ''; 
+    const lastName = nameParts.slice(1).join(' ') || '';
+    return { firstName, lastName };
+}
+
 
 async function getContactInfo() {
     try {
@@ -99,6 +136,7 @@ async function getContactInfo() {
         console.error("Failed to fetch contacts:", error);
     }
 }
+
 
 async function pushContactInfo(name, lastname, email, phone) {
     let newContact = {
@@ -124,5 +162,3 @@ async function pushContactInfo(name, lastname, email, phone) {
         console.error("Failed to add contact:", error);
     }
 }
-
-
