@@ -1,5 +1,5 @@
 #add-contact-content {
-    position: absolute;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,11 +27,11 @@
     position: absolute;
     display: flex;
     justify-content: center;
-    width: 90%;
-    height: 75%;
+    width: 70vw;
+    min-width: 40%;
+    height: 50%;
     z-index: 15;
     isolation: isolate; 
-
 }
 #add-contact-side-panel {
     display: flex;
@@ -78,16 +78,13 @@
 }
 #add-contact-btn-close {
     width: 40px;
-            height: 40px;
-            margin: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f5f5f5; 
-            border-radius: 50%;
-            border: 1px solid #ccc; 
-            cursor: pointer;
-            transition: background-color 0.3s;
+    height: 40px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 #add-contact-btn-close:hover {
     background-color: #e0e0e0;
@@ -119,26 +116,29 @@
     align-items: center;
     justify-content: space-evenly;
     width: 70%;
-    height: 75%;
+    height: 100%;
 }
 .add-contact-input {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 5px;
-    border-color: #d1d1d1;
+    padding: 15px;
+    border: 1px solid rgb(215, 215, 215);      
+    border-radius: 15px;
     color: #d1d1d1;
+                /* border-color: #d1d1d1;   */
 }
 #add-contact-first-name {
-    border-radius: 5px;
     border-color: #d1d1d1;
     color: #d1d1d1;
 }
 #add-contact-last-name {
-    border-radius: 5px;
+    border-color: #d1d1d1;
+    color: #d1d1d1;
 }
 #add-contact-email {
-    border-radius: 5px;
+    border-color: #d1d1d1;
+    color: #d1d1d1;
 }
 .add-contact-input-icon {
     position: absolute;
@@ -153,7 +153,7 @@
 }
 .input-wrapper {
     position: relative;
-    width: 50%;
+    width: 75%;
 }
 #add-contact-btn-wrapper {
     display: flex;
@@ -161,26 +161,28 @@
 }
 #add-contact-btn-container {
     display: flex;
-    justify-content: center;
-    height: 20vh;
+    justify-content: flex-start;
+    height: 10vh;
     width: 70%;
+    padding-left: 8%;
 }
 #add-contact-cancel {
-    height: 5vh;
+    height: 3vh;
     margin-left: 1vw;
     margin-right: 1vw;
     background-color: white;
     border-radius: 10px;
+    border: 1px solid black;
 }
 #add-contact-cancel:hover {
-    color:#0B8CE9;
-    border-color: #0B8CE9;
+    border: 2px solid #0B8CE9;
+    color : #0B8CE9;
     cursor: pointer;
     transition: background-color 0.3s;
     transition: color 0.3s;
 }
 #add-contact-create {
-    height: 5vh;
+    height: 3vh;
     margin-left: 1vw;
     margin-right: 1vw;
     border-radius: 10px;
@@ -193,8 +195,12 @@
 }
 #add-contact-btn-placeholder {
     width: 30%;
-    height: 20vh;
+    height: 10vh;
 }
 #test-btn {
     height: 2vh;
+}
+
+@media (max-width: 1050px) {
+
 }

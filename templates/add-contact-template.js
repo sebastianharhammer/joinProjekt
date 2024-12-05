@@ -32,11 +32,11 @@ function getAddContactHTML() {
                 <form id="input-fields">
                     <div class="input-wrapper">
                         <input required class="add-contact-input" id="add-contact-first-name" placeholder="Name">
-                        <img src="../img/login-person.png" class="add-contact-input-icon">
+                        <img src="../img/person.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
                         <input required class="add-contact-input" id="add-contact-last-name" placeholder="Last name">
-                        <img src="../img/login-person.png" class="add-contact-input-icon">
+                        <img src="../img/person.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
                         <input required class="add-contact-input" id="add-contact-email" placeholder="Email">
@@ -46,7 +46,7 @@ function getAddContactHTML() {
                         <input required class="add-contact-input" id="add-contact-phone" placeholder="Phone">
                         <img src="../img/call.png" class="add-contact-input-icon">
                     </div>
-</form>
+                </form>
 
             </div>
             <div id="add-contact-btn-wrapper">
