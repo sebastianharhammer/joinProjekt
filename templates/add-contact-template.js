@@ -52,7 +52,7 @@ function getAddContactHTML() {
                     <button id="add-contact-create" onclick="processContactInfo()">Create contact ✓</button>
                 </div>
             </div>  
-            <button id="test-btn" onclick="testing()">Fügt 20 Kontakte zu Firebase hinzu (Wenn Sie schon bestehen werden die vorhandenen überschrieben)</button>
+            <button id="test-btn" onclick="testing()">Fügt 23 Kontakte zu Firebase hinzu (überschreibt die Firebase Kontakte)</button>
         </div>
         <div id="add-contact-message" class="d-none"></div>
     </div>`;
