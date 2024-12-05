@@ -39,12 +39,17 @@ function loginUser(event){
     if(signedUser){
         console.log('user identified');
         console.log('Weiterleitung nach summary.html');
+        showRememberMeBox();
         window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
         getUser(signedUser);
     }else{
         console.log('user not found')
         showDomOfFailedLogin()
     }
+}
+
+function showRememberMeBox(){
+
 }
 
 function showDomOfFailedLogin(){
@@ -61,3 +66,5 @@ setTimeout(function() {
     }
 }, 1200);
 }
+
+function validateSignUpForm(){}
