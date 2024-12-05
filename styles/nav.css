@@ -6,7 +6,7 @@
   flex-direction: column;
   left: 0vw;
   width: 10vw;
-  min-width: 100px;
+  min-width: 150px;
   height: 95vh;
   padding-top: 5vh;
   background-color: #2b3647;
@@ -60,20 +60,7 @@
   cursor: pointer;
 }
 
-#overlay-left {
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  left: 0vw;
-  width: 10vw;
-  min-width: 100px;
-  height: 95vh;
-  padding-top: 5vh;
-  background-color: #2b3647;
-  z-index: 5;
-}
+
 
 #logo-container {
   height: 100px;
