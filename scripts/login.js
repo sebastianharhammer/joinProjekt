@@ -41,10 +41,14 @@ async function loadSignedUsers(path){
     }
 }
 
+function loginGuest(event){
+    event.preventDefault();
+    window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
+}
+
 function loginUser(event) {
     event.preventDefault();
     console.log(signedUsersArrayLogin);
-    
     let userMail = document.getElementById('loginMailUser').value;
     let userPassword = document.getElementById('loginPasswordUser').value;
     let rememberMe = document.getElementById('checkboxLogin').checked;
@@ -53,6 +57,7 @@ function loginUser(event) {
     if (signedUser) {
         console.log('User identified');
         console.log('Weiterleitung nach summary.html');
+        changeLoginStatus(signedUser);
         if (rememberMe) {
             saveData(signedUser);
         }
@@ -62,6 +67,29 @@ function loginUser(event) {
         showDomOfFailedLogin();
     }
 }
+
+async function changeLoginStatus(signedUser) {
+    try {
+        const userPath = `/signed_users/user${signedUser.id}`;
+        const response = await fetch(BASE_URL + userPath + ".json", {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({isLoggedin: true})
+        });
+        
+        if (response.ok) {
+            console.log(`Login-Status für Benutzer ${signedUser.email} erfolgreich geändert.`);
+        } else {
+            console.error("fehler");
+        }
+    } catch (error) {
+        console.error("Fehler beim Ändern des Login-Status:", error);
+    }
+}
+
+
 
 function saveData(user) {
     localStorage.setItem('rememberedUser', JSON.stringify({
