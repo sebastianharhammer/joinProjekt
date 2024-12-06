@@ -56,15 +56,14 @@
 }
 
 .loginForm {
-  height: 449px;
-  width: 652px;
+  height: 40vh;
+  width: 70vw;
   background-color: white;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 32px;
+  max-width: 900px;
 }
 
 d-none {
@@ -80,6 +79,9 @@ d-none {
   height: 53px;
   border-radius: 10px;
   border: 1px solid rgb(168, 168, 168);
+  margin-top: 1vh;
+  width: 350px;
+  justify-content: space-between;
 }
 
 .loginNameInput img {
@@ -89,9 +91,12 @@ d-none {
   padding-right: 8px;
 }
 
+input:-webkit-autofill {
+  background-color: white !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
 .inputMailPw {
-  width: 260px;
-  height: 49px;
   border: none;
   border-radius: 10px;
   padding-left: 8px;
@@ -110,6 +115,7 @@ d-none {
 .loginButtons {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -117,8 +123,9 @@ d-none {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 49px;
-  width: 91px;
+  width: 7vw;
+  max-width: 100px;
+  height: 4vh;
   border-radius: 8px;
   background-color: rgba(42, 54, 71, 1);
 }
@@ -129,11 +136,12 @@ d-none {
 }
 
 .guestLogInUpButton {
+  width: 9vw;
+  height: 4vh;
+  max-width: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 49px;
-  width: 140px;
   border-radius: 8px;
   background-color: white;
   border: 2px solid rgba(42, 54, 71, 1);
@@ -163,7 +171,7 @@ button:hover {
   font-weight: 700;
   font-size: 61px;
   color: black;
-  margin: 0;
+  margin-bottom: 1vh;
 }
 
 .horizontalLine {
@@ -173,6 +181,7 @@ button:hover {
   background-color: rgb(41, 171, 226);
   border: none;
   border-radius: 8px;
+  margin-bottom: 2vh;
 }
 
 .footerRegisterLogin {
@@ -195,10 +204,7 @@ button:hover {
     padding: 20px;
   }
 
-  .loginNameInput {
-    width: 100%;
-    margin-bottom: 15px;
-  }
+
 
   .inputMailPw {
     width: 100%;
@@ -310,4 +316,102 @@ button:hover {
   .loginForm {
     margin-bottom: 30px;
   }
+}
+
+.failedLoginDiv {
+  height: 16px;
+  background-color: white;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.failedLoginFont{
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 12px;
+  color: red;
+  margin: 0;
+  margin-bottom: 16px;
+}
+
+
+.footerRegisterLogin {
+  font-size: 14px;
+}
+
+.footerRegisterLogin a {
+  font-size: 14px;
+}
+
+.footerFont {
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
+  color: #a8a8a8;
+  margin: 0;
+  width: 120px;
+}
+
+.footerFont:hover {
+  font-weight: bold;
+  color: rgb(41, 171, 226);
+}
+
+.rememberMe{
+  height: 40px;
+  width: 350px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: row;
+  gap: 2px;
+}
+
+.checkboxLogin {
+  height: 12px;
+  width: 12px;
+  border: 1px solid rgba(42, 54, 71, 1);
+  background-color: transparent;
+  appearance: none;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.checkboxLogin:checked{
+  background-color: white;
+  border-color: rgba(42, 54, 71, 1);
+}
+
+.checkboxLogin:checked::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 3px;
+  width: 5px;
+  height: 12px;
+  border: solid rgba(42, 54, 71, 1);
+  border-width: 0 2px 2px 0;
+  transform: rotate(37deg);
+}
+
+.checkboxLogin:hover {
+  background-color: rgba(42, 54, 71, 0.1);
+}
+
+.rememberMeFont{
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 11px;
+  color: rgb(42,54,71)
+}
+
+.button-remember-me{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

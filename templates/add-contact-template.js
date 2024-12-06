@@ -31,22 +31,18 @@ function getAddContactHTML() {
                 </div>
                 <form id="input-fields">
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-first-name" placeholder="Name">
-                        <img src="../img/login-person.png" class="add-contact-input-icon">
+                        <input required class="add-contact-input" id="add-contact-name" placeholder="Name" required>
+                        <img src="../img/person.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-last-name" placeholder="Last name">
-                        <img src="../img/login-person.png" class="add-contact-input-icon">
-                    </div>
-                    <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-email" placeholder="Email">
+                        <input required class="add-contact-input" id="add-contact-email" placeholder="Email" type="email" required>
                         <img src="../img/login-mail.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
                         <input required class="add-contact-input" id="add-contact-phone" placeholder="Phone">
                         <img src="../img/call.png" class="add-contact-input-icon">
                     </div>
-</form>
+                </form>
 
             </div>
             <div id="add-contact-btn-wrapper">
@@ -56,7 +52,27 @@ function getAddContactHTML() {
                     <button id="add-contact-create" onclick="processContactInfo()">Create contact ✓</button>
                 </div>
             </div>  
-            <button id="test-btn" onclick="testing()">Fügt 20 Kontakte zu Firebase hinzu (Wenn Sie schon bestehen werden die vorhandenen überschrieben)</button>
+            <button id="test-btn" onclick="testing()">Fügt 23 Kontakte zu Firebase hinzu (überschreibt die Firebase Kontakte)</button>
         </div>
+        <div id="add-contact-message" class="d-none"></div>
     </div>`;
+}
+
+function showErrorMessageHTML() {
+    let content = document.getElementById('add-contact-message');
+    content.innerHTML = `
+    <div id="add-contact-error-message-container">
+    <span id="add-contact-error-message">Vor- und nachname sowie Email sind notwendig</span>
+    </div>
+    `;
+}
+
+
+function showSuccesMessageHTML() {
+    let content = document.getElementById('add-contact-message');
+    content.innerHTML = `
+    <div id="add-contact-succes-message-container">
+    <span id="add-contact-succes-message">Kontakt erfolgreich erstellt</span>
+    </div>
+    `;
 }

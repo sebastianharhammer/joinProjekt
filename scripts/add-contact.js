@@ -1,154 +1,32 @@
 const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let localContacts = [];
 let testingContacts = [
-    {   
-        id: 0,
-        firstName: "Anton",
-        lastName: "Mayer",
-        email: "antom@gmail.com",
-        phone: "012345"
-    },
-    {   
-        id: 1,
-        firstName: "Anja",
-        lastName: "Schulz",
-        email: "schulz@hotmail.com",
-        phone: "012345"
-    },
-    {   
-        id: 2,
-        firstName: "Benedikt",
-        lastName: "Ziegler",
-        email: "benedikt@gmail.com",
-        phone: "012345"
-    },
-    {   
-        id: 3,
-        firstName: "David",
-        lastName: "Eisenberg",
-        email: "davidberg@gmail.com",
-        phone: "012345"
-    },
-    {   
-        id: 4,
-        firstName: "Eva",
-        lastName: "Klein",
-        email: "eva.klein@yahoo.com",
-        phone: "678901"
-    },
-    {   
-        id: 5,
-        firstName: "Felix",
-        lastName: "Schmidt",
-        email: "felixsch@gmail.com",
-        phone: "234567"
-    },
-    {   
-        id: 6,
-        firstName: "Greta",
-        lastName: "Müller",
-        email: "greta.mueller@outlook.com",
-        phone: "345678"
-    },
-    {   
-        id: 7,
-        firstName: "Hannah",
-        lastName: "Weber",
-        email: "hannah.weber@gmail.com",
-        phone: "123456"
-    },
-    {   
-        id: 8,
-        firstName: "Isabella",
-        lastName: "Fischer",
-        email: "isabella.f@gmail.com",
-        phone: "987654"
-    },
-    {   
-        id: 9,
-        firstName: "Jakob",
-        lastName: "Hoffmann",
-        email: "jakobh@gmail.com",
-        phone: "765432"
-    },
-    {   
-        id: 10,
-        firstName: "Klara",
-        lastName: "Bauer",
-        email: "klara.bauer@yahoo.com",
-        phone: "543210"
-    },
-    {   
-        id: 11,
-        firstName: "Lukas",
-        lastName: "Meier",
-        email: "lukas.meier@gmail.com",
-        phone: "432109"
-    },
-    {   
-        id: 12,
-        firstName: "Maria",
-        lastName: "Schneider",
-        email: "maria.s@gmail.com",
-        phone: "890123"
-    },
-    {   
-        id: 13,
-        firstName: "Nina",
-        lastName: "Wagner",
-        email: "nina.wagner@outlook.com",
-        phone: "321098"
-    },
-    {   
-        id: 14,
-        firstName: "Oscar",
-        lastName: "Brückner",
-        email: "oscarb@gmail.com",
-        phone: "210987"
-    },
-    {   
-        id: 15,
-        firstName: "Paul",
-        lastName: "Becker",
-        email: "paulb@hotmail.com",
-        phone: "789012"
-    },
-    {   
-        id: 16,
-        firstName: "Quentin",
-        lastName: "Koch",
-        email: "quentink@yahoo.com",
-        phone: "654321"
-    },
-    {   
-        id: 17,
-        firstName: "Sophia",
-        lastName: "Krüger",
-        email: "sophiakruger@gmail.com",
-        phone: "456789"
-    },
-    {   
-        id: 18,
-        firstName: "Tom",
-        lastName: "Lange",
-        email: "tomlange@outlook.com",
-        phone: "987321"
-    },
-    {   
-        id: 19,
-        firstName: "Ulrike",
-        lastName: "Vogel",
-        email: "ulrike.vogel@gmail.com",
-        phone: "654789"
-    },
-    {   
-        id: 20,
-        firstName: "Valentin",
-        lastName: "Seidel",
-        email: "valentin.s@gmail.com",
-        phone: "321654"
-    }
+    { id: 0, firstName: "Mario", lastName: "Plumber", email: "mario.plumber@nintendo.com", phone: "111111" },
+    { id: 1, firstName: "Link", lastName: "Hyrule", email: "link.hero@zelda.com", phone: "222222" },
+    { id: 2, firstName: "Samus", lastName: "Aran", email: "samus.aran@metroid.com", phone: "333333" },
+    { id: 3, firstName: "Sonic", lastName: "Hedgehog", email: "sonic.speed@sega.com", phone: "444444" },
+    { id: 4, firstName: "Lara", lastName: "Croft", email: "lara.croft@tombraider.com", phone: "555555" },
+    { id: 5, firstName: "Geralt", lastName: "Rivia", email: "geralt.rivia@witcher.com", phone: "666666" },
+    { id: 6, firstName: "Master", lastName: "Chief", email: "master.chief@halo.com", phone: "777777" },
+    { id: 7, firstName: "Pikachu", lastName: "Electric", email: "pikachu.pokemon@kanto.com", phone: "888888" },
+    { id: 8, firstName: "Cloud", lastName: "Strife", email: "cloud.strife@finalfantasy.com", phone: "999999" },
+    { id: 9, firstName: "Kratos", lastName: "Spartan", email: "kratos.godwar@sparta.com", phone: "101010" },
+    { id: 10, firstName: "Nathan", lastName: "Drake", email: "nathan.drake@uncharted.com", phone: "121212" },
+    { id: 11, firstName: "Ellie", lastName: "Williams", email: "ellie.williams@tlou.com", phone: "131313" },
+    { id: 12, firstName: "Chun", lastName: "Li", email: "chun.li@streetfighter.com", phone: "141414" },
+    { id: 13, firstName: "Solid", lastName: "Snake", email: "solid.snake@metalgear.com", phone: "151515" },
+    { id: 14, firstName: "Ryu", lastName: "Fighter", email: "ryu.fighter@streetfighter.com", phone: "161616" },
+    { id: 15, firstName: "Zelda", lastName: "Princess", email: "zelda.princess@hyrule.com", phone: "171717" },
+    { id: 16, firstName: "Arthur", lastName: "Morgan", email: "arthur.morgan@rdr.com", phone: "181818" },
+    { id: 17, firstName: "Doom", lastName: "Slayer", email: "doom.slayer@hell.com", phone: "191919" },
+    { id: 18, firstName: "Cortana", lastName: "AI", email: "cortana.ai@halo.com", phone: "202020" },
+    { id: 19, firstName: "Ezio", lastName: "Auditore", email: "ezio.auditore@ac.com", phone: "212121" },
+    { id: 20, firstName: "Bayonetta", lastName: "Witch", email: "bayonetta.witch@platinumgames.com", phone: "222222" },
+    { id: 21, firstName: "Gordon", lastName: "Freeman", email: "gordon.freeman@halflife.com", phone: "232323" },
+    { id: 22, firstName: "Shepard", lastName: "Commander", email: "shepard.commander@masseffect.com", phone: "242424" },
+    { id: 23, firstName: "Tifa", lastName: "Lockhart", email: "tifa.lockhart@finalfantasy.com", phone: "252525" }
 ];
+
 
 
 async function testing() {
@@ -174,7 +52,6 @@ async function testing() {
 }
 
 
-
 function addContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
     let background = document.getElementById('add-contact-background');
@@ -183,28 +60,66 @@ function addContact() {
     addContactTemplate.innerHTML = getAddContactHTML();
 }
 
+
 function hideAddContact() {
     let addContactTemplate = document.getElementById('add-contact-content');
     let background = document.getElementById('add-contact-background');
     addContactTemplate.classList.remove('show-add-contact');
     background.classList.add('d-none');
-    getContacts();
+    getContactInfo();
 }
+
 
 async function processContactInfo() {
-    let name = document.getElementById('add-contact-first-name').value.trim();
-    let lastName = document.getElementById('add-contact-last-name').value.trim();
+    const { firstName, lastName } = extractNameParts();
     let email = document.getElementById('add-contact-email').value.trim();
     let phone = document.getElementById('add-contact-phone').value.trim();
-
-    if (name && lastName && email && phone) {
+    if (firstName && lastName && email) {
+        showSuccesMessage();
         await getContactInfo();
-        await pushContactInfo(name, lastName, email, phone);
+        await pushContactInfo(firstName, lastName, email, phone);
         hideAddContact();
     } else {
-        console.log("Not all fields are filled.");
+        showErrorMessage();
+        //clearAddContactInput();
     }
 }
+function showSuccesMessage() {
+    let content = document.getElementById('add-contact-message');
+    content.classList.remove('d-none');
+    showSuccesMessageHTML();
+    setTimeout(() => {
+        content.classList.add('d-none');
+    }, 2500);    
+}
+function showErrorMessage() {
+    let content = document.getElementById('add-contact-message');
+    content.classList.remove('d-none');
+    showErrorMessageHTML();
+    setTimeout(() => {
+        content.classList.add('d-none');
+    }, 2500);    
+}
+
+function clearAddContactInput() {
+    let content = document.getElementById('add-contact-message');
+    let nameInput = document.getElementById('add-contact-name');
+    let emailInput = document.getElementById('add-contact-email');
+    let phoneInput = document.getElementById('add-contact-phone');
+    content.classList.remove('d-none');
+    nameInput.value = "";
+    emailInput.value = "";
+    phoneInput.value = "";
+}
+
+function extractNameParts() {
+    const input = document.getElementById('add-contact-name').value;
+    const nameParts = input.trim().split(' ');
+    const firstName = nameParts[0] || ''; 
+    const lastName = nameParts.slice(1).join(' ') || '';
+    return { firstName, lastName };
+}
+
 
 async function getContactInfo() {
     try {
@@ -221,6 +136,7 @@ async function getContactInfo() {
         console.error("Failed to fetch contacts:", error);
     }
 }
+
 
 async function pushContactInfo(name, lastname, email, phone) {
     let newContact = {
@@ -246,5 +162,3 @@ async function pushContactInfo(name, lastname, email, phone) {
         console.error("Failed to add contact:", error);
     }
 }
-
-

@@ -29,9 +29,15 @@ header {
   padding-right: 25px;
 }
 #header-current-user {
+<<<<<<< HEAD
   padding: 10px;
   color: blue;
   z-index: 999;
+=======
+    padding: 10px;
+    color: rgba(18, 18, 232, 0.997);
+    z-index: 999;
+>>>>>>> 4a71c6ece882a375e872813dee5128fa8ead6e51
 }
 #header-current-user:hover {
   cursor: pointer;

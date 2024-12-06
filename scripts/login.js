@@ -3,6 +3,7 @@ let signedUsersArrayLogin="[]";
 function init(){
     showStartSlide();
     loadSignedUsers("/signed_users");
+    loadRememberedUser();
 }
 
 let urlParams = new URLSearchParams(window.location.search);
@@ -20,6 +21,16 @@ function showStartSlide(){
     }, 100);
 }
 
+function loadRememberedUser() {
+    const rememberedUser = localStorage.getItem('rememberedUser');
+    if (rememberedUser) {
+        const userData = JSON.parse(rememberedUser);
+        document.getElementById('loginMailUser').value = userData.email;
+        document.getElementById('loginPasswordUser').value = userData.password;
+        document.getElementById('checkboxLogin').checked = true;
+        console.log('User data loaded from Local Storage');
+    }
+}
 
 async function loadSignedUsers(path){
     let response = await fetch(BASE_URL + path + ".json");
@@ -30,19 +41,49 @@ async function loadSignedUsers(path){
     }
 }
 
-function loginUser(event){
+function loginUser(event) {
     event.preventDefault();
     console.log(signedUsersArrayLogin);
-    let userMail = document.getElementById('loginMailUser');
-    let userPassword = document.getElementById('loginPasswordUser');
-    let signedUser = signedUsersArrayLogin.find(u => u.email == userMail.value && u.password == userPassword.value)
-    if(signedUser){
-        console.log('user identified');
-        console.log('Weiterleitung nach summary.html');
-        window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
-        getUser(signedUser);
-    }else{
-        console.log('user not found')
-    }
+    
+    let userMail = document.getElementById('loginMailUser').value;
+    let userPassword = document.getElementById('loginPasswordUser').value;
+    let rememberMe = document.getElementById('checkboxLogin').checked;
+    let signedUser = signedUsersArrayLogin.find(u => u.email === userMail && u.password === userPassword);
 
+    if (signedUser) {
+        console.log('User identified');
+        console.log('Weiterleitung nach summary.html');
+        if (rememberMe) {
+            saveData(signedUser);
+        }
+        window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
+    } else {
+        console.log('User not found');
+        showDomOfFailedLogin();
+    }
 }
+
+function saveData(user) {
+    localStorage.setItem('rememberedUser', JSON.stringify({
+        email: user.email,
+        password: user.password
+    }));
+}
+
+
+function showDomOfFailedLogin(){
+let failedLoginDiv = document.getElementById('failedLoginDiv');
+let changeBorders = document.getElementsByClassName('loginNameInput');
+failedLoginDiv.classList.remove('d-none')
+for (let i = 0; i < changeBorders.length; i++) {
+    changeBorders[i].style.border = '1px solid red';
+}
+setTimeout(function() {
+    failedLoginDiv.classList.add('d-none');
+    for (let i = 0; i < changeBorders.length; i++) {
+        changeBorders[i].style.border = '1px solid rgb(168, 168, 168)';
+    }
+}, 2000);
+}
+
+function validateSignUpForm(){}
