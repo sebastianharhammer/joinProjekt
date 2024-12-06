@@ -30,7 +30,7 @@ function init() {
 }
 
 function createTask(status, event) {
-    event.preventDefault(); // Prevent the default form behavior
+    event.preventDefault();
 
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
@@ -60,8 +60,6 @@ function createTask(status, event) {
     localTasks.push(newTask);
     pushTaskToFirebase(newTask);
     console.log('Task created:', newTask);
-
-    // Optionally, reset the form here if needed
     document.querySelector('form').reset();
     selectedPriority = "";
     assignedUser = [];
