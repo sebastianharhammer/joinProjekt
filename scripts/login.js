@@ -57,7 +57,7 @@ function loginUser(event) {
     if (signedUser) {
         console.log('User identified');
         console.log('Weiterleitung nach summary.html');
-        changeLoginStatus(signedUser);
+        changeBooleanLogin(signedUser)
         if (rememberMe) {
             saveData(signedUser);
         }
@@ -68,27 +68,23 @@ function loginUser(event) {
     }
 }
 
-async function changeLoginStatus(signedUser) {
+async function changeBooleanLogin(signedUser) {
+    const userId = signedUser.id;
+    const updatedData = {
+        isLoggedin: true
+    };
     try {
-        const userPath = `/signed_users/user${signedUser.id}`;
-        const response = await fetch(BASE_URL + userPath + ".json", {
-            method: "PATCH",
+        const response = await fetch(`${BASE_URL}/signed_users/user${userId}.json`, {
+            method: 'PATCH',
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({isLoggedin: true})
+            body: JSON.stringify(updatedData)
         });
-        
-        if (response.ok) {
-            console.log(`Login-Status für Benutzer ${signedUser.email} erfolgreich geändert.`);
-        } else {
-            console.error("fehler");
-        }
     } catch (error) {
-        console.error("Fehler beim Ändern des Login-Status:", error);
+        console.error('Ein Fehler ist aufgetreten:', error);
     }
 }
-
 
 
 function saveData(user) {
