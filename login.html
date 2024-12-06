@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <form class="loginForm" onsubmit="loginUser(event)">
+        <form class="loginForm">
             <h1 class="FontOfOfLogin">Log in</h1>
             <hr class="horizontalLine">
             <section class="button-remember-me">
@@ -47,8 +47,8 @@
                     <p class="d-none failedLoginFont" id="failedLoginDiv">Check email and password. Please try again</p>
                 </div>
                 <div class="loginButtons">
-                    <button class="logInButton interFontLoginButton">Log in</button>
-                    <button class="guestLogInUpButton guestLogInButtonFont">Guest Log in</button>
+                    <button onclick="loginUser(event)" class="logInButton interFontLoginButton">Log in</button>
+                    <button onclick="loginGuest(event)" class="guestLogInUpButton guestLogInButtonFont">Guest Log in</button>
                 </div>
         </form>
         <div class="msgBox" id="msgBox"></div>
