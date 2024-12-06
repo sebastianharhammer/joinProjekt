@@ -11,34 +11,6 @@ body {
   padding-top: 102px;
   padding-left: 232px;
   display: flex;
-<<<<<<< HEAD
-  justify-content: center;
-  align-items: center;
-  background-color: #f6f7f8;
-}
-#add-task-content-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 80vw;
-  height: 90vh;
-  max-width: 1920px;
-}
-#headline-container {
-  display: flex;
-  justify-content: flex-start;
-  width: 80%;
-  padding: 25px;
-  margin: 25px;
-}
-#add-task-headline {
-  font-size: 48px;
-}
-.container {
-  padding: 20px;
-=======
->>>>>>> 677b3d9b3e24e0e075e6e0cebeab2bc43b99b4b4
   width: 100%;
   height: 100%;
   box-sizing: border-box;
