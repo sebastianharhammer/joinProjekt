@@ -21,12 +21,13 @@ body {
 .custom-dropdown {
   position: relative;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  width: 300px;
+  border-radius: 10px;
+  width: auto;
   cursor: pointer;
   background-color: #fff;
-  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 12px 21px;
 }
 
 .dropdown-placeholder {
@@ -34,7 +35,7 @@ body {
 }
 
 .dropdown-options {
-  display: none; /* Hidden by default */
+  display: none; 
   position: absolute;
   top: 100%;
   left: 0;
@@ -49,6 +50,8 @@ body {
 
 .dropdown-options .assigned-user {
   display: flex;
+  justify-content: space-between;
+  text-align: left;
   align-items: center;
   padding: 8px;
   cursor: pointer;
@@ -684,7 +687,7 @@ font-size: 14px;
       gap: 32px;
   }
   .addtask-buttons {
-      justify-content: flex-end;
+      justify-content: flex-start;
   }
 }
 @media(max-width: 830px) {

@@ -3,7 +3,7 @@ let categoriesContainerClick = false;
 let contacts = [];
 let selectedPriority = "";
 let subtasksArr = [];
-let assignedUser = [];
+let assignedUserArr = [];
 let localTasks = [];
 let subtaskIdCounter = 0;
 let subtasksEdit = [];
@@ -54,7 +54,7 @@ function createTask(status, event) {
         taskCategory: category,
         priority: priority,
         subtasks: subtasks,
-        owner: assignedUser,
+        owner: assignedUserArr,
     };
 
     localTasks.push(newTask);
@@ -62,7 +62,7 @@ function createTask(status, event) {
     console.log('Task created:', newTask);
     document.querySelector('form').reset();
     selectedPriority = "";
-    assignedUser = [];
+    assignedUserArr = [];
     subtasksArr = [];
 }
 
