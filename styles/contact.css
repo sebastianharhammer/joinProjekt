@@ -13,9 +13,9 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   align-items: center;
   width: 456px;
-  max-height: 928px;
   overflow-y: scroll;
   scrollbar-width: 24px;
+  overflow-x: hidden;
 }
 
 #add-new-contact-button-container {
