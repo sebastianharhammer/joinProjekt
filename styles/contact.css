@@ -209,3 +209,27 @@ hr {
 .contact-detail p {
   margin: 5px 0;
 }
+
+/* Highlight ausgewählter Kontakt */
+.contact-item.selected {
+  background-color: #2a3647;
+  color: white;
+}
+
+/* Detailansicht */
+#contact-detail {
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  display: none; /* Detailansicht standardmäßig ausgeblendet */
+}
+
+#contact-detail h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+#contact-detail p {
+  margin: 5px 0;
+}

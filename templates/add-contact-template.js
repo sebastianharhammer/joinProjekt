@@ -1,5 +1,5 @@
 function getAddContactHTML() {
-    return /*html*/`
+  return /*html*/ `
     <div id="contact-panel">
         <div id="add-contact-side-panel">
             <div id="add-contact-logo">
@@ -59,18 +59,17 @@ function getAddContactHTML() {
 }
 
 function showErrorMessageHTML() {
-    let content = document.getElementById('add-contact-message');
-    content.innerHTML = `
+  let content = document.getElementById("add-contact-message");
+  content.innerHTML = `
     <div id="add-contact-error-message-container">
     <span id="add-contact-error-message">Vor- und nachname sowie Email sind notwendig</span>
     </div>
     `;
 }
 
-
 function showSuccesMessageHTML() {
-    let content = document.getElementById('add-contact-message');
-    content.innerHTML = `
+  let content = document.getElementById("add-contact-message");
+  content.innerHTML = `
     <div id="add-contact-succes-message-container">
     <span id="add-contact-succes-message">Kontakt erfolgreich erstellt</span>
     </div>

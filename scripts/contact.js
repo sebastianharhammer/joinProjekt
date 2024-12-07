@@ -13,13 +13,10 @@ function fetchContactsFromFirebase() {
 
   contactsRef.on("value", (snapshot) => {
     const data = snapshot.val();
-    console.log("Daten aus Firebase:", data);
 
     if (data) {
       contactsData = Object.values(data);
-      console.log("Konvertiertes Array:", contactsData);
       renderSortedContacts(contactsData);
-      renderRightSideContainer();
     } else {
       console.log("Keine Kontakte gefunden.");
     }
@@ -67,6 +64,49 @@ function renderSortedContacts(contacts) {
 
   contactsHTML += `</div>`;
   content.innerHTML = contactsHTML;
+
+  addContactClickHandlers();
+}
+
+// Detailansicht ein- und ausblenden
+function toggleContactDetail(contactId) {
+  const contactItems = document.querySelectorAll(".contact-item");
+  const detailView = document.getElementById("contact-detail");
+  const selectedContact = contactsData.find((contact) => contact.id === contactId);
+  const clickedItem = document.getElementById(`contact-item-${contactId}`);
+
+  // Wenn bereits geöffnet, schließen und Auswahl entfernen
+  if (clickedItem.classList.contains("selected")) {
+    clickedItem.classList.remove("selected");
+    detailView.style.display = "none";
+    detailView.innerHTML = "";
+  } else {
+    // Alle vorherigen Auswahl entfernen
+    contactItems.forEach((item) => item.classList.remove("selected"));
+    clickedItem.classList.add("selected");
+
+    // Detailansicht aktualisieren
+    detailView.style.display = "block";
+    detailView.innerHTML = `
+      <div class="contact-detail">
+          <h2>${selectedContact.firstName} ${selectedContact.lastName}</h2>
+          <p><strong>Email:</strong> <a href="mailto:${selectedContact.email}">${selectedContact.email}</a></p>
+          <p><strong>Phone:</strong> ${selectedContact.phone}</p>
+          <div class="detail-actions">
+              <button onclick="editContact(${contactId})">Edit</button>
+              <button onclick="deleteContact(${contactId})">Delete</button>
+          </div>
+      </div>
+    `;
+  }
+}
+
+function editContact(contactId) {
+  alert(`Edit contact with ID: ${contactId}`);
+}
+
+function deleteContact(contactId) {
+  alert(`Delete contact with ID: ${contactId}`);
 }
 
 function getRandomColor() {
