@@ -43,46 +43,57 @@ async function loadSignedUsers(path){
 
 function loginGuest(event){
     event.preventDefault();
-    window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
+    window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('');
 }
 
-function loginUser(event) {
+async function loginUser(event) {
     event.preventDefault();
-    console.log(signedUsersArrayLogin);
     let userMail = document.getElementById('loginMailUser').value;
     let userPassword = document.getElementById('loginPasswordUser').value;
     let rememberMe = document.getElementById('checkboxLogin').checked;
     let signedUser = signedUsersArrayLogin.find(u => u.email === userMail && u.password === userPassword);
 
     if (signedUser) {
-        console.log('User identified');
-        console.log('Weiterleitung nach summary.html');
-        changeBooleanLogin(signedUser)
-        if (rememberMe) {
-            saveData(signedUser);
+        try {
+            await changeLoginStatus(signedUser);
+            forwardToSummary(signedUser);
+            if (rememberMe) {
+                saveData(signedUser);
+            }
+        } catch (error) {
+            console.error('Fehler beim Ändern des Login-Status:', error);
         }
-        window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
     } else {
         console.log('User not found');
         showDomOfFailedLogin();
     }
 }
 
-async function changeBooleanLogin(signedUser) {
-    const userId = signedUser.id;
-    const updatedData = {
-        isLoggedin: true
-    };
+function forwardToSummary(user) {
+    const url = `summary.html?firstName=${encodeURIComponent(user.firstName)}&lastName=${encodeURIComponent(user.lastName)}`;
+    window.location.href = url;
+}
+
+
+
+async function changeLoginStatus(signedUser) {
     try {
-        const response = await fetch(`${BASE_URL}/signed_users/user${userId}.json`, {
-            method: 'PATCH',
+        const userPath = `/signed_users/user${signedUser.id}`;
+        const response = await fetch(BASE_URL + userPath + ".json", {
+            method: "PATCH",
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatedData)
+            body: JSON.stringify({isLoggedin: true})
         });
+        
+        if (response.ok) {
+            console.log(`Login-Status für Benutzer ${signedUser.email} erfolgreich geändert.`);
+        } else {
+            console.error("fehler");
+        }
     } catch (error) {
-        console.error('Ein Fehler ist aufgetreten:', error);
+        console.error("Fehler beim Ändern des Login-Status:", error);
     }
 }
 
