@@ -16,7 +16,6 @@ function fetchContactsFromFirebase() {
     const data = snapshot.val();
 
     if (data) {
-      // Object.entries statt Object.values, um Keys (IDs) zu erhalten
       contactsData = Object.entries(data).map(([id, contact]) => ({
         id,
         ...contact
@@ -149,7 +148,6 @@ function getInitials(firstName, lastName) {
 function renderRightSideContainer() {
   const content = document.getElementById("contact-content");
 
-  // Kontaktliste ist bereits gerendert, wir fügen den großen Container hinzu:
   content.innerHTML += `
     <div id="contact-big">
         <div id="contact-headline-container">

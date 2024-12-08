@@ -34,7 +34,7 @@ async function saveEditedContact(contactId) {
     const firstName = nameParts[0];
     const lastName = nameParts.slice(1).join(" ");
 
-    
+
     const updatedContact = {
         id: contactId,
         firstName,
@@ -55,7 +55,6 @@ async function saveEditedContact(contactId) {
         if (response.ok) {
             console.log(`Contact with ID ${contactId} updated.`);
             hideEditContact(); 
-            // fetchContactsFromFirebase(); <-- Entfernen, Listener aktualisiert automatisch.
             toggleContactDetail(contactId); 
         } else {
             console.error(`Failed to update contact: ${response.statusText}`);
@@ -65,7 +64,6 @@ async function saveEditedContact(contactId) {
     }
 }
 
-// Hier sind keine weiteren Anpassungen nötig, sofern BASE_URL und die IDs korrekt genutzt werden.
 async function deleteContact(contactId) {
     try {
       await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
@@ -74,7 +72,6 @@ async function deleteContact(contactId) {
 
       console.log(`Contact with ID ${contactId} deleted.`);
       hideEditContact();
-      // fetchContactsFromFirebase(); <-- Auch hier könnte man es weglassen, da der Listener reagiert.
     } catch (error) {
       console.error("Failed to delete contact:", error);
     }

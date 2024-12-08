@@ -262,7 +262,6 @@ hr {
   margin: 5px 0;
 }
 
-/* Highlight ausgewählter Kontakt */
 .contact-item.selected {
   background-color: #2a3647;
   color: white;
