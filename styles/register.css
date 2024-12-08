@@ -205,6 +205,18 @@ button.logInButton:disabled {
   color: rgb(41, 171, 226);
 }
 
+button.buttonSignUp:disabled{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 49px;
+  width: 91px;
+  border-radius: 8px;
+  background-color: rgb(126, 126, 126);
+  border: none;
+  cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
   .signUpForm {
     width: 60vw;

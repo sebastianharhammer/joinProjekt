@@ -22,7 +22,7 @@ async function postSignUpData(path){
     let userMail = document.getElementById('loginMail').value;
     let userPassword = document.getElementById('loginPassword').value;
     let userPasswordConfirmed = document.getElementById('loginPasswordConfirm').value
-    let userId = await getNextUserId(path)
+    let userId = await getNextUserId(path);
     let checkBox = document.getElementById('registerCheckbox')
     if(userPasswordConfirmed === userPassword && checkBox.checked){
     let userData = {
@@ -30,7 +30,8 @@ async function postSignUpData(path){
         lastName: userLastName,
         email: userMail,
         password: userPassword,
-        id: userId
+        id: userId,
+        isLoggedin: false
     }
     let response = await fetch(BASE_URL + path + '/user' + userId + ".json",{
         method: "PUT",
@@ -120,21 +121,24 @@ function showResultsMessage(foundPassword){
     }
 }
 
-async function getNextUserId(path){
+async function getNextUserId(path) {
     let response = await fetch(BASE_URL + path + ".json");
     let data = await response.json();
     let nextId = 1;
-    if(data){
+
+    if (data) {
         for (let key in data) {
             let userData = data[key];
-            if (userData.id >= nextId) {
-                nextId = userData.id + 1;
+            if (userData.id && !isNaN(userData.id)) {
+                let idNumber = parseInt(userData.id, 10);
+                if (idNumber >= nextId) {
+                    nextId = idNumber+1;
+                }
             }
         }
     }
     return nextId;
 }
-
 
 
 

@@ -1,14 +1,14 @@
 function contactsTemplate(contact) {
   return `
-      <li id="contact-item-${contact.id}" onclick="showContactDetails(${
-    contact.id
-  })">
+      <li id="contact-item-${
+        contact.id
+      }" class="contact-item" onclick="toggleContactDetail(${contact.id})">
           <span id="avatar-${
             contact.id
           }" style="background-color: ${getRandomColor()};">
               ${getInitials(contact.firstName, contact.lastName)}
           </span>
-          <div>
+          <div id="contact-item-right">
               <p id="contact-name-${contact.id}">${contact.firstName} ${
     contact.lastName
   }</p>

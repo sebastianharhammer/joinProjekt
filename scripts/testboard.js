@@ -16,13 +16,31 @@ function allowDrop(event) {
     event.preventDefault();
 }
 
-function moveTo(category) {
+async function moveTo(category) {
     const taskIndex = taskArray.findIndex(task => task.id === currentDraggedElement);
     if (taskIndex !== -1) {
         taskArray[taskIndex].status = category;
+        await updateTaskInFirebase(taskArray[taskIndex]);
         updateTaskHTML();
     }
 }
+
+async function updateTaskInFirebase(task) {
+    const taskId = task.id;
+    try {
+        await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(task)
+        });
+        console.log(`Task ${taskId} erfolgreich aktualisiert.`);
+    } catch (error) {
+        console.error(`Fehler beim Aktualisieren des Tasks ${taskId}:`, error);
+    }
+}
+
 
 async function fetchTasks(path = "") {
     let response = await fetch(BASE_URL + path + ".json");

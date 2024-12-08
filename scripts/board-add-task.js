@@ -1,9 +1,9 @@
-const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+const ADD_TASK_BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let categoriesContainerClick = false;
 let contacts = [];
 let selectedPriority = "";
 let subtasksArr = [];
-let assignedUserArr = [];
+let assignedUser = [];
 let localTasks = [];
 let subtaskIdCounter = 0;
 let subtasksEdit = [];
@@ -20,13 +20,27 @@ let categories = [
       "bg-color": "#1FD7C1",
     },
   ];
+getTasks();
 
 
-function init() {
+function showAddTask(status) {
+    console.log("wird ausgeführt in " + "#" + status + "#") 
     getTasks();
+    let addTaskContent = document.getElementById('add-task-content');
+    let background = document.getElementById('add-task-background');
+    addTaskContent.classList.add('show-add-task');
+
+    background.classList.remove('d-none');
+    addTaskContent.innerHTML =  addTaskOverlayHTML();
     getUsers();
-    includeHTML(); 
-    renderAddTaskHTML();
+}
+
+
+function hideAddTask() {
+    let addContactTemplate = document.getElementById('add-task-content');
+    let background = document.getElementById('add-task-background');
+    addContactTemplate.classList.remove('show-add-task');
+    background.classList.add('d-none');
 }
 
 function createTask(status, event) {
@@ -54,7 +68,7 @@ function createTask(status, event) {
         taskCategory: category,
         priority: priority,
         subtasks: subtasks,
-        owner: assignedUserArr,
+        owner: assignedUser,
     };
 
     localTasks.push(newTask);
@@ -62,7 +76,7 @@ function createTask(status, event) {
     console.log('Task created:', newTask);
     document.querySelector('form').reset();
     selectedPriority = "";
-    assignedUserArr = [];
+    assignedUser = [];
     subtasksArr = [];
 }
 
@@ -70,7 +84,7 @@ function createTask(status, event) {
 async function pushTaskToFirebase(newTask) {
     try {
         let key = newTask.id;  
-        let response = await fetch(BASE_URL + `/testingTasks/${key}.json`, {
+        let response = await fetch(ADD_TASK_BASE_URL + `/testingTasks/${key}.json`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -115,7 +129,7 @@ function handleDropdownInteraction() {
 
 async function getTasks() {
     try {
-        let response = await fetch(BASE_URL + "/testingTasks/.json", {
+        let response = await fetch(ADD_TASK_BASE_URL + "/testingTasks/.json", {
             method: "GET",
             headers: {
                 "Content-type": "application/json",
@@ -126,7 +140,6 @@ async function getTasks() {
         }
         let responseToJson = await response.json();
         localTasks = responseToJson;
-        console.log("Array Tasks: " + localTasks)
     } catch (error) {
         console.error("Error fetching contacts:", error);
     }
@@ -134,7 +147,7 @@ async function getTasks() {
 
 async function getUsers() {
     try {
-        let response = await fetch(BASE_URL + "/contacts/.json", {
+        let response = await fetch(ADD_TASK_BASE_URL + "/contacts/.json", {
             method: "GET",
             headers: {
                 "Content-type": "application/json",

@@ -13,11 +13,9 @@ function fetchContactsFromFirebase() {
 
   contactsRef.on("value", (snapshot) => {
     const data = snapshot.val();
-    console.log("Daten aus Firebase:", data);
 
     if (data) {
       contactsData = Object.values(data);
-      console.log("Konvertiertes Array:", contactsData);
       renderSortedContacts(contactsData);
       renderRightSideContainer();
     } else {
@@ -69,6 +67,75 @@ function renderSortedContacts(contacts) {
   content.innerHTML = contactsHTML;
 }
 
+function toggleContactDetail(contactId) {
+  const contactItems = document.querySelectorAll(".contact-item");
+  const detailViewContainer = document.getElementById("contact-big");
+  const selectedContact = contactsData.find(
+    (contact) => contact.id === contactId
+  );
+  const clickedItem = document.getElementById(`contact-item-${contactId}`);
+
+  if (clickedItem.classList.contains("selected")) {
+    clickedItem.classList.remove("selected");
+    detailViewContainer.innerHTML = `
+      <div id="contact-headline-container">
+        <h3 id="contact-headline">Contacts</h3>
+        <h2 id="bwat-headline">Better with a team</h2>
+      </div>
+    `;
+  } else {
+    contactItems.forEach((item) => item.classList.remove("selected"));
+    clickedItem.classList.add("selected");
+
+    detailViewContainer.innerHTML = /*html*/ `
+      <div id="contact-headline-container">
+        <h3 id="contact-headline">Contacts</h3>
+        <h2 id="bwat-headline">Better with a team</h2>
+      </div>
+      <div class="contact-detail">
+      <div class="contact-detail-header">
+          <div class="contact-avatar" style="background-color: ${getRandomColor()};">
+              ${getInitials(
+                selectedContact.firstName,
+                selectedContact.lastName
+              )}
+          </div>
+          <div class="contact-detail-header-right">
+            <div class="contact-detail-header-right-headline">
+            ${selectedContact.firstName} ${selectedContact.lastName}</div>
+            <div class="detail-actions">
+              <button onclick="editContact(${contactId})"><img id="edit-contact-img" src="./img/edit.svg">Edit</button>
+              <button onclick="deleteContact(${contactId})"><img id="delete-contact-img" src="./img/delete.svg">Delete</button>
+            </div>
+          </div>
+      </div>
+
+      <div id="contact-information">Contact Information</div>
+
+          <div id="contact-detail-bottom">
+            <div id="contact-detail-email">
+              <div id="contact-detail-bottom-font">Email:</div> 
+              <div> <a href="mailto:${selectedContact.email}">${
+      selectedContact.email
+    }</a></div>
+            </div>
+          <div id="contact-detail-phone">
+            <div id="contact-detail-bottom-font">Phone:</div> 
+            <div> ${selectedContact.phone}</div>
+          </div>
+          </div>
+    `;
+  }
+}
+
+function editContact(contactId) {
+  alert(`Edit contact with ID: ${contactId}`);
+}
+
+function deleteContact(contactId) {
+  alert(`Delete contact with ID: ${contactId}`);
+}
+
 function getRandomColor() {
   const colors = ["orange", "purple", "blue", "red", "green", "teal"];
   return colors[Math.floor(Math.random() * colors.length)];
@@ -89,23 +156,6 @@ function renderRightSideContainer() {
         </div>
     </div>
   `;
-}
-
-function showContactDetails(contactId) {
-  const selectedContact = contactsData.find(
-    (contact) => contact.id === contactId
-  );
-
-  if (selectedContact) {
-    const detailView = document.getElementById("contact-detail");
-    detailView.innerHTML = `
-      <div class="contact-detail">
-          <h2>${selectedContact.firstName} ${selectedContact.lastName}</h2>
-          <p><strong>E-Mail:</strong> <a href="mailto:${selectedContact.email}">${selectedContact.email}</a></p>
-          <p><strong>Telefon:</strong> ${selectedContact.phone}</p>
-      </div>
-    `;
-  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

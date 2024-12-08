@@ -41,10 +41,14 @@ async function loadSignedUsers(path){
     }
 }
 
+function loginGuest(event){
+    event.preventDefault();
+    window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('Willkommen bei Join');
+}
+
 function loginUser(event) {
     event.preventDefault();
     console.log(signedUsersArrayLogin);
-    
     let userMail = document.getElementById('loginMailUser').value;
     let userPassword = document.getElementById('loginPasswordUser').value;
     let rememberMe = document.getElementById('checkboxLogin').checked;
@@ -53,6 +57,7 @@ function loginUser(event) {
     if (signedUser) {
         console.log('User identified');
         console.log('Weiterleitung nach summary.html');
+        changeBooleanLogin(signedUser)
         if (rememberMe) {
             saveData(signedUser);
         }
@@ -62,6 +67,25 @@ function loginUser(event) {
         showDomOfFailedLogin();
     }
 }
+
+async function changeBooleanLogin(signedUser) {
+    const userId = signedUser.id;
+    const updatedData = {
+        isLoggedin: true
+    };
+    try {
+        const response = await fetch(`${BASE_URL}/signed_users/user${userId}.json`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        });
+    } catch (error) {
+        console.error('Ein Fehler ist aufgetreten:', error);
+    }
+}
+
 
 function saveData(user) {
     localStorage.setItem('rememberedUser', JSON.stringify({

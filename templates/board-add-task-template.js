@@ -1,7 +1,6 @@
-function renderAddTaskHTML() {
-  let content = document.getElementById("add-task-content");
-  content.innerHTML = /*html*/ `
-      <div class="addtask-fullscreen-content">
+function addTaskOverlayHTML() {
+  return `
+<div class="addtask-overlay-content">
       <div class="addtask-main-content">
         <div>
           <h1>Add Task</h1>
@@ -25,7 +24,7 @@ function renderAddTaskHTML() {
               <div class="field-text-flex" id="addTaskAssignedTo">
                   <div class="form-group">
                     <label for="assigned-to">Assigned to</label>
-                    <div id="custom-dropdown" class="custom-dropdown input-addtask">
+                    <div id="custom-dropdown" class="custom-dropdown">
                       <div class="dropdown-placeholder">Select contacts to assign</div>
                       <div class="dropdown-options"></div>
                     </div>
@@ -117,22 +116,13 @@ function renderAddTaskHTML() {
 
 function assignUserHTML(contact) {
   return `
-        <div id="assigned-user-svg">
-          <svg class="customCircle" width="10" height="10">
+    <div id="assigned-user${contact.id}">
+        <svg class="customCircle" width="10" height="10">
             <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
             <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
-          </svg>
-        </div>
-        <div id="assigned-user-name-container">
-          <span>${contact.firstName}</span>
-          <span>${contact.lastName}</span>
-        </div>
-        <input id="checkbox${contact.id}" onclick="assignUser('${contact.firstName}', '${contact.lastName}')" type="checkbox">`;
-}
-
-function showAssignedUsersHTML(contact) {
-  return `<svg class="customCircle" width="10" height="10">
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="rgb(42,54,71)" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
-        </svg>`;
+        </svg>
+        <span>${contact.firstName}</span>
+        <span>${contact.lastName}</span>
+        <input id="checkbox${contact.id}" onclick="assignUser('${contact.firstName}', '${contact.lastName}')" type="checkbox">
+    </div>`;
 }

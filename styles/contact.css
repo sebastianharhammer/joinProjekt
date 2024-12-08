@@ -13,9 +13,9 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   align-items: center;
   width: 456px;
-  max-height: 928px;
   overflow-y: scroll;
   scrollbar-width: 24px;
+  overflow-x: hidden;
 }
 
 #add-new-contact-button-container {
@@ -63,6 +63,7 @@
 #contact-big {
   width: 50dvw;
   display: flex;
+  flex-direction: column;
   padding-top: 20px;
   padding-left: 30px;
   align-items: flex-start;
@@ -110,6 +111,10 @@
   scrollbar-width: thin;
 }
 
+ul {
+  padding: 0;
+}
+
 #contact-list-names {
   list-style: none;
   padding: 0;
@@ -121,10 +126,21 @@
   align-items: center;
   width: 352px;
   height: 78px;
-  padding: 15px 24px 15px 24px;
   gap: 35px;
-  border-radius: 10px 0px 0px 0px;
-  margin-left: 30px;
+  border-radius: 10px;
+}
+
+#contact-item-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 [id^="avatar-"] {
@@ -136,7 +152,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 15px;
+  margin-left: 32px;
   text-transform: uppercase;
   gap: 10px;
 }
@@ -148,6 +164,10 @@
   line-height: 24px;
   text-align: left;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
 }
 
 [id^="contact-email-"] {
@@ -157,6 +177,10 @@
   font-weight: 400;
   line-height: 19.2px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 [id^="contact-email-"]:hover {
@@ -195,17 +219,154 @@ hr {
 }
 
 .contact-detail {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 461px;
+  height: 364px;
+  top: 311px;
+  left: 750px;
+  gap: 21px;
 }
 
-.contact-detail h2 {
-  margin-bottom: 10px;
+.contact-detail-header {
+  display: flex;
+  align-items: center;
+  width: 461px;
+  height: 120px;
+  gap: 54px;
+}
+
+.contact-detail-header-right {
+  display: grid;
+  width: 287px;
+  height: 88px;
+  gap: 8px;
+}
+
+.contact-detail-header-right-headline {
+  display: flex;
+  width: 287px;
+  height: 56px;
+  gap: 8px;
+  font-size: 47px;
+  font-weight: 500;
+  line-height: 56.4px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  overflow: visible;
+  white-space: nowrap;
 }
 
 .contact-detail p {
   margin: 5px 0;
+}
+
+/* Highlight ausgewählter Kontakt */
+.contact-item.selected {
+  background-color: #2a3647;
+  color: white;
+}
+
+.contact-avatar {
+  width: 120px;
+  height: 120px;
+  gap: 10px;
+  border-radius: 70px;
+  border: 3px 0px 0px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 47px;
+  font-weight: 500;
+}
+
+.detail-actions {
+  display: flex;
+  width: 159px;
+  height: 24px;
+  gap: 16px;
+}
+
+.detail-actions button {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19.2px;
+  text-align: left;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#edit-contact-img {
+  width: 24px;
+  height: 24px;
+}
+
+#delete-contact-img {
+  width: 24px;
+  height: 24px;
+}
+
+.detail-actions button:first-child {
+  background-color: #f6f7f8;
+  color: #2a3647;
+  width: 62px;
+  height: 24px;
+  gap: 13px;
+}
+
+.detail-actions button:last-child {
+  background-color: #f6f7f8;
+  color: #2a3647;
+  width: 81px;
+  height: 24px;
+  left: 78px;
+  gap: 8px;
+}
+
+#contact-information {
+  align-content: center;
+  width: 207px;
+  height: 74px;
+  gap: 59px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+}
+
+#contact-detail-email {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#contact-detail-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#contact-detail-bottom a{
+  color: #007CEE;
+}
+
+#contact-detail-phone {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#contact-detail-bottom-font {
+  font-family: 'Inter';
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 19.2px;
+  text-align: left;
 }
