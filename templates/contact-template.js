@@ -8,7 +8,7 @@ function contactsTemplate(contact) {
           }" style="background-color: ${getRandomColor()};">
               ${getInitials(contact.firstName, contact.lastName)}
           </span>
-          <div>
+          <div id="contact-item-right">
               <p id="contact-name-${contact.id}">${contact.firstName} ${
     contact.lastName
   }</p>

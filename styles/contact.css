@@ -111,6 +111,9 @@
   scrollbar-width: thin;
 }
 
+ul {
+  padding: 0;
+}
 
 #contact-list-names {
   list-style: none;
@@ -127,6 +130,19 @@
   border-radius: 10px;
 }
 
+#contact-item-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 [id^="avatar-"] {
   width: 42px;
   height: 42px;
@@ -136,7 +152,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 15px;
+  margin-left: 32px;
   text-transform: uppercase;
   gap: 10px;
 }
@@ -148,6 +164,10 @@
   line-height: 24px;
   text-align: left;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
 }
 
 [id^="contact-email-"] {
@@ -157,6 +177,10 @@
   font-weight: 400;
   line-height: 19.2px;
   text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 [id^="contact-email-"]:hover {
@@ -213,7 +237,7 @@ hr {
 }
 
 .contact-detail-header-right {
-  display:grid;
+  display: grid;
   width: 287px;
   height: 88px;
   gap: 8px;
@@ -230,7 +254,8 @@ hr {
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
-  
+  overflow: visible;
+  white-space: nowrap;
 }
 
 .contact-detail p {
@@ -302,4 +327,41 @@ hr {
   height: 24px;
   left: 78px;
   gap: 8px;
+}
+
+#contact-information {
+  align-content: center;
+  width: 207px;
+  height: 74px;
+  gap: 59px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+}
+
+#contact-detail-email {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#contact-detail-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#contact-detail-phone {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#contact-detail-bottom-font {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 19.2px;
+  text-align: left;
 }
