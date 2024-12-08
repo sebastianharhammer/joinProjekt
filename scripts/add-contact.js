@@ -1,6 +1,5 @@
-const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let localContacts = [];
-let testingContacts = [
+/*let testingContacts = [
     { id: 0, firstName: "Mario", lastName: "Plumber", email: "mario.plumber@nintendo.com", phone: "111111" },
     { id: 1, firstName: "Link", lastName: "Hyrule", email: "link.hero@zelda.com", phone: "222222" },
     { id: 2, firstName: "Samus", lastName: "Aran", email: "samus.aran@metroid.com", phone: "333333" },
@@ -49,7 +48,7 @@ async function testing() {
         }
     }
     console.log("All contacts processed.");
-}
+}*/
 
 
 function addContact() {

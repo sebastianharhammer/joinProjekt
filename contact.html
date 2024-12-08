@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../styles/standard.css" />
     <link rel="stylesheet" href="../styles/contact.css" />
     <link rel="stylesheet" href="../styles/add-contact.css" />
+    <link rel="stylesheet" href="../styles/edit-contact.css" />
 
     <!-- Firebase CDN (Compat-Versionen) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
@@ -18,6 +19,8 @@
     <script src="./templates/contact-template.js"></script>
     <script src="./scripts/add-contact.js"></script>
     <script src="./templates/add-contact-template.js"></script>
+    <script src="./scripts/edit-contact.js"></script>
+    <script src="./templates/edit-contact-template.js"></script>
 
     <title>Contacts</title>
   </head>
@@ -26,6 +29,8 @@
     <div w3-include-html="./nav.html"></div>
     <div id="add-contact-background" class="d-none"></div>
     <div id="add-contact-content" class="hide-add-contact"></div>
+    <div id="edit-contact-content" class="hide-edit-contact"></div>
+    <div id="edit-contact-background" class="d-none"></div>
     <div id="contact-content"></div>
     <div id="contact-detail"></div>
   </body>

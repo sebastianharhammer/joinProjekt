@@ -1,7 +1,8 @@
 const firebaseConfig = {
-  databaseURL:
-    "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
+  databaseURL: "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
 };
+
+const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app";
 
 const app = firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
@@ -15,7 +16,11 @@ function fetchContactsFromFirebase() {
     const data = snapshot.val();
 
     if (data) {
-      contactsData = Object.values(data);
+      // Object.entries statt Object.values, um Keys (IDs) zu erhalten
+      contactsData = Object.entries(data).map(([id, contact]) => ({
+        id,
+        ...contact
+      }));
       renderSortedContacts(contactsData);
       renderRightSideContainer();
     } else {
@@ -75,12 +80,17 @@ function toggleContactDetail(contactId) {
   );
   const clickedItem = document.getElementById(`contact-item-${contactId}`);
 
+  if (!selectedContact) {
+    console.error(`Contact with ID ${contactId} not found.`);
+    return;
+  }
+
   if (clickedItem.classList.contains("selected")) {
     clickedItem.classList.remove("selected");
     detailViewContainer.innerHTML = `
       <div id="contact-headline-container">
-        <h3 id="contact-headline">Contacts</h3>
-        <h2 id="bwat-headline">Better with a team</h2>
+          <h3 id="contact-headline">Contacts</h3>
+          <h2 id="bwat-headline">Better with a team</h2>
       </div>
     `;
   } else {
@@ -89,51 +99,42 @@ function toggleContactDetail(contactId) {
 
     detailViewContainer.innerHTML = /*html*/ `
       <div id="contact-headline-container">
-        <h3 id="contact-headline">Contacts</h3>
-        <h2 id="bwat-headline">Better with a team</h2>
+          <h3 id="contact-headline">Contacts</h3>
+          <h2 id="bwat-headline">Better with a team</h2>
       </div>
       <div class="contact-detail">
-      <div class="contact-detail-header">
-          <div class="contact-avatar" style="background-color: ${getRandomColor()};">
-              ${getInitials(
-                selectedContact.firstName,
-                selectedContact.lastName
-              )}
+          <div class="contact-detail-header">
+              <div class="contact-avatar" style="background-color: ${getRandomColor()};">
+                  ${getInitials(
+                    selectedContact.firstName,
+                    selectedContact.lastName
+                  )}
+              </div>
+              <div class="contact-detail-header-right">
+                  <div class="contact-detail-header-right-headline">
+                      ${selectedContact.firstName} ${selectedContact.lastName}
+                  </div>
+                  <div class="detail-actions">
+                      <button onclick="editContact('${contactId}')">Edit</button>
+                      <button onclick="deleteContact('${contactId}')">Delete</button>
+                  </div>
+              </div>
           </div>
-          <div class="contact-detail-header-right">
-            <div class="contact-detail-header-right-headline">
-            ${selectedContact.firstName} ${selectedContact.lastName}</div>
-            <div class="detail-actions">
-              <button onclick="editContact(${contactId})"><img id="edit-contact-img" src="./img/edit.svg">Edit</button>
-              <button onclick="deleteContact(${contactId})"><img id="delete-contact-img" src="./img/delete.svg">Delete</button>
-            </div>
+          <div id="contact-information">Contact Information</div>
+          <div id="contact-detail-bottom">
+              <div id="contact-detail-email">
+                  <strong>Email:</strong> 
+                  <a href="mailto:${selectedContact.email}">
+                      ${selectedContact.email}
+                  </a>
+              </div>
+              <div id="contact-detail-phone">
+                  <strong>Phone:</strong> ${selectedContact.phone}
+              </div>
           </div>
       </div>
-
-      <div id="contact-information">Contact Information</div>
-
-          <div id="contact-detail-bottom">
-            <div id="contact-detail-email">
-              <div id="contact-detail-bottom-font">Email:</div> 
-              <div> <a href="mailto:${selectedContact.email}">${
-      selectedContact.email
-    }</a></div>
-            </div>
-          <div id="contact-detail-phone">
-            <div id="contact-detail-bottom-font">Phone:</div> 
-            <div> ${selectedContact.phone}</div>
-          </div>
-          </div>
     `;
   }
-}
-
-function editContact(contactId) {
-  alert(`Edit contact with ID: ${contactId}`);
-}
-
-function deleteContact(contactId) {
-  alert(`Delete contact with ID: ${contactId}`);
 }
 
 function getRandomColor() {
@@ -148,6 +149,7 @@ function getInitials(firstName, lastName) {
 function renderRightSideContainer() {
   const content = document.getElementById("contact-content");
 
+  // Kontaktliste ist bereits gerendert, wir fügen den großen Container hinzu:
   content.innerHTML += `
     <div id="contact-big">
         <div id="contact-headline-container">
