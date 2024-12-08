@@ -352,6 +352,10 @@ hr {
   gap: 16px;
 }
 
+#contact-detail-bottom a{
+  color: #007CEE;
+}
+
 #contact-detail-phone {
   display: flex;
   flex-direction: column;
@@ -359,9 +363,10 @@ hr {
 }
 
 #contact-detail-bottom-font {
-  color: #000000;
-  font-size: 16px;
-  font-weight: 700;
+  font-family: 'Inter';
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
   line-height: 19.2px;
   text-align: left;
 }

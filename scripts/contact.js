@@ -113,19 +113,17 @@ function toggleContactDetail(contactId) {
       <div id="contact-information">Contact Information</div>
 
           <div id="contact-detail-bottom">
-          <div id="contact-detail-email">
-          <div id="contact-detail-bottom-font">Email:</div> 
-          <div> <a href="mailto:${selectedContact.email}">${
+            <div id="contact-detail-email">
+              <div id="contact-detail-bottom-font">Email:</div> 
+              <div> <a href="mailto:${selectedContact.email}">${
       selectedContact.email
     }</a></div>
-          </div>
+            </div>
           <div id="contact-detail-phone">
-          <div id="contact-detail-bottom-font">Phone:</div> <div> ${
-            selectedContact.phone
-          }</div>
+            <div id="contact-detail-bottom-font">Phone:</div> 
+            <div> ${selectedContact.phone}</div>
           </div>
           </div>
-      </div>
     `;
   }
 }
