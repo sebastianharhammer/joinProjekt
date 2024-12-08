@@ -2,7 +2,7 @@ function contactsTemplate(contact) {
   return `
       <li id="contact-item-${
         contact.id
-      }" class="contact-item" onclick="toggleContactDetail(${contact.id})">
+      }" class="contact-item" onclick="toggleContactDetail('${contact.id}')">
           <span id="avatar-${
             contact.id
           }" style="background-color: ${getRandomColor()};">
