@@ -1,8 +1,23 @@
+/* Allgemeine CSS-Reset und Basis-Einstellungen */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+/* Header */
 header {
   display: flex;
   justify-content: center;
   width: 100%;
 }
+
+/* Header-Overlay */
 #overlay-top {
   display: flex;
   justify-content: space-between;
@@ -13,39 +28,88 @@ header {
   height: 100px;
   background-color: #ffffff;
   filter: drop-shadow(1px 2px 3px rgba(174, 173, 173, 0.5));
+  transition: all 0.3s ease;
+  padding-left: 20px; /* Abstand links im Header */
 }
+
+/* Kanban Project Management Tool - Überschrift */
 #headline-top {
   position: relative;
-  padding-top: 85px;
-  text-align: center;
+  text-align: left;
   font-size: 24px;
   font-weight: 300;
-  height: 100%;
   padding-left: 10vw;
+  z-index: 1;
+  margin-left: 0;
 }
+
+/* Header-Navigation */
 #header-nav {
   display: flex;
   align-items: center;
-  padding-right: 25px;
+  justify-content: flex-end; /* Stellt sicher, dass Help und User rechts bleiben */
+  padding-right: 35px;
 }
+
+/* Gemeinsame Klasse für den User-Icon und das SVG */
+.user-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.user-icon-svg {
+  width: 50px;
+  height: 50px;
+}
+
+.user-icon:hover .user-icon-svg {
+  background-color: #e1e5ec; /* Beispiel für Hover-Effekt */
+  border-radius: 50%;
+}
+
+/* Container für das Logo */
+#logo-container {
+  position: absolute; /* Absolute Positionierung im Header */
+  top: 30%; /* Vertikale Mitte */
+  left: 0; /* Ganz links im Header */
+  transform: translateY(
+    -50%
+  ); /* Exakte Zentrierung entlang der vertikalen Achse */
+  width: 8rem; /* Breite des Logos in rem */
+  height: 8rem; /* Höhe des Logos in rem */
+}
+
+/* Logo Bild */
+#logo-container img {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Verhindert Verzerrung des Logos */
+}
+
+/* Logo Bild */
+#logo-container img {
+  width: 200%;
+  height: 200%;
+  object-fit: contain; /* Verhindert Verzerrung des Logos */
+}
+
+/* Benutzerprofil */
 #header-current-user {
-<<<<<<< HEAD
+  display: flex;
+  justify-content: flex-end;
   padding: 10px;
-  color: blue;
+  color: rgba(18, 18, 232, 0.997);
   z-index: 999;
-=======
-    padding: 10px;
-    color: rgba(18, 18, 232, 0.997);
-    z-index: 999;
->>>>>>> 4a71c6ece882a375e872813dee5128fa8ead6e51
 }
+
 #header-current-user:hover {
   cursor: pointer;
 }
-#user-circle:hover {
-  background-color: #e1e5ec;
-  border-radius: 45px;
-}
+
+/* User-Options Dropdown */
 #user-overlay {
   display: flex;
   flex-direction: column;
@@ -58,77 +122,78 @@ header {
   border-radius: 20px 0 20px 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .header-links {
   color: #a8a8a8;
   padding: 15px 10px;
 }
+
 .header-links:hover {
   background-color: #091931;
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+/* Media Queries für kleinere Ansichten */
+
+/* Ab 1030px: Kanban-Text verschwindet und Join-Logo erscheint */
+@media (max-width: 1030px) {
   #overlay-top {
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 0 15px;
-    width: 110vw;
-  }
-
-  #headline-top {
-    display: none;
-  }
-
-  #help-btn {
-    display: none;
-  }
-
-  #header-nav {
-    gap: 10px;
-  }
-
-  #header-current-user {
-    padding: 5px;
-  }
-
-  #help-btn img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .customCircle {
-    width: 30px;
-    height: 30px;
-  }
-
-  .textInCircle {
-    font-size: 12px;
+    width: 100vw;
+    margin-left: 0;
   }
 
   #logo-container {
-    width: 40px;
-    height: 40px;
+    display: block; /* Das Join-Logo wird sichtbar */
+    width: 40px; /* Definierte Größe */
+    height: 40px; /* Definierte Größe */
+    order: -1; /* Position nach links verschieben */
+    margin-left: 0; /* Entferne den extra Abstand */
   }
 }
 
+/* Ab 770px: Benutzerprofil und Help-Button nach links verschieben */
+@media (max-width: 770px) {
+  #overlay-top {
+    justify-content: flex-end; /* Elemente nach links verschieben */
+    padding: 10px 15px;
+  }
+
+  #headline-top {
+    display: none; /* Kanban Project Management Tool verschwindet */
+  }
+
+  #logo-container {
+    margin-left: 10px; /* Stelle sicher, dass das Logo ausreichend Abstand hat */
+  }
+
+  #header-current-user {
+    margin-left: auto;
+  }
+}
+
+/* Ab 460px: Alle Elemente müssen sichtbar bleiben und korrekt ausgerichtet werden */
 @media (max-width: 460px) {
   #overlay-top {
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: flex-end;
     padding: 10px;
     height: 60px;
   }
 
+  #logo-container {
+    width: 30px;
+    height: 30px; /* Kleinere Größe für sehr kleine Bildschirme */
+  }
+
   #headline-top {
-    display: none;
+    display: none; /* Kanban Project Management Tool verschwindet */
   }
 
   #header-nav {
-    display: none;
-  }
-
-  #logo-container {
-    width: 30px;
-    height: 30px;
+    display: flex;
+    justify-content: flex-end;
   }
 
   #header-current-user {

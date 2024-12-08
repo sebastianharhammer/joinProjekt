@@ -1,68 +1,39 @@
+/* Allgemeine CSS-Reset und Basis-Einstellungen */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* Sidebar-Styles */
 #overlay-left {
   position: fixed;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  left: 0vw;
-  width: 10vw;
+
+  left: 0;
+  width: 200px;
   min-width: 150px;
-  height: 95vh;
-  padding-top: 5vh;
+  height: 95vh; /* Sidebar soll 95% der Bildschirmhöhe einnehmen */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #2b3647;
-  z-index: 5;
-}
-#logo-container {
-  height: 100px;
-  width: 100px;
-}
-#join-logo-big {
-  width: 100%;
-  height: 100%;
-}
-#navigation-links-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  vertical-align: middle;
-  margin-bottom: 20vh;
-}
-#policy-links-container {
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 10vh;
-  width: 100%;
-}
-.nav-icon {
-  height: 15px;
-  width: 15px;
-  margin-left: 2vw;
-}
-.nav-links {
-  color: white;
-  padding-left: 1vh;
-}
-.nav-links-policy {
-  color: #a8a8a8;
-  margin-left: 2vw;
-}
-.nav-links-container {
-  display: flex;
-  height: 35px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  width: 100%;
-  align-items: center;
+  padding-top: 5vh;
   z-index: 10;
-}
-.nav-links-container:hover {
-  background-color: #091931;
-  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+a {
+  color: white;
+}
 
-
-#logo-container {
+#logo-container-sidebar {
   height: 100px;
   width: 100px;
 }
@@ -75,114 +46,101 @@
 #navigation-links-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  vertical-align: middle;
-  margin-bottom: 20vh;
+  gap: 15px;
+  padding: 0 10px;
+}
+
+.nav-links-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-links-container:hover {
+  background-color: #091931;
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Styling für nav-links (Text) */
+
+.nav-links {
+  color: white;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.nav-links:hover {
+  color: #f1f1f1; /* Hover-Farbe für Links */
 }
 
 #policy-links-container {
   display: flex;
   flex-direction: column;
-  padding-bottom: 10vh;
-  width: 100%;
+  gap: 10px;
+  padding: 10px;
 }
 
-.nav-icon {
-  height: 15px;
-  width: 15px;
-  margin-left: 2vw;
-}
-
-.nav-links {
-  color: white;
-  padding-left: 1vh;
-}
-
-.nav-links-policy {
-  color: #a8a8a8;
-  margin-left: 2vw;
-}
-
-.nav-links-container {
-  display: flex;
-  height: 35px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  width: 100%;
-  align-items: center;
-  z-index: 10;
-}
-
-.nav-links-container:hover {
-  background-color: #091931;
-  cursor: pointer;
-}
-
+/* Media Queries für kleinere Ansichten */
 @media (max-width: 768px) {
   #overlay-left {
     position: fixed;
-    bottom: 0;
+    bottom: 0; /* Sidebar bleibt am unteren Rand */
     left: 0;
     width: 100%;
-    height: 60px;
+    height: 60px; /* Sidebar wird schmaler */
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     padding: 0;
-    background-color: #2b3647;
-    z-index: 5;
+    z-index: 10;
   }
 
-  #logo-container {
-    display: none;
+  #logo-container-sidebar {
+    display: none; /* Das Join-Logo verschwindet bei kleiner Ansicht */
   }
 
   #navigation-links-container {
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
-    margin-bottom: 0;
     width: 100%;
   }
 
   .nav-links-container {
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
     height: 100%;
-    margin: 0;
-    padding: 0 10px;
-    width: auto;
-    cursor: pointer;
+    padding: 0;
+  }
+
+  .nav-icon {
+    width: 25px;
+    height: 25px;
+  }
+
+  .nav-links {
+    display: none; /* Verstecke Text bei schmalen Ansichten */
+  }
+
+  /* Privacy Policy und Legal Notice auch ausblenden */
+  #policy-links-container {
+    display: none; /* Ausblenden des Abschnitts */
+  }
+}
+
+@media (max-width: 460px) {
+  .nav-links-container {
+    padding: 5px;
   }
 
   .nav-icon {
     width: 20px;
     height: 20px;
-    margin: 0;
-  }
-
-  .nav-links {
-    display: block;
-    color: white;
-    font-size: 10px;
-  }
-
-  #policy-links-container {
-    display: none;
-  }
-}
-
-@media (max-width: 460px) {
-  .nav-links {
-    display: none;
-  }
-
-  .nav-links-container {
-    justify-content: center;
-  }
-
-  .nav-icon {
-    margin: 0;
   }
 }
