@@ -3,21 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="./styles/summary.css" />
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/nav.css" />
-    <link rel="stylesheet" href="./fonts.css" />
     <script src="https://www.w3schools.com/lib/w3.js"></script>
-
     <script src="./scripts/w3-include.js"></script>
     <script src="./scripts/summary.js"></script>
     <script src="./scripts/header.js"></script>
-
     <title>Dashboard</title>
   </head>
-  <body onload="includeHTML()">
+  <body onload="initSummary()">
     <div w3-include-html="./header.html"></div>
     <div w3-include-html="./nav.html"></div>
 
@@ -80,13 +76,14 @@
 
       <div class="greeting-text">
         <h1>Good morning,</h1>
-        <h2>Guest User</h2>
+        <h2 id="nameOfUser">Guest User</h2>
       </div>
     </section>
 
     <!-- Willkommensnachricht nach Login (daniel) -->
 
     <div id="welcomeMsg" class="welcomeMsg"></div>
+    <script src="scripts/login.js"></script>
     <script>
       w3.includeHTML(function () {});
     </script>
