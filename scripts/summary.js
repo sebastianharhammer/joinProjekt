@@ -1,8 +1,8 @@
 async function initSummary() {
     await includeHTML();
-    const urlParams = new URLSearchParams(window.location.search);
-    const firstName = urlParams.get('firstName');
-    const lastName = urlParams.get('lastName');
+    let urlParams = new URLSearchParams(window.location.search);
+    let firstName = urlParams.get('firstName');
+    let lastName = urlParams.get('lastName');
     if (firstName && lastName) {
         showUserGreeting(firstName, lastName);
     } else {
@@ -11,24 +11,8 @@ async function initSummary() {
 }
 
 
-async function fetchUser(userId) {
-    try {
-        const userPath = `/signed_users/user${userId}.json`;
-        const response = await fetch(BASE_URL + userPath);
-        const userData = await response.json();
-        if (userData) {
-            console.log("Benutzerdaten erfolgreich abgerufen:", userData);
-        } else {
-            console.error("Benutzer nicht gefunden in Firebase");
-        }
-    } catch (error) {
-        console.error("Fehler beim Abrufen der Benutzerdaten aus Firebase:", error);
-    }
-    
-}
-
 function showUserGreeting(firstName, lastName) {
-    const greetingName = document.getElementById('nameOfUser');
+    let greetingName = document.getElementById('nameOfUser');
     if (greetingName) {
         greetingName.innerHTML = `<p>${firstName} ${lastName}</p>`;
     } else {
