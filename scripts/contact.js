@@ -17,6 +17,7 @@ function fetchContactsFromFirebase() {
     if (data) {
       contactsData = Object.values(data);
       renderSortedContacts(contactsData);
+      renderRightSideContainer();
     } else {
       console.log("Keine Kontakte gefunden.");
     }
@@ -64,37 +65,60 @@ function renderSortedContacts(contacts) {
 
   contactsHTML += `</div>`;
   content.innerHTML = contactsHTML;
-
-  addContactClickHandlers();
 }
 
-// Detailansicht ein- und ausblenden
 function toggleContactDetail(contactId) {
   const contactItems = document.querySelectorAll(".contact-item");
-  const detailView = document.getElementById("contact-detail");
-  const selectedContact = contactsData.find((contact) => contact.id === contactId);
+  const detailViewContainer = document.getElementById("contact-big");
+  const selectedContact = contactsData.find(
+    (contact) => contact.id === contactId
+  );
   const clickedItem = document.getElementById(`contact-item-${contactId}`);
 
-  // Wenn bereits geöffnet, schließen und Auswahl entfernen
   if (clickedItem.classList.contains("selected")) {
     clickedItem.classList.remove("selected");
-    detailView.style.display = "none";
-    detailView.innerHTML = "";
+    detailViewContainer.innerHTML = `
+      <div id="contact-headline-container">
+        <h3 id="contact-headline">Contacts</h3>
+        <h2 id="bwat-headline">Better with a team</h2>
+      </div>
+    `;
   } else {
-    // Alle vorherigen Auswahl entfernen
     contactItems.forEach((item) => item.classList.remove("selected"));
     clickedItem.classList.add("selected");
 
-    // Detailansicht aktualisieren
-    detailView.style.display = "block";
-    detailView.innerHTML = `
+    detailViewContainer.innerHTML = /*html*/ `
+      <div id="contact-headline-container">
+        <h3 id="contact-headline">Contacts</h3>
+        <h2 id="bwat-headline">Better with a team</h2>
+      </div>
       <div class="contact-detail">
-          <h2>${selectedContact.firstName} ${selectedContact.lastName}</h2>
-          <p><strong>Email:</strong> <a href="mailto:${selectedContact.email}">${selectedContact.email}</a></p>
+      <div class="contact-detail-header">
+          <div class="contact-avatar" style="background-color: ${getRandomColor()};">
+              ${getInitials(
+                selectedContact.firstName,
+                selectedContact.lastName
+              )}
+          </div>
+          <div class="contact-detail-header-right">
+            <div class="contact-detail-header-right-headline">
+            ${selectedContact.firstName} ${selectedContact.lastName}</div>
+            <div class="detail-actions">
+              <button onclick="editContact(${contactId})"><img id="edit-contact-img" src="./img/edit.svg">Edit</button>
+              <button onclick="deleteContact(${contactId})"><img id="delete-contact-img" src="./img/delete.svg">Delete</button>
+            </div>
+          </div>
+      </div>
+
+          <div>
+          <div>
+          <p><strong>Email:</strong> <a href="mailto:${
+            selectedContact.email
+          }">${selectedContact.email}</a></p>
+          </div>
+          <div>
           <p><strong>Phone:</strong> ${selectedContact.phone}</p>
-          <div class="detail-actions">
-              <button onclick="editContact(${contactId})">Edit</button>
-              <button onclick="deleteContact(${contactId})">Delete</button>
+          </div>
           </div>
       </div>
     `;
@@ -129,23 +153,6 @@ function renderRightSideContainer() {
         </div>
     </div>
   `;
-}
-
-function showContactDetails(contactId) {
-  const selectedContact = contactsData.find(
-    (contact) => contact.id === contactId
-  );
-
-  if (selectedContact) {
-    const detailView = document.getElementById("contact-detail");
-    detailView.innerHTML = `
-      <div class="contact-detail">
-          <h2>${selectedContact.firstName} ${selectedContact.lastName}</h2>
-          <p><strong>E-Mail:</strong> <a href="mailto:${selectedContact.email}">${selectedContact.email}</a></p>
-          <p><strong>Telefon:</strong> ${selectedContact.phone}</p>
-      </div>
-    `;
-  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
