@@ -1,4 +1,5 @@
 let signedUsersArrayLogin="[]";
+let currentUser = null;
 
 function init(){
     showStartSlide();
@@ -43,7 +44,14 @@ async function loadSignedUsers(path){
 
 function loginGuest(event){
     event.preventDefault();
-    window.location.href = 'summary.html?welcomeMsg=' + encodeURIComponent('');
+    let guestUser = {
+        firstName: "Guest",
+        lastName: "User"
+    }
+    localStorage.setItem('currentUser',JSON.stringify(guestUser));
+    currentUser = guestUser
+    console.log("Gastbenutzer erfolgreich gesetzt:", currentUser);
+    window.location.href = 'summary.html';
 }
 
 async function loginUser(event) {
@@ -52,14 +60,16 @@ async function loginUser(event) {
     let userPassword = document.getElementById('loginPasswordUser').value;
     let rememberMe = document.getElementById('checkboxLogin').checked;
     let signedUser = signedUsersArrayLogin.find(u => u.email === userMail && u.password === userPassword);
-
     if (signedUser) {
         try {
             await changeLoginStatus(signedUser);
-            forwardToSummary(signedUser);
+            localStorage.setItem('currentUser', JSON.stringify(signedUser));
+            currentUser = signedUser;
+            console.log("Aktueller Benutzer:", currentUser);
             if (rememberMe) {
                 saveData(signedUser);
             }
+            forwardToSummary(signedUser);
         } catch (error) {
             console.error('Fehler beim Ändern des Login-Status:', error);
         }
@@ -104,6 +114,8 @@ function saveData(user) {
         password: user.password
     }));
 }
+
+
 
 
 function showDomOfFailedLogin(){

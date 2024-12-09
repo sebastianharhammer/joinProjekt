@@ -98,11 +98,17 @@ header {
 
 /* Benutzerprofil */
 #header-current-user {
+<<<<<<< HEAD
   display: flex;
   justify-content: flex-end;
   padding: 10px;
   color: rgba(18, 18, 232, 0.997);
   z-index: 999;
+=======
+    padding: 10px;
+    color: rgba(18, 18, 232, 0.997);
+    z-index: 999;
+>>>>>>> 2fe5efb28cdb6fb9c3054499fc4a29b95ea80352
 }
 
 #header-current-user:hover {

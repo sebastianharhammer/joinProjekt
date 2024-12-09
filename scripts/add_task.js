@@ -276,7 +276,6 @@ function addSubtask() {
     
         const subtaskInput = document.getElementById("subtaskInput");
         const subtasksContent = document.getElementById("subtasksContent");
-      
         if (subtaskInput.value.trim() !== "") {
           subtaskIdCounter++;
           const liId = "subtask-" + subtaskIdCounter;
