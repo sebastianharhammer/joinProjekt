@@ -31,8 +31,15 @@ async function moveTo(category) {
     const taskIndex = taskArray.findIndex(task => task.id === currentDraggedElement);
     if (taskIndex !== -1) {
         taskArray[taskIndex].status = category;
+        if(currentUser.firstName === "Guest" && currentUser.lastName === "User"){
+            console.log("Gastbenutzer verschiebt Aufgabe lokal.");
+            updateTaskHTML(); 
+        }
+        else{
+        console.log("Registrierter Benutzer aktualisiert Firebase.");
         await updateTaskInFirebase(taskArray[taskIndex]);
         updateTaskHTML();
+        }
     }
 }
 
