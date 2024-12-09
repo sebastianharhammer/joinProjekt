@@ -1,12 +1,13 @@
 async function initSummary() {
     await includeHTML();
-    let urlParams = new URLSearchParams(window.location.search);
-    let firstName = urlParams.get('firstName');
-    let lastName = urlParams.get('lastName');
-    if (firstName && lastName) {
-        showUserGreeting(firstName, lastName);
+    let storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+        currentUser = JSON.parse(storedUser);
+        console.log("Aktueller Benutzer aus Local Storage:", currentUser);
+        showUserGreeting(currentUser.firstName, currentUser.lastName);
     } else {
-        console.error("no registered user found");
+        console.error("Kein Benutzer im Local Storage gefunden.");
+        window.location.href = 'login.html?msg=' + encodeURIComponent('Bitte melden Sie sich erneut an.');
     }
 }
 
