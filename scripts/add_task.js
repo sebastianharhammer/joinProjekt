@@ -72,7 +72,7 @@ function createTask(status, event) {
 async function pushTaskToFirebase(newTask) {
     try {
         let key = newTask.id;  
-        let response = await fetch(BASE_URL + `/testingTasks/${key}.json`, {
+        let response = await fetch(BASE_URL + `/tasks/${key}.json`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
