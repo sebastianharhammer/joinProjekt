@@ -1,5 +1,5 @@
-let firstName = "";
-let lastName = "";
+let headerFirstName = "";
+let headerLastName = "";
 
 window.addEventListener("load", function() {
     HeaderGetUser();
@@ -14,16 +14,16 @@ function showUserOptions() {
 function HeaderGetUser() {
     let object = localStorage.getItem("currentUser");
     let objectToJson = JSON.parse(object);
-    firstName = objectToJson.firstName;
-    lastName = objectToJson.lastName;
-    console.log("Header Local Storage Name: " + firstName + " - " + lastName);
-    headerDisplayName(firstName, lastName);
+    headerFirstName = objectToJson.firstName;
+    headerLastName = objectToJson.lastName;
+    console.log("Header Local Storage Name: " + headerFirstName + " - " + headerLastName);
+    headerDisplayName(headerFirstName, headerLastName);
 }
 
 
 function headerDisplayName(firstName, lastName) {
-        firstNameShort = firstName.trim().charAt(0).toUpperCase();
-        lastNameShort = lastName.trim().charAt(0).toUpperCase();
+        let headerFirstNameShort = firstName.trim().charAt(0).toUpperCase();
+        let headerLastNameShort = lastName.trim().charAt(0).toUpperCase();
         let userId = document.getElementById('header-user-name');
-        userId.innerHTML = `${firstNameShort}${lastNameShort}`;
+        userId.innerHTML = `${headerFirstNameShort}${headerLastNameShort}`;
 }
