@@ -1,15 +1,24 @@
 let headerFirstName = "";
 let headerLastName = "";
 
-window.addEventListener("load", function() {
-    HeaderGetUser();
-});
-
 function showUserOptions() {
     let userOption = document.getElementById('user-overlay');
     userOption.classList.toggle('d-none')
 }
 
+
+function waitForElement(selector, callback, interval = 100) {
+    const checkExist = setInterval(() => {
+        const element = document.querySelector(selector);
+        if (element) {
+            clearInterval(checkExist);
+            callback();
+        }
+    }, interval);
+}
+waitForElement('#header-user-name', () => {
+    HeaderGetUser();
+});
 
 function HeaderGetUser() {
     let object = localStorage.getItem("currentUser");
