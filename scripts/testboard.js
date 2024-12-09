@@ -19,6 +19,17 @@ function loadCurrentUser(){
     }
 }
 
+async function fetchTasks(path = "") {
+    let response = await fetch(BASE_URL + path + ".json");
+    let responseToJson = await response.json();
+    console.log(responseToJson)
+    if (responseToJson) {
+        taskArray = Object.values(responseToJson);
+    }
+    console.log(taskArray)
+    updateTaskHTML();
+} 
+
 function startDragging(id) {
     currentDraggedElement = id;
 }
@@ -59,17 +70,6 @@ async function updateTaskInFirebase(task) {
     }
 }
 
-
-async function fetchTasks(path = "") {
-    let response = await fetch(BASE_URL + path + ".json");
-    let responseToJson = await response.json();
-    console.log(responseToJson)
-    if (responseToJson) {
-        taskArray = Object.values(responseToJson);
-    }
-    console.log(taskArray)
-    updateTaskHTML();
-}
 
 
 

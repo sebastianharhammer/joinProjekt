@@ -20,6 +20,7 @@ let categories = [
       "bg-color": "#1FD7C1",
     },
   ];
+  let assignedUser = [];
 
 
 function init() {
@@ -65,6 +66,7 @@ function createTask(status, event) {
     assignedUserArr = [];
     subtasksArr = [];
 }
+
 
 
 async function pushTaskToFirebase(newTask) {
@@ -276,6 +278,7 @@ function addSubtask() {
     
         const subtaskInput = document.getElementById("subtaskInput");
         const subtasksContent = document.getElementById("subtasksContent");
+      
         if (subtaskInput.value.trim() !== "") {
           subtaskIdCounter++;
           const liId = "subtask-" + subtaskIdCounter;
