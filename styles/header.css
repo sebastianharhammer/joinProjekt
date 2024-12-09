@@ -157,7 +157,6 @@ header {
 @media (max-width: 770px) {
   #overlay-top {
     justify-content: flex-end; /* Elemente nach links verschieben */
-    padding: 10px 15px;
   }
 
   #headline-top {

@@ -1,17 +1,16 @@
 body {
   margin: 0;
   font-family: "Inter", Sans-Serif;
+  overflow-y: auto;
 }
 .outline {
   outline: 1px solid var(--darkLightBlue);
 }
 
 .addtask-fullscreen-content {
-  position: fixed;
   padding-top: 102px;
-  padding-left: 232px;
+
   display: flex;
-<<<<<<< HEAD
   justify-content: center;
   align-items: center;
   background-color: #f6f7f8;
@@ -37,8 +36,6 @@ body {
 }
 .container {
   padding: 20px;
-=======
->>>>>>> 677b3d9b3e24e0e075e6e0cebeab2bc43b99b4b4
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -63,7 +60,7 @@ body {
 }
 
 .dropdown-options {
-  display: none; 
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
@@ -157,7 +154,7 @@ body {
 }
 
 label {
-  display: inline-block;
+  display: -webkit-box;
   font-weight: 400;
   font-size: 20px;
   font-weight: 400;
@@ -314,12 +311,6 @@ ul {
   position: relative;
 }
 
-#categoryInput {
-  z-index: 1001;
-}
-#addTaskCategory img {
-  z-index: 1002;
-}
 #dropDownCategoryMenu {
   position: absolute;
   z-index: 1;
@@ -703,7 +694,7 @@ ul {
   }
   .addtask-main-content h1 {
     width: 440px;
-    text-align: center;
+
     margin: 0 auto;
   }
   .separator {
@@ -715,7 +706,7 @@ ul {
     align-items: center;
   }
   .addtask-buttons {
-      justify-content: flex-end;
+    justify-content: flex-end;
   }
 }
 
@@ -728,6 +719,7 @@ ul {
     margin-bottom: 32px;
   }
   .addtask-main-content h1 {
+    width: 210px;
     font-size: 47px;
     margin: 0 auto;
   }
@@ -735,7 +727,6 @@ ul {
   .addtask-form-right-bottom {
     font-size: 16px;
     margin: 0 auto;
-    text-align: center;
   }
   .subtask-icon {
     visibility: visible;
@@ -752,12 +743,11 @@ ul {
     align-items: center;
   }
   .addtask-main-content h1 {
-    width: 280px;
+    width: 210px;
     margin: 0 auto;
-    text-align: center;
   }
   .prio-btn-content {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
   }
   .addtask-buttons {
@@ -773,47 +763,92 @@ ul {
 @media (max-width: 576px) {
   /* Smartphones hoch */
   .addtask-form-container {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     align-items: center;
     padding: 0 8px;
   }
   .addtask-main-content h1 {
-    font-size: 35px;
-    width: 240px;
+    font-size: 32px; /* Reduziert die Schriftgröße für kleine Bildschirme */
+    width: 200px; /* Schrumpft das Element */
     margin: 0 auto;
     text-align: center;
   }
   .addtask-buttons {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px; /* Verringerte Lücke zwischen Buttons */
     align-items: center;
   }
   .addtask-bottom-container {
     align-items: center;
+    gap: 12px;
+    padding: 0 8px;
+  }
+  .input-addtask {
+    font-size: 16px; /* Kleinere Schriftgröße für Eingabefelder */
+    width: 100%; /* Eingabefelder nehmen die volle Breite ein */
+    padding: 8px 16px; /* Reduzierte Polsterung */
+    max-height: 40px; /* Eingabefelder schrumpfen */
+    border-radius: 8px; /* Angepasste Rundung */
   }
 }
 
 @media (max-width: 440px) {
   /* Sehr kleine Smartphones */
+
+  .subtask-input-wrapper input {
+    width: 75%;
+  }
+
+  #dropDownCategoryMenu {
+    padding-top: 0;
+  }
+
+  .addtask-main-content {
+    padding: 0;
+  }
+
+  .field-text-flex {
+    margin-bottom: 0;
+  }
+
   .addtask-main-content h1 {
-    font-size: 28px;
-    width: 200px;
+    padding: 0;
+  }
+
+  .addtask-main-content h1 {
+    font-size: 28px; /* Noch kleinere Schriftgröße */
+    width: 180px;
     margin: 0 auto;
     text-align: center;
   }
   .addtask-form-container {
-    margin-bottom: 16px;
-    padding: 0 8px;
+    margin-bottom: 12px;
+    padding: 0 6px; /* Engeres Padding für sehr kleine Bildschirme */
     align-items: center;
     width: 100%;
   }
   .addtask-bottom-container {
-    gap: 12px;
-    padding: 0 8px;
+    gap: 8px; /* Reduzierte Lücke für sehr enge Layouts */
+    padding: 0 6px;
     align-items: center;
   }
   .addtask-buttons {
-    gap: 8px;
+    gap: 6px; /* Buttons enger zusammenrücken */
     align-items: center;
+  }
+  .prio-btn-content {
+    /* Prioritäts-Buttons in einer Spalte */
+    gap: 8px;
+  }
+  .input-addtask {
+    font-size: 14px; /* Noch kleinere Schriftgröße für sehr kleine Geräte */
+    width: 70%; /* Volle Breite für Eingabefelder */
+    padding: 6px 12px; /* Engere Polsterung */
+    max-height: 36px; /* Maximale Höhe verringert */
+    border-radius: 6px; /* Angepasste Rundung für kleine Geräte */
+  }
+
+  textarea {
+    width: 70%;
   }
 }
