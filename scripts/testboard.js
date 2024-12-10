@@ -268,7 +268,7 @@ function findClassOfTaskCat(task) {
     const taskButton = document.getElementById(`taskButton-${task.id}`);
     const category = task.taskCategory || "Undefined Category";
 
-    taskButton.classList.remove("task-category-technicalTask", "task-category-userExperience");
+    taskButton.classList.remove("task-category-technicalTask", "task-category-userExperience", "task-category-undefined");
     if (category === "Technical Task") {
         taskButton.classList.add("task-category-technicalTask");
     } else if (category === "User Story") {
@@ -276,7 +276,9 @@ function findClassOfTaskCat(task) {
     } else {
         taskButton.classList.add("task-category-undefined");
     }
+    taskButton.textContent = category;
 }
+
 
 
 function findPrioIcon(task){
@@ -349,10 +351,7 @@ function createTaskHTML(task) {
         <p id="amountOfSubtasks-${task.id}" class="inter-font">0</p>
         <p class="inter-font">/${amountOfSubtasks} Subtasks</p>
         </div>
-        <div class="subtasksList" id="subtaskslist-${task.id}">
-            <div>${subtasks}
-            </div>
-        </div>
+
         <section class="namesAndPrio">
         <div class="userNameCircles" id="userNameCircles-${task.id}">
         </div>

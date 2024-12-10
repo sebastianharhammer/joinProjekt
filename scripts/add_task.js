@@ -216,9 +216,10 @@ function returnArrayContacts() {
 
 }
 function assignUser(firstName, lastName) {
-    assignedUser.push({
-        "Firstname":firstName,
-        "Lastname":lastName
+    assignedUserArr.push({
+        firstName: firstName,
+        lastName: lastName,
+        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}` // Initialen generieren
     });
 }
 
