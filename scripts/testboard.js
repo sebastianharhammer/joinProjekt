@@ -7,8 +7,8 @@ function init() {
     loadBoardNavigator();
 }
 
-const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
-let taskArray = [];
+
+
 let currentDraggedElement;
 
 function loadCurrentUser(){
@@ -242,58 +242,71 @@ function createNoToDosdiv(){
 function createOwnerCircles(task) {
     let userNameCircles = document.getElementById(`userNameCircles-${task.id}`);
     userNameCircles.innerHTML = '';
+
+    if (!task.owner || !Array.isArray(task.owner) || task.owner.length === 0) {
+        userNameCircles.innerHTML = `
+            <svg width="34" height="34">
+                <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
+                <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">N/A</text>
+            </svg>
+        `;
+        return;
+    }
     for (let owner of task.owner) {
         let initialsOfOwner = `${owner.firstName.charAt(0)}${owner.lastName.charAt(0)}`.toUpperCase();
-        userNameCircles.innerHTML += /*html*/`
+        userNameCircles.innerHTML += /*html*/ `
             <svg width="34" height="34">
                 <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(255,122,0)" />
                 <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${initialsOfOwner}</text>
             </svg>
-        `
+        `;
     }
 }
 
+
 function findClassOfTaskCat(task) {
-        const taskButton = document.getElementById(`taskButton-${task.id}`);
-        if (task.taskCategory === "Technical Task") {
-            taskButton.classList.add("task-category-technicalTask");
-        } else if (task.taskCategory === "User Story") {
-            taskButton.classList.add("task-category-userExperience");
-        }
+    const taskButton = document.getElementById(`taskButton-${task.id}`);
+    const category = task.taskCategory || "Undefined Category";
+
+    taskButton.classList.remove("task-category-technicalTask", "task-category-userExperience");
+    if (category === "Technical Task") {
+        taskButton.classList.add("task-category-technicalTask");
+    } else if (category === "User Story") {
+        taskButton.classList.add("task-category-userExperience");
+    } else {
+        taskButton.classList.add("task-category-undefined");
+    }
 }
+
 
 function findPrioIcon(task){
     let prioIcon = document.getElementById(`priority-${task.id}`);
     if(task.prio === "medium"){
         prioIcon.src = "./img/prio-mid.png"
-    }else if(task.prio === "high"){
+    }else if(task.prio === "urgent"){
         prioIcon.src = "./img/prio-high.png"
     }else{
         prioIcon.src = "./img/prio-low.png"
     }
 }
 
-function getOwners(task) {
-    let owners = [];
-    for (let i = 0; i < task.owner.length; i++) {
-        let owner = task.owner[i];
-        owners.push(`${owner.firstName} ${owner.lastName}`);
-    }
-    return owners.join(", ")
-}
+
 
 function getSubTasks(task) {
-let subtTasksHTML = "";
-for(let i=0; i < task.subtasks.length; i++){
-    let subtask = task.subtasks[i];
-    subtTasksHTML += /*html*/`
-        <div class="eachSubtaskBox">
-            <input type="checkbox" id="subtask-${task.id}-${i}" onchange="updateCompletedSubtasks(${task.id})">
-            <label for="subtask-${task.id}-${i}">${subtask}</label>
-        </div>
-    `
-}
-return subtTasksHTML;
+    if (!task.subtasks || task.subtasks.length === 0) {
+        return "";
+    }
+    let subtTasksHTML = "";
+    for (let i = 0; i < task.subtasks.length; i++) {
+        let subtask = task.subtasks[i];
+        subtTasksHTML += /*html*/ `
+            <div class="eachSubtaskBox">
+                <input type="checkbox" id="subtask-${task.id}-${i}" onchange="updateCompletedSubtasks(${task.id})">
+                <label for="subtask-${task.id}-${i}">${subtask}</label>
+            </div>
+        `;
+    }
+    return subtTasksHTML;
 }
 
 function updateCompletedSubtasks(taskId){
@@ -311,9 +324,13 @@ if(renderCompleted){
 }
 }
 
-function findAmountOfSubtasks(task){
+function findAmountOfSubtasks(task) {
+    if (!task.subtasks || task.subtasks.length === 0) {
+        return "";
+    }
     return task.subtasks.length;
 }
+
 
 
 function createTaskHTML(task) {

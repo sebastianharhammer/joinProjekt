@@ -91,6 +91,18 @@
     color: white;
 }
 
+.task-category-undefined{
+    height: 27px;
+    width: 110px;
+    background-color: rgb(31,215,193);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: red;
+}
+
 .open-sans{
     font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;

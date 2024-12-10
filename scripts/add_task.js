@@ -1,4 +1,4 @@
-const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+
 let categoriesContainerClick = false;
 let contacts = [];
 let selectedPriority = "";
@@ -30,9 +30,8 @@ function init() {
     renderAddTaskHTML();
 }
 
-function createTask(status, event) {
+async function createTask(status, event) {
     event.preventDefault();
-
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('addTaskInputDueDate').value;
@@ -40,32 +39,60 @@ function createTask(status, event) {
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
     const assignedUsers = assignedUser;
-
     if (!title || !description || !date || !priority || assignedUsers.length === 0) {
         console.error("All fields are required!");
         return;
     }
+    try {
+        const nextId = await getNextTaskId();
+        let newTask = {
+            id: nextId,
+            status: "todo",
+            title: title,
+            description: description,
+            date: date,
+            taskCategory: category || "Undefined Category",
+            prio: priority,
+            subtasks: subtasks,
+            owner: assignedUserArr,
+        };
 
-    let newTask = {
-        id: localTasks.length,
-        status: status,
-        title: title,
-        description: description,
-        date: date,
-        taskCategory: category,
-        priority: priority,
-        subtasks: subtasks,
-        owner: assignedUserArr,
-    };
-
-    localTasks.push(newTask);
-    pushTaskToFirebase(newTask);
-    console.log('Task created:', newTask);
-    document.querySelector('form').reset();
-    selectedPriority = "";
-    assignedUserArr = [];
-    subtasksArr = [];
+        taskArray.push(newTask); // Neuer Task wird in das taskArray gepusht
+        await pushTaskToFirebase(newTask); // Warten, bis der Task erfolgreich gepusht wurde
+        console.log('Task created:', newTask);
+        console.log('Updated Task Array:', taskArray);
+        window.location.href = "testboard.html";
+    } catch (error) {
+        console.error("Failed to create the task:", error);
+    }
 }
+
+
+
+async function getNextTaskId() {
+    try {
+        const response = await fetch(BASE_URL + "/tasks.json", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`Error! Status: ${response.status}`);
+        }
+        const tasks = await response.json();
+        const taskIds = tasks ? Object.values(tasks).map(task => task.id) : [];
+        const maxId = taskIds.length > 0 ? Math.max(...taskIds) : 0; // Höchste vorhandene ID ermitteln
+        return maxId + 1;
+    } catch (error) {
+        console.error("Failed to fetch tasks for ID generation:", error);
+        return 20;
+    }
+}
+
+
+
+
 
 
 
