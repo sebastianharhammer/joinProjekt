@@ -38,11 +38,13 @@ async function createTask(status, event) {
     const category = getCategory();
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
-    const assignedUsers = assignedUser;
+    const assignedUsers = [...assignedUserArr]; // Hier alle ausgewählten Benutzer kopieren
+
     if (!title || !description || !date || !priority || assignedUsers.length === 0) {
         console.error("All fields are required!");
         return;
     }
+
     try {
         const nextId = await getNextTaskId();
         let newTask = {
@@ -54,9 +56,8 @@ async function createTask(status, event) {
             taskCategory: category || "Undefined Category",
             prio: priority,
             subtasks: subtasks,
-            owner: assignedUserArr,
+            owner: assignedUsers // Die vollständige Liste der zugewiesenen Benutzer
         };
-
         taskArray.push(newTask); // Neuer Task wird in das taskArray gepusht
         await pushTaskToFirebase(newTask); // Warten, bis der Task erfolgreich gepusht wurde
         console.log('Task created:', newTask);
@@ -66,6 +67,7 @@ async function createTask(status, event) {
         console.error("Failed to create the task:", error);
     }
 }
+
 
 
 

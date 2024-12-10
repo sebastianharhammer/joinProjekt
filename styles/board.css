@@ -19,7 +19,7 @@
     height: 700px;
     margin-top: 0;
     background-color: rgb(246,247,248);
-    border: 1px solid black;
+    border-radius: 24px;
 }
 
 .dragarea-inProgress{
@@ -30,7 +30,7 @@
     height: 700px;
     margin-top: 0;
     background-color: rgb(246,247,248);
-    border: 1px solid black;
+    border-radius: 24px;
 }
 
 .dragarea-feedback{
@@ -41,7 +41,7 @@
     height: 700px;
     margin-top: 0;
     background-color: rgb(246,247,248);
-    border: 1px solid black;
+    border-radius: 24px;
 }
 
 .dragarea-done{
@@ -52,15 +52,19 @@
     height: 700px;
     margin-top: 0;
     background-color: rgb(246,247,248);
-    border: 1px solid black;
+    border-radius: 24px;
 }
 
-.todo{
+.todo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     padding: 8px;
     max-height: 400px;
     background-color: #FFFFFF;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px 3px rgba(0,0,0,0.22);
+    border-radius: 24px;
+    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.22);
+    max-width: 320px;
 }
 
 .dragAreaHighlight{

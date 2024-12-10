@@ -252,12 +252,14 @@ function createOwnerCircles(task) {
         `;
         return;
     }
+
     for (let owner of task.owner) {
-        let initialsOfOwner = `${owner.firstName.charAt(0)}${owner.lastName.charAt(0)}`.toUpperCase();
-        userNameCircles.innerHTML += /*html*/ `
+        userNameCircles.innerHTML += `
             <svg width="34" height="34">
                 <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(255,122,0)" />
-                <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${initialsOfOwner}</text>
+                <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
+                    ${owner.initials}
+                </text>
             </svg>
         `;
     }
