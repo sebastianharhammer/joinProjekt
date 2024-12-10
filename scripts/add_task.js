@@ -38,7 +38,7 @@ async function createTask(status, event) {
     const category = getCategory();
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
-    const assignedUsers = [...assignedUserArr]; // Hier alle ausgewählten Benutzer kopieren
+    const assignedUsers = [...assignedUserArr];
 
     if (!title || !description || !date || !priority || assignedUsers.length === 0) {
         console.error("All fields are required!");
@@ -56,12 +56,10 @@ async function createTask(status, event) {
             taskCategory: category || "Undefined Category",
             prio: priority,
             subtasks: subtasks,
-            owner: assignedUsers // Die vollständige Liste der zugewiesenen Benutzer
+            owner: assignedUsers
         };
-        taskArray.push(newTask); // Neuer Task wird in das taskArray gepusht
-        await pushTaskToFirebase(newTask); // Warten, bis der Task erfolgreich gepusht wurde
-        console.log('Task created:', newTask);
-        console.log('Updated Task Array:', taskArray);
+        taskArray.push(newTask);
+        await pushTaskToFirebase(newTask);
         window.location.href = "testboard.html";
     } catch (error) {
         console.error("Failed to create the task:", error);
@@ -93,11 +91,6 @@ async function getNextTaskId() {
 }
 
 
-
-
-
-
-
 async function pushTaskToFirebase(newTask) {
     try {
         let key = newTask.id;  
@@ -114,8 +107,6 @@ async function pushTaskToFirebase(newTask) {
         console.error("Failed to add task:", error);
     }
 }
-
-
 
 
 function handleDropdownInteraction() {
@@ -221,7 +212,7 @@ function assignUser(firstName, lastName) {
     assignedUserArr.push({
         firstName: firstName,
         lastName: lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}` // Initialen generieren
+        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`
     });
 }
 
@@ -247,51 +238,50 @@ function openCategories() {
     icon.style.transform = "rotate(180deg)";
     categoryList.innerHTML = "";
     if (!categoriesContainerClick) {
-      categoriesContainerClick = true;
-      categoryList.style.border = "1px solid #CDCDCD";
-      renderCategories();
+    categoriesContainerClick = true;
+    categoryList.style.border = "1px solid #CDCDCD";
+    renderCategories();
     } else {
-      categoriesContainerClick = false;
-      categoryList.style.border = "0px";
-      hideCategories();
+    categoriesContainerClick = false;
+    categoryList.style.border = "0px";
+    hideCategories();
     }
-    document.getElementById("categoryInput").classList.toggle("outline");
-  }
+    document.getElementById("categoryInput").classList.toggle("outline");}
 
-  function hideCategories() {
+function hideCategories() {
     categoriesContainerClick = false;
     let categoryList = document.getElementById("dropDownCategoryMenu");
     let icon = document.getElementById("arrowDropMenuCategory");
     icon.style.transform = "rotate(0deg)";
     categoryList.innerHTML = "";
-  }
+}
 
-  function renderCategories() {
+function renderCategories() {
     let categoryContainer = document.getElementById("dropDownCategoryMenu");
     categoryContainer.innerHTML = "";
-  
+
     for (let i = 0; i < categories.length; i++) {
-      const category = categories[i]["category"];
-      const catColor = categories[i]["bg-color"];
-  
-      categoryContainer.innerHTML += `
-          <div class="addtask-category" onclick="selectCategory('${category}', '${catColor}')">
-            ${category}
-          </div>
+    const category = categories[i]["category"];
+    const catColor = categories[i]["bg-color"];
+
+    categoryContainer.innerHTML += `
+        <div class="addtask-category" onclick="selectCategory('${category}', '${catColor}')">
+        ${category}
+        </div>
         `;
     }
-  }
-  function selectCategory(categoryTask, catColor) {
+}
+function selectCategory(categoryTask, catColor) {
     let categoryInput = document.getElementById("categoryInput");
     let categoryList = document.getElementById("dropDownCategoryMenu");
-  
+
     categoryInput.value = categoryTask;
     hideCategories();
     categoryList.style.border = "0px";
     categoryArr = [];
     categoryArr.push(categoryTask);
     categoryArr.push(catColor);
-  }
+}
 
 function setPriority(priority) {
     const priorities = ['urgent', 'medium', 'low'];
@@ -308,68 +298,66 @@ function addSubtask() {
     
         const subtaskInput = document.getElementById("subtaskInput");
         const subtasksContent = document.getElementById("subtasksContent");
-      
         if (subtaskInput.value.trim() !== "") {
-          subtaskIdCounter++;
-          const liId = "subtask-" + subtaskIdCounter;
-          const spanId = "span-" + subtaskIdCounter;
-          const inputId = "input-" + subtaskIdCounter;
-          const newSubtaskHTML = /*html*/ `
-          <li id="${liId}" class="subtask-item">
-              <div class="dot"></div>
-              <div class="subtask-text">
-                  <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${subtaskInput.value}</span>
-              </div>
-              <div class="subtask-icon">
-                  <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
-                  <div class="divider"></div>
-                  <img onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
-              </div>
-          </li>
-      `;
-          subtasksArr.push({
+        subtaskIdCounter++;
+        const liId = "subtask-" + subtaskIdCounter;
+        const spanId = "span-" + subtaskIdCounter;
+        const inputId = "input-" + subtaskIdCounter;
+        const newSubtaskHTML = /*html*/ `
+        <li id="${liId}" class="subtask-item">
+            <div class="dot"></div>
+            <div class="subtask-text">
+                <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${subtaskInput.value}</span>
+            </div>
+            <div class="subtask-icon">
+                <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
+                <div class="divider"></div>
+                <img onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
+            </div>
+        </li>
+        `;
+        subtasksArr.push({
             checkbox_img: "../assets/img/checkbox-empty.svg",
             subtask: `${subtaskInput.value}`,
-          });
-          subtasksEdit.push({
+        });
+        subtasksEdit.push({
             checkbox_img: "../assets/img/checkbox-empty.svg",
             subtask: `${subtaskInput.value}`,
-          });
-          subtasksContent.innerHTML += newSubtaskHTML;
-          subtaskInput.value = "";
+        });
+        subtasksContent.innerHTML += newSubtaskHTML;
+        subtaskInput.value = "";
         }
         document.getElementById("clear-add-icons").classList.add("d-none");
         document.getElementById("subtasks-plus-icon").classList.remove("d-none");
-      
 }
 
 function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
-  
+
     const editSubtaskHTML = /*html*/ `
-          <div class="subtask-input-wrapper edit-mode">
-              <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
-              <div class="input-icons-edit">
-                  <img src ="../assets/img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
-                  <div class="divider"></div>
-                  <img src="../assets/img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
-              </div>
-          </div>
-      `;
+        <div class="subtask-input-wrapper edit-mode">
+            <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
+            <div class="input-icons-edit">
+                <img src ="../assets/img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
+                <div class="divider"></div>
+                <img src="../assets/img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
+            </div>
+        </div>
+    `;
 }
 
 function deleteSubtask(liId) {
     const li = document.getElementById(liId);
     li.remove();
-  }
+}
 
 
 function showClearButton() {
     document.getElementById("clear-add-icons").classList.remove("d-none");
     document.getElementById("subtasks-plus-icon").classList.add("d-none");
-  }
+}
 
 function clearSubtaskInput() {
     document.getElementById("subtaskInput").value = "";
