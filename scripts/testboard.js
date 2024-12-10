@@ -349,7 +349,7 @@ function createTaskHTML(task) {
         <p id="title${task.id}" class= "open-sans-bold">${task.title}</p>
         <p id="description${task.id}" class="inter-font">${task.description}</p>
         <div class="progressBarDiv">
-        <progress value="32" max="100"> 32% </progress>
+        <progress class="progressBarBoard" value="32" max="100"> 32% </progress>
         <p id="amountOfSubtasks-${task.id}" class="inter-font">0</p>
         <p class="inter-font">/${amountOfSubtasks} Subtasks</p>
         </div>
