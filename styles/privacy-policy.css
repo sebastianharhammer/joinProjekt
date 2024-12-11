@@ -46,27 +46,25 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Media Query: Sidebar ausblenden unter 1250px */
 @media (max-width: 1250px) {
   #overlay-left {
-    display: none; /* Versteckt die Sidebar */
+    display: none;
   }
 
   .container {
-    margin: 20px; /* Verkleinert den Außenabstand */
-    width: calc(100% - 40px); /* Nutzt die volle Breite */
+    margin: 20px;
+    width: calc(100% - 40px);
   }
 }
 
-/* Für kleinere Bildschirme: Schrift lesbar und gut platziert */
 @media (max-width: 600px) {
   .container {
-    padding: 15px; /* Kleinere Polsterung für bessere Anpassung */
-    font-size: 14px; /* Verkleinerte Schrift für mobile Ansicht */
+    padding: 15px;
+    font-size: 14px;
   }
 
   h1 {
-    font-size: 24px; /* Kleinere Überschrift */
+    font-size: 24px;
   }
 
   h2 {
