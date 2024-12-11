@@ -127,7 +127,7 @@ body {
 .field-text-flex {
   display: flex;
   flex-direction: column;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 #addTaskDiscriptionField {
   width: auto;
@@ -686,7 +686,6 @@ ul {
 }
 
 @media (max-width: 1200px) {
-  /* Große Bildschirme (Desktops) */
   .addtask-form-container {
     flex-direction: column;
     margin-bottom: 32px;
@@ -711,7 +710,6 @@ ul {
 }
 
 @media (max-width: 992px) {
-  /* Mittlere Bildschirme (Tablets quer) */
   .addtask-form-container {
     flex-direction: column;
     padding: 0 20px;
@@ -734,7 +732,6 @@ ul {
 }
 
 @media (max-width: 768px) {
-  /* Kleine Tablets und kleine Bildschirme */
   .addtask-form-container {
     flex-direction: column;
     padding: 0 13px;
@@ -761,21 +758,20 @@ ul {
 }
 
 @media (max-width: 576px) {
-  /* Smartphones hoch */
   .addtask-form-container {
     margin-bottom: 16px;
     align-items: center;
     padding: 0 8px;
   }
   .addtask-main-content h1 {
-    font-size: 32px; /* Reduziert die Schriftgröße für kleine Bildschirme */
-    width: 200px; /* Schrumpft das Element */
+    font-size: 32px;
+    width: 200px;
     margin: 0 auto;
     text-align: center;
   }
   .addtask-buttons {
     flex-direction: column;
-    gap: 12px; /* Verringerte Lücke zwischen Buttons */
+    gap: 12px;
     align-items: center;
   }
   .addtask-bottom-container {
@@ -784,16 +780,33 @@ ul {
     padding: 0 8px;
   }
   .input-addtask {
-    font-size: 16px; /* Kleinere Schriftgröße für Eingabefelder */
-    width: 100%; /* Eingabefelder nehmen die volle Breite ein */
-    padding: 8px 16px; /* Reduzierte Polsterung */
-    max-height: 40px; /* Eingabefelder schrumpfen */
-    border-radius: 8px; /* Angepasste Rundung */
+    font-size: 16px;
+    width: 100%;
+    padding: 8px 16px;
+    max-height: 40px;
+    border-radius: 8px;
   }
 }
 
 @media (max-width: 440px) {
-  /* Sehr kleine Smartphones */
+  #addTaskSubtasks {
+    display: none;
+  }
+
+  .addtask-main-content {
+    padding: 45px 0px;
+  }
+
+  #categoryInput,
+  label[for="categoryInput"],
+  #arrowDropMenuCategory,
+  #subtaskInput,
+  #addTaskSubtaks,
+  #addTaskCategory,
+  label[for="subtaskInput"],
+  #subtasks-plus-icon {
+    display: none;
+  }
 
   .subtask-input-wrapper input {
     width: 75%;
@@ -803,52 +816,52 @@ ul {
     padding-top: 0;
   }
 
-  .addtask-main-content {
-    padding: 0;
-  }
-
-  .field-text-flex {
-    margin-bottom: 0;
-  }
-
   .addtask-main-content h1 {
     padding: 0;
   }
 
   .addtask-main-content h1 {
-    font-size: 28px; /* Noch kleinere Schriftgröße */
+    font-size: 28px;
     width: 180px;
     margin: 0 auto;
     text-align: center;
   }
   .addtask-form-container {
     margin-bottom: 12px;
-    padding: 0 6px; /* Engeres Padding für sehr kleine Bildschirme */
+    padding: 0 6px;
     align-items: center;
     width: 100%;
   }
   .addtask-bottom-container {
-    gap: 8px; /* Reduzierte Lücke für sehr enge Layouts */
     padding: 0 6px;
     align-items: center;
   }
+
+  .addtask-bottom-container span {
+    display: none;
+  }
+
   .addtask-buttons {
-    gap: 6px; /* Buttons enger zusammenrücken */
+    gap: 6px;
     align-items: center;
+    flex-direction: row;
   }
   .prio-btn-content {
-    /* Prioritäts-Buttons in einer Spalte */
     gap: 8px;
   }
   .input-addtask {
-    font-size: 14px; /* Noch kleinere Schriftgröße für sehr kleine Geräte */
-    width: 70%; /* Volle Breite für Eingabefelder */
-    padding: 6px 12px; /* Engere Polsterung */
-    max-height: 36px; /* Maximale Höhe verringert */
-    border-radius: 6px; /* Angepasste Rundung für kleine Geräte */
+    font-size: 14px;
+    width: 70%;
+    padding: 6px 12px;
+    max-height: 36px;
+    border-radius: 6px;
   }
 
   textarea {
     width: 70%;
+  }
+
+  #task-success {
+    display: none;
   }
 }
