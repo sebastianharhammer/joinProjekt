@@ -9,17 +9,15 @@ let subtaskIdCounter = 0;
 let subtasksEdit = [];
 let subtasksEdit_done = [];
 let subtasksArr_done = [];
-let categoryArr = [];
-let categories = [
-    {
-      category: "User Story",
-      "bg-color": "#0038FF",
-    },
-    {
-      category: "Technical Task",
-      "bg-color": "#1FD7C1",
-    },
-  ];
+let categoryObject = {};
+let addTaskcategories = [
+    { category: "User Story",
+        "bg-color": "#0038FF",
+      },
+      {
+        category: "Technical Task",
+        "bg-color": "#1FD7C1",
+      }];
   let assignedUser = [];
 
 
@@ -35,7 +33,7 @@ async function createTask(status, event) {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('addTaskInputDueDate').value;
-    const category = getCategory();
+    const category = categoryObject;
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
@@ -60,10 +58,19 @@ async function createTask(status, event) {
         };
         taskArray.push(newTask);
         await pushTaskToFirebase(newTask);
-        window.location.href = "testboard.html";
+        showAddTaskSuccesMessage();
+        setTimeout(() => {
+            window.location.href = "testboard.html";
+          }, 1500);
+        
     } catch (error) {
         console.error("Failed to create the task:", error);
     }
+}
+
+function showAddTaskSuccesMessage() {
+    let succes = document.getElementById('task-succes');
+    succes.classList.add('show-add-task');
 }
 
 
@@ -191,7 +198,6 @@ function returnArrayContacts() {
     contacts.forEach(contact => {
 
         if (!contact || !contact.firstName || !contact.lastName) {
-            console.warn('Skipping invalid contact:', contact);
             return;
         }
 
@@ -228,11 +234,8 @@ function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
 }
 
-function getCategory() {
-    return categoryArr[0];
-}
 
-function openCategories() {
+function openAddTaskCategories() {
     let categoryList = document.getElementById("dropDownCategoryMenu");
     let icon = document.getElementById("arrowDropMenuCategory");
     icon.style.transform = "rotate(180deg)";
@@ -240,15 +243,15 @@ function openCategories() {
     if (!categoriesContainerClick) {
     categoriesContainerClick = true;
     categoryList.style.border = "1px solid #CDCDCD";
-    renderCategories();
+    renderAddTaskCategories();
     } else {
     categoriesContainerClick = false;
     categoryList.style.border = "0px";
-    hideCategories();
+    hideAddTaskCategories();
     }
     document.getElementById("categoryInput").classList.toggle("outline");}
 
-function hideCategories() {
+function hideAddTaskCategories() {
     categoriesContainerClick = false;
     let categoryList = document.getElementById("dropDownCategoryMenu");
     let icon = document.getElementById("arrowDropMenuCategory");
@@ -256,31 +259,29 @@ function hideCategories() {
     categoryList.innerHTML = "";
 }
 
-function renderCategories() {
+function renderAddTaskCategories() {
     let categoryContainer = document.getElementById("dropDownCategoryMenu");
     categoryContainer.innerHTML = "";
 
-    for (let i = 0; i < categories.length; i++) {
-    const category = categories[i]["category"];
-    const catColor = categories[i]["bg-color"];
+    for (let i = 0; i < addTaskcategories.length; i++) {
+    const category = addTaskcategories[i]["category"];
+    const catColor = addTaskcategories[i]["bg-color"];
 
     categoryContainer.innerHTML += `
-        <div class="addtask-category" onclick="selectCategory('${category}', '${catColor}')">
+        <div class="addtask-category" onclick="selectAddTaskCategory('${category}', '${catColor}')">
         ${category}
         </div>
         `;
     }
 }
-function selectCategory(categoryTask, catColor) {
+function selectAddTaskCategory(categoryTask) {
     let categoryInput = document.getElementById("categoryInput");
     let categoryList = document.getElementById("dropDownCategoryMenu");
 
     categoryInput.value = categoryTask;
-    hideCategories();
+    hideAddTaskCategories();
     categoryList.style.border = "0px";
-    categoryArr = [];
-    categoryArr.push(categoryTask);
-    categoryArr.push(catColor);
+    categoryObject = {addTaskCateogory:categoryTask}
 }
 
 function setPriority(priority) {

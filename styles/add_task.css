@@ -684,6 +684,34 @@ ul {
   background-color: #0b8ce9;
   cursor: pointer;
 }
+#task-message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+#task-succes {
+  height: 5%;
+  width: 10%;
+  background-color: #2b3647;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 18px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.hide-add-task {
+  transform: translateY(100vh);
+  transition: all 250ms ease-in-out;
+}
+.show-add-task {
+  transform: translateY(-40vh)
+}
 
 @media (max-width: 1200px) {
   /* Große Bildschirme (Desktops) */

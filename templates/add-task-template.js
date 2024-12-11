@@ -66,22 +66,22 @@ function renderAddTaskHTML() {
                   Category
                   <span style="color: #ff8190">*</span>
                 </label>
-                <input class="input-addtask" onclick="openCategories()" id="categoryInput" type="text" placeholder="Select task category" maxlength="40" readonly/>
-                <img onclick="openCategories()" id="arrowDropMenuCategory" src="../img/arrow_drop_down.png" alt=""/>
+                <input class="input-addtask" onclick="openAddTaskCategories()" id="categoryInput" type="text" placeholder="Select task category" maxlength="40" readonly>
+                <img onclick="openAddTaskCategories()" id="arrowDropMenuCategory" src="../img/arrow_drop_down.png" alt=""/>
                 <div id="dropDownCategoryMenu"></div>
-                <span id="addCategoryError" class="validSpanCategory"></span>
+                <span id="addCategoryError"  class="validSpanCategory"></span>
               </div>
               <div class="field-text-flex" id="addTaskSubtasks">
                 <label>
                   Subtasks
                 </label>
                 <div class="subtask-input-wrapper">
-                  <input class="input-addtask plus-minus-drop-menu" id="subtaskInput" type="text" placeholder="Add a new subtask"  maxlength="40" onfocus="showClearButton()"/>
+                  <input class="input-addtask plus-minus-drop-menu" id="subtaskInput" type="text" placeholder="Add a new subtask"  maxlength="40" onfocus="showClearButton()">
                   <div class="input-icons">
                     <div id="clear-add-icons" class="d-none">
-                      <img onclick="clearSubtaskInput()" src="../img/close.svg"/>
+                      <img onclick="clearSubtaskInput()" src="../img/close.svg">
                       <div class="divider"></div>
-                      <img onclick="addSubtask()" src="../img/check.svg"/>
+                      <img onclick="addSubtask()" src="../img/check.svg">
                     </div>
                     <img id="subtasks-plus-icon" src="../img/add.png" type="button" onclick="addSubtask()"/>
                   </div>
@@ -109,10 +109,9 @@ function renderAddTaskHTML() {
         </form>
       </div>
     </div>
-    <div id="render-task-details"></div>
-    <div id="task-success" class="task-success">
-      Task successfully created
-    </div>`;
+    <div id="task-message-container">
+    <div id="task-succes" class="hide-add-task"><span>Task successfully created</span></div>
+</div>`;
 }
 
 function assignUserHTML(contact) {
