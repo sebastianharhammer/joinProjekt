@@ -14,7 +14,8 @@ body {
 #overlay-left {
   position: fixed;
   left: 0;
-  width: 200px;
+  width: 10vw;
+  max-width: 200px;
   min-width: 150px;
   height: 95vh;
   display: flex;
