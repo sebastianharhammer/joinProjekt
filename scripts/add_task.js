@@ -9,7 +9,7 @@ let subtaskIdCounter = 0;
 let subtasksEdit = [];
 let subtasksEdit_done = [];
 let subtasksArr_done = [];
-let categoryObject = {};
+let categoryObject = "";
 let addTaskcategories = [
     { category: "User Story",
         "bg-color": "#0038FF",
@@ -23,7 +23,7 @@ let addTaskcategories = [
 
 function init() {
     getTasks();
-    getUsers();
+    //getUsers();
     includeHTML(); 
     renderAddTaskHTML();
 }
@@ -38,7 +38,7 @@ async function createTask(status, event) {
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
 
-    if (!title || !description || !date || !priority || assignedUsers.length === 0) {
+    if (!title || !description || !date || !priority /*|| assignedUsers.length === 0) */ ){
         console.error("All fields are required!");
         return;
     }
@@ -161,7 +161,7 @@ async function getTasks() {
     }
 }
 
-async function getUsers() {
+/* async function getUsers() {
     try {
         let response = await fetch(BASE_URL + "/contacts/.json", {
             method: "GET",
@@ -233,7 +233,7 @@ function showAssignedUsers() {
 function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
 }
-
+*/
 
 function openAddTaskCategories() {
     let categoryList = document.getElementById("dropDownCategoryMenu");
@@ -261,14 +261,12 @@ function hideAddTaskCategories() {
 
 function renderAddTaskCategories() {
     let categoryContainer = document.getElementById("dropDownCategoryMenu");
-    categoryContainer.innerHTML = "";
 
     for (let i = 0; i < addTaskcategories.length; i++) {
     const category = addTaskcategories[i]["category"];
-    const catColor = addTaskcategories[i]["bg-color"];
 
     categoryContainer.innerHTML += `
-        <div class="addtask-category" onclick="selectAddTaskCategory('${category}', '${catColor}')">
+        <div class="addtask-category" onclick="selectAddTaskCategory('${category}')">
         ${category}
         </div>
         `;
@@ -279,9 +277,10 @@ function selectAddTaskCategory(categoryTask) {
     let categoryList = document.getElementById("dropDownCategoryMenu");
 
     categoryInput.value = categoryTask;
+    //categoryList.innerHTML = `${categoryTask}`;
     hideAddTaskCategories();
     categoryList.style.border = "0px";
-    categoryObject = {addTaskCateogory:categoryTask}
+    categoryObject = categoryTask;
 }
 
 function setPriority(priority) {
