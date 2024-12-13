@@ -393,7 +393,9 @@ function getTaskCategoryButtonHTML(task) {
             <div id="taskButton-${task.id}" class="${getTaskCategoryClass(task.taskCategory)}">
                 ${task.taskCategory}
             </div>
-            <img onclick="closeDetailView()" src="./img/close.svg" alt="">
+            <div class="closeCardParent">
+                <img class="closeCard" onclick="closeDetailView()" src="./img/close.svg" alt="">
+            </div>
         </div>
     `;
 }
@@ -423,6 +425,16 @@ function getTaskDetailsHTML(task) {
         <div class="cardSubtastks">
             <p class="firstTableColumnFont">Subtasks</p>
             ${getSubtasksHTML(task)}
+        </div>
+        <div class="editAndDelete">
+            <div class="deleteCard">
+                <img class="deleteIcon" src="./img/delete.svg" alt="">
+                <p class="editDeleteFont">Delete <span class="verticalSeparator">|   </span></p>
+            </div>
+            <div class="deleteCard">
+                <img class="editIcon" src="./img/edit.svg" alt="">
+                <p class="editDeleteFont">Edit</p>
+            </div>
         </div>
     `;
 }

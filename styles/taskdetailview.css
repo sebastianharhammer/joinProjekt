@@ -12,12 +12,15 @@
 }
 
 .currentTaskCard{
+    position: relative;
     display: flex;
     flex-direction: column;
+    gap: 32px;
     background-color: white;
     height: 900px;
     width: 700px;
     border-radius: 24px;
+    padding: 32px;
 }
 
 .task-category-userExperience-taskCard{
@@ -51,11 +54,11 @@
     color: black;
 }
 
-.headAreaTaskcard{
+.headAreaTaskcard {
     display: flex;
     justify-content: space-between;
+    align-items: start;
 }
-
 
 
 .dueDateAndPrio {
@@ -83,6 +86,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin-top: -40px;
 }
 
 .ownerItem {
@@ -105,4 +109,92 @@
     display: flex;
     flex-direction: row;
     gap: 8px;
+}
+
+
+
+.editAndDelete{
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.subtaskText{
+    color: black;
+    font-size: 14px;
+    font-family: "Inter";
+    font-weight: 400;
+}
+
+
+.editCard{
+    display: flex;
+    gap: 4px;
+}
+
+.deleteIcon{
+    height: 20px;
+}
+
+.editIcon{
+    height: 16px;
+    padding-left: 3px;
+}
+
+.verticalSeparator{
+    color: rgb(209,209,209);
+}
+
+.editDeleteFont{
+    color: rgba(42, 54, 71, 1);
+    font-size: 16px;
+    font-family: "Inter";
+    font-weight: 400;
+}
+
+.deleteCard {
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease; /* Für sanfte Übergänge */
+    cursor: pointer;
+}
+
+.deleteCard:hover {
+    color: rgb(41, 171, 226);
+    transform: scale(1.1);
+}
+
+.editDeleteFont:hover{
+    color: rgb(41, 171, 226);
+}
+
+.deleteCard img {
+    transition: all 0.3s ease;
+}
+
+.deleteCard:hover img {
+    filter: brightness(0) saturate(100%) invert(38%) sepia(74%) saturate(721%) hue-rotate(172deg) brightness(93%) contrast(87%);
+    transform: scale(1.1); 
+}
+
+.closeCardParent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+}
+
+.closeCard{
+    height: 30px;
+    width: 30px;
+}
+
+.closeCardParent:hover{
+    background-color: rgb(222, 222, 222);
+    cursor: pointer;
 }

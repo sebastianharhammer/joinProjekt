@@ -69,6 +69,11 @@
     max-width: 320px;
 }
 
+.todo:hover{
+    cursor: pointer;
+    background-color: #eeeeee;
+}
+
 .dragAreaHighlight{
     background-color: rgba(0, 0, 0, 0.2);
 }
