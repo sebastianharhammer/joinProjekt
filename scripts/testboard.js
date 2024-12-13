@@ -421,30 +421,46 @@ function getTaskDetailsHTML(task) {
                     <td class="firstTableColumnFont">Priority:</td>
                     <td>${task.prio} <img class="prioIconCard" src="${getPrioIcon(task.prio)}" alt=""></td>                   
                 </tr>
-                <tr>
-                    <td class="firstTableColumnFont">Assigned To:</td>                  
-                </tr>
             </tbody>
         </table>
-        <div class="cardAssignedContacts" id="cardAssignedContacts">
-            ${getAssignedOwnersHTML(task)}
-        </div>
         <div class="cardSubtasks">
             <p class="firstTableColumnFont">Subtasks</p>
             ${getSubtasksHTML(task)}
         </div>
         <div class="editAndDelete">
-            <div class="deleteCard">
+            <div class="deleteCard" onclick="deleteTask(${task.id})">
                 <img class="deleteIcon" src="./img/delete.svg" alt="">
-                <p class="editDeleteFont">Delete <span class="verticalSeparator">|   </span></p>
+                <p class="editDeleteFont">Delete</p>
             </div>
             <div class="deleteCard">
-                <img class="editIcon" src="./img/edit.svg" alt="">
-                <p class="editDeleteFont">Edit</p>
+            <img class="editIcon" src="./img/edit.svg" alt="">
+            <p class="editDeleteFont">Edit</p>
             </div>
         </div>
     `;
 }
+
+
+async function deleteTask(taskId) {
+    const taskIndex = taskArray.findIndex(task => task.id === taskId);
+    if (taskIndex === -1) {
+        console.error(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
+    }
+    try {
+        await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+            method: "DELETE"
+        });
+        console.log(`Task ${taskId} erfolgreich gelöscht.`);
+
+        taskArray.splice(taskIndex, 1);
+
+        updateTaskHTML();
+    } catch (error) {
+        console.error(`Fehler beim Löschen des Tasks ${taskId}:`, error);
+    }
+}
+
 
 function getSubtasksHTML(task) {
     if (!task.subtasks || task.subtasks.length === 0) {
