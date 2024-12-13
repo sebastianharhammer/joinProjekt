@@ -15,7 +15,8 @@ body {
   position: fixed;
   left: 0;
   width: 10vw;
-  max-width: 200px;
+  /* 200px verbuggt */
+  max-width: 1200px;
   min-width: 150px;
   height: 95vh;
   display: flex;
