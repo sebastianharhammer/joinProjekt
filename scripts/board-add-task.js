@@ -50,7 +50,7 @@ function getRandomColor() {
     const colors = ["orange", "purple", "blue", "red", "green", "teal"];
     return colors[Math.floor(Math.random() * colors.length)];
   }
-  
+
 function showAddTask(status) {
     console.log("wird ausgeführt in " + "#" + status + "#") 
     getTasks();
@@ -254,56 +254,53 @@ function getCategory() {
     return categoryArr[0];
 }
 
-function openCategories() {
+function openAddTaskCategories() {
     let categoryList = document.getElementById("dropDownCategoryMenu");
     let icon = document.getElementById("arrowDropMenuCategory");
     icon.style.transform = "rotate(180deg)";
     categoryList.innerHTML = "";
     if (!categoriesContainerClick) {
-      categoriesContainerClick = true;
-      categoryList.style.border = "1px solid #CDCDCD";
-      renderCategories();
+    categoriesContainerClick = true;
+    categoryList.style.border = "1px solid #CDCDCD";
+    renderAddTaskCategories();
     } else {
-      categoriesContainerClick = false;
-      categoryList.style.border = "0px";
-      hideCategories();
+    categoriesContainerClick = false;
+    categoryList.style.border = "0px";
+    hideAddTaskCategories();
     }
-    document.getElementById("categoryInput").classList.toggle("outline");
-  }
+    document.getElementById("categoryInput").classList.toggle("outline");}
 
-  function hideCategories() {
+function hideAddTaskCategories() {
     categoriesContainerClick = false;
     let categoryList = document.getElementById("dropDownCategoryMenu");
     let icon = document.getElementById("arrowDropMenuCategory");
     icon.style.transform = "rotate(0deg)";
     categoryList.innerHTML = "";
-  }
+}
 
-  function renderCategories() {
+function renderAddTaskCategories() {
     let categoryContainer = document.getElementById("dropDownCategoryMenu");
-    categoryContainer.innerHTML = "";
-  
+
     for (let i = 0; i < addTaskcategories.length; i++) {
-      const category = addTaskcategories[i]["category"];
-  
-      categoryContainer.innerHTML += `
-          <div class="addtask-category" onclick="selectCategory('${category}')">
-            ${category}
-          </div>
+    const category = addTaskcategories[i]["category"];
+
+    categoryContainer.innerHTML += `
+        <div class="addtask-category" onclick="selectAddTaskCategory('${category}')">
+        ${category}
+        </div>
         `;
     }
-  }
-  function selectCategory(categoryTask, catColor) {
+}
+function selectAddTaskCategory(categoryTask) {
     let categoryInput = document.getElementById("categoryInput");
     let categoryList = document.getElementById("dropDownCategoryMenu");
-  
+
     categoryInput.value = categoryTask;
-    hideCategories();
+    hideAddTaskCategories();
     categoryList.style.border = "0px";
-    categoryArr = [];
-    categoryArr.push(categoryTask);
-    categoryArr.push(catColor);
-  }
+    categoryObject = categoryTask;
+}
+
 
 function setPriority(priority) {
     const priorities = ['urgent', 'medium', 'low'];
