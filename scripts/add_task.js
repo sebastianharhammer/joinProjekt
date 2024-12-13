@@ -328,15 +328,17 @@ function setPriority(priority) {
     selectedPriority = priority;
 }
 
-function addSubtask() {
-    
-        const subtaskInput = document.getElementById("subtaskInput");
-        const subtasksContent = document.getElementById("subtasksContent");
-        if (subtaskInput.value.trim() !== "") {
+function addSubtask() {   
+    const subtaskInput = document.getElementById("subtaskInput");
+    const subtasksContent = document.getElementById("subtasksContent");
+
+    if (subtaskInput.value.trim() !== "") {
         subtaskIdCounter++;
         const liId = "subtask-" + subtaskIdCounter;
         const spanId = "span-" + subtaskIdCounter;
         const inputId = "input-" + subtaskIdCounter;
+
+    
         const newSubtaskHTML = /*html*/ `
         <li id="${liId}" class="subtask-item">
             <div class="dot"></div>
@@ -350,20 +352,27 @@ function addSubtask() {
             </div>
         </li>
         `;
+
         subtasksArr.push({
+            subtask: subtaskInput.value,
             checkbox_img: "../assets/img/checkbox-empty.svg",
-            subtask: `${subtaskInput.value}`,
+            checkbox: false
         });
+
         subtasksEdit.push({
+            subtask: subtaskInput.value,
             checkbox_img: "../assets/img/checkbox-empty.svg",
-            subtask: `${subtaskInput.value}`,
+            checkbox: false
         });
+
         subtasksContent.innerHTML += newSubtaskHTML;
+
         subtaskInput.value = "";
-        }
-        document.getElementById("clear-add-icons").classList.add("d-none");
-        document.getElementById("subtasks-plus-icon").classList.remove("d-none");
+    }
+    document.getElementById("clear-add-icons").classList.add("d-none");
+    document.getElementById("subtasks-plus-icon").classList.remove("d-none");
 }
+
 
 function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
