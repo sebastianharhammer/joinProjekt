@@ -379,19 +379,79 @@ function showTaskCard(id) {
 }
 
 function showTaskCardHTML(task) {
-    const taskCategoryButton = `
-        <div id="taskButton-${task.id}">
-            <div class="${getTaskCategoryClass(task.taskCategory)}">${task.taskCategory}</div>
-            <p class="boardFont">${task.title}</p>
-            <p class="description-taskCard">${task.description}</p>
-        </div>
-    `;
-
     return /*html*/`
         <div id="currentTaskCard${task.id}" class="currentTaskCard">
-            ${taskCategoryButton}
+            ${getTaskCategoryButtonHTML(task)}
+            ${getTaskDetailsHTML(task)}
         </div>
     `;
+}
+
+function getTaskCategoryButtonHTML(task) {
+    return /*html*/`
+        <div class="headAreaTaskcard">
+            <div id="taskButton-${task.id}" class="${getTaskCategoryClass(task.taskCategory)}">
+                ${task.taskCategory}
+            </div>
+            <img onclick="closeDetailView()" src="./img/close.svg" alt="">
+        </div>
+    `;
+}
+
+function getTaskDetailsHTML(task) {
+    return /*html*/`
+        <p class="boardFont">${task.title}</p>
+        <p class="description-taskCard">${task.description}</p>
+        <table class="dueDateAndPrio">
+            <tbody>
+                <tr>
+                    <td class="firstTableColumnFont">Due date:</td>
+                    <td>${task.date}</td>
+                </tr>
+                <tr>
+                    <td class="firstTableColumnFont">Priority</td>
+                    <td>${task.prio} <img class="prioIconCard" src="${getPrioIcon(task.prio)}" alt=""></td>                   
+                </tr>
+                <tr>
+                    <td class="firstTableColumnFont">Assigned To:</td>                  
+                </tr>
+            </tbody>
+        </table>
+        <div class="cardAssignedContacts" id="cardAssignedContacts">
+            ${getAssignedOwnersHTML(task)}
+        </div>
+    `;
+}
+
+function getAssignedOwnersHTML(task) {
+    if (!task.owner || task.owner.length === 0) {
+        return `<p class="noOwners">Keine Owner zugewiesen</p>`;
+    }
+    let ownerHTML = "";
+    task.owner.forEach(owner => {
+        ownerHTML += /*html*/`
+            <div class="ownerItem">
+                <svg width="34" height="34">
+                    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
+                    <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
+                        ${owner.initials || "N/A"}
+                    </text>
+                </svg>
+                <p>${owner.firstName} ${owner.lastName}</p>
+            </div>
+        `
+    });
+    return ownerHTML;
+}
+
+function getPrioIcon(prio) {
+    if (prio === "medium") {
+        return "./img/prio-mid.png";
+    } else if (prio === "urgent") {
+        return "./img/prio-high.png";
+    } else {
+        return "./img/prio-low.png";
+    }
 }
 
 function getTaskCategoryClass(taskCategory) {
@@ -401,11 +461,17 @@ function getTaskCategoryClass(taskCategory) {
 }
 
 
+
 function addTaskToColumnOverlay(id){
     let overlayDetailedTask= document.getElementById('overlayDetailedSite');
     overlayDetailedTask.innerHTML = '';
     overlayDetailedTask.classList.remove('d-none')
     overlayDetailedTask.innerHTML += addTaskOverlayHTML(id)
+}
+
+function closeDetailView(){
+    let taskCardOverlay = document.getElementById('taskDetailView');
+    taskCardOverlay.classList.add('d-none');
 }
 
 

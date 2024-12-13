@@ -51,3 +51,53 @@
     color: black;
 }
 
+.headAreaTaskcard{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.dueDateAndPrio {
+    width: 100%;
+    border-spacing: 0px 24px;
+}
+
+.dueDateAndPrio td {
+    vertical-align: middle;
+}
+
+.prioIconCard {
+    height: 24px; 
+    vertical-align: middle;
+}
+
+.firstTableColumnFont{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 20px;
+    color:rgba(42, 54, 71, 1)
+}
+
+.cardAssignedContacts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ownerItem {
+    display: flex;
+    align-items: center;
+    gap: 12px; 
+}
+
+.fontInNameCircle {
+    font-size: 12px;
+    fill: white;
+}
+
+.noOwners {
+    color: gray;
+    font-style: italic;
+}
+
