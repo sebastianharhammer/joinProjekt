@@ -1,6 +1,7 @@
 .taskDetailView{
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 100dvh;
     width: 100dvw;
     position: fixed;
@@ -11,14 +12,14 @@
     background-color: hsl(0deg 0% 0% / 44%);
 }
 
-.currentTaskCard{
+.currentTaskCard {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 32px;
     background-color: white;
-    height: 900px;
-    width: 700px;
+    height: 800px;
+    width: 500px;
     border-radius: 24px;
     padding: 32px;
 }
@@ -33,6 +34,7 @@
     align-items: center;
     text-align: center;
     color: white;
+    font-size: 24px;
 }
 
 .task-category-technicalTask-taskCard {
@@ -45,6 +47,7 @@
     align-items: center;
     text-align: center;
     color: white;
+    font-size: 24px;
 }
 
 .description-taskCard{
@@ -158,26 +161,24 @@
 .deleteCard {
     display: flex;
     align-items: center;
-    transition: all 0.3s ease; /* Für sanfte Übergänge */
     cursor: pointer;
 }
 
-.deleteCard:hover {
-    color: rgb(41, 171, 226);
-    transform: scale(1.1);
-}
 
 .editDeleteFont:hover{
     color: rgb(41, 171, 226);
+    font-weight: 800;
 }
 
-.deleteCard img {
-    transition: all 0.3s ease;
+.cardSubtasks{
+display: flex;
+flex-direction: column;
+gap: 12px;
 }
 
 .deleteCard:hover img {
     filter: brightness(0) saturate(100%) invert(38%) sepia(74%) saturate(721%) hue-rotate(172deg) brightness(93%) contrast(87%);
-    transform: scale(1.1); 
+    transform: scale(1.2); 
 }
 
 .closeCardParent{
@@ -197,4 +198,11 @@
 .closeCardParent:hover{
     background-color: rgb(222, 222, 222);
     cursor: pointer;
+}
+
+.boardFontDetail{
+    font-family: "Inter";
+    font-weight: 700;
+    font-size: 48px;
+    color: black;
 }

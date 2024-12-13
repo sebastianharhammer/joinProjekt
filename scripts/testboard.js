@@ -256,14 +256,15 @@ function createOwnerCircles(task) {
     for (let owner of task.owner) {
         userNameCircles.innerHTML += `
             <svg width="34" height="34">
-                <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="rgb(255,122,0)" />
+                <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${getRandomColor()}" />
                 <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
-                    ${owner.initials}
+                    ${owner.initials || "N/A"}
                 </text>
             </svg>
         `;
     }
 }
+
 
 
 function findClassOfTaskCat(task) {
@@ -330,7 +331,7 @@ if(renderCompleted){
 
 function findAmountOfSubtasks(task) {
     if (!task.subtasks || task.subtasks.length === 0) {
-        return "";
+        return "0";
     }
     return task.subtasks.length;
 }
@@ -402,7 +403,7 @@ function getTaskCategoryButtonHTML(task) {
 
 function getTaskDetailsHTML(task) {
     return /*html*/`
-        <p class="boardFont">${task.title}</p>
+        <p class="boardFontDetail">${task.title}</p>
         <p class="description-taskCard">${task.description}</p>
         <table class="dueDateAndPrio">
             <tbody>
@@ -411,7 +412,7 @@ function getTaskDetailsHTML(task) {
                     <td>${task.date}</td>
                 </tr>
                 <tr>
-                    <td class="firstTableColumnFont">Priority</td>
+                    <td class="firstTableColumnFont">Priority:</td>
                     <td>${task.prio} <img class="prioIconCard" src="${getPrioIcon(task.prio)}" alt=""></td>                   
                 </tr>
                 <tr>
@@ -422,7 +423,7 @@ function getTaskDetailsHTML(task) {
         <div class="cardAssignedContacts" id="cardAssignedContacts">
             ${getAssignedOwnersHTML(task)}
         </div>
-        <div class="cardSubtastks">
+        <div class="cardSubtasks">
             <p class="firstTableColumnFont">Subtasks</p>
             ${getSubtasksHTML(task)}
         </div>
