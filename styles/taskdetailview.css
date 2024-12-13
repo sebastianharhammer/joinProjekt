@@ -1,0 +1,53 @@
+.taskDetailView{
+    display: flex;
+    justify-content: center;
+    height: 100dvh;
+    width: 100dvw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: hsl(0deg 0% 0% / 44%);
+}
+
+.currentTaskCard{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    height: 900px;
+    width: 700px;
+    border-radius: 24px;
+}
+
+.task-category-userExperience-taskCard{
+    height: 54px;
+    width: 220px;
+    background-color: rgb(0, 56, 255);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.task-category-technicalTask-taskCard {
+    height: 54px;
+    width: 220px;
+    background-color: rgb(31, 215, 193);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+.description-taskCard{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 20px;
+    color: black;
+}
+

@@ -342,7 +342,7 @@ function createTaskHTML(task) {
     const subtasks = getSubTasks(task)
     const amountOfSubtasks = findAmountOfSubtasks(task)
     return /*html*/`
-        <div onclick=addTaskToColumnOverlay() id="boardTask${task.id}" class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
+        <div onclick=showTaskCard(${task.id}) id="boardTask${task.id}" class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
         <p class="open-sans">${task.taskCategory}</p>
         </div>
@@ -365,6 +365,41 @@ function createTaskHTML(task) {
         
     `
 }
+
+function showTaskCard(id) {
+    const task = taskArray.find(task => task.id === id);
+    if (!task) {
+        console.error(`Task mit ID ${id} nicht gefunden.`);
+        return;
+    }
+    let taskCardOverlay = document.getElementById('taskDetailView');
+    taskCardOverlay.innerHTML = '';
+    taskCardOverlay.classList.remove('d-none');
+    taskCardOverlay.innerHTML += showTaskCardHTML(task);
+}
+
+function showTaskCardHTML(task) {
+    const taskCategoryButton = `
+        <div id="taskButton-${task.id}">
+            <div class="${getTaskCategoryClass(task.taskCategory)}">${task.taskCategory}</div>
+            <p class="boardFont">${task.title}</p>
+            <p class="description-taskCard">${task.description}</p>
+        </div>
+    `;
+
+    return /*html*/`
+        <div id="currentTaskCard${task.id}" class="currentTaskCard">
+            ${taskCategoryButton}
+        </div>
+    `;
+}
+
+function getTaskCategoryClass(taskCategory) {
+    if (taskCategory === "Technical Task") return "task-category-technicalTask-taskCard";
+    if (taskCategory === "User Story") return "task-category-userExperience-taskCard";
+    return "task-category-undefined";
+}
+
 
 function addTaskToColumnOverlay(id){
     let overlayDetailedTask= document.getElementById('overlayDetailedSite');
