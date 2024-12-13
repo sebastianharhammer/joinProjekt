@@ -73,6 +73,10 @@ body {
   overflow-y: auto;
 }
 
+#assigned-users-short {
+  margin-top: 10px
+}
+
 .dropdown-options .assigned-user {
   display: flex;
   justify-content: space-between;
@@ -91,7 +95,7 @@ body {
 }
 
 .textInCircle {
-  font-size: 10px;
+  font-size: 15px;
   font-family: Arial, sans-serif;
   fill: black;
 }

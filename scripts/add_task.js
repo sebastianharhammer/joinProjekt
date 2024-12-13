@@ -1,6 +1,31 @@
 
 let categoriesContainerClick = false;
-let contacts = [];
+let contacts = [
+    { id: 0, firstName: "Mario", lastName: "Plumber", email: "mario.plumber@nintendo.com", phone: "111111" },
+    { id: 1, firstName: "Link", lastName: "Hyrule", email: "link.hero@zelda.com", phone: "222222" },
+    { id: 2, firstName: "Samus", lastName: "Aran", email: "samus.aran@metroid.com", phone: "333333" },
+    { id: 3, firstName: "Sonic", lastName: "Hedgehog", email: "sonic.speed@sega.com", phone: "444444" },
+    { id: 4, firstName: "Lara", lastName: "Croft", email: "lara.croft@tombraider.com", phone: "555555" },
+    { id: 5, firstName: "Geralt", lastName: "Rivia", email: "geralt.rivia@witcher.com", phone: "666666" },
+    { id: 6, firstName: "Master", lastName: "Chief", email: "master.chief@halo.com", phone: "777777" },
+    { id: 7, firstName: "Pikachu", lastName: "Electric", email: "pikachu.pokemon@kanto.com", phone: "888888" },
+    { id: 8, firstName: "Cloud", lastName: "Strife", email: "cloud.strife@finalfantasy.com", phone: "999999" },
+    { id: 9, firstName: "Kratos", lastName: "Spartan", email: "kratos.godwar@sparta.com", phone: "101010" },
+    { id: 10, firstName: "Nathan", lastName: "Drake", email: "nathan.drake@uncharted.com", phone: "121212" },
+    { id: 11, firstName: "Ellie", lastName: "Williams", email: "ellie.williams@tlou.com", phone: "131313" },
+    { id: 12, firstName: "Chun", lastName: "Li", email: "chun.li@streetfighter.com", phone: "141414" },
+    { id: 13, firstName: "Solid", lastName: "Snake", email: "solid.snake@metalgear.com", phone: "151515" },
+    { id: 14, firstName: "Ryu", lastName: "Fighter", email: "ryu.fighter@streetfighter.com", phone: "161616" },
+    { id: 15, firstName: "Zelda", lastName: "Princess", email: "zelda.princess@hyrule.com", phone: "171717" },
+    { id: 16, firstName: "Arthur", lastName: "Morgan", email: "arthur.morgan@rdr.com", phone: "181818" },
+    { id: 17, firstName: "Doom", lastName: "Slayer", email: "doom.slayer@hell.com", phone: "191919" },
+    { id: 18, firstName: "Cortana", lastName: "AI", email: "cortana.ai@halo.com", phone: "202020" },
+    { id: 19, firstName: "Ezio", lastName: "Auditore", email: "ezio.auditore@ac.com", phone: "212121" },
+    { id: 20, firstName: "Bayonetta", lastName: "Witch", email: "bayonetta.witch@platinumgames.com", phone: "222222" },
+    { id: 21, firstName: "Gordon", lastName: "Freeman", email: "gordon.freeman@halflife.com", phone: "232323" },
+    { id: 22, firstName: "Shepard", lastName: "Commander", email: "shepard.commander@masseffect.com", phone: "242424" },
+    { id: 23, firstName: "Tifa", lastName: "Lockhart", email: "tifa.lockhart@finalfantasy.com", phone: "252525" }
+];
 let selectedPriority = "";
 let subtasksArr = [];
 let assignedUserArr = [];
@@ -24,9 +49,17 @@ let addTaskcategories = [
 function init() {
     getTasks();
     //getUsers();
+    
     includeHTML(); 
     renderAddTaskHTML();
+    returnArrayContacts();
 }
+
+function getRandomColor() {
+    const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
 
 async function createTask(status, event) {
     event.preventDefault();
@@ -160,8 +193,8 @@ async function getTasks() {
         console.error("Error fetching contacts:", error);
     }
 }
-
-/* async function getUsers() {
+/*
+async function getUsers() {
     try {
         let response = await fetch(BASE_URL + "/contacts/.json", {
             method: "GET",
@@ -179,7 +212,7 @@ async function getTasks() {
         console.error("Error fetching contacts:", error);
     }
 }
-
+*/
 function returnArrayContacts() {
     if (!contacts || contacts.length === 0) {
         console.error("No contacts found.");
@@ -220,12 +253,14 @@ function assignUser(firstName, lastName) {
         lastName: lastName,
         initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`
     });
+    showAssignedUsers();
 }
 
 function showAssignedUsers() {
     let assignUsers = document.getElementById('assigned-users-short');
-    for (let i=0; i < assignedUser.length; i++) {
-        assignUsers.innerHTML += showAssignedUsersHTML(assignUsers[i]);
+    assignUsers.innerHTML = "";
+    for (let i=0; i < assignedUserArr.length; i++) {
+        assignUsers.innerHTML += showAssignedUsersHTML(assignedUserArr[i]);
     }
 }
 
@@ -233,7 +268,7 @@ function showAssignedUsers() {
 function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
 }
-*/
+
 
 function openAddTaskCategories() {
     let categoryList = document.getElementById("dropDownCategoryMenu");
@@ -277,7 +312,6 @@ function selectAddTaskCategory(categoryTask) {
     let categoryList = document.getElementById("dropDownCategoryMenu");
 
     categoryInput.value = categoryTask;
-    //categoryList.innerHTML = `${categoryTask}`;
     hideAddTaskCategories();
     categoryList.style.border = "0px";
     categoryObject = categoryTask;
