@@ -315,20 +315,24 @@ function getSubTasks(task) {
     return subtTasksHTML;
 }
 
-function updateCompletedSubtasks(taskId){
-let tasksCompleted = 0;
-const subtasksList = document.getElementById(`subtaskslist-${taskId}`);
-for(let i=0; i < subtasksList.querySelectorAll('input[type="checkbox"]').length; i++){
-    const checkbox = document.getElementById(`subtask-${taskId}-${i}`);
-    if(checkbox && checkbox.checked){
-        tasksCompleted++;
+function updateCompletedSubtasks(taskId) {
+    const task = taskArray.find(t => t.id === taskId);
+    if (!task || !task.subtasks) return;
+
+    const completedCount = task.subtasks.filter(subtask => subtask.checkbox).length;
+    const totalSubtasks = task.subtasks.length;
+
+    const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
+    if (renderCompleted) {
+        renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
+    }
+
+    const progressBar = document.getElementById(`progress-${taskId}`);
+    if (progressBar) {
+        progressBar.value = (completedCount / totalSubtasks) * 100;
     }
 }
-const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
-if(renderCompleted){
-    renderCompleted.innerHTML = tasksCompleted;
-}
-}
+
 
 function findAmountOfSubtasks(task) {
     if (!task.subtasks || task.subtasks.length === 0) {
@@ -341,8 +345,10 @@ function findAmountOfSubtasks(task) {
 
 function createTaskHTML(task) {
     const owners = getOwners(task);
-    const subtasks = getSubTasks(task)
-    const amountOfSubtasks = findAmountOfSubtasks(task)
+    const subtasks = getSubTasks(task);
+    const totalSubtasks = task.subtasks ? task.subtasks.length : 0;
+    const completedSubtasks = task.subtasks ? task.subtasks.filter(subtask => subtask.checkbox).length : 0;
+
     return /*html*/`
         <div onclick=showTaskCard(${task.id}) id="boardTask${task.id}" class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
@@ -351,9 +357,8 @@ function createTaskHTML(task) {
         <p id="title${task.id}" class= "open-sans-bold">${task.title}</p>
         <p id="description${task.id}" class="inter-font">${task.description}</p>
         <div class="progressBarDiv">
-        <progress class="progressBarBoard" value="32" max="100"> 32% </progress>
-        <p id="amountOfSubtasks-${task.id}" class="inter-font">0</p>
-        <p class="inter-font">/${amountOfSubtasks} Subtasks</p>
+        <progress id="progress-${task.id}" class="progressBarBoard" value="${(completedSubtasks / totalSubtasks) * 100}" max="100"></progress>
+        <p id="amountOfSubtasks-${task.id}" class="inter-font">${completedSubtasks} / ${totalSubtasks} Subtasks</p>
         </div>
 
         <section class="namesAndPrio">
@@ -364,9 +369,9 @@ function createTaskHTML(task) {
         </div>
         </section>
         </div>
-        
-    `
+    `;
 }
+
 
 function showTaskCard(id) {
     const task = taskArray.find(task => task.id === id);
@@ -454,7 +459,7 @@ function getSubtasksHTML(task) {
                     id="subtask-${task.id}-${index}" 
                     class="subtaskCheckbox"
                     ${subtask.checkbox ? "checked" : ""} 
-                    onchange="toggleSubtaskCheckbox(${task.id}, ${index})"
+                    onchange="toggleSubtaskCheckbox(${task.id}, ${index}); updateCompletedSubtasks(${task.id})"
                 >
                 <p class="subtaskText">${subtask.subtask || "Unnamed Subtask"}</p>
             </div>
@@ -462,6 +467,7 @@ function getSubtasksHTML(task) {
     });
     return subtasksHTML;
 }
+
 
 async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
     const task = taskArray.find(task => task.id === taskId);
