@@ -452,21 +452,26 @@ function getSubtasksHTML(task) {
     }
     let subtasksHTML = "";
     task.subtasks.forEach((subtask, index) => {
-        subtasksHTML += `
+        subtasksHTML += /*html*/`
             <div class="subtaskItem">
                 <input 
                     type="checkbox" 
                     id="subtask-${task.id}-${index}" 
-                    class="subtaskCheckbox"
+                    class="styledCheckbox"
                     ${subtask.checkbox ? "checked" : ""} 
                     onchange="toggleSubtaskCheckbox(${task.id}, ${index}); updateCompletedSubtasks(${task.id})"
                 >
-                <p class="subtaskText">${subtask.subtask || "Unnamed Subtask"}</p>
+                <label for="subtask-${task.id}-${index}" class="styledCheckboxLabel">
+                    <span class="checkboxSquare"></span>
+                    <p class="subtaskText">${subtask.subtask || "Unnamed Subtask"}</p>
+                </label>
             </div>
-        `;
+            `
+        ;
     });
     return subtasksHTML;
 }
+
 
 
 async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
