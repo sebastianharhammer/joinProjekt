@@ -73,6 +73,7 @@ async function updateTaskInFirebase(task) {
 
 
 
+
 function loadBoardNavigator() {
     let content = document.getElementById('wholeBoard');
     content.innerHTML = '';
@@ -448,13 +449,40 @@ function getSubtasksHTML(task) {
     task.subtasks.forEach((subtask, index) => {
         subtasksHTML += `
             <div class="subtaskItem">
-                <input type="checkbox" id="subtask-${task.id}-${index}" class="subtaskCheckbox">
+                <input 
+                    type="checkbox" 
+                    id="subtask-${task.id}-${index}" 
+                    class="subtaskCheckbox"
+                    ${subtask.checkbox ? "checked" : ""} 
+                    onchange="toggleSubtaskCheckbox(${task.id}, ${index})"
+                >
                 <p class="subtaskText">${subtask.subtask || "Unnamed Subtask"}</p>
             </div>
         `;
     });
     return subtasksHTML;
 }
+
+async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
+    const task = taskArray.find(task => task.id === taskId);
+    if (!task || !task.subtasks || !task.subtasks[subtaskIndex]) {
+        console.error("Task oder Subtask nicht gefunden.");
+        return;
+    }
+
+    const subtask = task.subtasks[subtaskIndex];
+    subtask.checkbox = !subtask.checkbox;
+
+    try {
+        await updateTaskInFirebase(task);
+        console.log(`Subtask ${subtaskIndex} von Task ${taskId} erfolgreich aktualisiert.`);
+    } catch (error) {
+        console.error(`Fehler beim Aktualisieren des Subtasks: ${error}`);
+    }
+    updateTaskHTML();
+}
+
+
 
 function getAssignedOwnersHTML(task) {
     if (!task.owner || task.owner.length === 0) {
