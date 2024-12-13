@@ -420,7 +420,27 @@ function getTaskDetailsHTML(task) {
         <div class="cardAssignedContacts" id="cardAssignedContacts">
             ${getAssignedOwnersHTML(task)}
         </div>
+        <div class="cardSubtastks">
+            <p class="firstTableColumnFont">Subtasks</p>
+            ${getSubtasksHTML(task)}
+        </div>
     `;
+}
+
+function getSubtasksHTML(task) {
+    if (!task.subtasks || task.subtasks.length === 0) {
+        return `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+    }
+    let subtasksHTML = "";
+    task.subtasks.forEach((subtask, index) => {
+        subtasksHTML += `
+            <div class="subtaskItem">
+                <input type="checkbox" id="subtask-${task.id}-${index}" class="subtaskCheckbox">
+                <p class="subtaskText">${subtask.subtask || "Unnamed Subtask"}</p>
+            </div>
+        `;
+    });
+    return subtasksHTML;
 }
 
 function getAssignedOwnersHTML(task) {
@@ -429,19 +449,36 @@ function getAssignedOwnersHTML(task) {
     }
     let ownerHTML = "";
     task.owner.forEach(owner => {
-        ownerHTML += /*html*/`
+        const circleColor = getRandomColor();
+        ownerHTML += `
             <div class="ownerItem">
                 <svg width="34" height="34">
-                    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
+                    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${circleColor}" />
                     <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
                         ${owner.initials || "N/A"}
                     </text>
                 </svg>
                 <p>${owner.firstName} ${owner.lastName}</p>
             </div>
-        `
+        `;
     });
     return ownerHTML;
+}
+
+
+function getRandomColor() {
+    const colors = [
+        "#FF5733",
+        "#33FF57", 
+        "#3357FF", 
+        "#FFC300", 
+        "#8E44AD", 
+        "#16A085", 
+        "#E74C3C", 
+        "#2ECC71", 
+        "#3498DB", 
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
 }
 
 function getPrioIcon(prio) {
