@@ -11,22 +11,29 @@
     <link rel="stylesheet" href="./styles/board-add-task.css">
     <link rel="stylesheet" href="./styles/taskdetailview.css">
     <script src="scripts/script.js"></script>
-    <script src="scripts/add_task.js"></script>
     <script src="./scripts/testboard.js"></script>
     <script src="./templates/board-add-task-template.js"></script>
+    <script src="./scripts/board-add-task.js"></script>
     <script src="./scripts/header.js"></script>
     <script src="./scripts/w3-include.js"></script>
 </head>
 <body onload="init()">
     <div w3-include-html="./header.html"></div>
     <div w3-include-html="./nav.html"></div>
+    <section id="add-task-overlay-wrapper">
+        <div id="add-task-background" class="d-none" onclick="hideAddTask()"></div>
+        <div id="add-task-content" class="hide-add-task"></div>
+    </section>
     <section id="wholeBoard">
     </section>
     <div class="overlayDetailedSite d-none" id="overlayDetailedSite"></div>
+<<<<<<< HEAD
     <div class="taskDetailView d-none" id="taskDetailView">
         <div class="taskCard">
             <p class="boardFont">TEST</p>
         </div>
     </div>
+=======
+>>>>>>> 0616f9e1f9be2d26fa78a1f8c3a17a6e6c1bafe3
 </body>
 </html>

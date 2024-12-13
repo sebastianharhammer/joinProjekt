@@ -80,6 +80,8 @@
 
 .dropdown-options .assigned-user {
   display: flex;
+  justify-content: space-between;
+  text-align: left;
   align-items: center;
   padding: 8px;
   cursor: pointer;
@@ -217,6 +219,10 @@ input[type="date"] {
 
 #openUserImge {
   cursor: pointer;
+}
+
+#assigned-users-short {
+  margin-top: 10px
 }
 
 #subtasksContent {
