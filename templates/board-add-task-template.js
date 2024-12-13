@@ -1,6 +1,6 @@
 function addTaskOverlayHTML() {
-  return `
-<div class="addtask-overlay-content">
+return  /*html*/`
+<div id="templateTaskDetailView" class="addtask-overlay-content">
       <div class="addtask-main-content">
         <div>
           <h1>Add Task</h1>

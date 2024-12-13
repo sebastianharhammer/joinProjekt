@@ -133,19 +133,19 @@ function loadTitleOfBoardColumns(content) {
 function showTitleOfBoardColumns() {
     return /*html*/`
         <section id="titleOfBoardColumns" class="titleOfBoardColumns">
-<div class="columntitleToDo">
+<div onclick=addTaskToColumnOverlay() class="columntitleToDo">
     <p class="columnTitleFont">To do</p>
     <img src="./img/plus button.png" alt="">
 </div>
-<div class="columntitleInProgress">
+<div onclick=addTaskToColumnOverlay() class="columntitleInProgress">
     <p class="columnTitleFont">In Progress</p>
     <img src="./img/plus button.png" alt="">
 </div>
-<div class="columntitleAwaitFeedback">
+<div onclick=addTaskToColumnOverlay() class="columntitleAwaitFeedback">
     <p class="columnTitleFont">Await Feedback</p>
     <img src="./img/plus button.png" alt="">
 </div>
-<div class="columntitleDone">
+<div onclick=addTaskToColumnOverlay() class="columntitleDone">
     <p class="columnTitleFont">Done</p>
     <img src="./img/plus button.png" alt="">
 </div>
@@ -342,7 +342,7 @@ function createTaskHTML(task) {
     const subtasks = getSubTasks(task)
     const amountOfSubtasks = findAmountOfSubtasks(task)
     return /*html*/`
-        <div id="boardTask${task.id}" class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
+        <div onclick=addTaskToColumnOverlay() id="boardTask${task.id}" class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
         <p class="open-sans">${task.taskCategory}</p>
         </div>
@@ -366,6 +366,14 @@ function createTaskHTML(task) {
     `
 }
 
+function addTaskToColumnOverlay(id){
+    let overlayDetailedTask= document.getElementById('overlayDetailedSite');
+    overlayDetailedTask.innerHTML = '';
+    overlayDetailedTask.classList.remove('d-none')
+    overlayDetailedTask.innerHTML += addTaskOverlayHTML(id)
+}
+
+
 function highlight(id) {
     document.getElementById(id).classList.add("dragAreaHighlight");
 }
@@ -373,3 +381,5 @@ function highlight(id) {
 function removeHighlight(id) {
     document.getElementById(id).classList.remove("dragAreaHighlight");
 }
+
+
