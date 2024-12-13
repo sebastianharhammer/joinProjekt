@@ -122,7 +122,7 @@ async function getNextTaskId() {
         }
         const tasks = await response.json();
         const taskIds = tasks ? Object.values(tasks).map(task => task.id) : [];
-        const maxId = taskIds.length > 0 ? Math.max(...taskIds) : 0; // Höchste vorhandene ID ermitteln
+        const maxId = taskIds.length > 0 ? Math.max(...taskIds) : 0;
         return maxId + 1;
     } catch (error) {
         console.error("Failed to fetch tasks for ID generation:", error);
@@ -142,7 +142,7 @@ async function pushTaskToFirebase(newTask) {
             body: JSON.stringify(newTask),
         });
         let responseToJson = await response.json();
-        console.log("Task added or updated:", responseToJson);
+        console.log("Task added", responseToJson);
     } catch (error) {
         console.error("Failed to add task:", error);
     }
