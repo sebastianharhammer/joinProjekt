@@ -65,23 +65,16 @@ header {
 
 #logo-container {
   position: absolute;
-  top: 30%;
-  left: 0;
+  top: 80%;
+  left: 30px;
   transform: translateY(-50%);
   width: 8rem;
   height: 8rem;
 }
 
 #logo-container img {
-  display: none;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-#logo-container img {
-  width: 200%;
-  height: 200%;
+  width: 50%;
+  height: 50%;
   object-fit: contain;
 }
 
@@ -122,13 +115,12 @@ header {
 
 @media (max-width: 1030px) {
   #overlay-top {
-    justify-content: flex-end;
     padding: 0 15px;
     width: 100vw;
     margin-left: 0;
   }
 
-  #logo-container {
+  ##logo-container img {
     display: block;
     width: 40px;
     height: 40px;
@@ -166,6 +158,12 @@ header {
   #logo-container {
     width: 30px;
     height: 30px;
+  }
+
+  #logo-container img {
+    width: 130%;
+    height: 160%;
+    margin-top: -33px;
   }
 
   #headline-top {
