@@ -128,19 +128,19 @@
   padding: 15px;
   border: 1px solid rgb(215, 215, 215);
   border-radius: 15px;
-  color: #d1d1d1;
+  color: black;
 }
 #add-contact-first-name {
   border-color: #d1d1d1;
-  color: #d1d1d1;
+  color: black;
 }
 #add-contact-last-name {
   border-color: #d1d1d1;
-  color: #d1d1d1;
+  color: black;
 }
 #add-contact-email {
   border-color: #d1d1d1;
-  color: #d1d1d1;
+  color: black;
 }
 .add-contact-input-icon {
   position: absolute;
@@ -150,7 +150,7 @@
   width: 20px;
   transform: translateY(-50%);
   font-size: 16px;
-  color: #888;
+  color: #a8a8a8;
   pointer-events: none;
 }
 .input-wrapper {
@@ -173,8 +173,11 @@
   margin-left: 1vw;
   margin-right: 1vw;
   background-color: white;
-  border-radius: 10px;
-  border: 1px solid black;
+  border: 1px solid #2a3647;
+  width: 113px;
+  height: 55px;
+  padding: 15px 24px 15px 24px;
+  border-radius: 8px;
 }
 #add-contact-cancel:hover {
   border: 2px solid #0b8ce9;
@@ -184,12 +187,18 @@
   transition: color 0.3s;
 }
 #add-contact-create {
+  white-space: nowrap;
   height: 3vh;
   margin-left: 1vw;
   margin-right: 1vw;
-  border-radius: 10px;
-  background-color: #2b3647;
+  background-color: #2a3647;
   color: white;
+  width: 126px;
+  height: 56px;
+  padding: 15px 24px 15px 24px;
+  border-radius: 10px;
+  border: 1px solid #2a3647;
+  gap: 4px;
 }
 #add-contact-create:hover {
   background-color: #0b8ce9;
