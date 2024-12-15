@@ -403,6 +403,10 @@ hr {
 
 /* Small Smartphones */
 @media (max-width: 576px) {
+  #add-contact-headline {
+    font-size: 34px;
+  }
+
   #contact-side-panel {
     width: 100%;
     padding-top: 0;
@@ -413,19 +417,21 @@ hr {
   /* Button - Round and Floating */
   #add-contact-btn {
     position: fixed;
-    bottom: 20px;
+    bottom: 70px;
     right: 20px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    font-size: 24px;
+    font-size: 0px;
     padding: 0;
     gap: 0;
   }
 
   #add-contact-img {
-    width: 24px;
-    height: 24px;
+    width: 31px;
+    object-fit: cover;
+    height: 23px;
+    padding-right: 5px;
   }
 
   /* Contact List - Fullscreen */
@@ -466,8 +472,16 @@ hr {
     margin-bottom: 60px;
   }
 
+  #add-contact-create {
+    margin-left: -2vw;
+  }
+
+  #add-contact-btn text {
+    display: none;
+  }
+
   #add-contact-img {
-    width: 20px;
-    height: 20px;
+    width: 27px;
+    height: 19px;
   }
 }
