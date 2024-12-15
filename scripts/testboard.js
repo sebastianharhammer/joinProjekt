@@ -452,7 +452,7 @@ function getTaskDetailsHTML(task) {
             ${getSubtasksHTML(task)}
         </div>
         <div class="editAndDelete">
-            <div class="deleteCard" onclick="deleteTask(${task.id})">
+            <div class="deleteCard" onclick="askFordeleteTask()">
                 <img class="deleteIcon" src="./img/delete.svg" alt="">
                 <p class="editDeleteFont">Delete</p>
             </div>
@@ -461,7 +461,19 @@ function getTaskDetailsHTML(task) {
             <p class="editDeleteFont">Edit</p>
             </div>
         </div>
+            <div class="deleteConfirmation d-none" id="deleteConfirmation">
+            <p class="deleteHeaderFont">Bist du dir sicher?</p>
+            <div class="confirmation-delete-buttons">
+                <button class="deleteTaskButtons" onclick="deleteTask(${task.id})">Ja, löschen</button>
+                <button class="deleteTaskButtons" onclick="closeQuestionDelete()">Nein, zurück</button>
+            </div>
+        </div>
     `;
+}
+
+function askFordeleteTask(){
+    let deleteDiv = document.getElementById('deleteConfirmation');
+    deleteDiv.classList.remove('d-none');
 }
 
 
@@ -478,13 +490,22 @@ async function deleteTask(taskId) {
         console.log(`Task ${taskId} erfolgreich gelöscht.`);
 
         taskArray.splice(taskIndex, 1);
-
+        closeDetailView()
         updateTaskHTML();
     } catch (error) {
         console.error(`Fehler beim Löschen des Tasks ${taskId}:`, error);
     }
 }
 
+function closeDetailView(){
+    let overlay = document.getElementById('taskDetailView');
+    overlay.classList.add('d-none');
+}
+
+function closeQuestionDelete(){
+    let deleteQuestDiv = document.getElementById('deleteConfirmation');
+    deleteQuestDiv.classList.add('d-none')
+}
 
 function getSubtasksHTML(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
