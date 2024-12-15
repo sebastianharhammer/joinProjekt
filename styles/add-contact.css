@@ -169,7 +169,7 @@
   padding-left: 8%;
 }
 #add-contact-cancel {
-  height: 3vh;
+  height: 4vh;
   margin-left: 1vw;
   margin-right: 1vw;
   background-color: white;
@@ -184,7 +184,8 @@
   transition: color 0.3s;
 }
 #add-contact-create {
-  height: 3vh;
+  font-weight: 700;
+  height: 4vh;
   margin-left: 1vw;
   margin-right: 1vw;
   border-radius: 10px;
@@ -252,5 +253,31 @@
   }
   #add-contact-interactions-container {
     border-radius: 0 0 20px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  #add-contact-logo {
+    display: none;
+  }
+
+  #add-contact-interactions {
+    flex-direction: column;
+  }
+
+  #add-contact-headline {
+    font-size: 34px;
+  }
+
+  #add-contact-second {
+    font-size: 18px;
+  }
+
+  #add-contact-cancel {
+    display: none;
+  }
+
+  #input-fields {
+    width: 100%;
   }
 }
