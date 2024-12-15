@@ -118,8 +118,8 @@ function toggleContactDetail(firebaseKey) {
                       ${selectedContact.firstName} ${selectedContact.lastName}
                   </div>
                   <div class="detail-actions">
-                      <button onclick="editContact('${firebaseKey}')">Edit</button>
-                      <button onclick="deleteContact('${firebaseKey}')">Delete</button>
+                      <button onclick="editContact('${firebaseKey}')"><img id="edit-contact-img" src="./img/edit.svg">Edit</button>
+                      <button onclick="deleteContact('${firebaseKey}')"><img id="delete-contact-img" src="./img/delete.svg">Delete</button>
                   </div>
               </div>
           </div>

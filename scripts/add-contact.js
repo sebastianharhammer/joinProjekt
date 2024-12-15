@@ -94,8 +94,6 @@ async function pushContactInfo(firstName, lastName, email, phone) {
   };
 
   try {
-    // POST-Anfrage, um einen neuen Eintrag zu erstellen. 
-    // Firebase generiert einen neuen Schlüssel für diesen Kontakt.
     let response = await fetch(`${BASE_URL}/contacts.json`, {
       method: "POST",
       headers: {
@@ -106,7 +104,6 @@ async function pushContactInfo(firstName, lastName, email, phone) {
     let responseToJson = await response.json();
     console.log("Contact added:", responseToJson);
 
-    // Kontakte neu laden (sofern fetchContactsFromFirebase() in Ihrem globalen Code definiert ist)
     await getContactInfo();
     fetchContactsFromFirebase();
   } catch (error) {

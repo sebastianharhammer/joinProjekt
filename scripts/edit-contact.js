@@ -53,9 +53,7 @@ async function saveEditedContact(firebaseKey) {
         if (response.ok) {
             console.log(`Contact with firebaseKey ${firebaseKey} updated.`);
             hideEditContact(); 
-            // Nach dem Bearbeiten Daten neu laden
             fetchContactsFromFirebase();
-            // Detailansicht neu laden
             toggleContactDetail(firebaseKey); 
         } else {
             console.error(`Failed to update contact: ${response.statusText}`);
@@ -73,7 +71,6 @@ async function deleteContact(firebaseKey) {
 
       console.log(`Contact with firebaseKey ${firebaseKey} deleted.`);
       hideEditContact();
-      // Liste neu laden
       fetchContactsFromFirebase();
     } catch (error) {
       console.error("Failed to delete contact:", error);
