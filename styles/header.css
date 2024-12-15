@@ -27,6 +27,7 @@ header {
   filter: drop-shadow(1px 2px 3px rgba(174, 173, 173, 0.5));
   transition: all 0.3s ease;
   padding-left: 20px;
+  z-index: 1000;
 }
 
 #headline-top {
