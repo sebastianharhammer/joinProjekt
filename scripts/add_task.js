@@ -366,7 +366,6 @@ function addSubtask() {
         });
 
         subtasksContent.innerHTML += newSubtaskHTML;
-
         subtaskInput.value = "";
     }
     document.getElementById("clear-add-icons").classList.add("d-none");
@@ -378,17 +377,6 @@ function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
-
-    const editSubtaskHTML = /*html*/ `
-        <div class="subtask-input-wrapper edit-mode">
-            <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
-            <div class="input-icons-edit">
-                <img src ="../assets/img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
-                <div class="divider"></div>
-                <img src="../assets/img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
-            </div>
-        </div>
-    `;
 }
 
 function deleteSubtask(liId) {
