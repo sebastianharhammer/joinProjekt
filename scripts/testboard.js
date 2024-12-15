@@ -69,6 +69,10 @@ async function updateTaskInFirebase(task) {
   }
 }
 
+
+
+
+
 function loadBoardNavigator() {
   let content = document.getElementById("wholeBoard");
   content.innerHTML = "";
@@ -320,13 +324,29 @@ function updateCompletedSubtasks(taskId) {
     const checkbox = document.getElementById(`subtask-${taskId}-${i}`);
     if (checkbox && checkbox.checked) {
       tasksCompleted++;
+function updateCompletedSubtasks(taskId) {
+    const task = taskArray.find(t => t.id === taskId);
+    if (!task || !task.subtasks) return;
+
+    const completedCount = task.subtasks.filter(subtask => subtask.checkbox).length;
+    const totalSubtasks = task.subtasks.length;
+
+    const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
+    if (renderCompleted) {
+        renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
     }
   }
   const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
   if (renderCompleted) {
     renderCompleted.innerHTML = tasksCompleted;
   }
+
+    const progressBar = document.getElementById(`progress-${taskId}`);
+    if (progressBar) {
+        progressBar.value = (completedCount / totalSubtasks) * 100;
+    }
 }
+
 
 function findAmountOfSubtasks(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
@@ -340,6 +360,12 @@ function createTaskHTML(task) {
   const subtasks = getSubTasks(task);
   const amountOfSubtasks = findAmountOfSubtasks(task);
   return /*html*/ `
+    const owners = getOwners(task);
+    const subtasks = getSubTasks(task);
+    const totalSubtasks = task.subtasks ? task.subtasks.length : 0;
+    const completedSubtasks = task.subtasks ? task.subtasks.filter(subtask => subtask.checkbox).length : 0;
+
+    return /*html*/`
         <div onclick=showTaskCard(${task.id}) id="boardTask${task.id}" class="todo" draggable ="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
         <p class="open-sans">${task.taskCategory}</p>
@@ -347,9 +373,8 @@ function createTaskHTML(task) {
         <p id="title${task.id}" class= "open-sans-bold">${task.title}</p>
         <p id="description${task.id}" class="inter-font">${task.description}</p>
         <div class="progressBarDiv">
-        <progress class="progressBarBoard" value="32" max="100"> 32% </progress>
-        <p id="amountOfSubtasks-${task.id}" class="inter-font">0</p>
-        <p class="inter-font">/${amountOfSubtasks} Subtasks</p>
+        <progress id="progress-${task.id}" class="progressBarBoard" value="${(completedSubtasks / totalSubtasks) * 100}" max="100"></progress>
+        <p id="amountOfSubtasks-${task.id}" class="inter-font">${completedSubtasks} / ${totalSubtasks} Subtasks</p>
         </div>
 
         <section class="namesAndPrio">
@@ -362,7 +387,9 @@ function createTaskHTML(task) {
         </div>
         
     `;
+    `;
 }
+
 
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
@@ -418,30 +445,46 @@ function getTaskDetailsHTML(task) {
     task.prio
   )}" alt=""></td>                   
                 </tr>
-                <tr>
-                    <td class="firstTableColumnFont">Assigned To:</td>                  
-                </tr>
             </tbody>
         </table>
-        <div class="cardAssignedContacts" id="cardAssignedContacts">
-            ${getAssignedOwnersHTML(task)}
-        </div>
         <div class="cardSubtasks">
             <p class="firstTableColumnFont">Subtasks</p>
             ${getSubtasksHTML(task)}
         </div>
         <div class="editAndDelete">
-            <div class="deleteCard">
+            <div class="deleteCard" onclick="deleteTask(${task.id})">
                 <img class="deleteIcon" src="./img/delete.svg" alt="">
-                <p class="editDeleteFont">Delete <span class="verticalSeparator">|   </span></p>
+                <p class="editDeleteFont">Delete</p>
             </div>
             <div class="deleteCard">
-                <img class="editIcon" src="./img/edit.svg" alt="">
-                <p class="editDeleteFont">Edit</p>
+            <img class="editIcon" src="./img/edit.svg" alt="">
+            <p class="editDeleteFont">Edit</p>
             </div>
         </div>
     `;
 }
+
+
+async function deleteTask(taskId) {
+    const taskIndex = taskArray.findIndex(task => task.id === taskId);
+    if (taskIndex === -1) {
+        console.error(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
+    }
+    try {
+        await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+            method: "DELETE"
+        });
+        console.log(`Task ${taskId} erfolgreich gelöscht.`);
+
+        taskArray.splice(taskIndex, 1);
+
+        updateTaskHTML();
+    } catch (error) {
+        console.error(`Fehler beim Löschen des Tasks ${taskId}:`, error);
+    }
+}
+
 
 function getSubtasksHTML(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
@@ -450,6 +493,12 @@ function getSubtasksHTML(task) {
   let subtasksHTML = "";
   task.subtasks.forEach((subtask, index) => {
     subtasksHTML += `
+    if (!task.subtasks || task.subtasks.length === 0) {
+        return `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+    }
+    let subtasksHTML = "";
+    task.subtasks.forEach((subtask, index) => {
+        subtasksHTML += /*html*/`
             <div class="subtaskItem">
                 <input type="checkbox" id="subtask-${
                   task.id
@@ -457,11 +506,49 @@ function getSubtasksHTML(task) {
                 <p class="subtaskText">${
                   subtask.subtask || "Unnamed Subtask"
                 }</p>
+                <input 
+                    type="checkbox" 
+                    id="subtask-${task.id}-${index}" 
+                    class="styledCheckbox"
+                    ${subtask.checkbox ? "checked" : ""} 
+                    onchange="toggleSubtaskCheckbox(${task.id}, ${index}); updateCompletedSubtasks(${task.id})"
+                >
+                <label for="subtask-${task.id}-${index}" class="styledCheckboxLabel">
+                    <span class="checkboxSquare"></span>
+                    <p class="subtaskText">${subtask.subtask || "Unnamed Subtask"}</p>
+                </label>
             </div>
         `;
   });
   return subtasksHTML;
+            `
+        ;
+    });
+    return subtasksHTML;
 }
+
+
+
+async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
+    const task = taskArray.find(task => task.id === taskId);
+    if (!task || !task.subtasks || !task.subtasks[subtaskIndex]) {
+        console.error("Task oder Subtask nicht gefunden.");
+        return;
+    }
+
+    const subtask = task.subtasks[subtaskIndex];
+    subtask.checkbox = !subtask.checkbox;
+
+    try {
+        await updateTaskInFirebase(task);
+        console.log(`Subtask ${subtaskIndex} von Task ${taskId} erfolgreich aktualisiert.`);
+    } catch (error) {
+        console.error(`Fehler beim Aktualisieren des Subtasks: ${error}`);
+    }
+    updateTaskHTML();
+}
+
+
 
 function getAssignedOwnersHTML(task) {
   if (!task.owner || task.owner.length === 0) {

@@ -1,4 +1,96 @@
-#help-content {
-    padding-top: 100px;
-    padding-left: 12vw;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 50rem;
+  margin: auto; /* Zentriert den Container horizontal und vertikal */
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9; /* Optional: Hintergrundfarbe für bessere Lesbarkeit */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  position: relative;
+  top: 5rem; /* Sicherheitsabstand zum Header */
+}
+
+h1 {
+  font-size: 2rem;
+  color: #000;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #444;
+  margin-top: 1.25rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: #666;
+  margin-top: 1rem;
+}
+
+p {
+  font-size: 1rem;
+  margin: 0.625rem 0;
+}
+
+ul {
+  margin: 0.625rem 0 1.25rem 1.25rem;
+  padding: 0;
+  list-style: disc;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 78.125rem) {
+  #overlay-left {
+    display: none;
+  }
+
+  .container {
+    margin: 1.25rem;
+    width: calc(100% - 2.5rem);
+    top: 0; /* Anpassung für kleinere Bildschirme */
+  }
+}
+
+@media (max-width: 37.5rem) {
+  .container {
+    padding: 0.9375rem;
+    font-size: 0.875rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p,
+  ul,
+  li {
+    font-size: 0.875rem;
+  }
 }

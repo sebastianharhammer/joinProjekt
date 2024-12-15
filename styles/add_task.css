@@ -74,7 +74,7 @@ body {
 }
 
 #assigned-users-short {
-  margin-top: 10px
+  margin-top: 10px;
 }
 
 .dropdown-options .assigned-user {
@@ -718,10 +718,15 @@ ul {
   transition: all 250ms ease-in-out;
 }
 .show-add-task {
-  transform: translateY(-40vh)
+  transform: translateY(-40vh);
 }
 
 @media (max-width: 1200px) {
+  .addtask-main-content {
+    padding: 0;
+    z-index: 0;
+  }
+
   .addtask-form-container {
     flex-direction: column;
     margin-bottom: 32px;
@@ -757,6 +762,12 @@ ul {
     font-size: 47px;
     margin: 0 auto;
   }
+
+  .addtask-main-content {
+    padding: 0;
+    z-index: 0;
+  }
+
   .addtask-form-left-top,
   .addtask-form-right-bottom {
     font-size: 16px;
@@ -825,12 +836,17 @@ ul {
 }
 
 @media (max-width: 440px) {
+  .prio-button {
+    margin-right: 30px;
+  }
+
   #addTaskSubtasks {
     display: none;
   }
 
   .addtask-main-content {
-    padding: 45px 0px;
+    display: flow;
+    margin-right: -60px;
   }
 
   #categoryInput,
@@ -853,13 +869,9 @@ ul {
   }
 
   .addtask-main-content h1 {
-    padding: 0;
-  }
-
-  .addtask-main-content h1 {
     font-size: 28px;
     width: 180px;
-    margin: 0 auto;
+    margin-left: 75px;
     text-align: center;
   }
   .addtask-form-container {
@@ -869,7 +881,7 @@ ul {
     width: 100%;
   }
   .addtask-bottom-container {
-    padding: 0 6px;
+    margin-right: 60px;
     align-items: center;
   }
 
@@ -883,8 +895,14 @@ ul {
     flex-direction: row;
   }
   .prio-btn-content {
+    width: 20px;
     gap: 8px;
   }
+
+  #prio-medium {
+    display: block;
+  }
+
   .input-addtask {
     font-size: 14px;
     width: 70%;

@@ -206,3 +206,59 @@ gap: 12px;
     font-size: 48px;
     color: black;
 }
+
+
+input.styledCheckbox {
+    display: none;
+}
+
+
+.styledCheckboxLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer; 
+    gap: 6px;
+}
+
+
+.styledCheckboxLabel .checkboxSquare {
+    width: 16px;
+    height: 16px;
+    background-color: white;
+    border: 2px solid rgb(42, 54, 71);
+    border-radius: 6px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Haken für Checkbox */
+.styledCheckboxLabel .checkboxSquare::after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 0px;
+    width: 5px;
+    height: 16px;
+    border: solid rgb(42, 54, 71);
+    border-width: 0 2px 2px 0;
+    transform: rotate(50deg) scale(0);
+    transform-origin: bottom left;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+
+input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
+    opacity: 1; 
+    transform: rotate(40deg) scale(1.2);
+    transform-origin: bottom left; 
+}
+
+
+.styledCheckboxLabel .subtaskText {
+    margin: 0;
+    font-size: 14px;
+    color: rgb(42, 54, 71);
+    line-height: 1.2;
+}
+
