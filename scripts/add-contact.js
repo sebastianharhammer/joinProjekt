@@ -20,6 +20,7 @@ async function processContactInfo() {
   const { firstName, lastName } = extractNameParts();
   let email = document.getElementById("add-contact-email").value.trim();
   let phone = document.getElementById("add-contact-phone").value.trim();
+
   if (firstName && lastName && email) {
     showSuccesMessage();
     await getContactInfo();
@@ -29,6 +30,7 @@ async function processContactInfo() {
     showErrorMessage();
   }
 }
+
 function showSuccesMessage() {
   let content = document.getElementById("add-contact-message");
   content.classList.remove("d-none");
@@ -37,6 +39,7 @@ function showSuccesMessage() {
     content.classList.add("d-none");
   }, 2500);
 }
+
 function showErrorMessage() {
   let content = document.getElementById("add-contact-message");
   content.classList.remove("d-none");
@@ -74,33 +77,38 @@ async function getContactInfo() {
       },
     });
     let responseToJson = await response.json();
-    localContacts = responseToJson;
+    localContacts = responseToJson || {};
     console.log("Fetched contacts:", localContacts);
   } catch (error) {
     console.error("Failed to fetch contacts:", error);
+    localContacts = {};
   }
 }
 
-async function pushContactInfo(name, lastname, email, phone) {
+async function pushContactInfo(firstName, lastName, email, phone) {
   let newContact = {
-    id: localContacts.length,
-    firstName: name,
-    lastName: lastname,
-    email: email,
-    phone: phone,
+    firstName,
+    lastName,
+    email,
+    phone,
   };
 
   try {
-    let key = newContact.id;
-    let response = await fetch(BASE_URL + `/contacts/${key}.json`, {
-      method: "PUT",
+    // POST-Anfrage, um einen neuen Eintrag zu erstellen. 
+    // Firebase generiert einen neuen Schlüssel für diesen Kontakt.
+    let response = await fetch(`${BASE_URL}/contacts.json`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newContact),
     });
     let responseToJson = await response.json();
-    console.log("Contact added or updated:", responseToJson);
+    console.log("Contact added:", responseToJson);
+
+    // Kontakte neu laden (sofern fetchContactsFromFirebase() in Ihrem globalen Code definiert ist)
+    await getContactInfo();
+    fetchContactsFromFirebase();
   } catch (error) {
     console.error("Failed to add contact:", error);
   }

@@ -69,9 +69,11 @@
   align-items: flex-start;
 }
 #contact-headline-container {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
+  top: 206px;
 }
 #contact-headline {
   padding-right: 25px;
@@ -219,13 +221,12 @@ hr {
 }
 
 .contact-detail {
+  position: absolute;
   display: flex;
   flex-direction: column;
   width: 461px;
   height: 364px;
   top: 311px;
-  left: 750px;
-  gap: 21px;
 }
 
 .contact-detail-header {

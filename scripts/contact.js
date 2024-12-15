@@ -16,14 +16,18 @@ function fetchContactsFromFirebase() {
     const data = snapshot.val();
 
     if (data) {
-      contactsData = Object.entries(data).map(([id, contact]) => ({
-        id,
+      // Verwende den von Firebase generierten Schlüssel als eindeutigen Bezeichner
+      contactsData = Object.entries(data).map(([firebaseKey, contact]) => ({
+        firebaseKey,
         ...contact
       }));
       renderSortedContacts(contactsData);
       renderRightSideContainer();
     } else {
       console.log("Keine Kontakte gefunden.");
+      contactsData = [];
+      renderSortedContacts(contactsData);
+      renderRightSideContainer();
     }
   });
 }
@@ -61,7 +65,10 @@ function renderSortedContacts(contacts) {
     `;
 
     groupedContacts[letter].forEach((contact) => {
-      contactsHTML += contactsTemplate(contact);
+      // Achten Sie darauf, dass contactsTemplate nun ebenfalls firebaseKey verwendet.
+      // Beispielsweise:
+      // <li class="contact-item" id="contact-item-${contact.firebaseKey}" onclick="toggleContactDetail('${contact.firebaseKey}')">...</li>
+      contactsHTML += contactsTemplate(contact); 
     });
 
     contactsHTML += `</ul></div>`;
@@ -71,20 +78,18 @@ function renderSortedContacts(contacts) {
   content.innerHTML = contactsHTML;
 }
 
-function toggleContactDetail(contactId) {
+function toggleContactDetail(firebaseKey) {
   const contactItems = document.querySelectorAll(".contact-item");
   const detailViewContainer = document.getElementById("contact-big");
-  const selectedContact = contactsData.find(
-    (contact) => contact.id === contactId
-  );
-  const clickedItem = document.getElementById(`contact-item-${contactId}`);
+  const selectedContact = contactsData.find((contact) => contact.firebaseKey === firebaseKey);
+  const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
 
   if (!selectedContact) {
-    console.error(`Contact with ID ${contactId} not found.`);
+    console.error(`Contact with firebaseKey ${firebaseKey} not found.`);
     return;
   }
 
-  if (clickedItem.classList.contains("selected")) {
+  if (clickedItem && clickedItem.classList.contains("selected")) {
     clickedItem.classList.remove("selected");
     detailViewContainer.innerHTML = `
       <div id="contact-headline-container">
@@ -94,7 +99,9 @@ function toggleContactDetail(contactId) {
     `;
   } else {
     contactItems.forEach((item) => item.classList.remove("selected"));
-    clickedItem.classList.add("selected");
+    if (clickedItem) {
+      clickedItem.classList.add("selected");
+    }
 
     detailViewContainer.innerHTML = /*html*/ `
       <div id="contact-headline-container">
@@ -104,18 +111,15 @@ function toggleContactDetail(contactId) {
       <div class="contact-detail">
           <div class="contact-detail-header">
               <div class="contact-avatar" style="background-color: ${getRandomColor()};">
-                  ${getInitials(
-                    selectedContact.firstName,
-                    selectedContact.lastName
-                  )}
+                  ${getInitials(selectedContact.firstName, selectedContact.lastName)}
               </div>
               <div class="contact-detail-header-right">
                   <div class="contact-detail-header-right-headline">
                       ${selectedContact.firstName} ${selectedContact.lastName}
                   </div>
                   <div class="detail-actions">
-                      <button onclick="editContact('${contactId}')">Edit</button>
-                      <button onclick="deleteContact('${contactId}')">Delete</button>
+                      <button onclick="editContact('${firebaseKey}')">Edit</button>
+                      <button onclick="deleteContact('${firebaseKey}')">Delete</button>
                   </div>
               </div>
           </div>

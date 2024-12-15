@@ -13,7 +13,7 @@ function getEditContactHTML(contact) {
             </svg>
               </div>
               <span id="edit-contact-headline">Edit contact</span>
-                <img src="../img/vector5.png" id="vector-line">
+              <img src="../img/vector5.png" id="vector-line">
           </div>
           <div id="edit-contact-interactions-container">
               <div id="edit-contact-btn-close-container">
@@ -55,10 +55,10 @@ function getEditContactHTML(contact) {
                   <div id="edit-contact-btn-placeholder"></div>
                   <div id="edit-contact-btn-container">
                     <button id="edit-contact-delete" onclick="deleteContact('${
-                      contact.id
+                      contact.firebaseKey
                     }')">Delete</button>    
                     <button id="edit-contact-create" onclick="saveEditedContact('${
-                      contact.id
+                      contact.firebaseKey
                     }')">Save</button>  
                   </div>
               </div>

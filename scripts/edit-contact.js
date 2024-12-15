@@ -1,8 +1,8 @@
-function editContact(contactId) {
-    const contact = contactsData.find((c) => c.id === contactId);
+function editContact(firebaseKey) {
+    const contact = contactsData.find((c) => c.firebaseKey === firebaseKey);
 
     if (!contact) {
-        console.error(`Contact with ID ${contactId} not found.`);
+        console.error(`Contact with firebaseKey ${firebaseKey} not found.`);
         return;
     }
 
@@ -20,7 +20,7 @@ function editContact(contactId) {
     editContactTemplate.innerHTML = getEditContactHTML(contact);
 }
 
-async function saveEditedContact(contactId) {
+async function saveEditedContact(firebaseKey) {
     const nameInput = document.getElementById("edit-contact-name").value.trim();
     const emailInput = document.getElementById("edit-contact-email").value.trim();
     const phoneInput = document.getElementById("edit-contact-phone").value.trim();
@@ -34,9 +34,7 @@ async function saveEditedContact(contactId) {
     const firstName = nameParts[0];
     const lastName = nameParts.slice(1).join(" ");
 
-
     const updatedContact = {
-        id: contactId,
         firstName,
         lastName,
         email: emailInput,
@@ -44,7 +42,7 @@ async function saveEditedContact(contactId) {
     };
 
     try {
-        const response = await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
+        const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -53,9 +51,12 @@ async function saveEditedContact(contactId) {
         });
 
         if (response.ok) {
-            console.log(`Contact with ID ${contactId} updated.`);
+            console.log(`Contact with firebaseKey ${firebaseKey} updated.`);
             hideEditContact(); 
-            toggleContactDetail(contactId); 
+            // Nach dem Bearbeiten Daten neu laden
+            fetchContactsFromFirebase();
+            // Detailansicht neu laden
+            toggleContactDetail(firebaseKey); 
         } else {
             console.error(`Failed to update contact: ${response.statusText}`);
         }
@@ -64,14 +65,16 @@ async function saveEditedContact(contactId) {
     }
 }
 
-async function deleteContact(contactId) {
+async function deleteContact(firebaseKey) {
     try {
-      await fetch(`${BASE_URL}/contacts/${contactId}.json`, {
+      await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
         method: "DELETE",
       });
 
-      console.log(`Contact with ID ${contactId} deleted.`);
+      console.log(`Contact with firebaseKey ${firebaseKey} deleted.`);
       hideEditContact();
+      // Liste neu laden
+      fetchContactsFromFirebase();
     } catch (error) {
       console.error("Failed to delete contact:", error);
     }
