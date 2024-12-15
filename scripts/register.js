@@ -1,5 +1,4 @@
 function onloadFunc(){
-    console.log('test');
     loadUsers("signed_users");
 }
 
@@ -89,7 +88,7 @@ showResultsMessage(foundPassword)
 validateSignUpForm();
 }
 
-function validateSignUpForm(){
+function validateSignUpForm(){ 
     let userFirstName = document.getElementById('loginFirstName').value;
     let userLastName = document.getElementById('loginLastName').value;
     let userMail = document.getElementById('loginMail').value;
@@ -97,6 +96,9 @@ function validateSignUpForm(){
     let userPasswordConfirmed = document.getElementById('loginPasswordConfirm').value;
     let checkBox = document.getElementById('registerCheckbox').checked;
     let signUpButton = document.getElementById('signUpButton');
+    console.log(userFirstName);
+    console.log(userLastName);
+    console.log(userMail);
     if (userFirstName && userLastName && userMail && userPassword && userPasswordConfirmed &&
         userPassword === userPasswordConfirmed && checkBox){
             signUpButton.disabled = false;
@@ -104,6 +106,8 @@ function validateSignUpForm(){
             signUpButton.disabled = true;
         }
 }
+
+
 
 function showResultsMessage(foundPassword){
     let alertDiv = document.getElementById('alert-password');

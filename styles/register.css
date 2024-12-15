@@ -118,17 +118,13 @@ d-none {
   margin: 0;
 }
 
-button.logInButton:disabled {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 49px;
-  width: 91px;
-  border-radius: 8px;
+
+
+button.button-signup:disabled {
   background-color: rgb(126, 126, 126);
-  border: none;
   cursor: not-allowed;
 }
+
 
 .signUpSuccessDiv {
   width: 312px;
@@ -205,17 +201,7 @@ button.logInButton:disabled {
   color: rgb(41, 171, 226);
 }
 
-button.buttonSignUp:disabled{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 49px;
-  width: 91px;
-  border-radius: 8px;
-  background-color: rgb(126, 126, 126);
-  border: none;
-  cursor: not-allowed;
-}
+
 
 @media (max-width: 768px) {
   .signUpForm {
