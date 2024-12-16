@@ -11,9 +11,9 @@ function init() {
 
 let currentDraggedElement;
 
-function loadCurrentUser(){
+function loadCurrentUser() {
     const storedUser = localStorage.getItem('currentUser');
-    if(storedUser){
+    if (storedUser) {
         currentUser = JSON.parse(storedUser);
         console.log(currentUser)
     }
@@ -28,7 +28,7 @@ async function fetchTasks(path = "") {
     }
     console.log(taskArray)
     updateTaskHTML();
-} 
+}
 
 function startDragging(id) {
     currentDraggedElement = id;
@@ -42,14 +42,14 @@ async function moveTo(category) {
     const taskIndex = taskArray.findIndex(task => task.id === currentDraggedElement);
     if (taskIndex !== -1) {
         taskArray[taskIndex].status = category;
-        if(currentUser.firstName === "Guest" && currentUser.lastName === "User"){
+        if (currentUser.firstName === "Guest" && currentUser.lastName === "User") {
             console.log("Gastbenutzer verschiebt Aufgabe lokal.");
-            updateTaskHTML(); 
+            updateTaskHTML();
         }
-        else{
-        console.log("Registrierter Benutzer aktualisiert Firebase.");
-        await updateTaskInFirebase(taskArray[taskIndex]);
-        updateTaskHTML();
+        else {
+            console.log("Registrierter Benutzer aktualisiert Firebase.");
+            await updateTaskInFirebase(taskArray[taskIndex]);
+            updateTaskHTML();
         }
     }
 }
@@ -98,10 +98,10 @@ function getBoardNavigatorHTML() {
     `
 }
 
-function filterTaskFunction(){
+function filterTaskFunction() {
     let myFilter = document.getElementById('filterTask').value.toLowerCase();
-    if (myFilter.length < 1){
-        for(let i = 0; i < taskArray.length; i++){
+    if (myFilter.length < 1) {
+        for (let i = 0; i < taskArray.length; i++) {
             let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
             if (wholeTask) {
                 wholeTask.style.display = '';
@@ -224,12 +224,12 @@ function updateTaskHTML() {
         findPrioIcon(task)
         findAmountOfSubtasks(task)
     }
-    if(todoColumn.children.length === 0){
+    if (todoColumn.children.length === 0) {
         createNoToDosdiv()
     }
 }
 
-function createNoToDosdiv(){
+function createNoToDosdiv() {
     document.getElementById('todo').innerHTML += /*html*/`
         <div class="noTasks">
             <p class="font-no-tasks">NO TASKS TO DO</p>
@@ -282,13 +282,13 @@ function findClassOfTaskCat(task) {
 
 
 
-function findPrioIcon(task){
+function findPrioIcon(task) {
     let prioIcon = document.getElementById(`priority-${task.id}`);
-    if(task.prio === "medium"){
+    if (task.prio === "medium") {
         prioIcon.src = "./img/prio-mid.png"
-    }else if(task.prio === "urgent"){
+    } else if (task.prio === "urgent") {
         prioIcon.src = "./img/prio-high.png"
-    }else{
+    } else {
         prioIcon.src = "./img/prio-low.png"
     }
 }
@@ -451,7 +451,7 @@ function getTaskDetailsHTML(task) {
     `;
 }
 
-function askFordeleteTask(){
+function askFordeleteTask() {
     let deleteDiv = document.getElementById('deleteConfirmation');
     deleteDiv.classList.remove('d-none');
 }
@@ -477,12 +477,12 @@ async function deleteTask(taskId) {
     }
 }
 
-function closeDetailView(){
+function closeDetailView() {
     let overlay = document.getElementById('taskDetailView');
     overlay.classList.add('d-none');
 }
 
-function closeQuestionDelete(){
+function closeQuestionDelete() {
     let deleteQuestDiv = document.getElementById('deleteConfirmation');
     deleteQuestDiv.classList.add('d-none')
 }
@@ -508,7 +508,7 @@ function getSubtasksHTML(task) {
                 </label>
             </div>
             `
-        ;
+            ;
     });
     return subtasksHTML;
 }
@@ -562,14 +562,14 @@ function getAssignedOwnersHTML(task) {
 function getRandomColor() {
     const colors = [
         "#FF5733",
-        "#33FF57", 
-        "#3357FF", 
-        "#FFC300", 
-        "#8E44AD", 
-        "#16A085", 
-        "#E74C3C", 
-        "#2ECC71", 
-        "#3498DB", 
+        "#33FF57",
+        "#3357FF",
+        "#FFC300",
+        "#8E44AD",
+        "#16A085",
+        "#E74C3C",
+        "#2ECC71",
+        "#3498DB",
     ];
     return colors[Math.floor(Math.random() * colors.length)];
 }
@@ -592,14 +592,14 @@ function getTaskCategoryClass(taskCategory) {
 
 
 
-function addTaskToColumnOverlay(id){
-    let overlayDetailedTask= document.getElementById('overlayDetailedSite');
+function addTaskToColumnOverlay(id) {
+    let overlayDetailedTask = document.getElementById('overlayDetailedSite');
     overlayDetailedTask.innerHTML = '';
     overlayDetailedTask.classList.remove('d-none')
     overlayDetailedTask.innerHTML += addTaskOverlayHTML(id)
 }
 
-function closeDetailView(){
+function closeDetailView() {
     let taskCardOverlay = document.getElementById('taskDetailView');
     taskCardOverlay.classList.add('d-none');
 }
@@ -616,7 +616,7 @@ function removeHighlight(id) {
 
 // edit task 
 
-function showEditTaskTempl(taskId){
+function showEditTaskTempl(taskId) {
     const task = taskArray.find(t => t.id === taskId);
     if (!task) {
         console.error("Task nicht gefunden!");
@@ -626,10 +626,125 @@ function showEditTaskTempl(taskId){
     let editView = document.getElementById('editTaskTempl');
     detailView.classList.add('d-none');
     editView.classList.remove('d-none');
-    editView.innerHTML='';
-    editView.innerHTML+= getEditTemplate(task);
-    setPriority(task.prio);
+    editView.innerHTML = '';
+    editView.innerHTML += getEditTemplate(task);
+    getUsersForEditDropDown()
 }
+
+async function getUsersForEditDropDown() {
+    try {
+        let response = await fetch(BASE_URL + "/contacts/.json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        let responseToJson = await response.json();
+        finalContactsForEdit = responseToJson || {};
+        console.log(finalContactsForEdit);
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+    }
+    returnArrayContactsEdit();
+    setupEditDropdownInteraction(); // Dropdown-Interaktion nach Rendern initialisieren
+}
+
+function setupEditDropdownInteraction() {
+    const editDropdown = document.getElementById("custom-dropdown-edit");
+    const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
+
+    // Klick auf das Dropdown öffnet/schließt die Optionen
+    editDropdown.addEventListener("click", () => {
+        const isOpen = editOptionsContainer.style.display === "flex";
+        editOptionsContainer.style.display = isOpen ? "none" : "block";
+    });
+}
+
+
+function returnArrayContactsEdit() {
+    if (!finalContactsForEdit || Object.keys(finalContactsForEdit).length === 0) {
+        console.error("No contacts found.");
+        return;
+    }
+
+    const editDropdown = document.getElementById('custom-dropdown-edit');
+    if (!editDropdown) {
+        console.error("Edit Dropdown element not found.");
+        return;
+    }
+
+    const editOptionsContainer = editDropdown.querySelector('.dropdown-options-edit');
+    editOptionsContainer.innerHTML = ""; // Optionen im Dropdown leeren
+
+    Object.keys(finalContactsForEdit).forEach((key) => {
+        const contact = finalContactsForEdit[key];
+        if (!contact || !contact.firstName || !contact.lastName) return;
+
+        const optionHTML = assignUserEditHTML(contact);
+        console.log(`Rendering contact: ${contact.firstName} ${contact.lastName}`); // Debug-Ausgabe
+
+        const optionElement = document.createElement("div");
+        optionElement.classList.add("dropdown-contact-edit");
+        optionElement.innerHTML = optionHTML;
+
+        editOptionsContainer.appendChild(optionElement);
+    });
+}
+
+
+function assignUserEditHTML(contact) {
+    const initials = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+    return `
+        <div class="contact-circle-edit" style="background-color: ${getRandomColor()}">${initials}</div>
+        <span>${contact.firstName} ${contact.lastName}</span>
+        <input type="checkbox" class="contact-checkbox-edit" onchange="handleEditContactSelection('${contact.firstName}', '${contact.lastName}')">
+    `;
+}
+
+
+function handleEditContactSelection(firstName, lastName) {
+    const fullName = `${firstName} ${lastName}`;
+    const checkbox = document.querySelector(`input[onchange*="${fullName}"]`);
+
+    if (checkbox.checked) {
+        assignedUserArr.push({ firstName, lastName });
+    } else {
+        assignedUserArr = assignedUserArr.filter(user => user.firstName !== firstName || user.lastName !== lastName);
+    }
+
+    console.log("Assigned users:", assignedUserArr);
+    updateAssignedUsersDisplay();
+}
+
+function updateAssignedUsersDisplay() {
+    const assignedUsersContainer = document.getElementById('assigned-users-short-edit');
+    assignedUsersContainer.innerHTML = "";
+
+    assignedUserArr.forEach(user => {
+        const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`;
+        assignedUsersContainer.innerHTML += `
+            <div class="assigned-user-circle" style="background-color: ${getRandomColor()}">
+                ${initials}
+            </div>
+        `;
+    });
+}
+
+function getFirstLetter(name) {
+    return name.trim().charAt(0).toUpperCase();
+}
+
+function getRandomColor() {
+    const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+
 
 function getEditTemplate(task) {
     return /*html*/`
@@ -656,12 +771,26 @@ function getEditTemplate(task) {
                     <img id="lowImg" src="../img/Prio_low_color.png" alt=""/>
                 </button>
             </div>
+
+            <div class="field-text-flex-edit" id="addTaskAssignedTo-edit">
+                <div class="form-group-edit">
+                    <label for="assigned-to-edit">Assigned to</label>
+                    <div id="custom-dropdown-edit" class="custom-dropdown-edit input-addtask-edit">
+                    <div class="dropdown-placeholder-edit">Select contacts to assign</div>
+                    <div class="dropdown-options-edit"></div>
+                    </div>
+                    <div id="assigned-users-short-edit"></div>
+                </div>
+            </div>
+
+
+
         </div>
     `;
 }
 
 
-function closeEditTask(){
+function closeEditTask() {
     let overlayEdit = document.getElementById('editTaskTempl');
     overlayEdit.classList.add('d-none');
 }

@@ -1,6 +1,7 @@
 const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let taskArray=[]
 let finalContacts =[];
+let finalContactsForEdit=[];
 
 function getOwners(task) {
     let owners = [];
