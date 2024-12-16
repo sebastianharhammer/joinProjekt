@@ -387,9 +387,16 @@ function showTaskCardHTML(task) {
         <div id="currentTaskCard${task.id}" class="currentTaskCard">
             ${getTaskCategoryButtonHTML(task)}
             ${getTaskDetailsHTML(task)}
+            <div class="taskOwnersSection">
+                <p class="firstTableColumnFont">Assigned To:</p>
+                <div class="assignedOwnersContainer">
+                    ${getAssignedOwnersHTML(task)}
+                </div>
+            </div>
         </div>
     `;
 }
+
 
 function getTaskCategoryButtonHTML(task) {
     return /*html*/`

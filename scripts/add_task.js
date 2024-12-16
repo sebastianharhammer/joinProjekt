@@ -239,7 +239,6 @@ function returnArrayContacts() {
         const optionElement = document.createElement("div");
         optionElement.classList.add("dropdown-contact");
         optionElement.innerHTML = optionHTML;
-
         optionsContainer.appendChild(optionElement);
     });
 }
