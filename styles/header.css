@@ -112,7 +112,11 @@ header {
   background-color: #091931;
   cursor: pointer;
 }
-
+@media (min-width: 1030px) {
+  #helpLink {
+    display: none;
+  }
+}
 @media (max-width: 1030px) {
   #overlay-top {
     padding: 0 15px;
@@ -126,6 +130,9 @@ header {
 
     order: -1;
     margin-left: 0;
+  }
+  #help-btn {
+    display: none;
   }
 }
 
