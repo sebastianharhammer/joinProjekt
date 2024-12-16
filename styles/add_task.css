@@ -759,11 +759,14 @@ ul {
   }
 }
 
-.dropdown-contact{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 16px;
+.dropdown-contact {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
 }
 
 @media (max-width: 992px) {
