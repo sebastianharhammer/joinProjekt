@@ -436,7 +436,7 @@ function getTaskDetailsHTML(task) {
                 <img class="deleteIcon" src="./img/delete.svg" alt="">
                 <p class="editDeleteFont">Delete</p>
             </div>
-            <div class="deleteCard">
+            <div onclick="showEditTaskTempl()" class="deleteCard">
             <img class="editIcon" src="./img/edit.svg" alt="">
             <p class="editDeleteFont">Edit</p>
             </div>
@@ -611,6 +611,16 @@ function highlight(id) {
 
 function removeHighlight(id) {
     document.getElementById(id).classList.remove("dragAreaHighlight");
+}
+
+
+// edit task 
+
+function showEditTaskTempl(){
+    let detailView = document.getElementById('taskDetailView');
+    let editView = document.getElementById('editTaskTempl');
+    detailView.classList.add('d-none');
+    editView.classList.remove('d-none');
 }
 
 
