@@ -55,6 +55,34 @@
   color: white;
 }
 
+.button-signup {
+  width: 120px;
+  border: unset;
+  border-radius: 8px;
+  height: 48px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 16px;
+  color: white;
+  background-color: rgb(42, 54, 71);
+}
+
+.button-signup:hover{
+  background-color: rgb(41, 171, 226);
+  border: unset;
+  cursor: pointer;
+}
+
+button:disabled:hover{
+  cursor: not-allowed;
+  background-color: gray;
+}
+
+button:disabled{
+  cursor: not-allowed;
+  background-color: gray;
+}
+
 .loginForm {
   height: 40vh;
   width: 70vw;

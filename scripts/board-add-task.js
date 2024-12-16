@@ -72,43 +72,69 @@ function hideAddTask() {
     background.classList.add('d-none');
 }
 
-function createTask(status, event) {
+async function createTask(status, event) {
     event.preventDefault();
-
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('addTaskInputDueDate').value;
-    const category = getCategory();
+    const category = categoryObject;
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
-    const assignedUsers = assignedUser;
+    const assignedUsers = [...assignedUserArr];
 
-    if (!title || !description || !date || !priority /* || assignedUsers.length === 0*/ ) {
+    if (!title || !description || !date || !priority /*|| assignedUsers.length === 0) */ ){
         console.error("All fields are required!");
         return;
     }
 
-    let newTask = {
-        id: localTasks.length,
-        status: status,
-        title: title,
-        description: description,
-        date: date,
-        taskCategory: category || "Undefined Category",
-        priority: priority,
-        subtasks: subtasks,
-        owner: assignedUser,
-    };
-
-    localTasks.push(newTask);
-    pushTaskToFirebase(newTask);
-    console.log('Task created:', newTask);
-    document.querySelector('form').reset();
-    selectedPriority = "";
-    assignedUser = [];
-    subtasksArr = [];
+    try {
+        const nextId = await getNextTaskId();
+        let newTask = {
+            id: nextId,
+            status: "todo",
+            title: title,
+            description: description,
+            date: date,
+            taskCategory: category || "Undefined Category",
+            prio: priority,
+            subtasks: subtasks,
+            owner: assignedUsers
+        };
+        taskArray.push(newTask);
+        await pushTaskToFirebase(newTask);
+        //showAddTaskSuccesMessage();
+        document.getElementById('add-task-background').classList.add('d-none');
+            document.getElementById('add-task-content').classList.add('hide-add-task');
+        setTimeout(() => {
+            window.location.href = "testboard.html";
+          }, 1500);
+        
+    } catch (error) {
+        console.error("Failed to create the task:", error);
+    }
 }
 
+
+async function getNextTaskId() {
+    try {
+        const response = await fetch(BASE_URL + "/tasks.json", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (!response.ok) {
+            throw new Error(`Error! Status: ${response.status}`);
+        }
+        const tasks = await response.json();
+        const taskIds = tasks ? Object.values(tasks).map(task => task.id) : [];
+        const maxId = taskIds.length > 0 ? Math.max(...taskIds) : 0;
+        return maxId + 1;
+    } catch (error) {
+        console.error("Failed to fetch tasks for ID generation:", error);
+        return 20;
+    }
+}
 
 async function pushTaskToFirebase(newTask) {
     try {
@@ -356,17 +382,6 @@ function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
-  
-    const editSubtaskHTML = /*html*/ `
-          <div class="subtask-input-wrapper edit-mode">
-              <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
-              <div class="input-icons-edit">
-                  <img src ="../assets/img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
-                  <div class="divider"></div>
-                  <img src="../assets/img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
-              </div>
-          </div>
-      `;
 }
 
 function deleteSubtask(liId) {
