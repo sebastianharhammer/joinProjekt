@@ -71,9 +71,6 @@ async function updateTaskInFirebase(task) {
 }
 
 
-
-
-
 function loadBoardNavigator() {
     let content = document.getElementById('wholeBoard');
     content.innerHTML = '';

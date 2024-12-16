@@ -46,14 +46,14 @@ let addTaskcategories = [
   let assignedUser = [];
 
 
-function init() {
+  function init() {
     getTasks();
-    //getUsers();
-    
-    includeHTML(); 
+    getUsers();
+    includeHTML();
     renderAddTaskHTML();
-    returnArrayContacts();
+    setupDropdownInteraction(); 
 }
+
 
 function getRandomColor() {
     const colors = ["orange", "purple", "blue", "red", "green", "teal"];
@@ -94,7 +94,7 @@ async function createTask(status, event) {
         showAddTaskSuccesMessage();
         setTimeout(() => {
             window.location.href = "testboard.html";
-          }, 1500);
+        }, 1500);
         
     } catch (error) {
         console.error("Failed to create the task:", error);
@@ -193,7 +193,7 @@ async function getTasks() {
         console.error("Error fetching contacts:", error);
     }
 }
-/*
+
 async function getUsers() {
     try {
         let response = await fetch(BASE_URL + "/contacts/.json", {
@@ -206,19 +206,21 @@ async function getUsers() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         let responseToJson = await response.json();
-        contacts = responseToJson;
-        returnArrayContacts();
+        console.log("Fetched Contacts:", responseToJson);
+        finalContacts = responseToJson || {};
+        console.log(finalContacts)
     } catch (error) {
         console.error("Error fetching contacts:", error);
     }
+    returnArrayContacts()
 }
-*/
+
 function returnArrayContacts() {
-    if (!contacts || contacts.length === 0) {
+    if (!finalContacts || Object.keys(finalContacts).length === 0) {
         console.error("No contacts found.");
         return;
     }
-
+    console.log(finalContacts)
     const dropdown = document.getElementById('custom-dropdown');
     if (!dropdown) {
         console.error("Dropdown element not found.");
@@ -226,27 +228,34 @@ function returnArrayContacts() {
     }
 
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    optionsContainer.innerHTML = ""; 
+    optionsContainer.innerHTML = ""; // Dropdown leeren
 
-    contacts.forEach(contact => {
+    Object.keys(finalContacts).forEach((key) => {
+        const contactInDrop = finalContacts[key];
 
-        if (!contact || !contact.firstName || !contact.lastName) {
-            return;
-        }
+        if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
+        const optionHTML = assignUserHTML(contactInDrop);
 
-        const option = document.createElement('div');
-        option.classList.add('assigned-user');
-        option.innerHTML = assignUserHTML(contact);
-        optionsContainer.appendChild(option);
+        const optionElement = document.createElement("div");
+        optionElement.classList.add("dropdown-contact");
+        optionElement.innerHTML = optionHTML;
+
+        optionsContainer.appendChild(optionElement);
     });
-
-    dropdown.addEventListener('click', () => {
-        const isOpen = optionsContainer.style.display === 'block';
-        optionsContainer.style.display = isOpen ? 'none' : 'block';
-    });
-
-
 }
+
+function setupDropdownInteraction() {
+    const dropdown = document.getElementById("custom-dropdown");
+    const optionsContainer = dropdown.querySelector(".dropdown-options");
+
+    dropdown.addEventListener("click", () => {
+        const isOpen = optionsContainer.style.display === "block";
+        optionsContainer.style.display = isOpen ? "none" : "block";
+    });
+}
+
+
+
 function assignUser(firstName, lastName) {
     assignedUserArr.push({
         firstName: firstName,
@@ -257,12 +266,14 @@ function assignUser(firstName, lastName) {
 }
 
 function showAssignedUsers() {
-    let assignUsers = document.getElementById('assigned-users-short');
-    assignUsers.innerHTML = "";
-    for (let i=0; i < assignedUserArr.length; i++) {
-        assignUsers.innerHTML += showAssignedUsersHTML(assignedUserArr[i]);
-    }
+    let assignUsersContainer = document.getElementById("assigned-users-short");
+    assignUsersContainer.innerHTML = "";
+
+    assignedUserArr.forEach((contact) => {
+        assignUsersContainer.innerHTML += showAssignedUsersHTML(contact);
+    });
 }
+
 
 
 function getFirstLetter(name) {
