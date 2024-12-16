@@ -44,7 +44,8 @@ let addTaskcategories = [
         "bg-color": "#1FD7C1",
       }];
   let assignedUser = [];
-getTasks();
+  let localStatus = "";
+
 
 function getRandomColor() {
     const colors = ["orange", "purple", "blue", "red", "green", "teal"];
@@ -53,6 +54,7 @@ function getRandomColor() {
 
 function showAddTask(status) {
     console.log("wird ausgeführt in " + "#" + status + "#") 
+    localStatus = status;
     getTasks();
     let addTaskContent = document.getElementById('add-task-content');
     let background = document.getElementById('add-task-background');
@@ -73,6 +75,7 @@ function hideAddTask() {
 }
 
 async function createTask(status, event) {
+    console.log(status);
     event.preventDefault();
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
@@ -81,17 +84,17 @@ async function createTask(status, event) {
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
-
-    if (!title || !description || !date || !priority /*|| assignedUsers.length === 0) */ ){
+/*
+    if (!title || !description || !date || !priority || assignedUsers.length === 0)  ){
         console.error("All fields are required!");
         return;
     }
-
+*/
     try {
         const nextId = await getNextTaskId();
         let newTask = {
             id: nextId,
-            status: "todo",
+            status: localStatus,
             title: title,
             description: description,
             date: date,
@@ -139,7 +142,7 @@ async function getNextTaskId() {
 async function pushTaskToFirebase(newTask) {
     try {
         let key = newTask.id;  
-        let response = await fetch(ADD_TASK_BASE_URL + `/testingTasks/${key}.json`, {
+        let response = await fetch(ADD_TASK_BASE_URL + `/tasks/${key}.json`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

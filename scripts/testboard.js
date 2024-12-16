@@ -592,12 +592,13 @@ function getTaskCategoryClass(taskCategory) {
 
 
 
-function addTaskToColumnOverlay(id){
+/*function addTaskToColumnOverlay(id){
     let overlayDetailedTask= document.getElementById('overlayDetailedSite');
     overlayDetailedTask.innerHTML = '';
     overlayDetailedTask.classList.remove('d-none')
     overlayDetailedTask.innerHTML += addTaskOverlayHTML(id)
 }
+    */
 
 function closeDetailView(){
     let taskCardOverlay = document.getElementById('taskDetailView');
