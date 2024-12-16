@@ -306,11 +306,15 @@ function setPriority(priority) {
     const priorities = ['urgent', 'medium', 'low'];
     priorities.forEach((prio) => {
         const btn = document.getElementById(`prio-${prio}`);
+        const img = document.getElementById(`prio-image-${prio}`);
         btn.classList.remove(prio === 'urgent' ? 'red' : prio === 'medium' ? 'yellow' : 'green');
+        img.classList.remove('sat-0');
     });
     const selectedButton = document.getElementById(`prio-${priority}`);
+    const selectedImg = document.getElementById(`prio-image-${priority}`);
     selectedButton.classList.add(priority === 'urgent' ? 'red' : priority === 'medium' ? 'yellow' : 'green');
-    selectedPriority = priority;
+    selectedImg.classList.add('sat-0');
+    selectedPriority = priority;  
 }
 
 

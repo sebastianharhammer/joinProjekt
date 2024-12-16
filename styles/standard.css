@@ -34,3 +34,7 @@ a:hover {
 .height-100-vh {
   height: 100vh !important;
 }
+.sat-0 {
+  filter: saturate(0);
+  filter: brightness(100);
+}
