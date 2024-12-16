@@ -372,18 +372,68 @@ function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
+    const editSubtaskHTML = /*html*/ `
+        <div class="subtask-input-wrapper edit-mode">
+            <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
+            <div class="input-icons-edit">
+                <img src ="../img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
+                <div class="divider"></div>
+                <img src="../img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
+            </div>
+        </div>
+    `;
+    li.innerHTML = editSubtaskHTML;
+    li.classList.add("subtask-item-on-focus");
+    li.classList.remove("subtask-item");
 }
 
 function deleteSubtask(liId) {
     const li = document.getElementById(liId);
     li.remove();
+}
+function saveSubtask(liId, inputId, spanId) {
+    const li = document.getElementById(liId);
+    const input = document.getElementById(inputId);
+    const saveSubtaskHTML = `
+          <div class="subtask-text">
+              <div class="dot"></div>
+              <span id="span-${liId}" onclick="editSubtask('${liId}', 'span-${liId}', 'input-${liId}')">${input.value}</span>
+          </div>
+          <div class="subtask-icon">
+              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
+              <div class="divider"></div>
+              <img id="deleteBtn-${liId}" onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
+          </div>
+      `;
+  
+    li.innerHTML = saveSubtaskHTML;
+    li.classList.remove("subtask-item-on-focus");
+    li.classList.add("subtask-item");
+  }
+  function clearSubtaskInput() {
+    document.getElementById("subtaskInput").value = "";
+  }
+  
+  function clearSubtaskInput() {
+    const input = document.getElementById("subtaskInput");
+    input.value = "";
+    document.getElementById("clearButton").style.display = "none";
+  }
+  
+  function showClearButton() {
+    document.getElementById("clear-add-icons").classList.remove("d-none");
+    document.getElementById("subtasks-plus-icon").classList.add("d-none");
+  }
+  
+  function clearImput() {
+    document.getElementById("subtaskInput").value = "";
   }
 
 
 function showClearButton() {
     document.getElementById("clear-add-icons").classList.remove("d-none");
     document.getElementById("subtasks-plus-icon").classList.add("d-none");
-  }
+}
 
 function clearSubtaskInput() {
     document.getElementById("subtaskInput").value = "";
