@@ -133,15 +133,15 @@ function showTitleOfBoardColumns() {
         <section id="titleOfBoardColumns" class="titleOfBoardColumns">
 <div onclick=addTaskToColumnOverlay() class="columntitleToDo">
     <p class="columnTitleFont">To do</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('to-do')">
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
 </div>
 <div onclick=addTaskToColumnOverlay() class="columntitleInProgress">
     <p class="columnTitleFont">In Progress</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('in-progress')">
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
 </div>
 <div onclick=addTaskToColumnOverlay() class="columntitleAwaitFeedback">
     <p class="columnTitleFont">Await Feedback</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('await-feedback')">
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
 </div>
 <div onclick=addTaskToColumnOverlay() class="columntitleDone">
     <p class="columnTitleFont">Done</p>
@@ -621,7 +621,7 @@ function showEditTaskTempl(){
     let editView = document.getElementById('editTaskTempl');
     detailView.classList.add('d-none');
     editView.classList.remove('d-none');
-    
+
 }
 
 
