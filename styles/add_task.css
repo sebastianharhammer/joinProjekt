@@ -759,6 +759,13 @@ ul {
   }
 }
 
+.dropdown-contact{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+}
+
 @media (max-width: 992px) {
   .addtask-form-container {
     flex-direction: column;
