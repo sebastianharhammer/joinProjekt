@@ -338,6 +338,7 @@ function setPriority(priority) {
     selectedPriority = priority;
 }
 
+
 function addSubtask() {   
     const subtaskInput = document.getElementById("subtaskInput");
     const subtasksContent = document.getElementById("subtasksContent");

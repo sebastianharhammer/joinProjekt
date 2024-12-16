@@ -436,7 +436,7 @@ function getTaskDetailsHTML(task) {
                 <img class="deleteIcon" src="./img/delete.svg" alt="">
                 <p class="editDeleteFont">Delete</p>
             </div>
-            <div onclick="showEditTaskTempl()" class="deleteCard">
+            <div onclick="showEditTaskTempl(${task.id})" class="deleteCard">
             <img class="editIcon" src="./img/edit.svg" alt="">
             <p class="editDeleteFont">Edit</p>
             </div>
@@ -616,12 +616,54 @@ function removeHighlight(id) {
 
 // edit task 
 
-function showEditTaskTempl(){
+function showEditTaskTempl(taskId){
+    const task = taskArray.find(t => t.id === taskId);
+    if (!task) {
+        console.error("Task nicht gefunden!");
+        return;
+    }
     let detailView = document.getElementById('taskDetailView');
     let editView = document.getElementById('editTaskTempl');
     detailView.classList.add('d-none');
     editView.classList.remove('d-none');
+    editView.innerHTML='';
+    editView.innerHTML+= getEditTemplate(task);
+    setPriority(task.prio);
+}
 
+function getEditTemplate(task) {
+    return /*html*/`
+        <div id="editTaskCard" class="editTaskCard">
+            <div class="closeEditView">
+                <img class="closeCard" onclick="closeEditTask()" src="./img/close.svg" alt="">
+            </div>
+            <p class="firstTableColumnFont">Title:</p>
+            <input value="${task.title}" type="text">
+            <p class="firstTableColumnFont">Description:</p>
+            <textarea id="editDescription" class="editTaskTextarea">${task.description}</textarea>
+            <p class="firstTableColumnFont">Priorität:</p>
+            <div class="prio-btn-content">
+                <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
+                    Urgent
+                    <img id="urgentImg" src="../img/Prio_urgent_color.png" alt=""/>
+                </button>
+                <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
+                    Medium
+                    <img id="mediumImg" src="../img/Prio_medium_color.png" alt=""/>
+                </button>
+                <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
+                    Low
+                    <img id="lowImg" src="../img/Prio_low_color.png" alt=""/>
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+
+function closeEditTask(){
+    let overlayEdit = document.getElementById('editTaskTempl');
+    overlayEdit.classList.add('d-none');
 }
 
 
