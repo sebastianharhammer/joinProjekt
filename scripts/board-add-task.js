@@ -46,6 +46,9 @@ function hideAddTask() {
     let background = document.getElementById('add-task-background');
     addContactTemplate.classList.remove('show-add-task');
     background.classList.add('d-none');
+    setTimeout(() => {
+        window.location.href = "testboard.html";
+      }, 1500);
 }
 
 async function createTask(status, event) {
