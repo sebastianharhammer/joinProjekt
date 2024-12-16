@@ -621,6 +621,7 @@ function showEditTaskTempl(){
     let editView = document.getElementById('editTaskTempl');
     detailView.classList.add('d-none');
     editView.classList.remove('d-none');
+    
 }
 
 

@@ -111,7 +111,7 @@ function showAddTaskSuccesMessage() {
 
 async function getNextTaskId() {
     try {
-        const response = await fetch(BASE_URL + "/tasks.json", {
+        const response = await fetch(BASE_URL + "/tasks.json", {    
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
