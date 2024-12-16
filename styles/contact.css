@@ -6,6 +6,7 @@
   width: 100%;
   height: calc(100vh - 100px);
 }
+
 #contact-side-panel {
   display: flex;
   flex-direction: column;
@@ -60,6 +61,7 @@
   width: 20px;
   padding-left: 10px;
 }
+
 #contact-big {
   width: 50dvw;
   display: flex;
@@ -68,6 +70,7 @@
   padding-left: 30px;
   align-items: flex-start;
 }
+
 #contact-headline-container {
   position: absolute;
   display: flex;
@@ -75,12 +78,14 @@
   align-items: center;
   top: 206px;
 }
+
 #contact-headline {
   padding-right: 25px;
   font-size: 61px;
   font-weight: 700;
   border-right: 3px solid #29abe2;
 }
+
 #bwat-headline {
   font-size: 27px;
   padding-left: 25px;
@@ -371,22 +376,35 @@ hr {
   text-align: left;
 }
 
-@media (max-width: 1200px) {
-  #contact-content {
-    padding-left: 5vw;
-  }
+/* Large screens (Desktop and above) */
+@media (max-width: 1300px) {
   #contact-side-panel {
-    width: 350px;
+    width: 100%;
+    padding-top: 20px;
+  }
+
+  #contact-big {
+    padding-left: 0px;
+    width: 0dvw;
+  }
+
+  #contact-content {
+    padding-left: 0vw;
   }
 }
 
 /* Medium Devices (Tablets and Smaller) */
 @media (max-width: 992px) {
-  #contact-content {
-    padding-left: 5vw;
-  }
   #contact-side-panel {
-    width: 300px;
+    width: 100%;
+    padding-top: 20px;
+  }
+  #contact-big {
+    width: 0dvw;
+  }
+
+  #contact-content {
+    padding-left: 0vw;
   }
 }
 
@@ -396,6 +414,7 @@ hr {
     width: 100%;
     padding-top: 20px;
   }
+
   #add-contact-btn {
     width: 80%;
   }
@@ -403,6 +422,10 @@ hr {
 
 /* Small Smartphones */
 @media (max-width: 576px) {
+  #contact-big {
+    width: 0dvw;
+  }
+
   #add-contact-headline {
     font-size: 34px;
   }
@@ -414,7 +437,6 @@ hr {
     overflow: auto;
   }
 
-  /* Button - Round and Floating */
   #add-contact-btn {
     position: fixed;
     bottom: 70px;
@@ -434,9 +456,7 @@ hr {
     padding-right: 5px;
   }
 
-  /* Contact List - Fullscreen */
   #contact-side-panel {
-    display: block;
     width: 100%;
     height: 100vh;
     overflow-y: scroll;
@@ -483,5 +503,15 @@ hr {
   #add-contact-img {
     width: 27px;
     height: 19px;
+  }
+
+  #add-new-contact-button-container {
+    height: 0px;
+    width: 0px;
+    padding: 0px;
+  }
+
+  #contact-content {
+    padding-top: 80px;
   }
 }
