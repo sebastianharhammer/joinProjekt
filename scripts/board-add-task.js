@@ -47,10 +47,10 @@ function hideAddTask() {
     addContactTemplate.classList.remove('show-add-task');
     setTimeout(() => {
         background.classList.add('d-none');
-      }, 500);
-    /* setTimeout(() => {
+      }, 1000);
+    setTimeout(() => {
         window.location.href = "testboard.html";
-      }, 1500); */
+      }, 1500);
 }
 
 async function createTask(status, event) {

@@ -35,6 +35,5 @@ a:hover {
   height: 100vh !important;
 }
 .sat-0 {
-  filter: saturate(0);
-  filter: brightness(100);
+  filter: saturate(0) brightness(67.5);
 }
