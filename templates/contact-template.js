@@ -5,9 +5,9 @@ function contactsTemplate(contact) {
       }" class="contact-item" onclick="toggleContactDetail('${
     contact.firebaseKey
   }')">
-          <span id="avatar-${
-            contact.firebaseKey
-          }" style="background-color: ${getRandomColor()};">
+          <span id="avatar-${contact.firebaseKey}" style="background-color: ${
+    contact.color || getRandomColor()
+  };">
               ${getInitials(contact.firstName, contact.lastName)}
           </span>
           <div id="contact-item-right">
