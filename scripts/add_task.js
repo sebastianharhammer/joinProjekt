@@ -30,7 +30,13 @@ let addTaskcategories = [
 
 
 function getRandomColor() {
-    const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+    const colors = [
+      "orange", "purple", "blue", "red", "green", "teal", 
+      "yellow", "pink", "cyan", "magenta", "lime", "indigo", 
+      "violet", "turquoise", "gold", "silver", "maroon", 
+      "navy", "coral", "olive", "peach", "aqua", "lavender", 
+      "salmon", "khaki", "plum", "mustard", "periwinkle", "chartreuse"
+    ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
