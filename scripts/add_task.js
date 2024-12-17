@@ -376,13 +376,13 @@ function addSubtask() {
 
         subtasksArr.push({
             subtask: subtaskInput.value,
-            checkbox_img: "../assets/img/checkbox-empty.svg",
+            checkbox_img: "../img/checkbox-empty.svg",
             checkbox: false
         });
 
         subtasksEdit.push({
             subtask: subtaskInput.value,
-            checkbox_img: "../assets/img/checkbox-empty.svg",
+            checkbox_img: "../img/checkbox-empty.svg",
             checkbox: false
         });
 
