@@ -22,8 +22,14 @@ let addTaskcategories = [
   let localStatus = "";
 
 
-function getRandomColor() {
-    const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+  function getRandomColor() {
+    const colors = [
+      "orange", "purple", "blue", "red", "green", "teal", 
+      "yellow", "pink", "cyan", "magenta", "lime", "indigo", 
+      "violet", "turquoise", "gold", "silver", "maroon", 
+      "navy", "coral", "olive", "peach", "aqua", "lavender", 
+      "salmon", "khaki", "plum", "mustard", "periwinkle", "chartreuse"
+    ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
@@ -41,16 +47,21 @@ function showAddTask(status) {
 }
 
 
+function handleCancel(event) {
+    event.preventDefault();
+    hideAddTask();
+}
+
 function hideAddTask() {
     let addContactTemplate = document.getElementById('add-task-content');
     let background = document.getElementById('add-task-background');
     addContactTemplate.classList.remove('show-add-task');
     setTimeout(() => {
         background.classList.add('d-none');
-      }, 1000);
+      }, 750);
     setTimeout(() => {
         window.location.href = "testboard.html";
-      }, 1500);
+      }, 750);
 }
 
 async function createTask(status, event) {
@@ -100,21 +111,21 @@ function validateTask(title, date, category) {
         document.getElementById('addTitleError').innerHTML = "Title is required!";
         setTimeout(() => {
             document.getElementById('addTitleError').innerHTML = "";
-        }, 5000);
+        }, 3000);
         exits = true;
     }
     if (!date) {
         document.getElementById('addDateError').innerHTML = "Date is required!";
         setTimeout(() => {
             document.getElementById('addDateError').innerHTML = "";
-        }, 5000);
+        }, 3000);
         exits = true;
     }
     if (!category) {
         document.getElementById('addCategoryError').innerHTML = "Category is required!";
         setTimeout(() => {
             document.getElementById('addCategoryError').innerHTML = "";
-        }, 5000);
+        }, 3000);
         exits = true;
     }
     return exits; 
@@ -243,7 +254,7 @@ function returnArrayContacts() {
     }
 
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    optionsContainer.innerHTML = ""; // Dropdown leeren
+    optionsContainer.innerHTML = ""; 
 
     Object.keys(finalContacts).forEach((key) => {
         const contactInDrop = finalContacts[key];
@@ -449,31 +460,36 @@ function saveSubtask(liId, inputId, spanId) {
     li.classList.remove("subtask-item-on-focus");
     li.classList.add("subtask-item");
   }
+
+
   function clearSubtaskInput() {
     document.getElementById("subtaskInput").value = "";
   }
   
+
   function clearSubtaskInput() {
     const input = document.getElementById("subtaskInput");
     input.value = "";
     document.getElementById("clearButton").style.display = "none";
   }
   
-  function showClearButton() {
-    document.getElementById("clear-add-icons").classList.remove("d-none");
-    document.getElementById("subtasks-plus-icon").classList.add("d-none");
-  }
+
+    function showClearButton() {
+        document.getElementById("clear-add-icons").classList.remove("d-none");
+        document.getElementById("subtasks-plus-icon").classList.add("d-none");
+    }
   
-  function clearImput() {
+
+    function clearImput() {
+        document.getElementById("subtaskInput").value = "";
+    }
+
+
+    function showClearButton() {
+        document.getElementById("clear-add-icons").classList.remove("d-none");
+        document.getElementById("subtasks-plus-icon").classList.add("d-none");
+    }
+
+    function clearSubtaskInput() {
     document.getElementById("subtaskInput").value = "";
-  }
-
-
-function showClearButton() {
-    document.getElementById("clear-add-icons").classList.remove("d-none");
-    document.getElementById("subtasks-plus-icon").classList.add("d-none");
-}
-
-function clearSubtaskInput() {
-    document.getElementById("subtaskInput").value = "";
-}
+    }   
