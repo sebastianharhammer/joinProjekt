@@ -283,13 +283,13 @@ ul {
   line-height: 25.2px;
 }
 .red {
-  background-color: #7ae229;
+  background-color: #ff3d00;
 }
 .yellow {
   background-color: #ffa800;
 }
 .green {
-  background-color: #ff3d00;
+  background-color: #7ae229;
 }
 #prio-medium {
   display: flex;
