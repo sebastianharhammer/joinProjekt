@@ -1,4 +1,3 @@
-
 let categoriesContainerClick = false;
 let contacts = [];
 let selectedPriority = "";
@@ -36,7 +35,7 @@ function getRandomColor() {
   }
 
 
-async function createTask(status, event) {
+async function createTask(event) {
     event.preventDefault();
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
@@ -46,11 +45,9 @@ async function createTask(status, event) {
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
 
-    if (!title || !date || !category) {
-        console.error("All fields are required!");
+    if (validateTask(title, date, category)) {
         return;
     }
-
     try {
         const nextId = await getNextTaskId();
         let newTask = {
@@ -76,12 +73,38 @@ async function createTask(status, event) {
     }
 }
 
+
+function validateTask(title, date, category) { 
+    let exits = false;
+    if (!title) {
+        document.getElementById('addTitleError').innerHTML = "Title is required!";
+        setTimeout(() => {
+            document.getElementById('addTitleError').innerHTML = "";
+        }, 3000);
+        exits = true;
+    }
+    if (!date) {
+        document.getElementById('addDateError').innerHTML = "Date is required!";
+        setTimeout(() => {
+            document.getElementById('addDateError').innerHTML = "";
+        }, 3000);
+        exits = true;
+    }
+    if (!category) {
+        document.getElementById('addCategoryError').innerHTML = "Category is required!";
+        setTimeout(() => {
+            document.getElementById('addCategoryError').innerHTML = "";
+        }, 3000);
+        exits = true;
+    }
+    return exits; 
+}
+
+
 function showAddTaskSuccesMessage() {
     let succes = document.getElementById('task-succes');
     succes.classList.add('show-add-task');
 }
-
-
 
 
 async function getNextTaskId() {
@@ -203,11 +226,13 @@ function returnArrayContacts() {
     }
 
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    optionsContainer.innerHTML = ""; // Dropdown leeren
+    optionsContainer.innerHTML = "";
+    
+    let sortedContacts = Object.values(finalContacts).sort((a, b) =>
+        a.firstName.localeCompare(b.firstName)
+    );
 
-    Object.keys(finalContacts).forEach((key) => {
-        const contactInDrop = finalContacts[key];
-
+    sortedContacts.forEach(contactInDrop => {
         if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
         const optionHTML = assignUserHTML(contactInDrop);
 

@@ -63,12 +63,9 @@ async function createTask(status, event) {
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
-/*
-    if (!title || !description || !date || !priority || assignedUsers.length === 0)  ){
-        console.error("All fields are required!");
+    if (validateTask(title, date, category)) {
         return;
     }
-*/
     try {
         const nextId = await getNextTaskId();
         let newTask = {
@@ -94,6 +91,33 @@ async function createTask(status, event) {
     } catch (error) {
         console.error("Failed to create the task:", error);
     }
+}
+
+
+function validateTask(title, date, category) { 
+    let exits = false;
+    if (!title) {
+        document.getElementById('addTitleError').innerHTML = "Title is required!";
+        setTimeout(() => {
+            document.getElementById('addTitleError').innerHTML = "";
+        }, 5000);
+        exits = true;
+    }
+    if (!date) {
+        document.getElementById('addDateError').innerHTML = "Date is required!";
+        setTimeout(() => {
+            document.getElementById('addDateError').innerHTML = "";
+        }, 5000);
+        exits = true;
+    }
+    if (!category) {
+        document.getElementById('addCategoryError').innerHTML = "Category is required!";
+        setTimeout(() => {
+            document.getElementById('addCategoryError').innerHTML = "";
+        }, 5000);
+        exits = true;
+    }
+    return exits; 
 }
 
 

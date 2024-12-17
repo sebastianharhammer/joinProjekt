@@ -114,9 +114,9 @@ return  /*html*/`
 function assignUserHTML(contact) {
   return `
         <div id="assigned-user-svg">
-          <svg class="customCircle" width="50" height="50">
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+          <svg class="addtask-customCircle" width="50" height="50">
+            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
+            <text class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>
         <div id="assigned-user-name-container">
@@ -127,8 +127,8 @@ function assignUserHTML(contact) {
 }
 
 function showAssignedUsersHTML(contact) {
-  return `<svg class="customCircle" width="50" height="50" >
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+  return `<svg class="addtask-customCircle" width="50" height="50" >
+            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
+            <text class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
         </svg>`;
 }

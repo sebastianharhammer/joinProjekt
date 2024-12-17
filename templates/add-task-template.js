@@ -99,7 +99,7 @@ function renderAddTaskHTML() {
             <button id="add-task-close" class="btn-cancel">
                 <span class="add-task-btn">Clear ✖</span>
               </button>
-              <button onclick="createTask(status, event)" id="add-task-create" class="btn-create" type="button">
+              <button onclick="createTask(event)" id="add-task-create" class="btn-create" type="button">
                  <span class="add-task-btn">Create task 🗸</span>
               </button>
             </div>

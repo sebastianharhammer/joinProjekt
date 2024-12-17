@@ -104,14 +104,14 @@
   background-color: #f0f0f0;
 }
 
-.customCircle {
+.addtask-customCircle {
   margin-right: 10px;
 }
 
-.textInCircle {
+.addtask-textInCircle {
   font-size: 10px;
   font-family: Arial, sans-serif;
-  fill: black;
+  
 }
 
 .addtask-main-content {
