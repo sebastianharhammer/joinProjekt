@@ -116,3 +116,23 @@
     background-color: #ccc; 
     flex-shrink: 0; 
 }
+
+.assigned-users-short-edit{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 6px;
+}
+
+
+.assigned-user-circle {
+    margin-top: 12px;
+    width: 22px;
+    border-radius: 50%;
+    padding: 10px;
+    font-family: "Inter", sans-serif;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
