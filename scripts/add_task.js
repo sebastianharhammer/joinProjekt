@@ -46,7 +46,7 @@ async function createTask(status, event) {
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
 
-    if (!title || !description || !date || !priority /*|| assignedUsers.length === 0) */ ){
+    if (!title || !date || !category) {
         console.error("All fields are required!");
         return;
     }

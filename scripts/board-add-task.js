@@ -45,10 +45,12 @@ function hideAddTask() {
     let addContactTemplate = document.getElementById('add-task-content');
     let background = document.getElementById('add-task-background');
     addContactTemplate.classList.remove('show-add-task');
-    background.classList.add('d-none');
     setTimeout(() => {
+        background.classList.add('d-none');
+      }, 500);
+    /* setTimeout(() => {
         window.location.href = "testboard.html";
-      }, 1500);
+      }, 1500); */
 }
 
 async function createTask(status, event) {
@@ -82,7 +84,7 @@ async function createTask(status, event) {
         };
         taskArray.push(newTask);
         await pushTaskToFirebase(newTask);
-        //showAddTaskSuccesMessage();
+        showAddTaskSuccesMessage();
         document.getElementById('add-task-background').classList.add('d-none');
             document.getElementById('add-task-content').classList.add('hide-add-task');
         setTimeout(() => {
@@ -133,7 +135,10 @@ async function pushTaskToFirebase(newTask) {
     }
 }
 
-
+function showAddTaskSuccesMessage() {
+    let succes = document.getElementById('task-succes');
+    succes.classList.add('show-add-task');
+}
 
 
 function handleDropdownInteraction() {

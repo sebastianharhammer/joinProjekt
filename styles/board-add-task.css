@@ -29,10 +29,11 @@
 }
 .hide-add-task {
   transform: translateX(100vw);
-  transition: all 750ms ease-in-out;
+  transition: all 500ms ease-in-out;
 }
 .show-add-task {
   transform: translateX(0vw);
+  transition: all 500ms ease-in-out;
 }
 .outline {
   outline: 1px solid var(--darkLightBlue);
@@ -705,6 +706,7 @@ ul {
   margin-right: 1vw;
   background-color: white;
   border-radius: 10px;
+  padding: 0 10px;
 }
 #add-task-close:hover {
   color: #0b8ce9;
@@ -713,6 +715,10 @@ ul {
   transition: background-color 0.3s;
   transition: color 0.3s;
 }
+#btn-cancel-icon:hover svg {
+    fill: #0b8ce9;
+}
+
 #add-task-create {
   display: flex;
   justify-content: space-evenly;
@@ -728,6 +734,9 @@ ul {
 #add-task-create:hover {
   background-color: #0b8ce9;
   cursor: pointer;
+}
+.add-task-btn {
+  font-size: 16px;
 }
 
 @media (max-width: 1230px) {
