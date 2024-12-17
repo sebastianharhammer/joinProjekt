@@ -619,14 +619,13 @@ function removeHighlight(id) {
 // edit task 
 
 function showEditTaskTempl(taskId) {
-    currentTaskBeingEdited = taskId; // Task-ID merken
-
     const task = taskArray.find(t => t.id === taskId);
     if (!task) {
         console.error("Task nicht gefunden!");
         return;
     }
 
+    // Lade die zugeordneten Benutzer aus `task.owner` in `assignedUserArr`
     assignedUserArr = task.owner ? [...task.owner] : [];
 
     let detailView = document.getElementById('taskDetailView');
@@ -636,8 +635,12 @@ function showEditTaskTempl(taskId) {
     editView.innerHTML = getEditTemplate(task);
 
     getUsersForEditDropDown();
-    updateAssignedUsersDisplay();
+    updateAssignedUsersDisplay(); // Zeige bereits zugeordnete Benutzer an
+
+    // Setze die Priorität visuell
+    setPriority(task.prio); 
 }
+
 
 
 async function getUsersForEditDropDown() {
