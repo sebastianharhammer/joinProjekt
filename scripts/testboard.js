@@ -622,14 +622,20 @@ function showEditTaskTempl(taskId) {
         console.error("Task nicht gefunden!");
         return;
     }
+
+    // Lade die zugeordneten Benutzer aus `task.owner` in `assignedUserArr`
+    assignedUserArr = task.owner ? [...task.owner] : [];
+
     let detailView = document.getElementById('taskDetailView');
     let editView = document.getElementById('editTaskTempl');
     detailView.classList.add('d-none');
     editView.classList.remove('d-none');
-    editView.innerHTML = '';
-    editView.innerHTML += getEditTemplate(task);
-    getUsersForEditDropDown()
+    editView.innerHTML = getEditTemplate(task);
+
+    getUsersForEditDropDown();
+    updateAssignedUsersDisplay(); // Zeige bereits zugeordnete Benutzer an
 }
+
 
 async function getUsersForEditDropDown() {
     try {
@@ -673,28 +679,36 @@ function returnArrayContactsEdit() {
     }
 
     const editDropdown = document.getElementById('custom-dropdown-edit');
-    if (!editDropdown) {
-        console.error("Edit Dropdown element not found.");
-        return;
-    }
-
     const editOptionsContainer = editDropdown.querySelector('.dropdown-options-edit');
-    editOptionsContainer.innerHTML = ""; // Optionen im Dropdown leeren
+    editOptionsContainer.innerHTML = "";
 
     Object.keys(finalContactsForEdit).forEach((key) => {
         const contact = finalContactsForEdit[key];
         if (!contact || !contact.firstName || !contact.lastName) return;
 
-        const optionHTML = assignUserEditHTML(contact);
-        console.log(`Rendering contact: ${contact.firstName} ${contact.lastName}`); // Debug-Ausgabe
+        const isChecked = assignedUserArr.some(
+            user => user.firstName === contact.firstName && user.lastName === contact.lastName
+        );
+
+        const optionHTML = /*html*/`
+            <div class="dropdown-contact-edit">
+                <div class="contact-circle-edit" style="background-color: ${getRandomColor()}">
+                    ${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}
+                </div>
+                <span>${contact.firstName} ${contact.lastName}</span>
+                <input type="checkbox" class="contact-checkbox-edit" ${isChecked ? "checked" : ""} 
+                    onchange="handleEditContactSelection('${contact.firstName}', '${contact.lastName}')">
+            </div>
+            `
+        ;
 
         const optionElement = document.createElement("div");
-        optionElement.classList.add("dropdown-contact-edit");
         optionElement.innerHTML = optionHTML;
 
         editOptionsContainer.appendChild(optionElement);
     });
 }
+
 
 
 function assignUserEditHTML(contact) {
@@ -729,11 +743,12 @@ function updateAssignedUsersDisplay() {
         const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`;
         assignedUsersContainer.innerHTML += `
             <div class="assigned-user-circle" style="background-color: ${getRandomColor()}">
-                ${initials}
+                <p>${initials}</p>
             </div>
         `;
     });
 }
+
 
 function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
@@ -779,7 +794,7 @@ function getEditTemplate(task) {
                     <div class="dropdown-placeholder-edit">Select contacts to assign</div>
                     <div class="dropdown-options-edit"></div>
                     </div>
-                    <div id="assigned-users-short-edit"></div>
+                    <div class="assigned-users-short-edit" id="assigned-users-short-edit"></div>
                 </div>
             </div>
 
