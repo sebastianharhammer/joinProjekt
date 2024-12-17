@@ -619,6 +619,7 @@ function removeHighlight(id) {
 // edit task 
 
 function showEditTaskTempl(taskId) {
+    currentTaskBeingEdited = taskId; // Aktualisiere die aktuelle Task-ID
     const task = taskArray.find(t => t.id === taskId);
     if (!task) {
         console.error("Task nicht gefunden!");
@@ -638,25 +639,26 @@ function showEditTaskTempl(taskId) {
     renderEditSubtasks(task);
 }
 
+
 function renderEditSubtasks(task) {
     const subtaskContainer = document.getElementById('rendered-subtasks-edit');
     subtaskContainer.innerHTML = '';
+
     if (!task.subtasks || task.subtasks.length === 0) {
         subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
         return;
     }
+
     // Subtasks rendern
     task.subtasks.forEach((subtask, index) => {
-        subtaskContainer.innerHTML += /*html*/`
-            
-            <div class="edit-subtask-item">
-                <p class="subtaskFontInEdit">${subtask.subtask || `Subtask ${index + 1}`}</p>
+        const subtaskId = `edit-subtask-${task.id}-${index + 1}`; // Dynamische ID erstellen
+
+        subtaskContainer.innerHTML += /*html*/ `
+            <div class="edit-subtask-item" id="${subtaskId}">
+                <p class="subtaskFontInEdit">• ${subtask.subtask || `Subtask ${index + 1}`}</p>
             </div>`;
     });
 }
-
-
-
 
 
 async function getUsersForEditDropDown() {
@@ -685,12 +687,10 @@ async function getUsersForEditDropDown() {
 function setupEditDropdownInteraction() {
     const editDropdown = document.getElementById("custom-dropdown-edit");
     const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
-
     // Toggle-Logik für Dropdown
     editDropdown.addEventListener("click", (event) => {
         // Verhindere, dass das Event andere Klick-Listener beeinflusst
         event.stopPropagation();
-
         // Toggle-Anzeige: Flex (offen) / None (geschlossen)
         if (editOptionsContainer.style.display === "block") {
             editOptionsContainer.style.display = "none";
@@ -884,13 +884,29 @@ function addSubTaskInEditTempl() {
     if (inputValue === "") {
         return;
     }
+
     const subtaskContainer = document.getElementById('rendered-subtasks-edit');
+    const taskId = currentTaskBeingEdited; // Verwende die aktuelle Task-ID
+    const subtaskIndex = subtaskContainer.childElementCount;
+    const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`; // Eindeutige ID erstellen
+
+    // Neues Subtask-Element erstellen
+    const newSubtaskWrapper = document.createElement('div');
+    newSubtaskWrapper.classList.add('edit-subtask-item');
+    newSubtaskWrapper.id = subtaskId; // Dynamische ID setzen
+
     const newSubtask = document.createElement('p');
-    newSubtask.textContent = inputValue; // Input-Wert als Textinhalt
+    newSubtask.textContent = `• ${inputValue}`;
     newSubtask.classList.add('subtaskFontInEdit');
-    subtaskContainer.appendChild(newSubtask);
+
+    // Subtask dem Wrapper hinzufügen
+    newSubtaskWrapper.appendChild(newSubtask);
+    subtaskContainer.appendChild(newSubtaskWrapper);
+
     inputField.value = "";
 }
+
+
 
 
 function skipEdit(taskId) {

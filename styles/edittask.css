@@ -229,3 +229,22 @@
 .editTaskTextarea{
     height: 300px;
 }
+
+.edit-subtask-item{
+    width: 100%;
+    height: 42px;
+    padding: 4px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.edit-subtask-item:hover{
+    background-color: #ccc;
+}
+
+#rendered-subtasks-edit{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
