@@ -392,11 +392,11 @@ function addSubtask() {
           </li>
       `;
           subtasksArr.push({
-            checkbox_img: "../assets/img/checkbox-empty.svg",
+            checkbox_img: "../img/checkbox-empty.svg",
             subtask: `${subtaskInput.value}`,
           });
           subtasksEdit.push({
-            checkbox_img: "../assets/img/checkbox-empty.svg",
+            checkbox_img: "../img/checkbox-empty.svg",
             subtask: `${subtaskInput.value}`,
           });
           subtasksContent.innerHTML += newSubtaskHTML;
