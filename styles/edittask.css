@@ -137,3 +137,37 @@
     justify-content: center;
     align-items: center;
 }
+
+.btn-skip-and-confirm-edit{
+    width: 100px;
+    height: 60px;
+    border: unset;
+    border-radius: 8px;
+    height: 48px;
+    font-family: "Inter";
+    font-weight: 300;
+    font-size: 12px;
+    color: white;
+    background-color: rgb(42, 54, 71);
+}
+
+.btn-skip-and-confirm-edit:hover{
+    width: 100px;
+    height: 60px;
+    border: unset;
+    border-radius: 8px;
+    height: 48px;
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    color: rgb(42, 54, 71);
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid rgb(42, 54, 71);
+}
+
+.editButtons{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}

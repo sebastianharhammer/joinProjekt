@@ -638,8 +638,31 @@ function showEditTaskTempl(taskId) {
     updateAssignedUsersDisplay(); // Zeige bereits zugeordnete Benutzer an
 
     // Setze die Priorität visuell
-    setPriority(task.prio); 
+    setPriority(task.prio);
+    renderEditSubtasks(task);
 }
+
+function renderEditSubtasks(task) {
+    const subtaskContainer = document.getElementById('rendered-subtasks-edit');
+    subtaskContainer.innerHTML = ''; // Container leeren
+
+    // Prüfe, ob Subtasks vorhanden sind
+    if (!task.subtasks || task.subtasks.length === 0) {
+        subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+        return;
+    }
+
+    // Subtasks rendern
+    task.subtasks.forEach((subtask, index) => {
+        subtaskContainer.innerHTML += /*html*/`
+            
+            <div class="edit-subtask-item">
+                <p>${subtask.subtask || `Subtask ${index + 1}`}</p>
+            </div>`;
+    });
+}
+
+
 
 
 
@@ -836,16 +859,44 @@ function getEditTemplate(task) {
                 </div>
             </div>
 
-            <button onclick="saveEditedTask()">DATEN SPEICHERN</button>
-
-
-
+            <section id="edit-subtasks-section">
+            <div id="rendered-subtasks-edit">
+                <p>hier ein Subtask falls vorhanden</p>
+                <p>hier ein Subtask falls vorhanden</p>
+                <p>und so weiter</p>
+            </div>
+            </section>
+            
+            <section class="editButtons">
+            <button class="btn-skip-and-confirm-edit" onclick="saveEditedTask()">Save changes</button>
+            <button onclick="skipEdit(${task.id})" class="btn-skip-and-confirm-edit">close edit</button>
+            </section>
         </div>
     `;
 }
 
+function skipEdit(taskId) {
+    const editView = document.getElementById('editTaskTempl');
+    if (editView) {
+        editView.classList.add('d-none');
+    }
+    const task = taskArray.find(t => t.id === taskId);
+    if (!task) {
+        console.error(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
+    }
+    let detailView = document.getElementById('taskDetailView');
+    if (detailView) {
+        detailView.innerHTML = ''; // Leere vorherigen Inhalt
+        detailView.classList.remove('d-none'); // Zeige die Detailansicht an
+        detailView.innerHTML += showTaskCardHTML(task);
+    }
+}
 
-function closeEditTask() {
+
+
+function closeEditTask(taskId) {
+
     let overlayEdit = document.getElementById('editTaskTempl');
     overlayEdit.classList.add('d-none');
 }
