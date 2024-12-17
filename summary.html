@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="./styles/summary.css" />
     <link rel="stylesheet" href="../styles/header.css" />
@@ -18,70 +22,13 @@
     <div w3-include-html="./nav.html"></div>
 
     <section class="main-content">
-      <div class="panels">
-        <div class="panel-row">
-          <div class="panel">
-            <img src="./img/edit-pencil.png" alt="To-do Icon" />
-            <div class="panel-content">
-              <p>1</p>
-              <span>To-do</span>
-            </div>
-          </div>
-          <div class="panel">
-            <img src="./img/done-mark.png" alt="Done Icon" />
-            <div class="panel-content">
-              <p>1</p>
-              <span>Done</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel-row">
-          <div class="panel large">
-            <img src="./img/up-scale-orange.png" alt="Urgent Icon" />
-            <div class="panel-content">
-              <p>1</p>
-              <span>Urgent</span>
-            </div>
-            <div class="divider"></div>
-            <div class="panel-right">
-              <span>November 25, 2024</span>
-              <br />
-              <span>Upcoming Deadline</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel-row">
-          <div class="panel small">
-            <div class="panel-content">
-              <p>5</p>
-              <span>Tasks in Board</span>
-            </div>
-          </div>
-          <div class="panel small">
-            <div class="panel-content">
-              <p>2</p>
-              <span>Tasks in progress</span>
-            </div>
-          </div>
-          <div class="panel small">
-            <div class="panel-content">
-              <p>2</p>
-              <span>Awaiting Feedback</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="panelContainer" class="panels"></div>
 
       <div class="greeting-text">
         <h1>Good morning,</h1>
         <h2 id="nameOfUser"></h2>
       </div>
     </section>
-
-    <!-- Willkommensnachricht nach Login (daniel) -->
-
     <div id="welcomeMsg" class="welcomeMsg"></div>
     <script src="scripts/login.js"></script>
     <script>

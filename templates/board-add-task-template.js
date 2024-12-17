@@ -95,7 +95,7 @@ return  /*html*/`
               This field is required
             </span>
             <div class="addtask-buttons">
-              <button id="add-task-close" class="btn-cancel" onclick="hideAddTask()">
+              <button id="add-task-close" class="btn-cancel" type="button" onclick="handleCancel(event)">
                 <span class="add-task-btn">Clear ✖</span>
               </button>
               <button onclick="createTask(status, event)" id="add-task-create" class="btn-create" type="button">

@@ -40,6 +40,8 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
+  
+
 
 async function createTask(event) {
     event.preventDefault();
