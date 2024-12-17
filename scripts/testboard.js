@@ -10,6 +10,8 @@ function init() {
 
 
 let currentDraggedElement;
+let currentTaskBeingEdited = null;
+
 
 function loadCurrentUser() {
     const storedUser = localStorage.getItem('currentUser');
@@ -617,13 +619,14 @@ function removeHighlight(id) {
 // edit task 
 
 function showEditTaskTempl(taskId) {
+    currentTaskBeingEdited = taskId; // Task-ID merken
+
     const task = taskArray.find(t => t.id === taskId);
     if (!task) {
         console.error("Task nicht gefunden!");
         return;
     }
 
-    // Lade die zugeordneten Benutzer aus `task.owner` in `assignedUserArr`
     assignedUserArr = task.owner ? [...task.owner] : [];
 
     let detailView = document.getElementById('taskDetailView');
@@ -633,7 +636,7 @@ function showEditTaskTempl(taskId) {
     editView.innerHTML = getEditTemplate(task);
 
     getUsersForEditDropDown();
-    updateAssignedUsersDisplay(); // Zeige bereits zugeordnete Benutzer an
+    updateAssignedUsersDisplay();
 }
 
 
@@ -664,10 +667,22 @@ function setupEditDropdownInteraction() {
     const editDropdown = document.getElementById("custom-dropdown-edit");
     const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
 
-    // Klick auf das Dropdown öffnet/schließt die Optionen
-    editDropdown.addEventListener("click", () => {
-        const isOpen = editOptionsContainer.style.display === "flex";
-        editOptionsContainer.style.display = isOpen ? "none" : "block";
+    // Toggle-Logik für Dropdown
+    editDropdown.addEventListener("click", (event) => {
+        // Verhindere, dass das Event andere Klick-Listener beeinflusst
+        event.stopPropagation();
+
+        // Toggle-Anzeige: Flex (offen) / None (geschlossen)
+        if (editOptionsContainer.style.display === "block") {
+            editOptionsContainer.style.display = "none";
+        } else {
+            editOptionsContainer.style.display = "block";
+        }
+    });
+
+    // Optional: Dropdown schließen, wenn außerhalb geklickt wird
+    document.addEventListener("click", () => {
+        editOptionsContainer.style.display = "none";
     });
 }
 
@@ -680,34 +695,50 @@ function returnArrayContactsEdit() {
 
     const editDropdown = document.getElementById('custom-dropdown-edit');
     const editOptionsContainer = editDropdown.querySelector('.dropdown-options-edit');
-    editOptionsContainer.innerHTML = "";
+    editOptionsContainer.innerHTML = ""; // Dropdown leeren
 
     Object.keys(finalContactsForEdit).forEach((key) => {
         const contact = finalContactsForEdit[key];
         if (!contact || !contact.firstName || !contact.lastName) return;
 
+        // Prüfen, ob der Benutzer zugeordnet ist
         const isChecked = assignedUserArr.some(
             user => user.firstName === contact.firstName && user.lastName === contact.lastName
         );
 
-        const optionHTML = /*html*/`
-            <div class="dropdown-contact-edit">
-                <div class="contact-circle-edit" style="background-color: ${getRandomColor()}">
-                    ${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}
-                </div>
-                <span>${contact.firstName} ${contact.lastName}</span>
-                <input type="checkbox" class="contact-checkbox-edit" ${isChecked ? "checked" : ""} 
-                    onchange="handleEditContactSelection('${contact.firstName}', '${contact.lastName}')">
-            </div>
-            `
-        ;
-
+        // Erstelle ein Container-DIV
         const optionElement = document.createElement("div");
-        optionElement.innerHTML = optionHTML;
+        optionElement.classList.add("dropdown-contact-edit");
 
+        // Erstelle die Initialen-Kreise
+        const circleDiv = document.createElement("div");
+        circleDiv.classList.add("contact-circle-edit");
+        circleDiv.style.backgroundColor = getRandomColor();
+        circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+
+        // Erstelle den Namen
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
+
+        // Erstelle die Checkbox
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("contact-checkbox-edit");
+        checkbox.checked = isChecked; // Zustand setzen
+        checkbox.addEventListener("change", () => {
+            handleEditContactSelection(contact.firstName, contact.lastName, checkbox.checked);
+        });
+
+        // Füge alle Elemente hinzu
+        optionElement.appendChild(circleDiv);
+        optionElement.appendChild(nameSpan);
+        optionElement.appendChild(checkbox);
+
+        // Füge das Element zum Dropdown hinzu
         editOptionsContainer.appendChild(optionElement);
     });
 }
+
 
 
 
@@ -721,19 +752,23 @@ function assignUserEditHTML(contact) {
 }
 
 
-function handleEditContactSelection(firstName, lastName) {
-    const fullName = `${firstName} ${lastName}`;
-    const checkbox = document.querySelector(`input[onchange*="${fullName}"]`);
-
-    if (checkbox.checked) {
-        assignedUserArr.push({ firstName, lastName });
+function handleEditContactSelection(firstName, lastName, isChecked) {
+    if (isChecked) {
+        // Benutzer hinzufügen
+        if (!assignedUserArr.some(user => user.firstName === firstName && user.lastName === lastName)) {
+            assignedUserArr.push({ firstName, lastName });
+        }
     } else {
-        assignedUserArr = assignedUserArr.filter(user => user.firstName !== firstName || user.lastName !== lastName);
+        // Benutzer entfernen
+        assignedUserArr = assignedUserArr.filter(
+            user => user.firstName !== firstName || user.lastName !== lastName
+        );
     }
 
     console.log("Assigned users:", assignedUserArr);
-    updateAssignedUsersDisplay();
+    updateAssignedUsersDisplay(); // Aktualisiere die Anzeige der zugewiesenen Benutzer
 }
+
 
 function updateAssignedUsersDisplay() {
     const assignedUsersContainer = document.getElementById('assigned-users-short-edit');
@@ -775,17 +810,17 @@ function getEditTemplate(task) {
             <div class="prio-btn-content">
                 <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
                     Urgent
-                    <img id="urgentImg" src="../img/Prio_urgent_color.png" alt=""/>
+                    <img id="prio-image-urgent" src="../img/Prio_urgent_color.png" alt=""/>
                 </button>
                 <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
                     Medium
-                    <img id="mediumImg" src="../img/Prio_medium_color.png" alt=""/>
+                    <img id="prio-image-medium" src="../img/Prio_medium_color.png" alt=""/>
                 </button>
                 <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
                     Low
-                    <img id="lowImg" src="../img/Prio_low_color.png" alt=""/>
+                    <img id="prio-image-low" src="../img/Prio_low_color.png" alt=""/>
                 </button>
-            </div>
+                </div>
 
             <div class="field-text-flex-edit" id="addTaskAssignedTo-edit">
                 <div class="form-group-edit">
@@ -798,6 +833,8 @@ function getEditTemplate(task) {
                 </div>
             </div>
 
+            <button onclick="saveEditedTask()">DATEN SPEICHERN</button>
+
 
 
         </div>
@@ -808,6 +845,43 @@ function getEditTemplate(task) {
 function closeEditTask() {
     let overlayEdit = document.getElementById('editTaskTempl');
     overlayEdit.classList.add('d-none');
+}
+
+async function saveEditedTask() {
+    // 1. Finde die Task-ID
+    const taskId = currentTaskBeingEdited; // Speichere die aktuell bearbeitete Task-ID vorher in einer globalen Variable
+
+    // 2. Neue Werte aus Input-Feldern holen
+    const newTitle = document.querySelector("#editTaskCard input").value;
+    const newDescription = document.getElementById("editDescription").value;
+
+    // 3. Aktualisierte Task zusammensetzen
+    const updatedTask = taskArray.find(task => task.id === taskId);
+    if (!updatedTask) {
+        console.error("Task nicht gefunden!");
+        return;
+    }
+
+    updatedTask.title = newTitle;
+    updatedTask.description = newDescription;
+    updatedTask.owner = assignedUserArr; // Aktualisierte Benutzerliste verwenden
+
+    try {
+        // 4. Firebase-Update durchführen
+        await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedTask)
+        });
+
+        console.log(`Task ${taskId} erfolgreich aktualisiert.`);
+
+        // 5. Lokale und visuelle Updates
+        updateTaskHTML();
+        closeEditTask();
+    } catch (error) {
+        console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
+    }
 }
 
 
