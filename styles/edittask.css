@@ -239,7 +239,15 @@
     align-items: center;
 }
 
-.edit-subtask-item:hover{
+.edit-existingtask {
+    display: none;
+    margin-left: auto;
+    gap: 8px;
+    align-items: center;
+}
+
+.edit-subtask-item:hover .edit-existingtask {
+    display: flex;
     background-color: #ccc;
 }
 

@@ -648,17 +648,21 @@ function renderEditSubtasks(task) {
         subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
         return;
     }
-
-    // Subtasks rendern
     task.subtasks.forEach((subtask, index) => {
         const subtaskId = `edit-subtask-${task.id}-${index + 1}`; // Dynamische ID erstellen
 
         subtaskContainer.innerHTML += /*html*/ `
             <div class="edit-subtask-item" id="${subtaskId}">
                 <p class="subtaskFontInEdit">• ${subtask.subtask || `Subtask ${index + 1}`}</p>
+                <div class="edit-existingtask">
+                    <img src="./img/edit-pencil.png" alt="Edit" class="edit-icon">
+                    <span>|</span>
+                    <img src="./img/delete.png" alt="Delete" class="delete-icon">
+                </div>
             </div>`;
     });
 }
+
 
 
 async function getUsersForEditDropDown() {
