@@ -624,8 +624,6 @@ function showEditTaskTempl(taskId) {
         console.error("Task nicht gefunden!");
         return;
     }
-
-    // Lade die zugeordneten Benutzer aus `task.owner` in `assignedUserArr`
     assignedUserArr = task.owner ? [...task.owner] : [];
 
     let detailView = document.getElementById('taskDetailView');
@@ -635,29 +633,24 @@ function showEditTaskTempl(taskId) {
     editView.innerHTML = getEditTemplate(task);
 
     getUsersForEditDropDown();
-    updateAssignedUsersDisplay(); // Zeige bereits zugeordnete Benutzer an
-
-    // Setze die Priorität visuell
+    updateAssignedUsersDisplay();
     setPriority(task.prio);
     renderEditSubtasks(task);
 }
 
 function renderEditSubtasks(task) {
     const subtaskContainer = document.getElementById('rendered-subtasks-edit');
-    subtaskContainer.innerHTML = ''; // Container leeren
-
-    // Prüfe, ob Subtasks vorhanden sind
+    subtaskContainer.innerHTML = '';
     if (!task.subtasks || task.subtasks.length === 0) {
         subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
         return;
     }
-
     // Subtasks rendern
     task.subtasks.forEach((subtask, index) => {
         subtaskContainer.innerHTML += /*html*/`
             
             <div class="edit-subtask-item">
-                <p>${subtask.subtask || `Subtask ${index + 1}`}</p>
+                <p class="subtaskFontInEdit">${subtask.subtask || `Subtask ${index + 1}`}</p>
             </div>`;
     });
 }
@@ -760,7 +753,6 @@ function returnArrayContactsEdit() {
         optionElement.appendChild(nameSpan);
         optionElement.appendChild(checkbox);
 
-        // Füge das Element zum Dropdown hinzu
         editOptionsContainer.appendChild(optionElement);
     });
 }
@@ -792,7 +784,7 @@ function handleEditContactSelection(firstName, lastName, isChecked) {
     }
 
     console.log("Assigned users:", assignedUserArr);
-    updateAssignedUsersDisplay(); // Aktualisiere die Anzeige der zugewiesenen Benutzer
+    updateAssignedUsersDisplay();
 }
 
 
@@ -860,10 +852,21 @@ function getEditTemplate(task) {
             </div>
 
             <section id="edit-subtasks-section">
+
+            <div class="add-subtask-in-edit">
+                <input class="input-subtask-in-edit" type="text" placeholder="Write a new subtask...">
+                <div class="img-in-edit-input">
+                    <div class="close-and-check-imgs">
+                        <img src="./img/close.svg" alt="close">
+                    </div>
+                    <div class="close-and-check-imgs">
+                        <img onclick="addSubTaskInEditTempl()" src="./img/check.svg" alt="check">
+                    </div>
+                </div>
+            </div>
+
+            
             <div id="rendered-subtasks-edit">
-                <p>hier ein Subtask falls vorhanden</p>
-                <p>hier ein Subtask falls vorhanden</p>
-                <p>und so weiter</p>
             </div>
             </section>
             
@@ -874,6 +877,21 @@ function getEditTemplate(task) {
         </div>
     `;
 }
+
+function addSubTaskInEditTempl() {
+    const inputField = document.querySelector('.input-subtask-in-edit');
+    const inputValue = inputField.value.trim();
+    if (inputValue === "") {
+        return;
+    }
+    const subtaskContainer = document.getElementById('rendered-subtasks-edit');
+    const newSubtask = document.createElement('p');
+    newSubtask.textContent = inputValue; // Input-Wert als Textinhalt
+    newSubtask.classList.add('subtaskFontInEdit');
+    subtaskContainer.appendChild(newSubtask);
+    inputField.value = "";
+}
+
 
 function skipEdit(taskId) {
     const editView = document.getElementById('editTaskTempl');
@@ -887,12 +905,11 @@ function skipEdit(taskId) {
     }
     let detailView = document.getElementById('taskDetailView');
     if (detailView) {
-        detailView.innerHTML = ''; // Leere vorherigen Inhalt
-        detailView.classList.remove('d-none'); // Zeige die Detailansicht an
+        detailView.innerHTML = '';
+        detailView.classList.remove('d-none');
         detailView.innerHTML += showTaskCardHTML(task);
     }
 }
-
 
 
 function closeEditTask(taskId) {
@@ -902,14 +919,9 @@ function closeEditTask(taskId) {
 }
 
 async function saveEditedTask() {
-    // 1. Finde die Task-ID
-    const taskId = currentTaskBeingEdited; // Speichere die aktuell bearbeitete Task-ID vorher in einer globalen Variable
-
-    // 2. Neue Werte aus Input-Feldern holen
+    const taskId = currentTaskBeingEdited; 
     const newTitle = document.querySelector("#editTaskCard input").value;
     const newDescription = document.getElementById("editDescription").value;
-
-    // 3. Aktualisierte Task zusammensetzen
     const updatedTask = taskArray.find(task => task.id === taskId);
     if (!updatedTask) {
         console.error("Task nicht gefunden!");
@@ -918,10 +930,8 @@ async function saveEditedTask() {
 
     updatedTask.title = newTitle;
     updatedTask.description = newDescription;
-    updatedTask.owner = assignedUserArr; // Aktualisierte Benutzerliste verwenden
-
+    updatedTask.owner = assignedUserArr;
     try {
-        // 4. Firebase-Update durchführen
         await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -929,8 +939,6 @@ async function saveEditedTask() {
         });
 
         console.log(`Task ${taskId} erfolgreich aktualisiert.`);
-
-        // 5. Lokale und visuelle Updates
         updateTaskHTML();
         closeEditTask();
     } catch (error) {
