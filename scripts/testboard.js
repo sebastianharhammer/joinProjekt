@@ -91,7 +91,7 @@ function getBoardNavigatorHTML() {
             <span class="verticalLine">|</span>
             <img src="./img/search.png" alt="">
             </div>
-            <div class="addTaskButtonBoard" onclick="showAddTask('to-do')">
+            <div class="addTaskButtonBoard" onclick="showAddTask('todo')">
                 <p class="buttonBoardFont">Add Task +</p>
             </div>
         </div>
