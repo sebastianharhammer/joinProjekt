@@ -738,6 +738,26 @@ ul {
 }
 
 @media (max-width: 1200px) {
+  #add-task-content {
+    overflow-y:scroll;
+    overflow-x: hidden;
+    height: 75vh;
+  }
+  .hide-add-task {
+    transform: translateX(100vw);
+    transition: all 250ms ease-in-out;
+  }
+  .show-add-task {
+    transform: translateX(-100vw);
+  }
+  #task-message-container {
+    height: 100%;
+    width: 100%;
+  }
+  .addtask-fullscreen-content {
+    height: 80%;
+  }
+
   .addtask-main-content {
     padding: 0;
     z-index: 0;
@@ -760,6 +780,11 @@ ul {
     flex-direction: column;
     gap: 32px;
     align-items: center;
+    position: fixed;
+    z-index: 100;
+    bottom: 10vh;
+    left: 30vw;
+    right: 30vw;
   }
   .addtask-buttons {
     justify-content: flex-end;

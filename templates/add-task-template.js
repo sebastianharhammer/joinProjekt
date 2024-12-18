@@ -87,14 +87,15 @@ function renderAddTaskHTML() {
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
+                <span>
+              <span style="color: #ff8190">*</span>
+              This field is required
+            </span>
               </div>
             </div>
           </div>
           <div class="addtask-bottom-container">
-            <span>
-              <span style="color: #ff8190">*</span>
-              This field is required
-            </span>
+            
             <div class="addtask-buttons">
             <button id="add-task-close" class="btn-cancel">
                 <span class="add-task-btn">Clear ✖</span>
