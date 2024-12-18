@@ -160,21 +160,25 @@ function getColumns(content) {
 function getColumnsHTML() {
     return /*html*/ `
         <section class="tasksContent">
+            <div class="headline-to-do-responsive">HIER TO DO RESPONSIVE</div>
             <div class="dragarea-todo" id="todo" 
                 ondrop="moveTo('todo')" 
                 ondragleave="removeHighlight('todo')" 
                 ondragover="allowDrop(event); highlight('todo')"></div>
-            
+                
+            <div class="headline-in-progress-responsive">HIER HEADLINE IN PROGRESS</div>
             <div class="dragarea-inProgress" id="inProgress" 
                 ondrop="moveTo('inProgress')" 
                 ondragleave="removeHighlight('inProgress')" 
                 ondragover="allowDrop(event); highlight('inProgress')"></div>
             
+            <div class="headline-feedback-responsive">HIER HEADLINE FEEDBACK</div>
             <div class="dragarea-feedback" id="feedback" 
                 ondrop="moveTo('feedback')" 
                 ondragleave="removeHighlight('feedback')" 
                 ondragover="allowDrop(event); highlight('feedback')"></div>
             
+            <div class="headline-done-responsive">HIER HEADLINE DONE</div>
             <div class="dragarea-done" id="done" 
                 ondrop="moveTo('done')" 
                 ondragleave="removeHighlight('done')" 

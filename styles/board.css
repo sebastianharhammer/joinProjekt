@@ -415,6 +415,22 @@
   }
 }
 
+.headline-to-do-responsive{
+  display: none;
+}
+
+.headline-in-progress-responsive{
+  display: none;
+}
+
+.headline-feedback-responsive{
+  display: none;
+}
+
+.headline-done-responsive{
+  display: none;
+}
+
 /* Mobile-Layout (max-width: 768px) */
 @media (max-width: 768px) {
   /* Layout-Änderung: Spalten untereinander anordnen */
@@ -466,6 +482,23 @@
     align-items: stretch;
     gap: 16px;
   }
+
+  .headline-to-do-responsive{
+    display: block;
+  }
+  
+  .headline-in-progress-responsive{
+    display: block;
+  }
+  
+  .headline-feedback-responsive{
+    display: block;
+  }
+  
+  .headline-done-responsive{
+    display: block;
+  }
+
 }
 
 /* Kleines Mobile-Layout (max-width: 560px) */
