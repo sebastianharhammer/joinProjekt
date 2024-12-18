@@ -29,10 +29,11 @@
 }
 .hide-add-task {
   transform: translateX(100vw);
-  transition: all 750ms ease-in-out;
+  transition: all 500ms ease-in-out;
 }
 .show-add-task {
   transform: translateX(0vw);
+  transition: all 500ms ease-in-out;
 }
 .outline {
   outline: 1px solid var(--darkLightBlue);
@@ -77,6 +78,18 @@
   max-height: 200px;
   overflow-y: auto;
 }
+.dropdown-contact{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+#assigned-users-short {
+  margin-top: 10px;
+}
 
 .dropdown-options .assigned-user {
   display: flex;
@@ -91,14 +104,14 @@
   background-color: #f0f0f0;
 }
 
-.customCircle {
+.addtask-customCircle {
   margin-right: 10px;
 }
 
-.textInCircle {
+.addtask-textInCircle {
   font-size: 10px;
   font-family: Arial, sans-serif;
-  fill: black;
+  
 }
 
 .addtask-main-content {
@@ -287,13 +300,13 @@ ul {
   line-height: 25.2px;
 }
 .red {
-  background-color: #7ae229;
+  background-color: #ff3d00;
 }
 .yellow {
   background-color: #ffa800;
 }
 .green {
-  background-color: #ff3d00;
+  background-color: #7ae229;
 }
 #prio-medium {
   display: flex;
@@ -693,6 +706,7 @@ ul {
   margin-right: 1vw;
   background-color: white;
   border-radius: 10px;
+  padding: 0 10px;
 }
 #add-task-close:hover {
   color: #0b8ce9;
@@ -701,6 +715,10 @@ ul {
   transition: background-color 0.3s;
   transition: color 0.3s;
 }
+#btn-cancel-icon:hover svg {
+    fill: #0b8ce9;
+}
+
 #add-task-create {
   display: flex;
   justify-content: space-evenly;
@@ -716,6 +734,9 @@ ul {
 #add-task-create:hover {
   background-color: #0b8ce9;
   cursor: pointer;
+}
+.add-task-btn {
+  font-size: 16px;
 }
 
 @media (max-width: 1230px) {

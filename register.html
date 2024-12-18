@@ -24,28 +24,28 @@
             <h1 class="FontOfOfLogin">Sign up</h1>
             <hr class="horizontalLine">
             <div class="loginNameInput">
-                <input id="loginFirstName" class="inputMailPw" type="text" placeholder="First Name" required oninput="validateSignUpForm()">
+                <input id="loginFirstName" class="inputMailPw" type="text" placeholder="First Name" required oninput="validate()">
                 <img src="./img/person.png" alt="">
             </div>
             <div class="loginNameInput">
-                <input id="loginLastName" class="inputMailPw" type="text" placeholder="Last Name" required oninput="validateSignUpForm()">
+                <input id="loginLastName" class="inputMailPw" type="text" placeholder="Last Name" required oninput="validate()">
                 <img src="./img/person.png" alt="">
             </div>
             <div class="loginNameInput">
-                <input id="loginMail" class="inputMailPw" type="email" placeholder="Email" required oninput="validateSignUpForm()">
+                <input id="loginMail" class="inputMailPw" type="email" placeholder="Email" required oninput="validate()">
                 <img src="./img/login-mail.png" alt="">
             </div>
             <div class="loginNameInput">
-                <input id="loginPassword" class="inputMailPw" type="password" placeholder="Password" required oninput="validateSignUpForm()">
+                <input id="loginPassword" class="inputMailPw" type="password" placeholder="Password" required oninput="validate()">
                 <img src="./img/login-lock.png" alt="">
             </div>
             <div id="passWordBorder" class="signUpPasswordConfirmDiv defaultBorderInputSignUp">
-                <input onkeyup="comparePasswords()" id="loginPasswordConfirm" class="inputMailPw" type="password" placeholder="Confirm Password" required oninput="validateSignUpForm()">
+                <input onkeyup="comparePasswords()" id="loginPasswordConfirm" class="inputMailPw" type="password" placeholder="Confirm Password" required oninput="validate()">
                 <img class="lock" src="./img/login-lock.png" alt="">
             </div>
             <div class="alert-password" id="alert-password"></div>
             <div class="privacyPolicyCheckbox">
-                <input id="registerCheckbox" type="checkbox" class="checkBoxSignUp" oninput="validateSignUpForm()">
+                <input id="registerCheckbox" type="checkbox" class="checkBoxSignUp" oninput="validate()">
                 <p class="fontPrivacyPolicy">I accept the <a class="privPolicyLink" href=""> Privacy Policy</a></p>    
             </div>
             <div class="loginButtons">

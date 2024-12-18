@@ -1,31 +1,5 @@
-
 let categoriesContainerClick = false;
-let contacts = [
-    { id: 0, firstName: "Mario", lastName: "Plumber", email: "mario.plumber@nintendo.com", phone: "111111" },
-    { id: 1, firstName: "Link", lastName: "Hyrule", email: "link.hero@zelda.com", phone: "222222" },
-    { id: 2, firstName: "Samus", lastName: "Aran", email: "samus.aran@metroid.com", phone: "333333" },
-    { id: 3, firstName: "Sonic", lastName: "Hedgehog", email: "sonic.speed@sega.com", phone: "444444" },
-    { id: 4, firstName: "Lara", lastName: "Croft", email: "lara.croft@tombraider.com", phone: "555555" },
-    { id: 5, firstName: "Geralt", lastName: "Rivia", email: "geralt.rivia@witcher.com", phone: "666666" },
-    { id: 6, firstName: "Master", lastName: "Chief", email: "master.chief@halo.com", phone: "777777" },
-    { id: 7, firstName: "Pikachu", lastName: "Electric", email: "pikachu.pokemon@kanto.com", phone: "888888" },
-    { id: 8, firstName: "Cloud", lastName: "Strife", email: "cloud.strife@finalfantasy.com", phone: "999999" },
-    { id: 9, firstName: "Kratos", lastName: "Spartan", email: "kratos.godwar@sparta.com", phone: "101010" },
-    { id: 10, firstName: "Nathan", lastName: "Drake", email: "nathan.drake@uncharted.com", phone: "121212" },
-    { id: 11, firstName: "Ellie", lastName: "Williams", email: "ellie.williams@tlou.com", phone: "131313" },
-    { id: 12, firstName: "Chun", lastName: "Li", email: "chun.li@streetfighter.com", phone: "141414" },
-    { id: 13, firstName: "Solid", lastName: "Snake", email: "solid.snake@metalgear.com", phone: "151515" },
-    { id: 14, firstName: "Ryu", lastName: "Fighter", email: "ryu.fighter@streetfighter.com", phone: "161616" },
-    { id: 15, firstName: "Zelda", lastName: "Princess", email: "zelda.princess@hyrule.com", phone: "171717" },
-    { id: 16, firstName: "Arthur", lastName: "Morgan", email: "arthur.morgan@rdr.com", phone: "181818" },
-    { id: 17, firstName: "Doom", lastName: "Slayer", email: "doom.slayer@hell.com", phone: "191919" },
-    { id: 18, firstName: "Cortana", lastName: "AI", email: "cortana.ai@halo.com", phone: "202020" },
-    { id: 19, firstName: "Ezio", lastName: "Auditore", email: "ezio.auditore@ac.com", phone: "212121" },
-    { id: 20, firstName: "Bayonetta", lastName: "Witch", email: "bayonetta.witch@platinumgames.com", phone: "222222" },
-    { id: 21, firstName: "Gordon", lastName: "Freeman", email: "gordon.freeman@halflife.com", phone: "232323" },
-    { id: 22, firstName: "Shepard", lastName: "Commander", email: "shepard.commander@masseffect.com", phone: "242424" },
-    { id: 23, firstName: "Tifa", lastName: "Lockhart", email: "tifa.lockhart@finalfantasy.com", phone: "252525" }
-];
+let contacts = [];
 let selectedPriority = "";
 let subtasksArr = [];
 let assignedUserArr = [];
@@ -46,22 +20,30 @@ let addTaskcategories = [
   let assignedUser = [];
 
 
-function init() {
+  function init() {
     getTasks();
-    //getUsers();
-    
-    includeHTML(); 
+    getUsers();
+    includeHTML();
     renderAddTaskHTML();
-    returnArrayContacts();
+    setupDropdownInteraction(); 
 }
 
+
 function getRandomColor() {
-    const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+    const colors = [
+      "orange", "purple", "blue", "red", "green", "teal", 
+      "yellow", "pink", "cyan", "magenta", "lime", "indigo", 
+      "violet", "turquoise", "gold", "silver", "maroon", 
+      "navy", "coral", "olive", "peach", "aqua", "lavender", 
+      "salmon", "khaki", "plum", "mustard", "periwinkle", "chartreuse"
+    ];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
+  
 
-async function createTask(status, event) {
+
+async function createTask(event) {
     event.preventDefault();
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
@@ -71,11 +53,9 @@ async function createTask(status, event) {
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
 
-    if (!title || !description || !date || !priority /*|| assignedUsers.length === 0) */ ){
-        console.error("All fields are required!");
+    if (validateTask(title, date, category)) {
         return;
     }
-
     try {
         const nextId = await getNextTaskId();
         let newTask = {
@@ -94,12 +74,40 @@ async function createTask(status, event) {
         showAddTaskSuccesMessage();
         setTimeout(() => {
             window.location.href = "testboard.html";
-          }, 1500);
+        }, 1500);
         
     } catch (error) {
         console.error("Failed to create the task:", error);
     }
 }
+
+
+function validateTask(title, date, category) { 
+    let exits = false;
+    if (!title) {
+        document.getElementById('addTitleError').innerHTML = "Title is required!";
+        setTimeout(() => {
+            document.getElementById('addTitleError').innerHTML = "";
+        }, 3000);
+        exits = true;
+    }
+    if (!date) {
+        document.getElementById('addDateError').innerHTML = "Date is required!";
+        setTimeout(() => {
+            document.getElementById('addDateError').innerHTML = "";
+        }, 3000);
+        exits = true;
+    }
+    if (!category) {
+        document.getElementById('addCategoryError').innerHTML = "Category is required!";
+        setTimeout(() => {
+            document.getElementById('addCategoryError').innerHTML = "";
+        }, 3000);
+        exits = true;
+    }
+    return exits; 
+}
+
 
 function showAddTaskSuccesMessage() {
     let succes = document.getElementById('task-succes');
@@ -107,11 +115,9 @@ function showAddTaskSuccesMessage() {
 }
 
 
-
-
 async function getNextTaskId() {
     try {
-        const response = await fetch(BASE_URL + "/tasks.json", {
+        const response = await fetch(BASE_URL + "/tasks.json", {    
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -193,7 +199,7 @@ async function getTasks() {
         console.error("Error fetching contacts:", error);
     }
 }
-/*
+
 async function getUsers() {
     try {
         let response = await fetch(BASE_URL + "/contacts/.json", {
@@ -206,19 +212,21 @@ async function getUsers() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         let responseToJson = await response.json();
-        contacts = responseToJson;
-        returnArrayContacts();
+        console.log("Fetched Contacts:", responseToJson);
+        finalContacts = responseToJson || {};
+        console.log(finalContacts)
     } catch (error) {
         console.error("Error fetching contacts:", error);
     }
+    returnArrayContacts()
 }
-*/
+
 function returnArrayContacts() {
-    if (!contacts || contacts.length === 0) {
+    if (!finalContacts || Object.keys(finalContacts).length === 0) {
         console.error("No contacts found.");
         return;
     }
-
+    console.log(finalContacts)
     const dropdown = document.getElementById('custom-dropdown');
     if (!dropdown) {
         console.error("Dropdown element not found.");
@@ -226,27 +234,35 @@ function returnArrayContacts() {
     }
 
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    optionsContainer.innerHTML = ""; 
+    optionsContainer.innerHTML = "";
+    
+    let sortedContacts = Object.values(finalContacts).sort((a, b) =>
+        a.firstName.localeCompare(b.firstName)
+    );
 
-    contacts.forEach(contact => {
+    sortedContacts.forEach(contactInDrop => {
+        if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
+        const optionHTML = assignUserHTML(contactInDrop);
 
-        if (!contact || !contact.firstName || !contact.lastName) {
-            return;
-        }
-
-        const option = document.createElement('div');
-        option.classList.add('assigned-user');
-        option.innerHTML = assignUserHTML(contact);
-        optionsContainer.appendChild(option);
+        const optionElement = document.createElement("div");
+        optionElement.classList.add("dropdown-contact");
+        optionElement.innerHTML = optionHTML;
+        optionsContainer.appendChild(optionElement);
     });
-
-    dropdown.addEventListener('click', () => {
-        const isOpen = optionsContainer.style.display === 'block';
-        optionsContainer.style.display = isOpen ? 'none' : 'block';
-    });
-
-
 }
+
+function setupDropdownInteraction() {
+    const dropdown = document.getElementById("custom-dropdown");
+    const optionsContainer = dropdown.querySelector(".dropdown-options");
+
+    dropdown.addEventListener("click", () => {
+        const isOpen = optionsContainer.style.display === "block";
+        optionsContainer.style.display = isOpen ? "none" : "block";
+    });
+}
+
+
+
 function assignUser(firstName, lastName) {
     assignedUserArr.push({
         firstName: firstName,
@@ -257,12 +273,14 @@ function assignUser(firstName, lastName) {
 }
 
 function showAssignedUsers() {
-    let assignUsers = document.getElementById('assigned-users-short');
-    assignUsers.innerHTML = "";
-    for (let i=0; i < assignedUserArr.length; i++) {
-        assignUsers.innerHTML += showAssignedUsersHTML(assignedUserArr[i]);
-    }
+    let assignUsersContainer = document.getElementById("assigned-users-short");
+    assignUsersContainer.innerHTML = "";
+
+    assignedUserArr.forEach((contact) => {
+        assignUsersContainer.innerHTML += showAssignedUsersHTML(contact);
+    });
 }
+
 
 
 function getFirstLetter(name) {
@@ -321,12 +339,17 @@ function setPriority(priority) {
     const priorities = ['urgent', 'medium', 'low'];
     priorities.forEach((prio) => {
         const btn = document.getElementById(`prio-${prio}`);
+        const img = document.getElementById(`prio-image-${prio}`);
         btn.classList.remove(prio === 'urgent' ? 'red' : prio === 'medium' ? 'yellow' : 'green');
+        img.classList.remove('sat-0');
     });
     const selectedButton = document.getElementById(`prio-${priority}`);
+    const selectedImg = document.getElementById(`prio-image-${priority}`);
     selectedButton.classList.add(priority === 'urgent' ? 'red' : priority === 'medium' ? 'yellow' : 'green');
-    selectedPriority = priority;
+    selectedImg.classList.add('sat-0');
+    selectedPriority = priority;  
 }
+
 
 function addSubtask() {   
     const subtaskInput = document.getElementById("subtaskInput");
@@ -355,13 +378,13 @@ function addSubtask() {
 
         subtasksArr.push({
             subtask: subtaskInput.value,
-            checkbox_img: "../assets/img/checkbox-empty.svg",
+            checkbox_img: "../img/checkbox-empty.svg",
             checkbox: false
         });
 
         subtasksEdit.push({
             subtask: subtaskInput.value,
-            checkbox_img: "../assets/img/checkbox-empty.svg",
+            checkbox_img: "../img/checkbox-empty.svg",
             checkbox: false
         });
 
@@ -377,12 +400,62 @@ function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
+    const editSubtaskHTML = /*html*/ `
+        <div class="subtask-input-wrapper edit-mode">
+            <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
+            <div class="input-icons-edit">
+                <img src ="../img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
+                <div class="divider"></div>
+                <img src="../img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
+            </div>
+        </div>
+    `;
+    li.innerHTML = editSubtaskHTML;
+    li.classList.add("subtask-item-on-focus");
+    li.classList.remove("subtask-item");
 }
 
 function deleteSubtask(liId) {
     const li = document.getElementById(liId);
     li.remove();
 }
+function saveSubtask(liId, inputId, spanId) {
+    const li = document.getElementById(liId);
+    const input = document.getElementById(inputId);
+    const saveSubtaskHTML = `
+          <div class="subtask-text">
+              <div class="dot"></div>
+              <span id="span-${liId}" onclick="editSubtask('${liId}', 'span-${liId}', 'input-${liId}')">${input.value}</span>
+          </div>
+          <div class="subtask-icon">
+              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
+              <div class="divider"></div>
+              <img id="deleteBtn-${liId}" onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
+          </div>
+      `;
+  
+    li.innerHTML = saveSubtaskHTML;
+    li.classList.remove("subtask-item-on-focus");
+    li.classList.add("subtask-item");
+  }
+  function clearSubtaskInput() {
+    document.getElementById("subtaskInput").value = "";
+  }
+  
+  function clearSubtaskInput() {
+    const input = document.getElementById("subtaskInput");
+    input.value = "";
+    document.getElementById("clearButton").style.display = "none";
+  }
+  
+  function showClearButton() {
+    document.getElementById("clear-add-icons").classList.remove("d-none");
+    document.getElementById("subtasks-plus-icon").classList.add("d-none");
+  }
+  
+  function clearImput() {
+    document.getElementById("subtaskInput").value = "";
+  }
 
 
 function showClearButton() {

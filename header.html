@@ -16,11 +16,11 @@
         <svg class="header-customCircle user-icon-svg" width="50" height="50">
           <circle
             id="header-user-circle"
-            class="circleBorder"
+            class="header-circleBorder"
             cx="50%"
             cy="50%"
             r="24"
-            stroke="rgb(42,54,71)"
+            stroke="${headerGetColor()}"
             stroke-width="2"
             fill="white"
           ></circle>
@@ -38,6 +38,7 @@
     </div>
   </div>
   <div id="user-overlay" class="d-none">
+    <a class="header-links" id="helpLink" href="./help.html">Help</a>
     <a class="header-links" href="./Privacy-Policy.html">Privacy Policy</a>
     <a class="header-links" href="./Legal-notice.html">Legal Notice</a>
     <a class="header-links" href="./login.html">Log out</a>

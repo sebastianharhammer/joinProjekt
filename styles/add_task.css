@@ -283,19 +283,20 @@ ul {
   line-height: 25.2px;
 }
 .red {
-  background-color: #7ae229;
+  background-color: #ff3d00;
 }
 .yellow {
   background-color: #ffa800;
 }
 .green {
-  background-color: #ff3d00;
+  background-color: #7ae229;
 }
 #prio-medium {
   display: flex;
   align-items: center;
   gap: 4px;
 }
+
 
 .separator {
   height: 424px;
@@ -674,6 +675,7 @@ ul {
   border-radius: 10px;
   font-weight: 700;
   font-size: 1rem;
+  padding: 0 10px;
 }
 #add-task-close:hover {
   color: #0b8ce9;
@@ -701,6 +703,10 @@ ul {
   background-color: #0b8ce9;
   cursor: pointer;
 }
+.add-task-btn {
+  font-size: 16px;
+  font-weight: 500;
+}
 #task-message-container {
   display: flex;
   justify-content: center;
@@ -709,8 +715,8 @@ ul {
   width: 100vw;
 }
 #task-succes {
-  height: 5%;
-  width: 10%;
+  height: 7%;
+  width: 13%;
   background-color: #2b3647;
   border: 1px solid black;
   border-radius: 10px;
@@ -721,6 +727,7 @@ ul {
   justify-content: center;
   align-items: center;
   color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 .hide-add-task {
   transform: translateY(100vh);
@@ -757,6 +764,16 @@ ul {
   .addtask-buttons {
     justify-content: flex-end;
   }
+}
+
+.dropdown-contact {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
 }
 
 @media (max-width: 992px) {

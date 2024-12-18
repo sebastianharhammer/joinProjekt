@@ -8,6 +8,7 @@
 }
 
 #contact-side-panel {
+  position: sticky;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -17,15 +18,20 @@
   overflow-y: scroll;
   scrollbar-width: 24px;
   overflow-x: hidden;
+  left: 10vw;
 }
 
 #add-new-contact-button-container {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 456px;
   height: 101px;
-  padding: 10px 0;
+  padding: 22px 0;
 }
 
 #contact-side-panel::-webkit-scrollbar {

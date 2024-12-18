@@ -91,6 +91,7 @@ async function pushContactInfo(firstName, lastName, email, phone) {
     lastName,
     email,
     phone,
+    color: getRandomColor()
   };
 
   try {

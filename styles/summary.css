@@ -60,6 +60,22 @@ body {
   max-width: 1000px;
 }
 
+.panel-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.panel-link:hover .panel {
+  transform: scale(1.05);
+  background-color: #2a3647;
+  color: white;
+}
+
+.panel-img-prio {
+  width: 60px;
+  height: 60px;
+}
+
 .panel-row {
   display: flex;
   justify-content: space-between;

@@ -48,15 +48,15 @@ return  /*html*/`
                 <div class="prio-btn-content">
                   <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
                     Urgent
-                    <img id="urgentImg" src="../img/Prio_urgent_color.png" alt=""/>
+                    <img id="prio-image-urgent" src="../img/Prio_urgent_color.png" alt=""/>
                   </button>
                   <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
                     Medium
-                    <img id="mediumImg" src="../img/Prio_medium_color.png" alt=""/>
+                    <img id="prio-image-medium" src="../img/Prio_medium_color.png" alt=""/>
                   </button>
                   <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
                     Low
-                    <img id="lowImg" src="../img/Prio_low_color.png" alt=""/>
+                    <img id="prio-image-low" src="../img/Prio_low_color.png" alt=""/>
                   </button>
                 </div>
               </div>
@@ -95,15 +95,12 @@ return  /*html*/`
               This field is required
             </span>
             <div class="addtask-buttons">
-              <button id="add-task-close" class="btn-cancel" onclick="hideAddTask()">
-                Clear
-                <img class="btn-cancel-icon" src="../img/iconoir_cancel.svg">
+              <button id="add-task-close" class="btn-cancel" type="button" onclick="handleCancel(event)">
+                <span class="add-task-btn">Clear ✖</span>
               </button>
               <button onclick="createTask(status, event)" id="add-task-create" class="btn-create" type="button">
-                 Create task
-                 <img src="../img/check.svg">
+                 <span class="add-task-btn">Create task 🗸</span>
               </button>
-
             </div>
           </div>
         </form>
@@ -117,9 +114,9 @@ return  /*html*/`
 function assignUserHTML(contact) {
   return `
         <div id="assigned-user-svg">
-          <svg class="customCircle" width="50" height="50">
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+          <svg class="addtask-customCircle" width="50" height="50">
+            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
+            <text class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>
         <div id="assigned-user-name-container">
@@ -130,8 +127,8 @@ function assignUserHTML(contact) {
 }
 
 function showAssignedUsersHTML(contact) {
-  return `<svg class="customCircle" width="50" height="50" >
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+  return `<svg class="addtask-customCircle" width="50" height="50" >
+            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
+            <text class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
         </svg>`;
 }

@@ -1,26 +1,56 @@
 const firebaseConfig = {
-  databaseURL: "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
+  databaseURL:
+    "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
 };
 
-const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL =
+  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app";
 
 const app = firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 let contactsData = [];
 
+async function ensureContactHasColor(firebaseKey, contact) {
+  if (!contact.color) {
+    const updatedContact = {
+      ...contact,
+      color: getRandomColor(),
+    };
+
+    await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedContact),
+    });
+
+    return updatedContact;
+  }
+
+  return contact;
+}
+
 function fetchContactsFromFirebase() {
   const contactsRef = database.ref("contacts");
 
-  contactsRef.on("value", (snapshot) => {
+  contactsRef.on("value", async (snapshot) => {
     const data = snapshot.val();
 
     if (data) {
-      // Verwende den von Firebase generierten Schlüssel als eindeutigen Bezeichner
-      contactsData = Object.entries(data).map(([firebaseKey, contact]) => ({
-        firebaseKey,
-        ...contact
-      }));
+      const entries = Object.entries(data);
+      const updatedContacts = [];
+
+      for (const [firebaseKey, contact] of entries) {
+        const updatedContact = await ensureContactHasColor(
+          firebaseKey,
+          contact
+        );
+        updatedContacts.push({ firebaseKey, ...updatedContact });
+      }
+
+      contactsData = updatedContacts;
       renderSortedContacts(contactsData);
       renderRightSideContainer();
     } else {
@@ -68,7 +98,7 @@ function renderSortedContacts(contacts) {
       // Achten Sie darauf, dass contactsTemplate nun ebenfalls firebaseKey verwendet.
       // Beispielsweise:
       // <li class="contact-item" id="contact-item-${contact.firebaseKey}" onclick="toggleContactDetail('${contact.firebaseKey}')">...</li>
-      contactsHTML += contactsTemplate(contact); 
+      contactsHTML += contactsTemplate(contact);
     });
 
     contactsHTML += `</ul></div>`;
@@ -81,7 +111,9 @@ function renderSortedContacts(contacts) {
 function toggleContactDetail(firebaseKey) {
   const contactItems = document.querySelectorAll(".contact-item");
   const detailViewContainer = document.getElementById("contact-big");
-  const selectedContact = contactsData.find((contact) => contact.firebaseKey === firebaseKey);
+  const selectedContact = contactsData.find(
+    (contact) => contact.firebaseKey === firebaseKey
+  );
   const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
 
   if (!selectedContact) {
@@ -99,10 +131,9 @@ function toggleContactDetail(firebaseKey) {
     `;
   } else {
     contactItems.forEach((item) => item.classList.remove("selected"));
-    if (clickedItem) {
-      clickedItem.classList.add("selected");
-    }
+    if (clickedItem) clickedItem.classList.add("selected");
 
+    // Verwenden Sie jetzt selectedContact.color anstelle von getRandomColor()
     detailViewContainer.innerHTML = /*html*/ `
       <div id="contact-headline-container">
           <h3 id="contact-headline">Contacts</h3>
@@ -110,16 +141,21 @@ function toggleContactDetail(firebaseKey) {
       </div>
       <div class="contact-detail">
           <div class="contact-detail-header">
-              <div class="contact-avatar" style="background-color: ${getRandomColor()};">
-                  ${getInitials(selectedContact.firstName, selectedContact.lastName)}
+              <div class="contact-avatar" style="background-color: ${
+                selectedContact.color || getRandomColor()
+              };">
+                  ${getInitials(
+                    selectedContact.firstName,
+                    selectedContact.lastName
+                  )}
               </div>
               <div class="contact-detail-header-right">
                   <div class="contact-detail-header-right-headline">
                       ${selectedContact.firstName} ${selectedContact.lastName}
                   </div>
                   <div class="detail-actions">
-                      <button onclick="editContact('${firebaseKey}')"><img id="edit-contact-img" src="./img/edit.svg">Edit</button>
-                      <button onclick="deleteContact('${firebaseKey}')"><img id="delete-contact-img" src="./img/delete.svg">Delete</button>
+                  <button onclick="editContact('${firebaseKey}')"><img id="edit-contact-img" src="./img/edit.svg">Edit</button>
+                  <button onclick="deleteContact('${firebaseKey}')"><img id="delete-contact-img" src="./img/delete.svg">Delete</button>
                   </div>
               </div>
           </div>

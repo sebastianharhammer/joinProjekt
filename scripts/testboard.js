@@ -10,10 +10,12 @@ function init() {
 
 
 let currentDraggedElement;
+let currentTaskBeingEdited = null;
 
-function loadCurrentUser(){
+
+function loadCurrentUser() {
     const storedUser = localStorage.getItem('currentUser');
-    if(storedUser){
+    if (storedUser) {
         currentUser = JSON.parse(storedUser);
         console.log(currentUser)
     }
@@ -28,7 +30,7 @@ async function fetchTasks(path = "") {
     }
     console.log(taskArray)
     updateTaskHTML();
-} 
+}
 
 function startDragging(id) {
     currentDraggedElement = id;
@@ -42,14 +44,14 @@ async function moveTo(category) {
     const taskIndex = taskArray.findIndex(task => task.id === currentDraggedElement);
     if (taskIndex !== -1) {
         taskArray[taskIndex].status = category;
-        if(currentUser.firstName === "Guest" && currentUser.lastName === "User"){
+        if (currentUser.firstName === "Guest" && currentUser.lastName === "User") {
             console.log("Gastbenutzer verschiebt Aufgabe lokal.");
-            updateTaskHTML(); 
+            updateTaskHTML();
         }
-        else{
-        console.log("Registrierter Benutzer aktualisiert Firebase.");
-        await updateTaskInFirebase(taskArray[taskIndex]);
-        updateTaskHTML();
+        else {
+            console.log("Registrierter Benutzer aktualisiert Firebase.");
+            await updateTaskInFirebase(taskArray[taskIndex]);
+            updateTaskHTML();
         }
     }
 }
@@ -71,9 +73,6 @@ async function updateTaskInFirebase(task) {
 }
 
 
-
-
-
 function loadBoardNavigator() {
     let content = document.getElementById('wholeBoard');
     content.innerHTML = '';
@@ -92,7 +91,7 @@ function getBoardNavigatorHTML() {
             <span class="verticalLine">|</span>
             <img src="./img/search.png" alt="">
             </div>
-            <div class="addTaskButtonBoard">
+            <div class="addTaskButtonBoard" onclick="showAddTask('todo')">
                 <p class="buttonBoardFont">Add Task +</p>
             </div>
         </div>
@@ -101,10 +100,10 @@ function getBoardNavigatorHTML() {
     `
 }
 
-function filterTaskFunction(){
+function filterTaskFunction() {
     let myFilter = document.getElementById('filterTask').value.toLowerCase();
-    if (myFilter.length < 1){
-        for(let i = 0; i < taskArray.length; i++){
+    if (myFilter.length < 1) {
+        for (let i = 0; i < taskArray.length; i++) {
             let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
             if (wholeTask) {
                 wholeTask.style.display = '';
@@ -136,15 +135,15 @@ function showTitleOfBoardColumns() {
         <section id="titleOfBoardColumns" class="titleOfBoardColumns">
 <div onclick=addTaskToColumnOverlay() class="columntitleToDo">
     <p class="columnTitleFont">To do</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('to-do')">
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
 </div>
 <div onclick=addTaskToColumnOverlay() class="columntitleInProgress">
     <p class="columnTitleFont">In Progress</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('in-progress')">
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
 </div>
 <div onclick=addTaskToColumnOverlay() class="columntitleAwaitFeedback">
     <p class="columnTitleFont">Await Feedback</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('await-feedback')">
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
 </div>
 <div onclick=addTaskToColumnOverlay() class="columntitleDone">
     <p class="columnTitleFont">Done</p>
@@ -227,12 +226,12 @@ function updateTaskHTML() {
         findPrioIcon(task)
         findAmountOfSubtasks(task)
     }
-    if(todoColumn.children.length === 0){
+    if (todoColumn.children.length === 0) {
         createNoToDosdiv()
     }
 }
 
-function createNoToDosdiv(){
+function createNoToDosdiv() {
     document.getElementById('todo').innerHTML += /*html*/`
         <div class="noTasks">
             <p class="font-no-tasks">NO TASKS TO DO</p>
@@ -285,13 +284,13 @@ function findClassOfTaskCat(task) {
 
 
 
-function findPrioIcon(task){
+function findPrioIcon(task) {
     let prioIcon = document.getElementById(`priority-${task.id}`);
-    if(task.prio === "medium"){
+    if (task.prio === "medium") {
         prioIcon.src = "./img/prio-mid.png"
-    }else if(task.prio === "urgent"){
+    } else if (task.prio === "urgent") {
         prioIcon.src = "./img/prio-high.png"
-    }else{
+    } else {
         prioIcon.src = "./img/prio-low.png"
     }
 }
@@ -390,9 +389,16 @@ function showTaskCardHTML(task) {
         <div id="currentTaskCard${task.id}" class="currentTaskCard">
             ${getTaskCategoryButtonHTML(task)}
             ${getTaskDetailsHTML(task)}
+            <div class="taskOwnersSection">
+                <p class="firstTableColumnFont">Assigned To:</p>
+                <div class="assignedOwnersContainer">
+                    ${getAssignedOwnersHTML(task)}
+                </div>
+            </div>
         </div>
     `;
 }
+
 
 function getTaskCategoryButtonHTML(task) {
     return /*html*/`
@@ -432,7 +438,7 @@ function getTaskDetailsHTML(task) {
                 <img class="deleteIcon" src="./img/delete.svg" alt="">
                 <p class="editDeleteFont">Delete</p>
             </div>
-            <div class="deleteCard">
+            <div onclick="showEditTaskTempl(${task.id})" class="deleteCard">
             <img class="editIcon" src="./img/edit.svg" alt="">
             <p class="editDeleteFont">Edit</p>
             </div>
@@ -447,7 +453,7 @@ function getTaskDetailsHTML(task) {
     `;
 }
 
-function askFordeleteTask(){
+function askFordeleteTask() {
     let deleteDiv = document.getElementById('deleteConfirmation');
     deleteDiv.classList.remove('d-none');
 }
@@ -473,12 +479,12 @@ async function deleteTask(taskId) {
     }
 }
 
-function closeDetailView(){
+function closeDetailView() {
     let overlay = document.getElementById('taskDetailView');
     overlay.classList.add('d-none');
 }
 
-function closeQuestionDelete(){
+function closeQuestionDelete() {
     let deleteQuestDiv = document.getElementById('deleteConfirmation');
     deleteQuestDiv.classList.add('d-none')
 }
@@ -504,7 +510,7 @@ function getSubtasksHTML(task) {
                 </label>
             </div>
             `
-        ;
+            ;
     });
     return subtasksHTML;
 }
@@ -558,14 +564,14 @@ function getAssignedOwnersHTML(task) {
 function getRandomColor() {
     const colors = [
         "#FF5733",
-        "#33FF57", 
-        "#3357FF", 
-        "#FFC300", 
-        "#8E44AD", 
-        "#16A085", 
-        "#E74C3C", 
-        "#2ECC71", 
-        "#3498DB", 
+        "#33FF57",
+        "#3357FF",
+        "#FFC300",
+        "#8E44AD",
+        "#16A085",
+        "#E74C3C",
+        "#2ECC71",
+        "#3498DB",
     ];
     return colors[Math.floor(Math.random() * colors.length)];
 }
@@ -588,14 +594,14 @@ function getTaskCategoryClass(taskCategory) {
 
 
 
-function addTaskToColumnOverlay(id){
-    let overlayDetailedTask= document.getElementById('overlayDetailedSite');
+function addTaskToColumnOverlay(id) {
+    let overlayDetailedTask = document.getElementById('overlayDetailedSite');
     overlayDetailedTask.innerHTML = '';
     overlayDetailedTask.classList.remove('d-none')
     overlayDetailedTask.innerHTML += addTaskOverlayHTML(id)
 }
 
-function closeDetailView(){
+function closeDetailView() {
     let taskCardOverlay = document.getElementById('taskDetailView');
     taskCardOverlay.classList.add('d-none');
 }
@@ -607,6 +613,357 @@ function highlight(id) {
 
 function removeHighlight(id) {
     document.getElementById(id).classList.remove("dragAreaHighlight");
+}
+
+
+// edit task 
+
+function showEditTaskTempl(taskId) {
+    currentTaskBeingEdited = taskId; // Aktualisiere die aktuelle Task-ID
+    const task = taskArray.find(t => t.id === taskId);
+    if (!task) {
+        console.error("Task nicht gefunden!");
+        return;
+    }
+    assignedUserArr = task.owner ? [...task.owner] : [];
+
+    let detailView = document.getElementById('taskDetailView');
+    let editView = document.getElementById('editTaskTempl');
+    detailView.classList.add('d-none');
+    editView.classList.remove('d-none');
+    editView.innerHTML = getEditTemplate(task);
+
+    getUsersForEditDropDown();
+    updateAssignedUsersDisplay();
+    setPriority(task.prio);
+    renderEditSubtasks(task);
+}
+
+
+function renderEditSubtasks(task) {
+    const subtaskContainer = document.getElementById('rendered-subtasks-edit');
+    subtaskContainer.innerHTML = '';
+
+    if (!task.subtasks || task.subtasks.length === 0) {
+        subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+        return;
+    }
+    task.subtasks.forEach((subtask, index) => {
+        const subtaskId = `edit-subtask-${task.id}-${index + 1}`; // Dynamische ID erstellen
+
+        subtaskContainer.innerHTML += /*html*/ `
+            <div class="edit-subtask-item" id="${subtaskId}">
+                <p class="subtaskFontInEdit">• ${subtask.subtask || `Subtask ${index + 1}`}</p>
+                <div class="edit-existingtask">
+                    <img src="./img/edit-pencil.png" alt="Edit" class="edit-icon">
+                    <span>|</span>
+                    <img src="./img/delete.png" alt="Delete" class="delete-icon">
+                </div>
+            </div>`;
+    });
+}
+
+
+
+async function getUsersForEditDropDown() {
+    try {
+        let response = await fetch(BASE_URL + "/contacts/.json", {
+            method: "GET",
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        let responseToJson = await response.json();
+        finalContactsForEdit = responseToJson || {};
+        console.log(finalContactsForEdit);
+    } catch (error) {
+        console.error("Error fetching contacts:", error);
+    }
+    returnArrayContactsEdit();
+    setupEditDropdownInteraction(); // Dropdown-Interaktion nach Rendern initialisieren
+}
+
+function setupEditDropdownInteraction() {
+    const editDropdown = document.getElementById("custom-dropdown-edit");
+    const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
+    // Toggle-Logik für Dropdown
+    editDropdown.addEventListener("click", (event) => {
+        // Verhindere, dass das Event andere Klick-Listener beeinflusst
+        event.stopPropagation();
+        // Toggle-Anzeige: Flex (offen) / None (geschlossen)
+        if (editOptionsContainer.style.display === "block") {
+            editOptionsContainer.style.display = "none";
+        } else {
+            editOptionsContainer.style.display = "block";
+        }
+    });
+
+    // Optional: Dropdown schließen, wenn außerhalb geklickt wird
+    document.addEventListener("click", () => {
+        editOptionsContainer.style.display = "none";
+    });
+}
+
+
+function returnArrayContactsEdit() {
+    if (!finalContactsForEdit || Object.keys(finalContactsForEdit).length === 0) {
+        console.error("No contacts found.");
+        return;
+    }
+
+    const editDropdown = document.getElementById('custom-dropdown-edit');
+    const editOptionsContainer = editDropdown.querySelector('.dropdown-options-edit');
+    editOptionsContainer.innerHTML = ""; // Dropdown leeren
+
+    Object.keys(finalContactsForEdit).forEach((key) => {
+        const contact = finalContactsForEdit[key];
+        if (!contact || !contact.firstName || !contact.lastName) return;
+
+        // Prüfen, ob der Benutzer zugeordnet ist
+        const isChecked = assignedUserArr.some(
+            user => user.firstName === contact.firstName && user.lastName === contact.lastName
+        );
+
+        // Erstelle ein Container-DIV
+        const optionElement = document.createElement("div");
+        optionElement.classList.add("dropdown-contact-edit");
+
+        // Erstelle die Initialen-Kreise
+        const circleDiv = document.createElement("div");
+        circleDiv.classList.add("contact-circle-edit");
+        circleDiv.style.backgroundColor = getRandomColor();
+        circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+
+        // Erstelle den Namen
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
+
+        // Erstelle die Checkbox
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.classList.add("contact-checkbox-edit");
+        checkbox.checked = isChecked; // Zustand setzen
+        checkbox.addEventListener("change", () => {
+            handleEditContactSelection(contact.firstName, contact.lastName, checkbox.checked);
+        });
+
+        // Füge alle Elemente hinzu
+        optionElement.appendChild(circleDiv);
+        optionElement.appendChild(nameSpan);
+        optionElement.appendChild(checkbox);
+
+        editOptionsContainer.appendChild(optionElement);
+    });
+}
+
+
+
+
+function assignUserEditHTML(contact) {
+    const initials = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+    return `
+        <div class="contact-circle-edit" style="background-color: ${getRandomColor()}">${initials}</div>
+        <span>${contact.firstName} ${contact.lastName}</span>
+        <input type="checkbox" class="contact-checkbox-edit" onchange="handleEditContactSelection('${contact.firstName}', '${contact.lastName}')">
+    `;
+}
+
+
+function handleEditContactSelection(firstName, lastName, isChecked) {
+    if (isChecked) {
+        // Benutzer hinzufügen
+        if (!assignedUserArr.some(user => user.firstName === firstName && user.lastName === lastName)) {
+            assignedUserArr.push({ firstName, lastName });
+        }
+    } else {
+        // Benutzer entfernen
+        assignedUserArr = assignedUserArr.filter(
+            user => user.firstName !== firstName || user.lastName !== lastName
+        );
+    }
+
+    console.log("Assigned users:", assignedUserArr);
+    updateAssignedUsersDisplay();
+}
+
+
+function updateAssignedUsersDisplay() {
+    const assignedUsersContainer = document.getElementById('assigned-users-short-edit');
+    assignedUsersContainer.innerHTML = "";
+
+    assignedUserArr.forEach(user => {
+        const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`;
+        assignedUsersContainer.innerHTML += `
+            <div class="assigned-user-circle" style="background-color: ${getRandomColor()}">
+                <p>${initials}</p>
+            </div>
+        `;
+    });
+}
+
+
+function getFirstLetter(name) {
+    return name.trim().charAt(0).toUpperCase();
+}
+
+function getRandomColor() {
+    const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+
+
+function getEditTemplate(task) {
+    return /*html*/`
+        <div id="editTaskCard" class="editTaskCard">
+            <div class="closeEditView">
+                <img class="closeCard" onclick="closeEditTask()" src="./img/close.svg" alt="">
+            </div>
+            <p class="firstTableColumnFont">Title:</p>
+            <input value="${task.title}" type="text">
+            <p class="firstTableColumnFont">Description:</p>
+            <textarea id="editDescription" class="editTaskTextarea">${task.description}</textarea>
+            <p class="firstTableColumnFont">Priorität:</p>
+            <div class="prio-btn-content">
+                <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
+                    Urgent
+                    <img id="prio-image-urgent" src="../img/Prio_urgent_color.png" alt=""/>
+                </button>
+                <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
+                    Medium
+                    <img id="prio-image-medium" src="../img/Prio_medium_color.png" alt=""/>
+                </button>
+                <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
+                    Low
+                    <img id="prio-image-low" src="../img/Prio_low_color.png" alt=""/>
+                </button>
+                </div>
+
+            <div class="field-text-flex-edit" id="addTaskAssignedTo-edit">
+                <div class="form-group-edit">
+                    <label for="assigned-to-edit">Assigned to</label>
+                    <div id="custom-dropdown-edit" class="custom-dropdown-edit input-addtask-edit">
+                    <div class="dropdown-placeholder-edit">Select contacts to assign</div>
+                    <div class="dropdown-options-edit"></div>
+                    </div>
+                    <div class="assigned-users-short-edit" id="assigned-users-short-edit"></div>
+                </div>
+            </div>
+
+            <section id="edit-subtasks-section">
+
+            <div class="add-subtask-in-edit">
+                <input class="input-subtask-in-edit" type="text" placeholder="Write a new subtask...">
+                <div class="img-in-edit-input">
+                    <div class="close-and-check-imgs">
+                        <img src="./img/close.svg" alt="close">
+                    </div>
+                    <div class="close-and-check-imgs">
+                        <img onclick="addSubTaskInEditTempl()" src="./img/check.svg" alt="check">
+                    </div>
+                </div>
+            </div>
+
+            
+            <div id="rendered-subtasks-edit">
+            </div>
+            </section>
+            
+            <section class="editButtons">
+            <button class="btn-skip-and-confirm-edit" onclick="saveEditedTask()">Save changes</button>
+            <button onclick="skipEdit(${task.id})" class="btn-skip-and-confirm-edit">close edit</button>
+            </section>
+        </div>
+    `;
+}
+
+function addSubTaskInEditTempl() {
+    const inputField = document.querySelector('.input-subtask-in-edit');
+    const inputValue = inputField.value.trim();
+    if (inputValue === "") {
+        return;
+    }
+
+    const subtaskContainer = document.getElementById('rendered-subtasks-edit');
+    const taskId = currentTaskBeingEdited; // Verwende die aktuelle Task-ID
+    const subtaskIndex = subtaskContainer.childElementCount;
+    const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`; // Eindeutige ID erstellen
+
+    // Neues Subtask-Element erstellen
+    const newSubtaskWrapper = document.createElement('div');
+    newSubtaskWrapper.classList.add('edit-subtask-item');
+    newSubtaskWrapper.id = subtaskId; // Dynamische ID setzen
+
+    const newSubtask = document.createElement('p');
+    newSubtask.textContent = `• ${inputValue}`;
+    newSubtask.classList.add('subtaskFontInEdit');
+
+    // Subtask dem Wrapper hinzufügen
+    newSubtaskWrapper.appendChild(newSubtask);
+    subtaskContainer.appendChild(newSubtaskWrapper);
+
+    inputField.value = "";
+}
+
+
+
+
+function skipEdit(taskId) {
+    const editView = document.getElementById('editTaskTempl');
+    if (editView) {
+        editView.classList.add('d-none');
+    }
+    const task = taskArray.find(t => t.id === taskId);
+    if (!task) {
+        console.error(`Task mit ID ${taskId} nicht gefunden.`);
+        return;
+    }
+    let detailView = document.getElementById('taskDetailView');
+    if (detailView) {
+        detailView.innerHTML = '';
+        detailView.classList.remove('d-none');
+        detailView.innerHTML += showTaskCardHTML(task);
+    }
+}
+
+
+function closeEditTask(taskId) {
+
+    let overlayEdit = document.getElementById('editTaskTempl');
+    overlayEdit.classList.add('d-none');
+}
+
+async function saveEditedTask() {
+    const taskId = currentTaskBeingEdited; 
+    const newTitle = document.querySelector("#editTaskCard input").value;
+    const newDescription = document.getElementById("editDescription").value;
+    const updatedTask = taskArray.find(task => task.id === taskId);
+    if (!updatedTask) {
+        console.error("Task nicht gefunden!");
+        return;
+    }
+
+    updatedTask.title = newTitle;
+    updatedTask.description = newDescription;
+    updatedTask.owner = assignedUserArr;
+    try {
+        await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedTask)
+        });
+
+        console.log(`Task ${taskId} erfolgreich aktualisiert.`);
+        updateTaskHTML();
+        closeEditTask();
+    } catch (error) {
+        console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
+    }
 }
 
 

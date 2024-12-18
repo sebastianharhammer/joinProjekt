@@ -49,15 +49,15 @@ function renderAddTaskHTML() {
                 <div class="prio-btn-content">
                   <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
                     Urgent
-                    <img id="urgentImg" src="../img/Prio_urgent_color.png" alt=""/>
+                    <img id="prio-image-urgent" src="../img/Prio_urgent_color.png" alt=""/>
                   </button>
                   <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
                     Medium
-                    <img id="mediumImg" src="../img/Prio_medium_color.png" alt=""/>
+                    <img id="prio-image-medium" src="../img/Prio_medium_color.png" alt=""/>
                   </button>
                   <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
                     Low
-                    <img id="lowImg" src="../img/Prio_low_color.png" alt=""/>
+                    <img id="prio-image-low" src="../img/Prio_low_color.png" alt=""/>
                   </button>
                 </div>
               </div>
@@ -96,14 +96,12 @@ function renderAddTaskHTML() {
               This field is required
             </span>
             <div class="addtask-buttons">
-              <button id="add-task-close" class="btn-cancel">
-                Clear<img class="btn-cancel-icon" src="../img/iconoir_cancel.svg"/>
+            <button id="add-task-close" class="btn-cancel">
+                <span class="add-task-btn">Clear ✖</span>
               </button>
-              <button onclick="createTask(status, event)" id="add-task-create" class="btn-create" type="button">
-                 Create task
-                 <img src="../img/check.svg" />
+              <button onclick="createTask(event)" id="add-task-create" class="btn-create" type="button">
+                 <span class="add-task-btn">Create task 🗸</span>
               </button>
-
             </div>
           </div>
         </form>
