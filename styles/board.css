@@ -392,21 +392,32 @@
 /* Bestehender Code bleibt unverändert */
 
 /* Responsive Anpassungen */
+/* Standard Layout bleibt wie es ist */
+
+/* Standard Layout bleibt wie es ist */
+
+/* Tablet-Layout (max-width: 1024px) */
 @media (max-width: 1024px) {
-  /* Spalten enger machen */
+  /* Engere Spalten und reduzierter Abstand */
   .dragarea-todo,
   .dragarea-inProgress,
   .dragarea-feedback,
   .dragarea-done {
     width: 20vw;
   }
+
+  .tasksContent {
+    gap: 30px;
+  }
+
   .titleOfBoardColumns {
     gap: 30px;
   }
 }
 
+/* Mobile-Layout (max-width: 768px) */
 @media (max-width: 768px) {
-  /* Layout der Spalten stacken */
+  /* Layout-Änderung: Spalten untereinander anordnen */
   .tasksContent {
     flex-direction: column;
     align-items: center;
@@ -415,31 +426,37 @@
     left: 0;
   }
 
-  .titleOfBoardColumns {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding-left: 20px;
-  }
-
-  .columntitleToDo,
-  .columntitleInProgress,
-  .columntitleAwaitFeedback,
-  .columntitleDone {
-    width: 100%;
-  }
-
+  /* Jede Spalte mit eigener Überschrift */
   .dragarea-todo,
   .dragarea-inProgress,
   .dragarea-feedback,
   .dragarea-done {
     width: 90%;
+    margin-bottom: 20px;
   }
 
+  .dragarea-todo::before,
+  .dragarea-inProgress::before,
+  .dragarea-feedback::before,
+  .dragarea-done::before {
+    content: attr(data-title); /* Überschrift dynamisch anzeigen */
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: left;
+  }
+
+  /* Entferne globale Column Titles */
+  .titleOfBoardColumns {
+    display: none;
+  }
+
+  /* Board Navigator: Elemente zentrieren */
   .boardNavigator {
     flex-direction: column;
     gap: 16px;
-
     padding: 16px;
     height: auto;
   }
@@ -451,8 +468,9 @@
   }
 }
 
+/* Kleines Mobile-Layout (max-width: 560px) */
 @media (max-width: 560px) {
-  /* Add Task Button anpassen */
+  /* Button-Anpassungen */
   .addTaskButtonBoard {
     width: 48px;
     height: 48px;
@@ -460,34 +478,37 @@
   }
 
   .buttonBoardFont {
-    font-size: 0;
+    font-size: 0; /* Text entfernen */
   }
 
   .addTaskButtonBoard::after {
-    content: "+";
+    content: "+"; /* Icon ersetzen */
     font-size: 24px;
     color: white;
     font-weight: bold;
   }
 
-  /* Suchleiste vergrößern */
+  /* Eingabefeld größer machen */
   .inputBoard {
     width: 100%;
     font-size: 16px;
   }
 }
 
+/* Kleinstes Layout (max-width: 440px) */
 @media (max-width: 440px) {
-  /* Mobiles Layout: Vertikales Stacken */
+  /* Stacking der Drag & Drop Bereiche */
   .tasksContent {
     flex-direction: column;
     gap: 10px;
   }
 
+  /* Titel der Spalten entfernen */
   .titleOfBoardColumns {
-    display: none; /* Titel nur in Dragareas anzeigen */
+    display: none;
   }
 
+  /* Spalten zentrieren */
   .dragarea-todo,
   .dragarea-inProgress,
   .dragarea-feedback,
@@ -496,16 +517,15 @@
     margin: 0 auto;
   }
 
-  .columntitleToDo,
-  .columntitleInProgress,
-  .columntitleAwaitFeedback,
-  .columntitleDone {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  /* Schriftgrößen anpassen */
+  .dragarea-todo::before,
+  .dragarea-inProgress::before,
+  .dragarea-feedback::before,
+  .dragarea-done::before {
+    font-size: 18px;
   }
 
-  .columnTitleFont {
-    font-size: 18px;
+  .inputBoard {
+    font-size: 14px;
   }
 }

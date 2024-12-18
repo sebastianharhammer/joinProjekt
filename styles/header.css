@@ -113,7 +113,13 @@ header {
   cursor: pointer;
 }
 
-@media (max-width: 1030px) {
+@media screen and (min-width: 1251px) and (max-width: 1450px) {
+  #overlay-top {
+    width: 88vw;
+  }
+}
+
+@media (max-width: 1250px) {
   #overlay-top {
     padding: 0 15px;
     width: 100vw;
@@ -144,6 +150,10 @@ header {
 
   #header-current-user {
     margin-left: auto;
+  }
+
+  #logo-container img {
+    margin-left: 20px;
   }
 }
 
