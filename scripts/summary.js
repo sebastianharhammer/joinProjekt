@@ -48,7 +48,7 @@ function loadTasksFromFirebase() {
 
 function calculateTaskSummary(tasks) {
   const stats = {
-    toDo: tasks.filter((t) => t.status === "to-do").length,
+    toDo: tasks.filter((t) => t.status === "todo").length,
     inProgress: tasks.filter((t) => t.status === "inProgress").length,
     feedback: tasks.filter((t) => t.status === "feedback").length,
     done: tasks.filter((t) => t.status === "done").length,
@@ -72,18 +72,23 @@ function renderPanels(stats) {
         ${createLargePanel(stats.upcomingTask)}
       </div>
       <div class="panel-row">
-      ${createPanel("Tasks in Board", stats.totalTasks)}  
-      ${createPanel("Tasks in progress", stats.inProgress)}
-      ${createPanel("Awaiting Feedback", stats.feedback)}
+      ${createPanel("Tasks in Board", stats.totalTasks, null, "panel-bottom")}  
+      ${createPanel(
+        "Tasks in progress",
+        stats.inProgress,
+        null,
+        "panel-bottom"
+      )}
+      ${createPanel("Awaiting Feedback", stats.feedback, null, "panel-bottom")}
       </div>
     `;
   panelContainer.innerHTML = panelsHTML;
 }
 
-function createPanel(title, value, imgSrc = "") {
+function createPanel(title, value, imgSrc = "", extraClass = "") {
   return `
       <a href="testboard.html" class="panel-link">
-        <div class="panel">
+        <div class="panel ${extraClass}">
           ${imgSrc ? `<img src="${imgSrc}" alt="${title} Icon" />` : ""}
           <div class="panel-content">
             <p>${value}</p>
