@@ -172,6 +172,7 @@
   padding-left: 8%;
 }
 #add-contact-cancel {
+  font-weight: 700;
   height: 4vh;
   margin-left: 1vw;
   margin-right: 1vw;
@@ -190,13 +191,14 @@
   transition: color 0.3s;
 }
 #add-contact-create {
+  font-weight: 700;
   white-space: nowrap;
   height: 3vh;
   margin-left: 1vw;
   margin-right: 1vw;
   background-color: #2a3647;
   color: white;
-  width: 126px;
+
   height: 56px;
   padding: 15px 24px 15px 24px;
   border-radius: 10px;

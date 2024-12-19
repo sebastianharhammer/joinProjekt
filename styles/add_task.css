@@ -297,7 +297,6 @@ ul {
   gap: 4px;
 }
 
-
 .separator {
   height: 424px;
   width: 1px;
@@ -739,7 +738,7 @@ ul {
 
 @media (max-width: 1200px) {
   #add-task-content {
-    overflow-y:scroll;
+    overflow-y: scroll;
     overflow-x: hidden;
     height: 75vh;
   }
@@ -846,7 +845,6 @@ ul {
     align-items: center;
   }
   .addtask-buttons {
-    flex-direction: column-reverse;
     align-items: center;
   }
   .addtask-bottom-container {
@@ -868,7 +866,6 @@ ul {
     text-align: center;
   }
   .addtask-buttons {
-    flex-direction: column;
     gap: 12px;
     align-items: center;
   }
@@ -917,12 +914,9 @@ ul {
     width: 100%;
   }
   .addtask-bottom-container {
+    margin-left: 40px;
     margin-right: 60px;
     align-items: center;
-  }
-
-  .addtask-bottom-container span {
-    display: none;
   }
 
   .addtask-buttons {

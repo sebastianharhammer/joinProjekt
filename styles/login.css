@@ -226,13 +226,14 @@ button:hover {
   height: 5vh;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 909px) {
   .loginContent {
     height: 100%;
     padding-bottom: 20px;
   }
 
   .loginForm {
+    margin-top: 100px;
     width: 85vw;
     height: auto;
     padding: 20px;
@@ -311,7 +312,7 @@ button:hover {
   }
 
   .FontOfOfLogin {
-    font-size: 28px;
+    font-size: 44px;
   }
 
   .headAreaOfLogin img {
@@ -348,6 +349,17 @@ button:hover {
 
   .loginForm {
     margin-bottom: 30px;
+  }
+
+  .footerRegisterLogin {
+    margin-top: 0px;
+    margin-left: 40px;
+  }
+}
+
+@media (max-width: 390px) {
+  .interFontLogin {
+    font-size: 12px;
   }
 }
 
