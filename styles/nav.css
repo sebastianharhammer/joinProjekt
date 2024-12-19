@@ -39,7 +39,7 @@ a {
 
 .svgJoin {
   position: absolute;
-  margin-left: 33px;
+  margin-left: 2vw;
 }
 
 #join-logo-big {
@@ -70,6 +70,7 @@ a {
 .nav-icon {
   width: 20px;
   height: 20px;
+  padding-left: 1vw;
 }
 
 .nav-links {
@@ -94,7 +95,8 @@ a {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
+    max-width: 1258px;
     height: 60px;
     flex-direction: row;
     justify-content: space-around;
@@ -132,6 +134,9 @@ a {
   #policy-links-container {
     display: none;
   }
+}
+.nav-links-policy {
+  padding-left: 9px;
 }
 
 @media (max-width: 460px) {
