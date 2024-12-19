@@ -32,16 +32,19 @@
   justify-content: center;
   width: 70vw;
   min-width: 40%;
-  height: 50%;
+  height: 100%; /* Höhe auf 100% setzen */
   z-index: 15;
   isolation: isolate;
 }
+
 #add-contact-side-panel {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
+
   background-color: #2a3647;
+
   width: 50%;
   border-radius: 20px 0 0 20px;
 }
@@ -264,21 +267,40 @@
   }
 }
 
+@media (max-width: 670px) {
+  #add-contact-icon {
+    margin-left: 20px;
+  }
+}
+
 @media (max-width: 576px) {
+  #add-contact-create {
+    padding: 0;
+  }
+
   #add-contact-logo {
     display: none;
   }
 
+  #add-contact-icon {
+    height: 150px;
+    position: absolute;
+    margin-bottom: 160px;
+  }
   #add-contact-interactions {
     flex-direction: column;
   }
 
   #add-contact-headline {
     font-size: 34px;
+    margin-left: 25%;
+    margin-top: 40px;
   }
 
   #add-contact-second {
-    font-size: 18px;
+    font-size: 16px;
+    margin-bottom: 100px;
+    margin-left: 80px;
   }
 
   #add-contact-cancel {
@@ -287,5 +309,19 @@
 
   #input-fields {
     width: 100%;
+  }
+}
+
+@media (max-width: 414px) {
+  #add-contact-second {
+    font-size: 16px;
+    margin-bottom: 100px;
+    margin-left: 60px;
+  }
+
+  #add-contact-headline {
+    font-size: 34px;
+    margin-left: 17%;
+    margin-top: 40px;
   }
 }
