@@ -466,3 +466,8 @@ function showClearButton() {
 function clearSubtaskInput() {
     document.getElementById("subtaskInput").value = "";
 }
+
+function handleCancel(event) {
+    event.preventDefault();
+    window.location.href = 'board.html';
+}
