@@ -738,8 +738,17 @@ ul {
 .add-task-btn {
   font-size: 16px;
 }
-
+@media (max-width: 1700px) {
+  .addtask-overlay-content {
+    width: 90vw;
+    height: 90vh;
+  }
+}
 @media (max-width: 1230px) {
+  .addtask-overlay-content {
+    width: 90vw;
+    height: 90vh;
+  }
   .addtask-form-container {
     flex-direction: column;
     margin-bottom: 32px;
@@ -793,6 +802,9 @@ ul {
   }
   .prio-btn-content {
     flex-direction: column;
+  }
+  #prio-medium {
+    display: block;
   }
   #medium {
     justify-content: center;
