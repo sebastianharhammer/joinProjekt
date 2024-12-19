@@ -30,6 +30,10 @@ function renderAddTaskHTML() {
                       <div class="dropdown-options"></div>
                     </div>
                     <div id="assigned-users-short"></div>
+                    
+                  </div>
+                  <div style="display: flex; align-items: center;">
+                  <span style="color: #ff8190;" class="required-field">*</span><span class="required-field">This field is required</span>
                   </div>
               </div>
             </div>
@@ -88,12 +92,11 @@ function renderAddTaskHTML() {
                 </div>
                 <ul id="subtasksContent"></ul>
                 <span>
-              <span style="color: #ff8190">*</span>
-              This field is required
-            </span>
+              
               </div>
             </div>
           </div>
+          
           <div class="addtask-bottom-container">
             
             <div class="addtask-buttons">
@@ -117,7 +120,7 @@ function assignUserHTML(contact) {
   return `
         <div id="assigned-user-svg">
           <svg class="customCircle" width="50" height="50">
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${getRandomColor()}" stroke-width="2" fill="white"></circle>
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="2" fill="white"></circle>
             <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>

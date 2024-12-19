@@ -436,10 +436,13 @@ ul {
 
 .addtask-bottom-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .addtask-buttons {
   display: flex;
+}
+.required-field {
+  margin-top: 50px;
 }
 .dot {
   height: 5px;
