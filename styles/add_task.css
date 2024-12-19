@@ -10,7 +10,6 @@ body {
 
 .addtask-fullscreen-content {
   padding-top: 102px;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,8 +113,8 @@ body {
   box-sizing: border-box;
 }
 .addtask-main-content h1 {
-  width: 937px;
-  font-size: 61px;
+  width: 935px;
+  font-size: 58px;
 }
 
 .addtask-form-left-top {
@@ -803,6 +802,7 @@ ul {
   gap: 16px;
 }
 
+
 @media (max-width: 992px) {
   .addtask-form-container {
     flex-direction: column;
@@ -879,8 +879,7 @@ ul {
   }
   .input-addtask {
     font-size: 16px;
-    width: 100%;
-    padding: 8px 16px;
+    padding: 6px 12px;
     max-height: 40px;
     border-radius: 8px;
   }
@@ -893,7 +892,7 @@ ul {
 
   .addtask-main-content {
     display: flow;
-    margin-right: -60px;
+    margin-right: -32px;
   }
 
   .subtask-input-wrapper input {
