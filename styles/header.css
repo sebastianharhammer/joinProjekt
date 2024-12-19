@@ -17,7 +17,7 @@ header {
 
 #overlay-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: absolute;
   width: 90vw;
@@ -27,6 +27,13 @@ header {
   filter: drop-shadow(1px 2px 3px rgba(174, 173, 173, 0.5));
   transition: all 0.3s ease;
   z-index: 9;
+}
+#header-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1920px;
 }
 
 #headline-top {
@@ -44,6 +51,7 @@ header {
   align-items: center;
   justify-content: flex-end;
   padding-right: 35px;
+  max-width: 1920px;
 }
 
 .user-icon {
@@ -96,11 +104,17 @@ header {
   position: fixed;
   margin-top: 100px;
   z-index: 999;
-  right: 1vw;
+  right: 1vw max(1920px);
+  top: 0px;
   background-color: #2b3647;
   padding: 10px 15px;
   border-radius: 20px 0 20px 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 1920px) {
+  #user-overlay {
+    right: 1vw;
+  }
 }
 
 .header-links {
@@ -112,7 +126,11 @@ header {
   background-color: #091931;
   cursor: pointer;
 }
-
+@media (min-width: 1250px) {
+  #logo-container {
+    display: none;
+  }
+}
 @media screen and (min-width: 1251px) and (max-width: 1450px) {
   #overlay-top {
     width: 88vw;
