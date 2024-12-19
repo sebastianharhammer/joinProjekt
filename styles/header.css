@@ -41,7 +41,7 @@ header {
   text-align: left;
   font-size: 24px;
   font-weight: 300;
-  padding-left: 10vw;
+  padding-left: 2vw;
   z-index: 1;
   margin-left: 0;
 }
@@ -140,30 +140,36 @@ header {
     margin-left: 0;
   }
 
-  #logo-container img {
-    display: block;
-    width: 40px;
-
-    order: -1;
-    margin-left: 0;
-  }
+ 
   #help-btn {
     display: none;
   }
 }
-
+@media (min-width: 770px) { 
+  #logo-container img {
+    display: none;
+  }
+}
 @media (max-width: 770px) {
   #overlay-top {
     justify-content: flex-end;
   }
 
+  #headline-container {
+    display: none;
+  }
   #headline-top {
     display: none;
   }
 
   #logo-container {
     margin-left: 10px;
-  }
+    display: block;
+    width: 40px;
+    order: -1;
+    margin-left: 0;
+    }
+
 
   #header-current-user {
     margin-left: auto;
@@ -193,9 +199,7 @@ header {
     margin-top: -33px;
   }
 
-  #headline-top {
-    display: none;
-  }
+ 
 
   #header-nav {
     display: flex;
