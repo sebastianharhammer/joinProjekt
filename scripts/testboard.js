@@ -659,7 +659,7 @@ function renderEditSubtasks(task) {
             <div class="edit-subtask-item" id="${subtaskId}">
                 <p class="subtaskFontInEdit">• ${subtask.subtask || `Subtask ${index + 1}`}</p>
                 <div class="edit-existingtask">
-                    <img src="./img/edit-pencil.png" alt="Edit" class="edit-icon">
+                    <img src="./img/edit.svg" alt="Edit" class="edit-icon">
                     <span>|</span>
                     <img src="./img/delete.png" alt="Delete" class="delete-icon">
                 </div>
@@ -829,9 +829,20 @@ function getEditTemplate(task) {
                 <img class="closeCard" onclick="closeEditTask()" src="./img/close.svg" alt="">
             </div>
             <p class="firstTableColumnFont">Title:</p>
-            <input value="${task.title}" type="text">
+
+            <div class="add-subtask-in-edit">
+                <input class="input-title-in-edit" type="text" value="${task.title}">
+            </div>
+
+
             <p class="firstTableColumnFont">Description:</p>
             <textarea id="editDescription" class="editTaskTextarea">${task.description}</textarea>
+            
+            <p class="firstTableColumnFont">Due Date:</p>
+            <div class="edit-due-date">
+                <input type="date">
+            </div>
+            
             <p class="firstTableColumnFont">Priorität:</p>
             <div class="prio-btn-content">
                 <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">

@@ -16,7 +16,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 16px;
     background-color: white;
     height: 800px;
     width: 500px;
@@ -185,7 +185,7 @@
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 8px;
+    padding: 4px;
     height: 40px;
 }
 
@@ -212,6 +212,19 @@
     outline: none;
 }
 
+.input-title-in-edit{
+    width: 70%;
+    height: 40px;
+    padding: 4px;
+    border: none;
+    color: rgb(136,136,136);
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    outline: none;
+}
+
 .close-and-check-imgs{
     display: flex;
     justify-content: center;
@@ -221,10 +234,6 @@
     border-radius: 50%;
 }
 
-.close-and-check-imgs:hover{
-    cursor: pointer;
-    background-color: #ccc;
-}
 
 .editTaskTextarea{
     height: 300px;
@@ -232,7 +241,6 @@
 
 .edit-subtask-item{
     width: 100%;
-    height: 42px;
     padding: 4px;
     border-radius: 8px;
     display: flex;
@@ -246,13 +254,53 @@
     align-items: center;
 }
 
+.edit-existingtask:hover{
+    display: flex;
+    margin-left: auto;
+    gap: 8px;
+    align-items: center;
+}
+
+
 .edit-subtask-item:hover .edit-existingtask {
     display: flex;
-    background-color: #ccc;
+}
+
+.edit-subtask-item:hover {
+    background-color: #F0F0F0;
 }
 
 #rendered-subtasks-edit{
     display: flex;
     flex-direction: column;
     gap: 3px;
+}
+
+
+.edit-icon{
+    height: 18px;
+}
+
+.edit-icon:hover{
+    cursor: pointer;
+}
+
+.delete-icon{
+    height: 18px;
+}
+
+.delete-icon:hover{
+    cursor: pointer;
+}
+
+input[type="date"] {
+    border: 1px solid #ccc;
+    height: 40px;
+    border-radius: 8px;
+    width: 100%;
+    font-family: "Inter";
+    font-size: 20px;
+    font-weight: 400;
+    color: #d1d1d1;
+    padding: 4px;
 }
