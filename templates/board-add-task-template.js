@@ -23,7 +23,7 @@ return  /*html*/`
               </div>
               <div class="field-text-flex" id="addTaskAssignedTo">
                   <div class="form-group">
-                    <label for="assigned-to">Assigned to</label>
+                    <label>Assigned to</label>
                     <div id="custom-dropdown" class="custom-dropdown input-addtask">
                       <div class="dropdown-placeholder">Select contacts to assign</div>
                       <div class="dropdown-options"></div>
@@ -123,7 +123,7 @@ function assignUserHTML(contact) {
           <span>${contact.firstName}</span>
           <span>${contact.lastName}</span>
         </div>
-        <input id="checkbox${contact.id}" onclick="assignUser('${contact.firstName}', '${contact.lastName}', '${contact.color}')" type="checkbox">`;
+        <input class="checkbox-addtask" onclick="assignUser('${contact.firstName}', '${contact.lastName}', '${contact.color}')" type="checkbox">`;
 }
 
 function showAssignedUsersHTML(contact) {
@@ -131,4 +131,47 @@ function showAssignedUsersHTML(contact) {
             <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="2" fill="white"></circle>
             <text class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
         </svg>`;
+}
+
+function renderAddTaskCategoriesHTML(category) {
+  return `<div class="addtask-category" onclick="selectAddTaskCategory('${category}')">
+          ${category}
+          </div>`;
+}
+
+function addSubtaskHTML(liId, spanId, inputId, subtaskInput) {
+  return `<li id="${liId}" class="subtask-item">
+          <div class="dot"></div>
+          <div class="subtask-text">
+              <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${subtaskInput.value}</span>
+          </div>
+          <div class="subtask-icon">
+              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
+              <div class="divider"></div>
+              <img onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
+          </div>
+      </li>`;
+}
+
+function editSubtaskHTML(liId, spanId, inputId, currentText) {
+  return `<div class="subtask-input-wrapper edit-mode">
+            <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
+            <div class="input-icons-edit">
+                <img src ="../img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
+                <div class="divider"></div>
+                <img src="../img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
+            </div>
+        </div>`;
+}
+
+function saveSubtaskHTML(liId, inputId, spanId, input) {
+  return `<div class="subtask-text">
+              <div class="dot"></div>
+              <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${input.value}</span>
+          </div>
+          <div class="subtask-icon">
+              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
+              <div class="divider"></div>
+              <img id="deleteBtn-${liId}" onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
+          </div>`;
 }

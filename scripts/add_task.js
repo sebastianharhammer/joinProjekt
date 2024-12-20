@@ -345,66 +345,35 @@ function setPriority(priority) {
 }
 
 
-function addSubtask() {   
+function addSubtask() { 
     const subtaskInput = document.getElementById("subtaskInput");
     const subtasksContent = document.getElementById("subtasksContent");
-
     if (subtaskInput.value.trim() !== "") {
         subtaskIdCounter++;
-        const liId = "subtask-" + subtaskIdCounter;
-        const spanId = "span-" + subtaskIdCounter;
-        const inputId = "input-" + subtaskIdCounter;
-
-    
-        const newSubtaskHTML = /*html*/ `
-        <li id="${liId}" class="subtask-item">
-            <div class="dot"></div>
-            <div class="subtask-text">
-                <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${subtaskInput.value}</span>
-            </div>
-            <div class="subtask-icon">
-                <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
-                <div class="divider"></div>
-                <img onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
-            </div>
-        </li>
-        `;
-
-        subtasksArr.push({
-            subtask: subtaskInput.value,
-            checkbox_img: "../img/checkbox-empty.svg",
-            checkbox: false
+    const liId = "subtask-" + subtaskIdCounter;
+    const spanId = "span-" + subtaskIdCounter;
+    const inputId = "input-" + subtaskIdCounter;
+    const newSubtaskHTML = addSubtaskHTML(liId, spanId, inputId, subtaskInput);
+    subtasksArr.push({
+        checkbox_img: "../img/checkbox-empty.svg",
+        subtask: `${subtaskInput.value}`,
         });
-
-        subtasksEdit.push({
-            subtask: subtaskInput.value,
-            checkbox_img: "../img/checkbox-empty.svg",
-            checkbox: false
-        });
-
-        subtasksContent.innerHTML += newSubtaskHTML;
-        subtaskInput.value = "";
+    subtasksEdit.push({
+        checkbox_img: "../img/checkbox-empty.svg",
+        subtask: `${subtaskInput.value}`,
+    });
+    subtasksContent.innerHTML += newSubtaskHTML;
+    subtaskInput.value = "";
     }
     document.getElementById("clear-add-icons").classList.add("d-none");
-    document.getElementById("subtasks-plus-icon").classList.remove("d-none");
+    document.getElementById("subtasks-plus-icon").classList.remove("d-none");    
 }
-
 
 function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
-    const editSubtaskHTML = /*html*/ `
-        <div class="subtask-input-wrapper edit-mode">
-            <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
-            <div class="input-icons-edit">
-                <img src ="../img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
-                <div class="divider"></div>
-                <img src="../img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
-            </div>
-        </div>
-    `;
-    li.innerHTML = editSubtaskHTML;
+    li.innerHTML = editSubtaskHTML(liId, spanId, inputId, currentText);
     li.classList.add("subtask-item-on-focus");
     li.classList.remove("subtask-item");
 }
@@ -416,24 +385,19 @@ function deleteSubtask(liId) {
 function saveSubtask(liId, inputId, spanId) {
     const li = document.getElementById(liId);
     const input = document.getElementById(inputId);
-    const saveSubtaskHTML = `
-          <div class="subtask-text">
-              <div class="dot"></div>
-              <span id="span-${liId}" onclick="editSubtask('${liId}', 'span-${liId}', 'input-${liId}')">${input.value}</span>
-          </div>
-          <div class="subtask-icon">
-              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
-              <div class="divider"></div>
-              <img id="deleteBtn-${liId}" onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
-          </div>
-      `;
-  
-    li.innerHTML = saveSubtaskHTML;
+    li.innerHTML = saveSubtaskHTML(liId, inputId, spanId, input);
     li.classList.remove("subtask-item-on-focus");
     li.classList.add("subtask-item");
   }
-  function clearSubtaskInput() {
+
+function clearSubtaskInput() {
     document.getElementById("subtaskInput").value = "";
+  }
+  
+function clearSubtaskInput() {
+    const input = document.getElementById("subtaskInput");
+    input.value = "";
+    document.getElementById("clearButton").style.display = "none";
   }
   
   function clearSubtaskInput() {
@@ -450,7 +414,6 @@ function saveSubtask(liId, inputId, spanId) {
   function clearImput() {
     document.getElementById("subtaskInput").value = "";
   }
-
 
 function showClearButton() {
     document.getElementById("clear-add-icons").classList.remove("d-none");
