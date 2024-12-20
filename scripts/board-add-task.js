@@ -280,11 +280,12 @@ function setupDropdownInteraction() {
 }
 
 
-function assignUser(firstName, lastName) {
+function assignUser(firstName, lastName, color) {
     assignedUserArr.push({
         firstName: firstName,
         lastName: lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`
+        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+        color: color
     });
     showAssignedUsers();
 }

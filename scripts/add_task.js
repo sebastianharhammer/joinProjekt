@@ -226,16 +226,9 @@ function returnArrayContacts() {
         console.error("No contacts found.");
         return;
     }
-    console.log(finalContacts)
     const dropdown = document.getElementById('custom-dropdown');
-    if (!dropdown) {
-        console.error("Dropdown element not found.");
-        return;
-    }
-
     const optionsContainer = dropdown.querySelector('.dropdown-options');
     optionsContainer.innerHTML = "";
-    
     let sortedContacts = Object.values(finalContacts).sort((a, b) =>
         a.firstName.localeCompare(b.firstName)
     );
@@ -243,7 +236,6 @@ function returnArrayContacts() {
     sortedContacts.forEach(contactInDrop => {
         if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
         const optionHTML = assignUserHTML(contactInDrop);
-
         const optionElement = document.createElement("div");
         optionElement.classList.add("dropdown-contact");
         optionElement.innerHTML = optionHTML;
@@ -263,11 +255,12 @@ function setupDropdownInteraction() {
 
 
 
-function assignUser(firstName, lastName) {
+function assignUser(firstName, lastName, color) {
     assignedUserArr.push({
         firstName: firstName,
         lastName: lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`
+        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+        color: color
     });
     showAssignedUsers();
 }
@@ -277,6 +270,7 @@ function showAssignedUsers() {
     assignUsersContainer.innerHTML = "";
 
     assignedUserArr.forEach((contact) => {
+        console.log(contact);
         assignUsersContainer.innerHTML += showAssignedUsersHTML(contact);
     });
 }
