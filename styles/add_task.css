@@ -902,7 +902,7 @@ ul {
 
   .addtask-main-content {
     display: flow;
-    margin-right: -32px;
+    margin-right: -50px;
   }
 
   .subtask-input-wrapper input {
@@ -959,5 +959,12 @@ ul {
 
   #task-success {
     display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .addtask-main-content {
+    display: flow;
+    margin-right: -10px;
   }
 }
