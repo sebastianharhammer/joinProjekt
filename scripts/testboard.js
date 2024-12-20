@@ -677,11 +677,12 @@ function renderEditSubtasks(task) {
                 <div class="edit-existingtask">
                     <img src="./img/edit.svg" alt="Edit" class="edit-icon">
                     <span>|</span>
-                    <img src="./img/delete.png" alt="Delete" class="delete-icon">
+                    <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${task.id}, ${index})">
                 </div>
             </div>`;
     });
 }
+
 
 
 
@@ -923,23 +924,23 @@ function addSubTaskInEditTempl() {
 
     const subtaskContainer = document.getElementById('rendered-subtasks-edit');
     const taskId = currentTaskBeingEdited; // Verwende die aktuelle Task-ID
-    const subtaskIndex = subtaskContainer.childElementCount;
+    const subtaskIndex = subtaskContainer.childElementCount; // Index des neuen Subtasks
     const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`; // Eindeutige ID erstellen
 
-    // Neues Subtask-Element erstellen
-    const newSubtaskWrapper = document.createElement('div');
-    newSubtaskWrapper.classList.add('edit-subtask-item');
-    newSubtaskWrapper.id = subtaskId; // Dynamische ID setzen
+    // Neues Subtask-Element mit allen zugehörigen Icons und Separator erstellen
+    subtaskContainer.innerHTML += /*html*/ `
+        <div class="edit-subtask-item" id="${subtaskId}">
+            <p class="subtaskFontInEdit">• ${inputValue}</p>
+            <div class="edit-existingtask">
+                <img src="./img/edit.svg" alt="Edit" class="edit-icon">
+                <span>|</span>
+                <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${taskId}, ${subtaskIndex})">
+            </div>
+        </div>`;
 
-    const newSubtask = document.createElement('p');
-    newSubtask.textContent = `• ${inputValue}`;
-    newSubtask.classList.add('subtaskFontInEdit');
-
-    newSubtaskWrapper.appendChild(newSubtask);
-    subtaskContainer.appendChild(newSubtaskWrapper);
-
-    inputField.value = "";
+    inputField.value = ""; // Eingabefeld leeren
 }
+
 
 
 function setupEditTaskEventListeners(taskId) {
@@ -954,6 +955,38 @@ function setupEditTaskEventListeners(taskId) {
         });
     }
 }
+
+function deleteSubtaskEditview(taskId, subtaskIndex) {
+    const task = taskArray.find(t => t.id === taskId);
+    if (!task || !task.subtasks) {
+        console.error("Task oder Subtasks nicht gefunden!");
+        return;
+    }
+
+    task.subtasks.splice(subtaskIndex, 1);
+
+    fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Fehler beim Aktualisieren in Firebase: ${response.statusText}`);
+        }
+        console.log(`Subtask ${subtaskIndex} von Task ${taskId} erfolgreich gelöscht.`);
+    })
+    .catch(error => {
+        console.error("Fehler beim Löschen des Subtasks in Firebase:", error);
+    });
+
+    const subtaskElement = document.getElementById(`edit-subtask-${taskId}-${subtaskIndex + 1}`);
+    if (subtaskElement) {
+        subtaskElement.remove();
+    }
+}
+
+
 
 
 
