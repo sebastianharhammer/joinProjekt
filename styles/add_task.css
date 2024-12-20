@@ -743,7 +743,7 @@ ul {
   #add-task-content {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 84vh;
+    height: 82vh;
   }
 /*   .hide-add-task {
     transform: translateX(100vw);
