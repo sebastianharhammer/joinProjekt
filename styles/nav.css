@@ -97,7 +97,7 @@ a {
     left: 0;
     width: 100vw;
     max-width: 1258px;
-    height: 60px;
+    height: 6vh;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
