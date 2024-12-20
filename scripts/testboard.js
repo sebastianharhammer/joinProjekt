@@ -623,13 +623,12 @@ function removeHighlight(id) {
 // edit task 
 
 function showEditTaskTempl(taskId) {
-    currentTaskBeingEdited = taskId; // Aktualisiere die aktuelle Task-ID
+    currentTaskBeingEdited = taskId; // Speichert die aktuelle Task-ID
     const task = taskArray.find(t => t.id === taskId);
     if (!task) {
         console.error("Task nicht gefunden!");
         return;
     }
-    assignedUserArr = task.owner ? [...task.owner] : [];
 
     let detailView = document.getElementById('taskDetailView');
     let editView = document.getElementById('editTaskTempl');
@@ -637,11 +636,13 @@ function showEditTaskTempl(taskId) {
     editView.classList.remove('d-none');
     editView.innerHTML = getEditTemplate(task);
 
+    setupEditTaskEventListeners(taskId);
     getUsersForEditDropDown();
     updateAssignedUsersDisplay();
     setPriority(task.prio);
     renderEditSubtasks(task);
 }
+
 
 
 function renderEditSubtasks(task) {
@@ -840,7 +841,7 @@ function getEditTemplate(task) {
             
             <p class="firstTableColumnFont">Due Date:</p>
             <div class="edit-due-date">
-                <input type="date">
+            <input type="date" id="edit-due-date" class="edit-input" value="${task.date || ''}">
             </div>
             
             <p class="firstTableColumnFont">Priorität:</p>
@@ -925,6 +926,18 @@ function addSubTaskInEditTempl() {
     inputField.value = "";
 }
 
+function setupEditTaskEventListeners(taskId) {
+    const dueDateInput = document.getElementById('edit-due-date');
+    if (dueDateInput) {
+        dueDateInput.addEventListener('change', () => {
+            const task = taskArray.find(t => t.id === taskId);
+            if (task) {
+                task.date = dueDateInput.value;
+                console.log('Updated date:', task.date);
+            }
+        });
+    }
+}
 
 
 
@@ -954,9 +967,11 @@ function closeEditTask(taskId) {
 }
 
 async function saveEditedTask() {
-    const taskId = currentTaskBeingEdited; 
+    const taskId = currentTaskBeingEdited;
     const newTitle = document.querySelector("#editTaskCard input").value;
     const newDescription = document.getElementById("editDescription").value;
+    const newDate = document.getElementById("edit-due-date").value; // Hole das geänderte Datum
+
     const updatedTask = taskArray.find(task => task.id === taskId);
     if (!updatedTask) {
         console.error("Task nicht gefunden!");
@@ -965,12 +980,14 @@ async function saveEditedTask() {
 
     updatedTask.title = newTitle;
     updatedTask.description = newDescription;
+    updatedTask.date = newDate;
     updatedTask.owner = assignedUserArr;
+
     try {
         await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedTask)
+            body: JSON.stringify(updatedTask),
         });
 
         console.log(`Task ${taskId} erfolgreich aktualisiert.`);
@@ -980,5 +997,7 @@ async function saveEditedTask() {
         console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
     }
 }
+
+
 
 
