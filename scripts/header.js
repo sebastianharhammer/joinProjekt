@@ -2,7 +2,7 @@ let headerFirstName = "";
 let headerLastName = "";
 
 function showUserOptions() {
-    let userOption = document.getElementById('user-overlay');
+    let userOption = document.getElementById('header-user-overlay');
     userOption.classList.toggle('d-none')
 }
 
