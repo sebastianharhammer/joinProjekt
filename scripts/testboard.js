@@ -194,46 +194,58 @@ function updateTaskHTML() {
     let inProgressColumn = document.getElementById("inProgress");
     let feedbackColumn = document.getElementById("feedback");
     let doneColumn = document.getElementById("done");
+
+    // Leere die Spalten vor der Aktualisierung
     todoColumn.innerHTML = '';
     inProgressColumn.innerHTML = '';
     feedbackColumn.innerHTML = '';
     doneColumn.innerHTML = '';
+
+    // Tasks nach Status filtern
     let todos = taskArray.filter(task => task.status === "todo");
     let inProgress = taskArray.filter(task => task.status === "inProgress");
     let feedback = taskArray.filter(task => task.status === "feedback");
     let done = taskArray.filter(task => task.status === "done");
+
+    // Tasks in die entsprechenden Spalten rendern
     for (const task of todos) {
         todoColumn.innerHTML += createTaskHTML(task);
-        createOwnerCircles(task);
-        findClassOfTaskCat(task);
-        findPrioIcon(task)
-        findAmountOfSubtasks(task)
+        createOwnerCircles(task);   // Erstelle Benutzerkreise
+        findClassOfTaskCat(task);  // Setze die Kategorie-Klasse
+        findPrioIcon(task);        // Aktualisiere das Prio-Icon
+        findAmountOfSubtasks(task); // Zeige die Anzahl der Subtasks
     }
+
     for (const task of inProgress) {
         inProgressColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
-        findPrioIcon(task)
-        findAmountOfSubtasks(task)
+        findPrioIcon(task);
+        findAmountOfSubtasks(task);
     }
+
     for (const task of feedback) {
         feedbackColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
-        findPrioIcon(task)
-        findAmountOfSubtasks(task)
+        findPrioIcon(task);
+        findAmountOfSubtasks(task);
     }
+
     for (const task of done) {
         doneColumn.innerHTML += createTaskHTML(task);
         createOwnerCircles(task);
         findClassOfTaskCat(task);
-        findPrioIcon(task)
-        findAmountOfSubtasks(task)
+        findPrioIcon(task);
+        findAmountOfSubtasks(task);
     }
+
+    // Wenn keine Tasks in der "todo"-Spalte sind, zeige eine Nachricht
     if (todoColumn.children.length === 0) {
-        createNoToDosdiv()
+        createNoToDosdiv();
     }
 }
+
 
 function createNoToDosdiv() {
     document.getElementById('todo').innerHTML += /*html*/`
@@ -289,15 +301,17 @@ function findClassOfTaskCat(task) {
 
 
 function findPrioIcon(task) {
-    let prioIcon = document.getElementById(`priority-${task.id}`);
-    if (task.prio === "medium") {
-        prioIcon.src = "./img/prio-mid.png"
-    } else if (task.prio === "urgent") {
-        prioIcon.src = "./img/prio-high.png"
-    } else {
-        prioIcon.src = "./img/prio-low.png"
+    const prioIcon = document.getElementById(`priority-${task.id}`);
+    if (!prioIcon) return;
+    if (task.prio === "urgent") {
+        prioIcon.src = "./img/prio-high.png";
+    } else if (task.prio === "medium") {
+        prioIcon.src = "./img/prio-mid.png";
+    } else if (task.prio === "low") {
+        prioIcon.src = "./img/prio-low.png";
     }
 }
+
 
 
 
@@ -846,19 +860,19 @@ function getEditTemplate(task) {
             
             <p class="firstTableColumnFont">Priorität:</p>
             <div class="prio-btn-content">
-                <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
+                <button id="prio-urgent" class="prio-button ${task.prio === 'urgent' ? 'red' : ''}" onclick="setPriority('urgent')" type="button">
                     Urgent
-                    <img id="prio-image-urgent" src="../img/Prio_urgent_color.png" alt=""/>
+                    <img id="prio-image-urgent" class="${task.prio === 'urgent' ? 'sat-0' : ''}" src="./img/Prio_urgent_color.png" alt=""/>
                 </button>
-                <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
+                <button id="prio-medium" class="prio-button ${task.prio === 'medium' ? 'yellow' : ''}" onclick="setPriority('medium')" type="button">
                     Medium
-                    <img id="prio-image-medium" src="../img/Prio_medium_color.png" alt=""/>
+                    <img id="prio-image-medium" class="${task.prio === 'medium' ? 'sat-0' : ''}" src="./img/Prio_medium_color.png" alt=""/>
                 </button>
-                <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
+                <button id="prio-low" class="prio-button ${task.prio === 'low' ? 'green' : ''}" onclick="setPriority('low')" type="button">
                     Low
-                    <img id="prio-image-low" src="../img/Prio_low_color.png" alt=""/>
+                    <img id="prio-image-low" class="${task.prio === 'low' ? 'sat-0' : ''}" src="./img/Prio_low_color.png" alt=""/>
                 </button>
-                </div>
+            </div>
 
             <div class="field-text-flex-edit" id="addTaskAssignedTo-edit">
                 <div class="form-group-edit">
@@ -970,7 +984,7 @@ async function saveEditedTask() {
     const taskId = currentTaskBeingEdited;
     const newTitle = document.querySelector("#editTaskCard input").value;
     const newDescription = document.getElementById("editDescription").value;
-    const newDate = document.getElementById("edit-due-date").value; // Hole das geänderte Datum
+    const newDate = document.getElementById("edit-due-date").value;
 
     const updatedTask = taskArray.find(task => task.id === taskId);
     if (!updatedTask) {
@@ -980,7 +994,7 @@ async function saveEditedTask() {
 
     updatedTask.title = newTitle;
     updatedTask.description = newDescription;
-    updatedTask.date = newDate;
+    updatedTask.date = newDate; // Aktualisiertes Datum speichern
     updatedTask.owner = assignedUserArr;
 
     try {
@@ -991,12 +1005,13 @@ async function saveEditedTask() {
         });
 
         console.log(`Task ${taskId} erfolgreich aktualisiert.`);
-        updateTaskHTML();
+        updateTaskHTML(); // Aktualisiert das Board
         closeEditTask();
     } catch (error) {
         console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
     }
 }
+
 
 
 

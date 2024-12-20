@@ -332,6 +332,8 @@ function selectAddTaskCategory(categoryTask) {
 
 function setPriority(priority) {
     const priorities = ['urgent', 'medium', 'low'];
+
+    // Entferne die Farben und Sättigung für alle Prioritäten
     priorities.forEach((prio) => {
         const btn = document.getElementById(`prio-${prio}`);
         const img = document.getElementById(`prio-image-${prio}`);
@@ -339,6 +341,8 @@ function setPriority(priority) {
         btn.classList.remove('red', 'yellow', 'green');
         img.classList.remove('sat-0');
     });
+
+    // Aktiviere die richtige Priorität
     const selectedButton = document.getElementById(`prio-${priority}`);
     const selectedImg = document.getElementById(`prio-image-${priority}`);
 
@@ -351,7 +355,14 @@ function setPriority(priority) {
     }
     selectedImg.classList.add('sat-0');
     selectedPriority = priority;
+
+    const task = taskArray.find(t => t.id === currentTaskBeingEdited);
+    if (task) {
+        task.prio = priority;
+        console.log(`Updated priority to: ${priority} for task ID: ${currentTaskBeingEdited}`);
+    }
 }
+
 
 function addSubtask() { 
     const subtaskInput = document.getElementById("subtaskInput");
@@ -406,13 +417,13 @@ function clearSubtaskInput() {
     const input = document.getElementById("subtaskInput");
     input.value = "";
     document.getElementById("clearButton").style.display = "none";
-  }
-  
+}
+
 function showClearButton() {
     document.getElementById("clear-add-icons").classList.remove("d-none");
     document.getElementById("subtasks-plus-icon").classList.add("d-none");
 }
-  
+
 function clearImput() {
     document.getElementById("subtaskInput").value = "";
 }
