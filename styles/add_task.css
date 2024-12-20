@@ -716,6 +716,7 @@ ul {
   width: 100vw;
 }
 #task-succes {
+  position: absolute;
   height: 7%;
   width: 13%;
   background-color: #2b3647;
@@ -742,15 +743,15 @@ ul {
   #add-task-content {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 75vh;
+    height: 84vh;
   }
-  .hide-add-task {
+/*   .hide-add-task {
     transform: translateX(100vw);
     transition: all 250ms ease-in-out;
   }
   .show-add-task {
     transform: translateX(-100vw);
-  }
+  } */
   #task-message-container {
     height: 100%;
     width: 100%;
@@ -804,6 +805,15 @@ ul {
 
 
 @media (max-width: 992px) {
+  #task-succes {
+    height: 10%;
+    width: 66%;
+  }
+
+  .show-add-task {
+    transform: translateY(-70vh);
+  }
+
   .addtask-form-container {
     flex-direction: column;
     padding: 0 20px;

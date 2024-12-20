@@ -111,7 +111,7 @@ function renderAddTaskHTML() {
         </form>
       </div>
     </div>
-    <div id="task-message-container">
+    <div id="task-message-container" class="d-none">
     <div id="task-succes" class="hide-add-task"><span>Task successfully created</span></div>
 </div>`;
 }

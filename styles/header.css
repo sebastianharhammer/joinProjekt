@@ -122,6 +122,10 @@ header {
   background-color: #091931;
   cursor: pointer;
 }
+.header-guest-user {
+  color: #364D6D;
+}
+
 
 
 @media (min-width: 1250px) {

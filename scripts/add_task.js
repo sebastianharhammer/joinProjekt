@@ -111,7 +111,13 @@ function validateTask(title, date, category) {
 
 function showAddTaskSuccesMessage() {
     let succes = document.getElementById('task-succes');
+    let messageContainer = document.getElementById('task-message-container');
+    messageContainer.classList.remove('d-none');
     succes.classList.add('show-add-task');
+    setTimeout(() => {
+        messageContainer.classList.add('d-none');
+        succes.classList.remove('show-add-task');
+    }, 750);
 }
 
 

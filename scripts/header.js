@@ -37,6 +37,5 @@ function headerDisplayName(firstName, lastName) {
         userId.innerHTML = `${headerFirstNameShort}${headerLastNameShort}`;
 }
 function headerGetColor() {
-        const colors = ["orange", "purple", "blue", "red", "green", "teal"];
-        return colors[Math.floor(Math.random() * colors.length)];
+    
 }
