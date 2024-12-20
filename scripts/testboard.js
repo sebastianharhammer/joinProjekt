@@ -661,12 +661,13 @@ function showEditTaskTempl(taskId) {
 
 function renderEditSubtasks(task) {
     const subtaskContainer = document.getElementById('rendered-subtasks-edit');
-    subtaskContainer.innerHTML = '';
+    subtaskContainer.innerHTML = ''; // Container leeren
 
     if (!task.subtasks || task.subtasks.length === 0) {
         subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
         return;
     }
+
     task.subtasks.forEach((subtask, index) => {
         const subtaskId = `edit-subtask-${task.id}-${index + 1}`; // Dynamische ID erstellen
 
@@ -681,6 +682,7 @@ function renderEditSubtasks(task) {
             </div>`;
     });
 }
+
 
 
 
@@ -933,12 +935,12 @@ function addSubTaskInEditTempl() {
     newSubtask.textContent = `• ${inputValue}`;
     newSubtask.classList.add('subtaskFontInEdit');
 
-    // Subtask dem Wrapper hinzufügen
     newSubtaskWrapper.appendChild(newSubtask);
     subtaskContainer.appendChild(newSubtaskWrapper);
 
     inputField.value = "";
 }
+
 
 function setupEditTaskEventListeners(taskId) {
     const dueDateInput = document.getElementById('edit-due-date');
@@ -986,17 +988,26 @@ async function saveEditedTask() {
     const newDescription = document.getElementById("editDescription").value;
     const newDate = document.getElementById("edit-due-date").value;
 
+    // Finde den aktuellen Task
     const updatedTask = taskArray.find(task => task.id === taskId);
     if (!updatedTask) {
         console.error("Task nicht gefunden!");
         return;
     }
 
+    // Aktualisiere die Felder
     updatedTask.title = newTitle;
     updatedTask.description = newDescription;
-    updatedTask.date = newDate; // Aktualisiertes Datum speichern
-    updatedTask.owner = assignedUserArr;
+    updatedTask.date = newDate;
 
+    // Hole die Subtasks aus dem DOM
+    const subtaskElements = document.querySelectorAll("#rendered-subtasks-edit .subtaskFontInEdit");
+    updatedTask.subtasks = Array.from(subtaskElements).map(subtaskElement => ({
+        subtask: subtaskElement.textContent.replace("• ", "").trim(), // Entferne das "• " und trimme Leerzeichen
+        checkbox: false // Standardmäßig nicht erledigt
+    }));
+
+    // Aktualisiere die Daten in Firebase
     try {
         await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
             method: "PUT",
@@ -1011,6 +1022,7 @@ async function saveEditedTask() {
         console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
     }
 }
+
 
 
 

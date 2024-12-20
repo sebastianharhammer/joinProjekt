@@ -407,12 +407,12 @@ function saveSubtask(listId, inputId, spanId) {
     list.innerHTML = saveSubtaskHTML(listId, inputId, spanId, input);
     list.classList.remove("subtask-item-on-focus");
     list.classList.add("subtask-item");
-  }
+}
 
 function clearSubtaskInput() {
     document.getElementById("subtaskInput").value = "";
-  }
-  
+}
+
 function clearSubtaskInput() {
     const input = document.getElementById("subtaskInput");
     input.value = "";
