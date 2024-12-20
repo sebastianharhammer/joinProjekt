@@ -104,12 +104,12 @@ header {
   position: fixed;
   margin-top: 100px;
   z-index: 999;
-  right: 1vw max(1920px);
+  right: 6vw max(1920px);
   top: 0px;
   background-color: #2b3647;
   padding: 10px 15px;
   border-radius: 20px 0 20px 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.1));
 }
 
 
@@ -183,9 +183,14 @@ header {
   #logo-container img {
     margin-left: 20px;
   }
+  #user-overlay {
+    right: 1vw;
+    top: 0px;
 }
 
-@media (max-width: 460px) {
+}
+
+@media (max-width: 480px) {
   #overlay-top {
     flex-direction: row;
     justify-content: flex-end;
@@ -216,7 +221,7 @@ header {
   }
 
   #user-overlay {
-    right: 1vw;
-    top: 0;
+    right: 4vw;
+    top: -17px;
   }
 }
