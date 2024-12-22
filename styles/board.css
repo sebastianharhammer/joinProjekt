@@ -415,25 +415,26 @@
   }
 }
 
-.headline-to-do-responsive{
+.headline-to-do-responsive {
   display: none;
 }
 
-.headline-in-progress-responsive{
+.headline-in-progress-responsive {
   display: none;
 }
 
-.headline-feedback-responsive{
+.headline-feedback-responsive {
   display: none;
 }
 
-.headline-done-responsive{
+.headline-done-responsive {
   display: none;
 }
 
 /* Mobile-Layout (max-width: 768px) */
 @media (max-width: 768px) {
   /* Layout-Änderung: Spalten untereinander anordnen */
+
   .tasksContent {
     flex-direction: column;
     align-items: center;
@@ -449,6 +450,7 @@
   .dragarea-done {
     width: 90%;
     margin-bottom: 20px;
+    height: 100%;
   }
 
   .dragarea-todo::before,
@@ -483,35 +485,64 @@
     gap: 16px;
   }
 
-  .headline-to-do-responsive{
+  .headline-to-do-responsive {
     display: block;
-  }
-  
-  .headline-in-progress-responsive{
-    display: block;
-  }
-  
-  .headline-feedback-responsive{
-    display: block;
-  }
-  
-  .headline-done-responsive{
-    display: block;
+    font-family: "inter";
+    font-optical-sizing: auto;
+    font-weight: 1000;
+    font-style: normal;
+    font-size: 22px;
   }
 
+  .headline-in-progress-responsive {
+    display: block;
+    font-family: "inter";
+    font-optical-sizing: auto;
+    font-weight: 1000;
+    font-style: normal;
+    font-size: 22px;
+  }
+
+  .headline-feedback-responsive {
+    display: block;
+    font-family: "inter";
+    font-optical-sizing: auto;
+    font-weight: 1000;
+    font-style: normal;
+    font-size: 22px;
+  }
+
+  .headline-done-responsive {
+    display: block;
+    font-family: "inter";
+    font-optical-sizing: auto;
+    font-weight: 1000;
+    font-style: normal;
+    font-size: 22px;
+  }
 }
 
 /* Kleines Mobile-Layout (max-width: 560px) */
 @media (max-width: 560px) {
   /* Button-Anpassungen */
-  .addTaskButtonBoard {
-    width: 48px;
-    height: 48px;
-    justify-content: center;
+  .boardFont {
+    margin-left: 14px;
+    font-size: 70px;
   }
-
   .buttonBoardFont {
     font-size: 0; /* Text entfernen */
+    margin-left: 20px;
+  }
+
+  .inputAndButtonBoard {
+    position: absolute;
+    bottom: -50px;
+    left: -20px;
+  }
+
+  .addTaskButtonBoard {
+    width: 32px;
+    padding-right: 20px;
   }
 
   .addTaskButtonBoard::after {
@@ -531,6 +562,7 @@
 /* Kleinstes Layout (max-width: 440px) */
 @media (max-width: 440px) {
   /* Stacking der Drag & Drop Bereiche */
+
   .tasksContent {
     flex-direction: column;
     gap: 10px;
@@ -547,6 +579,7 @@
   .dragarea-feedback,
   .dragarea-done {
     width: 100%;
+
     margin: 0 auto;
   }
 

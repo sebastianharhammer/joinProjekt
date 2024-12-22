@@ -1,6 +1,6 @@
 body {
   font-family: "Inter", sans-serif;
-  line-height: 1.6;
+
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
@@ -9,7 +9,7 @@ body {
   overflow-y: auto;
 }
 
-.container {
+.containerLegalNotice {
   max-width: 800px;
   margin: 90px auto;
   padding: 20px;

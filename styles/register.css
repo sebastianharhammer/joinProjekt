@@ -8,6 +8,7 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+  padding: 20px;
 }
 
 d-none {
@@ -180,6 +181,11 @@ button.button-signup:disabled {
   margin: 0;
 }
 
+.back-arrow {
+  display: flex;
+  gap: 10px;
+}
+
 .back-arrow img {
   display: none;
 }
@@ -206,27 +212,30 @@ button.button-signup:disabled {
   .signUpForm {
     width: 60vw;
     height: fit-content;
-    padding: 20px;
-  }
-
-  .back-arrow {
-    display: inline-block;
-    position: relative; /* Positionierung innerhalb des Containers */
-    left: -25px; /* Verschiebt den Pfeil weiter nach links */
+    padding: 35px;
   }
 
   .back-arrow img {
-    width: 40px; /* Größe des Pfeils */
-    height: auto;
+    display: block;
+    /* position: relative; 
+    left: -25px; */
   }
 
-  /* Container "Sign Up" mit Pfeil */
+  .back-arrow img {
+    /* width: 40px;
+    height: auto; */
+  }
+
   .FontOfOfLogin {
     display: flex;
     position: relative;
     align-items: center;
     justify-content: center; /* Zentrierung von Text und Pfeil */
     gap: 10px; /* Abstand zwischen Pfeil und "Sign Up"-Text */
+  }
+
+  .back-arrow a {
+    align-self: center;
   }
 
   .loginNameInput {
@@ -311,9 +320,11 @@ button.button-signup:disabled {
 
   .privacyPolicyCheckbox {
     margin-top: 15px;
+    gap: 5px;
   }
 
   .signUpForm {
     gap: 0px;
+    margin-top: 5px;
   }
 }
