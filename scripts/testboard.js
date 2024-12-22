@@ -85,6 +85,7 @@ function getBoardNavigatorHTML() {
         <div class="inputAndButtonBoard">
             <div class="searchAreaBoard">
             <input id="filterTask" onkeyup="filterTaskFunction()" class="inputBoard" type="text" placeholder="Find Task">
+            <p id="noResults" style="display: none; color: red; font-size: 14px; margin-top: 5px;">Kein Task gefunden</p>
             <span class="verticalLine">|</span>
             <img src="./img/search.png" alt="">
             </div>
@@ -99,6 +100,7 @@ function getBoardNavigatorHTML() {
 
 function filterTaskFunction() {
   let myFilter = document.getElementById("filterTask").value.toLowerCase();
+<<<<<<< HEAD
   if (myFilter.length < 1) {
     for (let i = 0; i < taskArray.length; i++) {
       let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
@@ -122,6 +124,33 @@ function filterTaskFunction() {
         wholeTask.style.display = "none";
       }
     }
+=======
+  let tasksFound = false;
+
+  for (let i = 0; i < taskArray.length; i++) {
+    let paramToFind = document.getElementById(`title${taskArray[i].id}`);
+    let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
+    let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
+
+    if (paramToFind || (param2ToFind && wholeTask)) {
+      if (
+        paramToFind.innerText.toLowerCase().includes(myFilter) ||
+        param2ToFind.innerText.toLowerCase().includes(myFilter)
+      ) {
+        wholeTask.style.display = "";
+        tasksFound = true;
+      } else {
+        wholeTask.style.display = "none";
+      }
+    }
+  }
+
+  const noResultsMessage = document.getElementById("noResults");
+  if (!tasksFound && myFilter.length > 0) {
+    noResultsMessage.style.display = "block";
+  } else {
+    noResultsMessage.style.display = "none";
+>>>>>>> 5ea9f0c05dff17666161b1e46cfc2f864fbce56e
   }
 }
 
