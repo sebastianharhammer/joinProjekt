@@ -130,9 +130,9 @@ function getPriorityIcon(priority) {
     case "urgent":
       return "./img/up-scale-orange.png";
     case "medium":
-      return "./img/Prio_medium_color.png";
+      return "./img/Prio_medium_color.svg";
     case "low":
-      return "./img/Prio_low_color.png";
+      return "./img/Prio_low_color.svg";
   }
 }
 
