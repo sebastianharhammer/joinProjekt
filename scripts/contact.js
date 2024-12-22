@@ -95,9 +95,7 @@ function renderSortedContacts(contacts) {
     `;
 
     groupedContacts[letter].forEach((contact) => {
-      // Achten Sie darauf, dass contactsTemplate nun ebenfalls firebaseKey verwendet.
-      // Beispielsweise:
-      // <li class="contact-item" id="contact-item-${contact.firebaseKey}" onclick="toggleContactDetail('${contact.firebaseKey}')">...</li>
+    
       contactsHTML += contactsTemplate(contact);
     });
 
@@ -133,7 +131,6 @@ function toggleContactDetail(firebaseKey) {
     contactItems.forEach((item) => item.classList.remove("selected"));
     if (clickedItem) clickedItem.classList.add("selected");
 
-    // Verwenden Sie jetzt selectedContact.color anstelle von getRandomColor()
     detailViewContainer.innerHTML = /*html*/ `
       <div id="contact-headline-container">
           <h3 id="contact-headline">Contacts</h3>
