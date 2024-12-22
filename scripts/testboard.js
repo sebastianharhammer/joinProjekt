@@ -137,19 +137,19 @@ function loadTitleOfBoardColumns(content) {
 function showTitleOfBoardColumns() {
   return /*html*/ `
         <section id="titleOfBoardColumns" class="titleOfBoardColumns">
-<div onclick=addTaskToColumnOverlay() class="columntitleToDo">
+<div class="columntitleToDo">
     <p class="columnTitleFont">To do</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
 </div>
-<div onclick=addTaskToColumnOverlay() class="columntitleInProgress">
+<div class="columntitleInProgress">
     <p class="columnTitleFont">In Progress</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
 </div>
-<div onclick=addTaskToColumnOverlay() class="columntitleAwaitFeedback">
+<div class="columntitleAwaitFeedback">
     <p class="columnTitleFont">Await Feedback</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
 </div>
-<div onclick=addTaskToColumnOverlay() class="columntitleDone">
+<div class="columntitleDone">
     <p class="columnTitleFont">Done</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('done')">
 </div>
