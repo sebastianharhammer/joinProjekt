@@ -99,35 +99,34 @@ function getBoardNavigatorHTML() {
 }
 
 function filterTaskFunction() {
-    let myFilter = document.getElementById('filterTask').value.toLowerCase();
-    let tasksFound = false;
+  let myFilter = document.getElementById("filterTask").value.toLowerCase();
+  let tasksFound = false;
 
-    for (let i = 0; i < taskArray.length; i++) {
-        let paramToFind = document.getElementById(`title${taskArray[i].id}`);
-        let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
-        let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
+  for (let i = 0; i < taskArray.length; i++) {
+    let paramToFind = document.getElementById(`title${taskArray[i].id}`);
+    let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
+    let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
 
-        if (paramToFind || (param2ToFind && wholeTask)) {
-            if (
-                paramToFind.innerText.toLowerCase().includes(myFilter) ||
-                param2ToFind.innerText.toLowerCase().includes(myFilter)
-            ) {
-                wholeTask.style.display = ''; 
-                tasksFound = true;
-            } else {
-                wholeTask.style.display = 'none'; 
-            }
-        }
+    if (paramToFind || (param2ToFind && wholeTask)) {
+      if (
+        paramToFind.innerText.toLowerCase().includes(myFilter) ||
+        param2ToFind.innerText.toLowerCase().includes(myFilter)
+      ) {
+        wholeTask.style.display = "";
+        tasksFound = true;
+      } else {
+        wholeTask.style.display = "none";
+      }
     }
+  }
 
-    const noResultsMessage = document.getElementById('noResults');
-    if (!tasksFound && myFilter.length > 0) {
-        noResultsMessage.style.display = 'block';
-    } else {
-        noResultsMessage.style.display = 'none';
-    }
+  const noResultsMessage = document.getElementById("noResults");
+  if (!tasksFound && myFilter.length > 0) {
+    noResultsMessage.style.display = "block";
+  } else {
+    noResultsMessage.style.display = "none";
+  }
 }
-
 
 function loadTitleOfBoardColumns(content) {
   content.innerHTML += showTitleOfBoardColumns();
