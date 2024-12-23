@@ -37,6 +37,3 @@ function headerDisplayName(firstName, lastName) {
         userId.style.fill = '#29ABE2';
         userId.innerHTML = `${headerFirstNameShort}${headerLastNameShort}`;
 }
-function headerGetColor() {
-    
-}

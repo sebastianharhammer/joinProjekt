@@ -57,7 +57,9 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
+#header-help-btn {
+  display: none !important;
+}
 @media (max-width: 78.125rem) {
   #overlay-left {
     display: none;
@@ -69,6 +71,7 @@ a:hover {
     top: 0; /* Anpassung für kleinere Bildschirme */
   }
 }
+
 
 @media (max-width: 37.5rem) {
   .container {

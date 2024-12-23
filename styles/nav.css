@@ -137,6 +137,7 @@ a {
 }
 .nav-links-policy {
   padding-left: 9px;
+  color: #f1f1f1;
 }
 
 @media (max-width: 460px) {

@@ -20,7 +20,7 @@ function renderAddTaskHTML() {
               </div>
               <div class="field-text-flex" id="addTaskDiscription">
                 <label>Description</label>
-                <textarea id="description" placeholder="Enter a Description" cols="30" rows="10"></textarea>
+                <textarea id="description" placeholder="Enter a Description max 170 characters" cols="30" rows="10" maxlength="170"></textarea>
               </div>
               <div class="field-text-flex" id="addTaskAssignedTo">
                   <div class="form-group">
