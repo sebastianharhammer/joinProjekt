@@ -29,20 +29,6 @@ let addTaskcategories = [
 }
 
 
-function getRandomColor() {
-    const colors = [
-      "orange", "purple", "blue", "red", "green", "teal", 
-      "yellow", "pink", "cyan", "magenta", "lime", "indigo", 
-      "violet", "turquoise", "gold", "silver", "maroon", 
-      "navy", "coral", "olive", "peach", "aqua", "lavender", 
-      "salmon", "khaki", "plum", "mustard", "periwinkle", "chartreuse"
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  
-
-
 async function createTask(event) {
     event.preventDefault();
     let title = document.getElementById('title').value;
@@ -235,11 +221,11 @@ function returnArrayContacts() {
     const dropdown = document.getElementById('custom-dropdown');
     const optionsContainer = dropdown.querySelector('.dropdown-options');
     optionsContainer.innerHTML = "";
-    let sortedContacts = Object.values(finalContacts).sort((a, b) =>
+    /* let sortedContacts = Object.values(finalContacts).sort((a, b) =>
         a.firstName.localeCompare(b.firstName)
-    );
-
-    sortedContacts.forEach(contactInDrop => {
+    ); */
+    const contactsArray = Object.values(finalContacts);
+    contactsArray.forEach(contactInDrop => {
         if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
         const optionHTML = assignUserHTML(contactInDrop);
         const optionElement = document.createElement("div");

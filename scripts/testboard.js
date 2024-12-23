@@ -99,32 +99,35 @@ function getBoardNavigatorHTML() {
 }
 
 function filterTaskFunction() {
-  let myFilter = document.getElementById("filterTask").value.toLowerCase();
-  if (myFilter.length < 1) {
-    for (let i = 0; i < taskArray.length; i++) {
-      let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
-      if (wholeTask) {
-        wholeTask.style.display = "";
-      }
-    }
-    return;
-  }
+  let myFilter = document.getElementById('filterTask').value.toLowerCase();
+  let tasksFound = false;
+
   for (let i = 0; i < taskArray.length; i++) {
-    let paramToFind = document.getElementById(`title${taskArray[i].id}`);
-    let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
-    let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
-    if (paramToFind || (param2ToFind && wholeTask)) {
-      if (
-        paramToFind.innerText.toLowerCase().includes(myFilter) ||
-        param2ToFind.innerText.toLowerCase().includes(myFilter)
-      ) {
-        wholeTask.style.display = "";
-      } else {
-        wholeTask.style.display = "none";
+      let paramToFind = document.getElementById(`title${taskArray[i].id}`);
+      let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
+      let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
+
+      if (paramToFind || (param2ToFind && wholeTask)) {
+          if (
+              paramToFind.innerText.toLowerCase().includes(myFilter) ||
+              param2ToFind.innerText.toLowerCase().includes(myFilter)
+          ) {
+              wholeTask.style.display = '';
+              tasksFound = true;
+          } else {
+              wholeTask.style.display = 'none';
+          }
       }
-    }
+  }
+
+  const noResultsMessage = document.getElementById('noResults');
+  if (!tasksFound && myFilter.length > 0) {
+      noResultsMessage.style.display = 'block';
+  } else {
+      noResultsMessage.style.display = 'none';
   }
 }
+
 
 function loadTitleOfBoardColumns(content) {
   content.innerHTML += showTitleOfBoardColumns();
@@ -134,19 +137,19 @@ function loadTitleOfBoardColumns(content) {
 function showTitleOfBoardColumns() {
   return /*html*/ `
         <section id="titleOfBoardColumns" class="titleOfBoardColumns">
-<div onclick=addTaskToColumnOverlay() class="columntitleToDo">
+<div class="columntitleToDo">
     <p class="columnTitleFont">To do</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
 </div>
-<div onclick=addTaskToColumnOverlay() class="columntitleInProgress">
+<div class="columntitleInProgress">
     <p class="columnTitleFont">In Progress</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
 </div>
-<div onclick=addTaskToColumnOverlay() class="columntitleAwaitFeedback">
+<div class="columntitleAwaitFeedback">
     <p class="columnTitleFont">Await Feedback</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
 </div>
-<div onclick=addTaskToColumnOverlay() class="columntitleDone">
+<div class="columntitleDone">
     <p class="columnTitleFont">Done</p>
     <img src="./img/plus button.png" alt="" onclick="showAddTask('done')">
 </div>
@@ -621,12 +624,7 @@ function getTaskCategoryClass(taskCategory) {
   return "task-category-undefined";
 }
 
-function addTaskToColumnOverlay(id) {
-  let overlayDetailedTask = document.getElementById("overlayDetailedSite");
-  overlayDetailedTask.innerHTML = "";
-  overlayDetailedTask.classList.remove("d-none");
-  overlayDetailedTask.innerHTML += addTaskOverlayHTML(id);
-}
+
 
 function closeDetailView() {
   let taskCardOverlay = document.getElementById("taskDetailView");

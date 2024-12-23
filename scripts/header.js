@@ -34,8 +34,6 @@ function headerDisplayName(firstName, lastName) {
         let headerFirstNameShort = firstName.trim().charAt(0).toUpperCase();
         let headerLastNameShort = lastName.trim().charAt(0).toUpperCase();
         let userId = document.getElementById('header-user-name');
+        userId.style.fill = '#29ABE2';
         userId.innerHTML = `${headerFirstNameShort}${headerLastNameShort}`;
-}
-function headerGetColor() {
-    
 }

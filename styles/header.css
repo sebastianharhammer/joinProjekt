@@ -147,7 +147,7 @@ header {
   #header-logo-container img {
     display: none;
   }
-  #header-helpLink {
+  #helpLink {
     display: none;
   }
 
@@ -159,7 +159,7 @@ header {
   #header-help-btn {
     display: none;
   }
-  #header-helpLink {
+  #helpLink {
     display: block;
   }
 
