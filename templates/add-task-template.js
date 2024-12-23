@@ -92,7 +92,7 @@ function renderAddTaskHTML() {
                 </div>
                 <ul id="subtasksContent"></ul>
                 <span>
-              
+
               </div>
             </div>
           </div>
