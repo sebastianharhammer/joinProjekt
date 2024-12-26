@@ -14,10 +14,27 @@ body {
 }
 
 h1 {
+  margin-top: 30px;
   font-size: 32px;
   color: #000;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.header-with-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.arrow-icon {
+  position: absolute;
+  left: 100%;
+  margin-left: 0px;
+  width: 28px;
+  height: auto;
+  cursor: pointer;
 }
 
 h2 {

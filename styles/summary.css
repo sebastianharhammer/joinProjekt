@@ -151,7 +151,7 @@ body {
 .panel.large {
   flex-direction: row;
   justify-content: space-evenly;
-  padding: 20px 40px;
+  padding: 20px 45px;
   max-width: 100%;
   height: 168px;
   width: 560px;
@@ -234,166 +234,45 @@ body {
   margin: 10px 0 0 0;
 }
 
-@media (max-width: 1024px) {
-  html,
-  body {
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    height: 100%;
+@media (max-width: 1160px) {
+  .greeting-text h1 {
+    display: none;
   }
 
+  #nameOfUser {
+    display: none;
+  }
+}
+
+@media (max-width: 894px) {
   .main-content {
-    margin-left: 50px;
-    height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
+    padding: 70px;
+  }
+}
+
+@media (max-width: 788px) {
+  .main-content {
     padding: 0px;
   }
 }
 
-@media (max-width: 768px) {
-  html,
-  body {
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-
-  .main-content {
-    padding: 40px;
-    margin-left: 0;
-    height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
-  }
-
-  .panels {
-    width: 100%;
-  }
-
-  .panel-row {
-    gap: 15px;
-  }
-
+@media (max-width: 708px) {
   .panel.large {
-    align-items: center;
-    height: auto;
-    padding: 20px;
+    padding: 0px;
   }
 
-  .panel.large .divider {
-    display: none;
+  .panel-link .panel {
+    padding: 0px;
   }
 
-  .panel.small {
-    width: 100%;
-  }
+  @media (max-width: 688px) {
+    .panel.large {
+      width: 385px;
+    }
 
-  .panel {
-    padding: 15px;
-    height: auto;
-  }
-
-  .panel img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .panel p {
-    font-size: 28px;
-  }
-
-  .panel span {
-    font-size: 12px;
-  }
-
-  .greeting-text h1 {
-    font-size: 36px;
-  }
-
-  .greeting-text h2 {
-    font-size: 56px;
-  }
-}
-
-@media (max-width: 480px) {
-  html,
-  body {
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-
-  .main-content {
-    padding: 20px;
-    margin-left: 36px;
-    margin-top: 20px;
-    height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
-  }
-
-  .panels {
-    width: 100%;
-  }
-
-  .panel-row {
-    gap: 15px;
-  }
-
-  .panel.large {
-    gap: inherit;
-    align-items: center;
-    height: auto;
-  }
-
-  .panel img {
-    width: 35px;
-    height: 35px;
-  }
-
-  .panel p {
-    font-size: 24px;
-  }
-
-  .panel span {
-    font-size: 10px;
-  }
-
-  .greeting-text h1 {
-    font-size: 28px;
-  }
-
-  .greeting-text h2 {
-    font-size: 40px;
-  }
-}
-
-@media (max-width: 430px) {
-  html,
-  body {
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-
-  .main-content {
-    padding: 20px;
-
-    height: 100vh;
-    width: 100vw;
-    box-sizing: border-box;
-  }
-
-  .greeting-text h1 {
-    display: none;
-  }
-
-  .greeting-text h2 {
-    display: none;
+    .panel-link .panel img {
+      width: 46px;
+      height: 47px;
+    }
   }
 }

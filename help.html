@@ -3,24 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Legal Notice</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.svg">
-    <link rel="stylesheet" href="./styles/legal-notice.css" />
-    <link rel="stylesheet" href="./styles/standard.css" />
-    <link rel="stylesheet" href="./styles/summary.css" />
+    <title>Help</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.svg" />
+    <link rel="stylesheet" href="./styles/help.css" />
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/nav.css" />
-    <link rel="stylesheet" href="./fonts.css" />
-    <link rel="stylesheet" href="../styles/Legal-notice.css" />
-    <script src="./scripts/w3-include.js"></script>
+    <link rel="stylesheet" href="../styles/standard.css" />
+
     <script src="./scripts/header.js"></script>
+    <script src="./scripts/w3-include.js"></script>
   </head>
   <body onload="includeHTML()">
     <div w3-include-html="./header.html"></div>
     <div w3-include-html="./nav.html"></div>
 
-    <div class="container">
-      <h1>Help</h1>
+      <div class="container">
+<div class="header-with-arrow">
+  <h1>Help</h1>
+  <a href="summary.html">
+    <img src="./img/arrow-left.png" alt="Back to Summary" class="arrow-icon">
+  </a>
+</div>
+
+
+
 
       <h2>Welcome to the help page for Join</h2>
       <p>
@@ -110,6 +116,12 @@
         European Union.
       </p>
     </div>
+
+    <script>
+      w3.includeHTML(function () {});
+    </script>
+  </body>
+</html>
 
     <script>
       w3.includeHTML(function () {});
