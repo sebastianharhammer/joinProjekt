@@ -56,7 +56,7 @@
   font-weight: 700;
   transition: background-color 0.3s;
   padding: 12px 0px 12px 0px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 #add-contact-btn:hover {
