@@ -56,6 +56,7 @@
   font-weight: 700;
   transition: background-color 0.3s;
   padding: 12px 0px 12px 0px;
+  cursor:pointer;
 }
 
 #add-contact-btn:hover {
@@ -83,6 +84,7 @@
   justify-content: center;
   align-items: center;
   top: 206px;
+  cursor: default;
 }
 
 #contact-headline {
@@ -141,6 +143,17 @@ ul {
   height: 78px;
   gap: 35px;
   border-radius: 10px;
+  cursor: pointer;
+}
+
+[id^="contact-item-"]:hover {
+  background-color: #f4f4f4;
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+[id^="contact-item-"] > * {
+  pointer-events: none;
 }
 
 #contact-item-right {
@@ -268,6 +281,7 @@ hr {
   text-decoration-skip-ink: none;
   overflow: visible;
   white-space: nowrap;
+  cursor: default;
 }
 
 .contact-detail p {
@@ -371,6 +385,7 @@ hr {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  cursor: default;
 }
 
 #contact-detail-bottom-font {
@@ -453,6 +468,7 @@ hr {
     font-size: 0px;
     padding: 0;
     gap: 0;
+    cursor: pointer;
   }
 
   #add-contact-img {
