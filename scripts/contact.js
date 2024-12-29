@@ -119,20 +119,18 @@ function toggleContactDetail(firebaseKey) {
     return;
   }
 
-  // Überprüfen, ob die Ansicht mobil ist
   const isMobile = window.matchMedia("(max-width: 1300px)").matches;
 
   if (isMobile) {
-    // Mobile Ansicht
-    contactListContainer.style.display = "none"; // Kontaktliste ausblenden
-    detailViewContainer.style.display = "flex"; // Detailansicht anzeigen
+    contactListContainer.style.display = "none";
+    detailViewContainer.style.display = "flex";
     detailViewContainer.innerHTML = /*html*/ `
       <div id="contact-headline-container">
           <h3 id="contact-headline">Contacts</h3>
             <h2 id="bwat-headline">Better with a team</h2>
       </div>
-      <button id="back-button" class="back-button" onclick="renderContactList()"><img src="./img/arrow-left.png" alt="arrow left"></button>
-      <div class="contact-detail">
+      <button id="back-button" class="back-button" onclick="renderContactList()"><img src="./img/arrow-left-line.svg" alt="arrow left"></button>
+        <div class="contact-detail">
           <div class="contact-detail-header">
               <div class="contact-avatar" style="background-color: ${
                 selectedContact.color || getRandomColor()
@@ -147,7 +145,7 @@ function toggleContactDetail(firebaseKey) {
                       ${selectedContact.firstName} ${selectedContact.lastName}
                   </div>
               </div>
-          </div>
+        </div>
           <div id="contact-information">Contact Information</div>
           <div id="contact-detail-bottom">
               <div id="contact-detail-email">
@@ -160,19 +158,18 @@ function toggleContactDetail(firebaseKey) {
                   <strong>Phone:</strong> ${selectedContact.phone}
               </div>
           </div>
+          </div>
           <button id="menu-button" class="menu-button" onclick="toggleMenu()">⋮</button>
           <div id="dropdown-menu" class="dropdown-menu hidden">
-              <button onclick="editContact('${firebaseKey}')">
+              <button class="edit-button-mobile" onclick="editContact('${firebaseKey}')">
                   <img id="edit-contact-img" src="./img/edit.svg" alt="Edit"> Edit
               </button>
-              <button onclick="deleteContact('${firebaseKey}')">
+              <button class="delete-button-mobile" onclick="deleteContact('${firebaseKey}')">
                   <img id="delete-contact-img" src="./img/delete.svg" alt="Delete"> Delete
               </button>
           </div>
-      </div>
     `;
   } else {
-    // Desktop Ansicht (bestehendes Verhalten bleibt)
     if (clickedItem && clickedItem.classList.contains("selected")) {
       clickedItem.classList.remove("selected");
       renderRightSideContainer();
@@ -239,10 +236,43 @@ function renderContactList() {
 
 function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
+  const button = document.getElementById("menu-button");
+
   if (menu) {
-    menu.classList.toggle("hidden");
+    if (menu.classList.contains("hidden")) {
+      // Menü öffnen
+      menu.style.display = "block"; // Sofort sichtbar machen
+      setTimeout(() => {
+        menu.classList.remove("hidden"); // Animation starten
+      }, 10);
+
+      // Listener für Klicks außerhalb hinzufügen
+      document.addEventListener("click", closeMenuOnOutsideClick);
+    } else {
+      // Menü schließen
+      menu.classList.add("hidden"); // Animation starten
+      setTimeout(() => {
+        menu.style.display = "none"; // Nach der Animation aus dem Layout entfernen
+      }, 300); // Dauer der CSS-Animation
+      document.removeEventListener("click", closeMenuOnOutsideClick);
+    }
+  }
+
+  function closeMenuOnOutsideClick(event) {
+    if (!menu.contains(event.target) && !button.contains(event.target)) {
+      menu.classList.add("hidden"); // Animation starten
+      setTimeout(() => {
+        menu.style.display = "none"; // Menü aus dem Layout entfernen
+      }, 300);
+      document.removeEventListener("click", closeMenuOnOutsideClick);
+    }
   }
 }
+
+
+
+
+
 
 function getRandomColor() {
   const colors = ["orange", "purple", "blue", "red", "green", "teal"];

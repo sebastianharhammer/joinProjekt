@@ -407,7 +407,10 @@ hr {
   }
 
   .hidden {
-    display: none !important; /* Sichtbarkeit steuern */
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 300ms ease-in-out;
   }
 
   #contact-big {
@@ -421,6 +424,25 @@ hr {
 
   #contact-headline-container {
     flex-direction: column;
+    display: flex;
+  }
+
+  .contact-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 27px;
+  }
+
+  .contact-detail-header-right-headline {
+    font-size: 36px;
+  }
+
+  .contact-detail-header {
+    gap: 20px;
+  }
+
+  .contact-detail-header-right {
+    align-items: center;
   }
 
   #contact-headline {
@@ -434,18 +456,17 @@ hr {
     font-size: 27px;
     padding-left: 20px;
     font-weight: 400;
-    border-bottom: 3px solid #29abe2;
-    
+    padding: 0px;
   }
 
   #bwat-headline::after {
     content: "";
     position: absolute;
-    bottom: -3px; /* Abstand zur Schrift */
-    left: 20px; /* Gleicher Abstand wie padding-left */
-    width: 90px; /* Länge der Linie */
-    height: 3px; /* Dicke der Linie */
-    background-color: #29abe2; /* Farbe der Linie */
+    bottom: -3px;
+    left: 0px;
+    width: 90px;
+    height: 3px;
+    background-color: #29abe2;
   }
 
   #contact-content {
@@ -453,42 +474,101 @@ hr {
   }
 
   .back-button {
+    position: absolute;
     background: none;
     border: none;
-    font-size: 18px;
     cursor: pointer;
     margin-bottom: 10px;
+    width: 32px;
+    height: 32px;
+    top: 128px;
+    left: 380px;
   }
 
   .menu-button {
     position: absolute;
-    bottom: 20px;
+    bottom: 60px;
     right: 20px;
     font-size: 24px;
-    border: none;
+    color: white;
+    background: #2a3647;
+    cursor: pointer;
+    width: 56px;
+    height: 56px;
+    left: 356px;
+    padding: 12px;
+    border-radius: 56px;
+    border: 1px solid #2a3647;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
+
+  /* --- STANDARDEINSTELLUNG DES MENÜS --- */
+.dropdown-menu {
+  position: absolute;
+  bottom: 60px;
+  left: 296px;
+  width: 116px;
+  height: 100px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 20px 20px 0 20px;
+  z-index: 1000;
+
+  /*
+   * Anfangszustand für "Unsichtbar und nach rechts verschoben"
+   * Damit liegt das Menü zunächst außerhalb des sichtbaren Bereichs.
+   */
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none; /* Maus ist in diesem Zustand blockiert */
+
+  /* Füge hier deine gewünschte Transition hinzu */
+  transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+/* --- HIDDEN-CLASS: BLEIBT IMMER DER "AUSGEBLENDETE" ZUSTAND --- */
+.dropdown-menu.hidden {
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/*
+ * Sobald die Klasse "hidden" entfernt wird,
+ * geht das Element in den "sichtbaren" Zustand über.
+ */
+.dropdown-menu:not(.hidden) {
+  transform: translateX(0); /* = fährt aus dem rechten Bereich ins Bild */
+  opacity: 1;
+  pointer-events: auto; /* jetzt ist es anklickbar */
+}
+
+
+  .edit-button-mobile {
+    display: flex;
+    align-items: center;
+    color: #2a3647;
+    width: 96px;
+    height: 40px;
+    padding: 8px;
+    gap: 8px;
     background: none;
+    border: none;
     cursor: pointer;
   }
 
-  .dropdown-menu {
-    position: absolute;
-    bottom: 60px;
-    right: 20px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    display: none;
-    z-index: 20;
-  }
-
-  .dropdown-menu.hidden {
-    display: none;
-  }
-
-  .dropdown-menu:not(.hidden) {
+  .delete-button-mobile {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    color: #2a3647;
+    width: 96px;
+    height: 40px;
+    padding: 8px;
+    gap: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 }
 
