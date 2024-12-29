@@ -212,7 +212,7 @@ function toggleContactDetail(firebaseKey) {
   if (isMobile) {
     contactListContainer.style.display = "none";
     detailViewContainer.style.display = "flex";
-    detailViewContainer.innerHTML = getDetailHTML(selectedContact, firebaseKey);
+    detailViewContainer.innerHTML = getMobileDetailHTML(selectedContact, firebaseKey);
   } else {
     if (clickedItem && clickedItem.classList.contains("selected")) {
       clickedItem.classList.remove("selected");
@@ -221,49 +221,8 @@ function toggleContactDetail(firebaseKey) {
     }
     contactItems.forEach((item) => item.classList.remove("selected"));
     if (clickedItem) clickedItem.classList.add("selected");
-    detailViewContainer.innerHTML = getDetailHTML(selectedContact, firebaseKey);
+    detailViewContainer.innerHTML = getDesktopDetailHTML(selectedContact, firebaseKey);
   }
-}
-
-function getDetailHTML(contact, firebaseKey) {
-  return `
-    <div id="contact-headline-container">
-        <h3 id="contact-headline">Contacts</h3>
-        <h2 id="bwat-headline">Better with a team</h2>
-    </div>
-    <div class="contact-detail">
-      <div class="contact-detail-header">
-        <div class="contact-avatar" style="background-color: ${
-          contact.color || getRandomColor()
-        }">
-          ${getInitials(contact.firstName, contact.lastName)}
-        </div>
-        <div class="contact-detail-header-right">
-          <div class="contact-detail-header-right-headline">
-            ${contact.firstName} ${contact.lastName}
-          </div>
-          <div class="detail-actions">
-            <button onclick="editContact('${firebaseKey}')">
-              <img id="edit-contact-img" src="./img/edit.svg">Edit
-            </button>
-            <button onclick="deleteContact('${firebaseKey}')">
-              <img id="delete-contact-img" src="./img/delete.svg">Delete
-            </button>
-          </div>
-        </div>
-      </div>
-      <div id="contact-information">Contact Information</div>
-      <div id="contact-detail-bottom">
-        <div id="contact-detail-email">
-          <strong>Email:</strong> 
-          <a href="mailto:${contact.email}">${contact.email}</a>
-        </div>
-        <div id="contact-detail-phone">
-          <strong>Phone:</strong> ${contact.phone}
-        </div>
-      </div>
-    </div>
-  `;
 }
 
 function renderContactList() {
