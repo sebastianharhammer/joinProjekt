@@ -1,4 +1,22 @@
-let localContacts = [];
+function loadCurrentUser() {
+  const storedUser = localStorage.getItem("currentUser");
+  if (storedUser) {
+    currentUser = JSON.parse(storedUser);
+    console.log("[add-contact.js] currentUser =", currentUser);
+  }
+}
+
+function isGuestUser() {
+  return (
+    currentUser &&
+    currentUser.firstName === "Guest" &&
+    currentUser.lastName === "User"
+  );
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadCurrentUser();
+});
 
 function addContact() {
   let addContactTemplate = document.getElementById("add-contact-content");
@@ -78,7 +96,7 @@ async function getContactInfo() {
     });
     let responseToJson = await response.json();
     localContacts = responseToJson || {};
-    console.log("Fetched contacts:", localContacts);
+    console.log("[add-contact.js] Fetched contacts:", localContacts);
   } catch (error) {
     console.error("Failed to fetch contacts:", error);
     localContacts = {};
@@ -91,8 +109,24 @@ async function pushContactInfo(firstName, lastName, email, phone) {
     lastName,
     email,
     phone,
-    color: getRandomColor()
+    color: getRandomColor(),
   };
+
+  if (isGuestUser()) {
+    const pseudoKey = `guest-${Date.now()}`;
+    if (typeof contactsData === "undefined") {
+      console.warn("[add-contact.js] Kein globales contactsData gefunden!");
+      return;
+    }
+    contactsData.push({ firebaseKey: pseudoKey, ...newContact });
+    if (typeof renderSortedContacts === "function") {
+      renderSortedContacts(contactsData);
+    }
+    if (typeof renderRightSideContainer === "function") {
+      renderRightSideContainer();
+    }
+    return;
+  }
 
   try {
     let response = await fetch(`${BASE_URL}/contacts.json`, {
@@ -103,11 +137,17 @@ async function pushContactInfo(firstName, lastName, email, phone) {
       body: JSON.stringify(newContact),
     });
     let responseToJson = await response.json();
-    console.log("Contact added:", responseToJson);
-
+    console.log("[add-contact.js] Contact added (Firebase):", responseToJson);
     await getContactInfo();
-    fetchContactsFromFirebase();
+    if (typeof fetchContactsFromFirebase === "function") {
+      fetchContactsFromFirebase();
+    }
   } catch (error) {
     console.error("Failed to add contact:", error);
   }
+}
+
+function getRandomColor() {
+  const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+  return colors[Math.floor(Math.random() * colors.length)];
 }
