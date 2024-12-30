@@ -99,35 +99,34 @@ function getBoardNavigatorHTML() {
 }
 
 function filterTaskFunction() {
-  let myFilter = document.getElementById('filterTask').value.toLowerCase();
+  let myFilter = document.getElementById("filterTask").value.toLowerCase();
   let tasksFound = false;
 
   for (let i = 0; i < taskArray.length; i++) {
-      let paramToFind = document.getElementById(`title${taskArray[i].id}`);
-      let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
-      let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
+    let paramToFind = document.getElementById(`title${taskArray[i].id}`);
+    let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
+    let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
 
-      if (paramToFind || (param2ToFind && wholeTask)) {
-          if (
-              paramToFind.innerText.toLowerCase().includes(myFilter) ||
-              param2ToFind.innerText.toLowerCase().includes(myFilter)
-          ) {
-              wholeTask.style.display = '';
-              tasksFound = true;
-          } else {
-              wholeTask.style.display = 'none';
-          }
+    if (paramToFind || (param2ToFind && wholeTask)) {
+      if (
+        paramToFind.innerText.toLowerCase().includes(myFilter) ||
+        param2ToFind.innerText.toLowerCase().includes(myFilter)
+      ) {
+        wholeTask.style.display = "";
+        tasksFound = true;
+      } else {
+        wholeTask.style.display = "none";
       }
+    }
   }
 
-  const noResultsMessage = document.getElementById('noResults');
+  const noResultsMessage = document.getElementById("noResults");
   if (!tasksFound && myFilter.length > 0) {
-      noResultsMessage.style.display = 'block';
+    noResultsMessage.style.display = "block";
   } else {
-      noResultsMessage.style.display = 'none';
+    noResultsMessage.style.display = "none";
   }
 }
-
 
 function loadTitleOfBoardColumns(content) {
   content.innerHTML += showTitleOfBoardColumns();
@@ -164,31 +163,42 @@ function getColumns(content) {
 function getColumnsHTML() {
   return /*html*/ `
         <section class="tasksContent">
-            <div class="headline-to-do-responsive">TO DO</div>
-            <div class="dragarea-todo" id="todo" 
+            <div class="column-header">
+                <span class="headline-to-do-responsive">TO DO</span>
+                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('todo')">
+            </div>
+            <div class="dragarea-todo" id="todo"
                 ondrop="moveTo('todo')" 
                 ondragleave="removeHighlight('todo')" 
                 ondragover="allowDrop(event); highlight('todo')"></div>
-                
-            <div class="headline-in-progress-responsive">IN PROGRESS</div>
-            <div class="dragarea-inProgress" id="inProgress" 
+
+            <div class="column-header">
+                <span class="headline-in-progress-responsive">IN PROGRESS</span>
+                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('inProgress')">
+            </div>
+            <div class="dragarea-inProgress" id="inProgress"
                 ondrop="moveTo('inProgress')" 
                 ondragleave="removeHighlight('inProgress')" 
                 ondragover="allowDrop(event); highlight('inProgress')"></div>
-            
-            <div class="headline-feedback-responsive">AWAIT FEEDBACK</div>
-            <div class="dragarea-feedback" id="feedback" 
+
+            <div class="column-header">
+                <span class="headline-feedback-responsive">AWAIT FEEDBACK</span>
+                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('feedback')">
+            </div>
+            <div class="dragarea-feedback" id="feedback"
                 ondrop="moveTo('feedback')" 
                 ondragleave="removeHighlight('feedback')" 
                 ondragover="allowDrop(event); highlight('feedback')"></div>
-            
-            <div class="headline-done-responsive">DONE</div>
-            <div class="dragarea-done" id="done" 
+
+            <div class="column-header">
+                <span class="headline-done-responsive">DONE</span>
+                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('done')">
+            </div>
+            <div class="dragarea-done" id="done"
                 ondrop="moveTo('done')" 
                 ondragleave="removeHighlight('done')" 
                 ondragover="allowDrop(event); highlight('done')"></div>
-        </section>
-    `;
+        </section>`;
 }
 
 function updateTaskHTML() {
@@ -623,8 +633,6 @@ function getTaskCategoryClass(taskCategory) {
     return "task-category-userExperience-taskCard";
   return "task-category-undefined";
 }
-
-
 
 function closeDetailView() {
   let taskCardOverlay = document.getElementById("taskDetailView");

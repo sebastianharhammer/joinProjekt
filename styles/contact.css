@@ -503,47 +503,46 @@ hr {
   }
 
   /* --- STANDARDEINSTELLUNG DES MENÜS --- */
-.dropdown-menu {
-  position: absolute;
-  bottom: 60px;
-  left: 296px;
-  width: 116px;
-  height: 100px;
-  padding: 10px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 20px 20px 0 20px;
-  z-index: 1000;
+  .dropdown-menu {
+    position: absolute;
+    bottom: 60px;
+    left: 296px;
+    width: 116px;
+    height: 100px;
+    padding: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 20px 20px 0 20px;
+    z-index: 1000;
 
-  /*
+    /*
    * Anfangszustand für "Unsichtbar und nach rechts verschoben"
    * Damit liegt das Menü zunächst außerhalb des sichtbaren Bereichs.
    */
-  transform: translateX(100%);
-  opacity: 0;
-  pointer-events: none; /* Maus ist in diesem Zustand blockiert */
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none; /* Maus ist in diesem Zustand blockiert */
 
-  /* Füge hier deine gewünschte Transition hinzu */
-  transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
-}
+    /* Füge hier deine gewünschte Transition hinzu */
+    transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+  }
 
-/* --- HIDDEN-CLASS: BLEIBT IMMER DER "AUSGEBLENDETE" ZUSTAND --- */
-.dropdown-menu.hidden {
-  transform: translateX(100%);
-  opacity: 0;
-  pointer-events: none;
-}
+  /* --- HIDDEN-CLASS: BLEIBT IMMER DER "AUSGEBLENDETE" ZUSTAND --- */
+  .dropdown-menu.hidden {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
 
-/*
+  /*
  * Sobald die Klasse "hidden" entfernt wird,
  * geht das Element in den "sichtbaren" Zustand über.
  */
-.dropdown-menu:not(.hidden) {
-  transform: translateX(0); /* = fährt aus dem rechten Bereich ins Bild */
-  opacity: 1;
-  pointer-events: auto; /* jetzt ist es anklickbar */
-}
-
+  .dropdown-menu:not(.hidden) {
+    transform: translateX(0); /* = fährt aus dem rechten Bereich ins Bild */
+    opacity: 1;
+    pointer-events: auto; /* jetzt ist es anklickbar */
+  }
 
   .edit-button-mobile {
     display: flex;
@@ -693,5 +692,23 @@ hr {
 
   #contact-content {
     padding-top: 80px;
+  }
+}
+
+@media (max-width: 410px) {
+  .menu-button {
+    margin-left: -60px;
+  }
+}
+
+@media (max-width: 368px) {
+  .contact-detail-header-right-headline {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 354px) {
+  .menu-button {
+    margin-left: -95px;
   }
 }
