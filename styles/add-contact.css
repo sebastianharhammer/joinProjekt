@@ -32,7 +32,7 @@
   justify-content: center;
   width: 70vw;
   min-width: 40%;
-  height: 100%; /* Höhe auf 100% setzen */
+  height: 100%;
   z-index: 15;
   isolation: isolate;
 }
@@ -242,8 +242,11 @@
 }
 
 #add-contact-succes-message-container {
+  position: fixed;
   height: 20%;
   width: 30%;
+  bottom: -250px;
+  left: 170px;
   display: flex;
   justify-content: center;
   align-items: center;
