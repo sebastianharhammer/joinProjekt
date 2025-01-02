@@ -400,8 +400,73 @@ function createTaskHTML(task) {
         <img id="priority-${task.id}"  src="./img/prio-mid.png" alt="">
         </div>
         </section>
-        </div>
-    `;
+        
+  <div class="mobile-arrows">
+      <button class="arrow-btn arrow-up" 
+              onclick="moveTaskUp(${task.id}, event)">
+        <img src="./img/arrow-up.png" alt="Up">
+      </button>
+      <button class="arrow-btn arrow-down" 
+              onclick="moveTaskDown(${task.id}, event)">
+        <img src="./img/arrow-down.png" alt="Down">
+      </button>
+    </div>
+  </div>
+  `;
+}
+
+function moveTaskUp(taskId, event) {
+  event.stopPropagation();
+
+  const statusOrder = ["todo", "inProgress", "feedback", "done"];
+  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
+  if (taskIndex === -1) return;
+
+  const currentStatus = taskArray[taskIndex].status;
+  const currentPos = statusOrder.indexOf(currentStatus);
+
+  if (currentPos <= 0) {
+    console.log("Task ist bereits in der obersten Kategorie.");
+    return;
+  }
+
+  const newStatus = statusOrder[currentPos - 1];
+  taskArray[taskIndex].status = newStatus;
+
+  if (currentUser && currentUser.firstName !== "Guest") {
+    updateTaskInFirebase(taskArray[taskIndex])
+      .then(() => updateTaskHTML())
+      .catch((err) => console.error("Fehler beim Update:", err));
+  } else {
+    updateTaskHTML();
+  }
+}
+
+function moveTaskDown(taskId, event) {
+  event.stopPropagation();
+
+  const statusOrder = ["todo", "inProgress", "feedback", "done"];
+  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
+  if (taskIndex === -1) return;
+
+  const currentStatus = taskArray[taskIndex].status;
+  const currentPos = statusOrder.indexOf(currentStatus);
+
+  if (currentPos >= statusOrder.length - 1) {
+    console.log("Task ist bereits in der untersten Kategorie.");
+    return;
+  }
+
+  const newStatus = statusOrder[currentPos + 1];
+  taskArray[taskIndex].status = newStatus;
+
+  if (currentUser && currentUser.firstName !== "Guest") {
+    updateTaskInFirebase(taskArray[taskIndex])
+      .then(() => updateTaskHTML())
+      .catch((err) => console.error("Fehler beim Update:", err));
+  } else {
+    updateTaskHTML();
+  }
 }
 
 function showTaskCard(id) {

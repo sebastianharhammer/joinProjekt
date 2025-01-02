@@ -439,12 +439,47 @@
   cursor: pointer;
 }
 
+.dragarea-todo.dragAreaHighlight,
+.dragarea-inProgress.dragAreaHighlight,
+.dragarea-feedback.dragAreaHighlight,
+.dragarea-done.dragAreaHighlight {
+  border: 3px dashed rgba(42, 54, 71, 0.8);
+  background-color: rgba(42, 54, 71, 0.05);
+  border-radius: 24px;
+  box-sizing: border-box;
+}
+
+.arrow-btn {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  /* falls du willst, position: absolute; ... */
+}
+
+/* Container, der sie umschließt */
+.mobile-arrows {
+  display: flex;
+  gap: 10px;
+  position: relative; /* anpassen, wie du willst */
+}
+
+/* Icons anpassen */
+.arrow-btn img {
+  width: 24px;
+  height: 24px;
+}
+
 @media (max-width: 768px) {
   .column-header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+  }
+
+  .arrow-btn {
+    display: block;
   }
 
   .plus-button {
@@ -469,7 +504,7 @@
   .dragarea-inProgress,
   .dragarea-feedback,
   .dragarea-done {
-    width: 90%;
+    width: 74%;
     margin-bottom: 20px;
     height: 100%;
   }
@@ -589,7 +624,7 @@
   .dragarea-inProgress,
   .dragarea-feedback,
   .dragarea-done {
-    width: 100%;
+    width: 90%;
 
     margin: 0 auto;
   }
