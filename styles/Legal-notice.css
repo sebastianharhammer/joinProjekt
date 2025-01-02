@@ -17,6 +17,11 @@ body {
   border-radius: 8px;
 }
 
+.legal-notice-links {
+  color: #007bff;
+  text-decoration: none;
+}
+
 .header-with-arrow {
   display: flex;
   align-items: center;
