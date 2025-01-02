@@ -217,7 +217,7 @@ body {
   align-items: flex-start;
   justify-content: center;
   margin-left: 50px;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .greeting-text h1 {

@@ -9,8 +9,9 @@ body {
   max-width: 800px;
   margin: 90px auto;
   padding: 20px;
-
+  height: auto;
   border-radius: 8px;
+  overflow-y: auto!important;
 }
 
 h1 {
@@ -55,6 +56,11 @@ ul {
 }
 
 a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.privacy-policy-links {
   color: #007bff;
   text-decoration: none;
 }
