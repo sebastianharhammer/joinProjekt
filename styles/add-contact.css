@@ -298,14 +298,14 @@
 
   #add-contact-headline {
     font-size: 34px;
-    margin-left: 25%;
+    margin-left: 27%;
     margin-top: 40px;
   }
 
   #add-contact-second {
     font-size: 16px;
     margin-bottom: 100px;
-    margin-left: 80px;
+    margin-left: 97px;
   }
 
   #add-contact-cancel {
@@ -319,14 +319,20 @@
 
 @media (max-width: 414px) {
   #add-contact-second {
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 100px;
-    margin-left: 60px;
+    margin-left: 40px;
   }
 
   #add-contact-headline {
-    font-size: 34px;
-    margin-left: 17%;
+    font-size: 26px;
+    margin-left: 18%;
     margin-top: 40px;
+  }
+}
+
+@media (max-width: 345px) {
+  #add-contact-btn-close svg {
+    margin-left: 15px;
   }
 }

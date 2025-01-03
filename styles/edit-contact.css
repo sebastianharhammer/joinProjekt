@@ -310,8 +310,11 @@
   #back-button {
     margin-left: -100px;
   }
-}
-@media (max-width: 385px) {
+
+  .edit-contact-input-icon {
+    right: -20px;
+  }
+
   .dropdown-menu:not(.hidden) {
     margin-left: -175px;
   }
