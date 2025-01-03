@@ -53,8 +53,9 @@ function getAddContactHTML() {
                 </div>
             </div>  
         </div>
-        <div id="add-contact-message" class="d-none"></div>
-    </div>`;
+    </div>
+    <div id="add-contact-message" class="d-none"></div>
+    `;
 }
 
 function showErrorMessageHTML() {

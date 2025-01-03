@@ -55,7 +55,7 @@ function showSuccesMessage() {
   showSuccesMessageHTML();
   setTimeout(() => {
     content.classList.add("d-none");
-  }, 2500);
+  }, 20500);
 }
 
 function showErrorMessage() {
@@ -148,6 +148,17 @@ async function pushContactInfo(firstName, lastName, email, phone) {
 }
 
 function getRandomColor() {
-  const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+  const colors = [
+    "orange",
+    "purple",
+    "blue",
+    "red",
+    "green",
+    "teal",
+    "yellow",
+    "pink",
+    "cyan",
+    "brown",
+  ];
   return colors[Math.floor(Math.random() * colors.length)];
 }
