@@ -84,7 +84,8 @@ button:disabled {
 }
 
 .loginForm {
-  height: 50vh;
+  padding-top: 20px;
+  height: 40vh;
   width: 40vw;
   background-color: white;
   border-radius: 30px;
@@ -261,11 +262,7 @@ button:hover {
 
   .headAreaOfLogin img {
     height: 80px;
-    width: 80px;
-  }
-
-  .FontOfOfLogin {
-    font-size: 36px;
+    width: 70px;
   }
 
   .horizontalLine {

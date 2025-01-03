@@ -217,21 +217,18 @@ button.button-signup:disabled {
 
   .back-arrow img {
     display: block;
-    /* position: relative; 
-    left: -25px; */
   }
 
-  .back-arrow img {
-    /* width: 40px;
-    height: auto; */
+  .signUpForm {
+    gap: 0px;
   }
 
   .FontOfOfLogin {
     display: flex;
     position: relative;
     align-items: center;
-    justify-content: center; /* Zentrierung von Text und Pfeil */
-    gap: 10px; /* Abstand zwischen Pfeil und "Sign Up"-Text */
+    justify-content: center;
+    gap: 10px;
   }
 
   .back-arrow a {
@@ -284,16 +281,16 @@ button.button-signup:disabled {
 }
 
 @media (max-width: 480px) {
+  .FontOfOfLogin {
+    font-size: 50px;
+  }
+
   .signUpForm {
     width: 70vw;
   }
 
   .inputMailPw {
     font-size: 18px;
-  }
-
-  .FontOfOfLogin {
-    font-size: 232x;
   }
 
   .loginButtons {
@@ -326,5 +323,8 @@ button.button-signup:disabled {
   .signUpForm {
     gap: 0px;
     margin-top: 5px;
+  }
+  .fontPrivacyPolicy {
+    font-size: 15px;
   }
 }
