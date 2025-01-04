@@ -26,8 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 49px;
-  width: 91px;
+  padding: 16px;
   border-radius: 8px;
   background-color: rgba(42, 54, 71, 1);
 }
@@ -227,139 +226,7 @@ button:hover {
   height: 5vh;
 }
 
-@media (max-width: 909px) {
-  .loginContent {
-    height: 100%;
-    padding-bottom: 20px;
-  }
 
-  .loginForm {
-    margin-top: 100px;
-    width: 85vw;
-    height: auto;
-    padding: 20px;
-  }
-
-  .inputMailPw {
-    width: 100%;
-  }
-
-  .loginButtons {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .logInButton,
-  .guestLogInUpButton {
-    width: 100%;
-    max-width: 300px;
-  }
-
-  .headAreaOfLogin {
-    align-items: center;
-    width: 100%;
-  }
-
-  .headAreaOfLogin img {
-    height: 80px;
-    width: 70px;
-  }
-
-  .horizontalLine {
-    width: 80px;
-  }
-
-  .footerRegisterLogin {
-    margin-top: 20px;
-    font-size: 14px;
-  }
-
-  .signUpArea {
-    justify-content: center;
-    margin-top: 20px;
-    width: 100%;
-    flex-direction: row;
-    gap: 10px;
-    margin-left: 120px;
-  }
-
-  .signUpArea {
-    margin-top: 20px;
-    justify-content: center;
-    width: 100%;
-  }
-
-  .signUpButton {
-    width: 100%;
-    text-align: center;
-  }
-
-  .loginForm {
-    margin-bottom: 30px;
-  }
-}
-
-@media (max-width: 480px) {
-  .loginForm {
-    width: 85vw;
-  }
-
-  .inputMailPw {
-    font-size: 18px;
-  }
-
-  .FontOfOfLogin {
-    font-size: 44px;
-  }
-
-  .headAreaOfLogin img {
-    height: 70px;
-    width: 60px;
-    margin-left: 10px;
-  }
-
-  .loginButtons {
-    flex-direction: column;
-  }
-
-  .logInButton,
-  .guestLogInUpButton {
-    width: 100%;
-    max-width: 280px;
-  }
-
-  .signUpButton {
-    width: 100%;
-  }
-
-  .horizontalLine {
-    width: 70px;
-  }
-
-  .footerRegisterLogin {
-    font-size: 12px;
-  }
-
-  .signUpArea {
-    justify-content: center;
-    margin-right: 0px;
-  }
-
-  .loginForm {
-    margin-bottom: 30px;
-  }
-
-  .footerRegisterLogin {
-    margin-top: 0px;
-    margin-left: 40px;
-  }
-}
-
-@media (max-width: 390px) {
-  .interFontLogin {
-    font-size: 12px;
-  }
-}
 
 .failedLoginDiv {
   height: 16px;
@@ -456,4 +323,158 @@ button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 909px) {
+  .loginContent {
+    height: 100%;
+    padding-bottom: 20px;
+  }
+
+  .loginForm {
+    margin-top: 100px;
+    width: 85vw;
+    height: auto;
+    padding: 20px;
+  }
+
+  .inputMailPw {
+    width: 100%;
+  }
+
+  .loginButtons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .logInButton,
+  .guestLogInUpButton {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .headAreaOfLogin {
+    align-items: center;
+    width: 100%;
+  }
+
+
+
+  .headAreaOfLogin img {
+    height: 80px;
+    width: 70px;
+  }
+
+  .horizontalLine {
+    width: 80px;
+  }
+
+  .footerRegisterLogin {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .signUpArea {
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+    margin-left: 120px;
+  }
+
+  .signUpArea {
+    margin-top: 20px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .signUpButton {
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+  }
+
+  .loginForm {
+    margin-bottom: 30px;
+  }
+
+  .interFontLoginButton{
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+}
+
+
+
+@media (max-width: 480px) {
+  .loginForm {
+    width: 85vw;
+  }
+
+  .rememberMe{
+    width: 290px;
+  }
+
+  .inputMailPw {
+    font-size: 18px;
+  }
+
+  .FontOfOfLogin {
+    font-size: 44px;
+  }
+
+  .headAreaOfLogin img {
+    height: 70px;
+    width: 60px;
+    margin-left: 10px;
+  }
+
+  .loginButtons {
+    flex-direction: column;
+  }
+
+  .logInButton,
+  .guestLogInUpButton {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .signUpButton {
+    width: 100%;
+  }
+
+  .horizontalLine {
+    width: 70px;
+  }
+
+  .footerRegisterLogin {
+    font-size: 12px;
+  }
+
+  .signUpArea {
+    justify-content: center;
+    margin-right: 0px;
+  }
+
+  .loginForm {
+    margin-bottom: 30px;
+  }
+
+  .footerRegisterLogin {
+    margin-top: 0px;
+    margin-left: 40px;
+  }
+
+  .loginNameInput{
+    margin-top: 6px;
+    width: 290px;
+  }
+}
+
+@media (max-width: 390px) {
+  .interFontLogin {
+    font-size: 12px;
+  }
 }
