@@ -18,10 +18,13 @@
     flex-direction: column;
     gap: 32px;
     background-color: white;
-    height: 800px;
-    width: 500px;
     border-radius: 24px;
     padding: 32px;
+    height: 800px;
+    width: 500px;
+    margin-left: 16px;
+    margin-right: 16px;
+    overflow-x: hidden;
 }
 
 .task-category-userExperience-taskCard{
@@ -309,4 +312,65 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
     font-size: 21px;
     color: rgb(255, 255, 255);
     font-weight: 400;
+}
+
+@media (max-width: 480px) {
+    .currentTaskCard {
+        position: fixed;
+        top: 15%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        gap: 1vh;
+        height: 600px;
+        width: 80vw;
+        margin-left: 8px;
+        margin-right: 8px;
+        padding: 8px;
+    }
+
+    .task-category-technicalTask-taskCard {
+        height: 37px;
+        width: 161px;
+        font-size: 19px;}
+
+    .task-category-userExperience-taskCard{
+        height: 54px;
+        width: 220px;
+        font-size: 19px;
+    }
+
+    .closeCard {
+        height: 16px;
+        width: 16px;
+        font-size: 19px;
+    }
+
+    .closeCardParent {
+        height: 32px;
+        width: 32px;
+    }
+
+    .boardFontDetail {
+        font-size: 28px;
+    }
+
+    .description-taskCard {
+        font-size: 16px;
+    }
+
+    .firstTableColumnFont {
+        font-size: 16px;
+    }
+
+    .styledCheckboxLabel .subtaskText {
+        font-size: 11px;
+    }
+
+    .assignedOwnersContainer{
+        margin-top: 8px;
+    }
+
+    .editAndDelete{
+        bottom: 16px;
+    }
 }

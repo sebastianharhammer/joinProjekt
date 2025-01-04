@@ -22,7 +22,10 @@
     width: 500px;
     border-radius: 24px;
     padding: 32px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
+
 
 .closeEditView{
     display: flex;
