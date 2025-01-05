@@ -791,6 +791,7 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
   );
   if (editIcon) {
     editIcon.src = "./img/check.svg";
+    editIcon.classList.add("check-icon");
     editIcon.onclick = null; // Entferne die `onclick`-Funktion
   }
 
@@ -838,8 +839,6 @@ function saveEditedSubtask(taskId, subtaskIndex, newValue) {
     editIcon.onclick = () => editExistingSubtaskEditView(taskId, subtaskIndex);
   }
 }
-
-
 
 
 async function getUsersForEditDropDown() {

@@ -321,3 +321,8 @@ input[type="date"] {
     line-height: 24px;
     outline: none;
 }
+
+.check-icon-in-edit{
+    height: 16px;
+    width: 16px;
+}
