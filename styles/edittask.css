@@ -198,6 +198,11 @@
     gap: 8px;
 }
 
+.closeEditLine{
+    display: flex;
+    justify-content: end;
+}
+
 .img-in-edit-input img{
     height: 12px;  
 }
@@ -326,3 +331,36 @@ input[type="date"] {
     height: 16px;
     width: 16px;
 }
+
+
+.contact-checkbox-edit {
+    appearance: none; /* Entfernt das standardmäßige Checkbox-Design */
+    width: 20px; /* Breite der Checkbox */
+    height: 20px; /* Höhe der Checkbox */
+    border: 2px solid rgb(43,54,71); /* Dunkelgrüner Rand */
+    border-radius: 4px; /* Abgerundete Ecken */
+    background-color: white; /* Weißer Hintergrund */
+    display: inline-block; /* Macht es inline */
+    cursor: pointer; /* Ändert den Cursor in einen Zeiger */
+    position: relative; /* Position für den Haken */
+}
+
+.contact-checkbox-edit:checked {
+    background-color: white; /* Hintergrund bleibt weiß */
+    border-color: rgb(43,54,71); /* Rand bleibt dunkelgrün */
+}
+
+.contact-checkbox-edit:checked::after {
+    content: "✔"; /* Grüner Haken */
+    color: rgb(43,54,71); /* Farbe des Hakens */
+    font-size: 16px; /* Größe des Hakens */
+    position: absolute; /* Position relativ zur Checkbox */
+    top: 50%; /* Zentriert den Haken vertikal */
+    left: 50%; /* Zentriert den Haken horizontal */
+    transform: translate(-50%, -50%); /* Korrigiert die Zentrierung */
+}
+
+.dropdown-contact-edit:hover{
+    background-color: rgb(240, 240, 240);
+}
+

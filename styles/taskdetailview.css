@@ -386,6 +386,7 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
         width: 32px;
     }
 
+
     .boardFontDetail {
         font-size: 28px;
     }

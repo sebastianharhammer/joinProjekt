@@ -894,9 +894,7 @@ function returnArrayContactsEdit() {
   }
 
   const editDropdown = document.getElementById("custom-dropdown-edit");
-  const editOptionsContainer = editDropdown.querySelector(
-      ".dropdown-options-edit"
-  );
+  const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
   editOptionsContainer.innerHTML = ""; // Dropdown leeren
 
   // Iteriere durch alle Kontakte und setze die Checkbox-Zustände
@@ -919,15 +917,21 @@ function returnArrayContactsEdit() {
       const circleDiv = document.createElement("div");
       circleDiv.classList.add("contact-circle-edit");
       circleDiv.style.backgroundColor = getRandomColor();
-      circleDiv.textContent = `${getFirstLetter(
-          contact.firstName
-      )}${getFirstLetter(contact.lastName)}`;
+      circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
 
       // Erstelle den Namen
       const nameSpan = document.createElement("span");
       nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
 
-      // Erstelle die Checkbox
+      // Erstelle das Label für die Checkbox
+      const checkboxLabel = document.createElement("label");
+      checkboxLabel.classList.add("contact-checkbox-edit-label");
+
+      // Erstelle das Quadrat für die Checkbox
+      const checkboxSquare = document.createElement("span");
+      checkboxSquare.classList.add("checkboxSquare");
+
+      // Erstelle die eigentliche Checkbox
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.classList.add("contact-checkbox-edit");
@@ -940,14 +944,21 @@ function returnArrayContactsEdit() {
           );
       });
 
-      // Füge alle Elemente hinzu
+      // Füge die Checkbox und das Quadrat in das Label ein
+      checkboxLabel.appendChild(checkbox);
+      checkboxLabel.appendChild(checkboxSquare);
+
+      // Füge alle Elemente in das `optionElement` ein
       optionElement.appendChild(circleDiv);
       optionElement.appendChild(nameSpan);
-      optionElement.appendChild(checkbox);
+      optionElement.appendChild(checkboxLabel);
 
+      // Füge das fertige `optionElement` in den `editOptionsContainer` ein
       editOptionsContainer.appendChild(optionElement);
   });
 }
+
+
 
 
 function assignUserEditHTML(contact) {
@@ -1014,8 +1025,10 @@ function getRandomColor() {
 function getEditTemplate(task) {
   return /*html*/ `
         <div id="editTaskCard" class="editTaskCard">
+            <div class="closeEditLine">
             <div class="closeEditView">
                 <img class="closeCard" onclick="closeEditTask()" src="./img/close.svg" alt="">
+            </div>
             </div>
             <p class="firstTableColumnFont">Title:</p>
 
