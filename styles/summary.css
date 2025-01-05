@@ -233,7 +233,6 @@ body {
   margin: 10px 0 0 0;
 }
 
-/* Größere Breakpoints */
 @media (max-width: 1160px) {
   .greeting-text h1 {
     display: none;
@@ -255,7 +254,6 @@ body {
   }
 }
 
-/* Korrigierte Media Query für 708px */
 @media (max-width: 708px) {
   .panel.large {
     padding: 0px;
@@ -265,7 +263,6 @@ body {
   }
 }
 
-/* Zusätzlicher Breakpoint 688px (aus deinem Code) */
 @media (max-width: 688px) {
   .panel-link .panel img {
     width: 46px;
@@ -273,97 +270,132 @@ body {
   }
 }
 
-/* --- NEUE Breakpoints: 560px, 430px, 350px --- */
-
-/* 1) Bis 560px */
-@media (max-width: 560px) {
-  .main-content {
-    margin-left: 0;
-    margin-top: 80px;
-    padding: 0 20px;
+@media (max-width: 576px) {
+  .panel-row {
+    width: 80%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .panel {
+    min-height: 120px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .panels {
-    margin-top: 120px;
-  }
-
-  .panel-row {
     justify-content: center;
-    align-items: center;
-    gap: 16px;
+    overflow: hidden;
   }
-
-  .panel {
-    width: 90%;
-    height: auto;
-  }
-
   .panel img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .panel p {
-    font-size: 44px; /* etwas kleiner */
-  }
-
-  .panel.large {
-    width: 90%;
+    max-width: 40px;
     height: auto;
-    flex-direction: row;
-    padding: 10px;
+  }
+  .panel p {
+    font-size: 20px;
+    margin: 6px 0 0;
+  }
+  .panel span {
+    font-size: 12px;
+    margin: 4px 0 0;
+    text-align: center;
+  }
+  .panel-row:nth-child(1) {
+    /* Wir machen die row schmaler/breiter je nach Bedarf */
+    width: 80% !important;
+
+    /* Damit Panels nicht an die Außenkanten gedrückt werden: */
+    justify-content: flex-start !important;
+    gap: 130px !important; /* falls du gar keinen Abstand möchtest */
+  }
+
+  .panel-row:nth-child(1) .panel {
+    /* Verhindert, dass sie sich ausdehnen */
+    flex: 0 0 auto !important;
+    /* Z. B. 48% pro Panel = 96% + minimaler gap passt rein */
+    width: 408% !important;
+    margin: 0 !important; /* remove margins if any */
+  }
+  .panel-row:nth-child(1) {
+    gap: 0px;
+  }
+  .panel-row:nth-child(2) .panel {
+    width: 100%;
+  }
+  .panel-row:nth-child(3) .panel {
+    width: 99.3%;
+  }
+  .greeting-text h1 {
+    font-size: 26px;
+  }
+  .greeting-text h2 {
+    font-size: 32px;
   }
 }
 
-/* 2) Bis 430px */
-@media (max-width: 430px) {
-  .panel-link .panel {
-    width: 322px;
-  }
-
+@media (max-width: 459px) {
   .panel {
-    width: 95%;
-    height: auto;
-  }
-
-  .panel img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .panel p {
-    font-size: 36px;
-  }
-
-  .panel.large {
+    min-height: 150px;
     padding: 8px;
   }
-}
-
-/* 3) Bis 350px */
-@media (max-width: 350px) {
-  .panel {
-    width: 100%;
-    height: auto;
-  }
-
   .panel img {
-    width: 30px;
-    height: 30px;
+    max-width: 35px;
   }
-
   .panel p {
+    font-size: 18px;
+  }
+  .panel span {
+    font-size: 11px;
+  }
+  .greeting-text h1 {
+    font-size: 24px;
+  }
+  .greeting-text h2 {
     font-size: 28px;
   }
+}
 
-  .panel.large {
+@media (max-width: 360px) {
+  .panel {
+    min-height: 100px;
     padding: 6px;
-    flex-direction: column;
-    align-items: center;
   }
-  .panel.large .divider {
-    display: none; /* bei sehr kleinem Platz ausblenden */
+  .panel img {
+    max-width: 30px;
+  }
+  .panel p {
+    font-size: 16px;
+  }
+  .panel span {
+    font-size: 10px;
+  }
+  .greeting-text h1 {
+    font-size: 22px;
+  }
+  .greeting-text h2 {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 320px) {
+  .panel {
+    min-height: 90px;
+    padding: 4px;
+  }
+  .panel img {
+    max-width: 28px;
+  }
+  .panel p {
+    font-size: 14px;
+  }
+  .panel span {
+    font-size: 9px;
+  }
+  .greeting-text h1 {
+    font-size: 20px;
+  }
+  .greeting-text h2 {
+    font-size: 24px;
   }
 }
