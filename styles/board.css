@@ -153,9 +153,35 @@
   fill: white;
 }
 
+
+
 .progressBarBoard {
-  margin-right: 8px;
+  width: 50%; /* Breite der Fortschrittsanzeige */
+  height: 10px; /* Höhe der Fortschrittsanzeige */
+  appearance: none; /* Entfernt standardmäßige Browser-Stile */
+  background-color: #f9f9f9; /* Zartes Hellgrau für den Hintergrund */
+  border: 1px solid #e6e6e6; /* Rahmen in zartem Hellgrau */
+  border-radius: 4px; /* Leicht abgerundete Ecken */
+  overflow: hidden; /* Verhindert Überlauf */
 }
+
+/* Für Webkit-basierte Browser (Chrome, Safari) */
+.progressBarBoard::-webkit-progress-bar {
+  background-color: #f9f9f9; /* Gleicher Hintergrund wie der Container */
+  border-radius: 4px; /* Gleiche Abrundung */
+}
+
+.progressBarBoard::-webkit-progress-value {
+  background-color: rgb(29, 129, 224); /* Dunkelblau für den Fortschritt */
+  border-radius: 4px; /* Gleiche Abrundung */
+}
+
+/* Für Firefox */
+.progressBarBoard::-moz-progress-bar {
+  background-color: rgb(43, 54, 71); /* Dunkelblau für den Fortschritt */
+  border-radius: 4px; /* Gleiche Abrundung */
+}
+
 
 .addMarginToOverlay {
   margin-left: -11px;
@@ -364,6 +390,7 @@
 }
 
 .progressBarDiv {
+  gap: 8px;
   display: flex;
   flex-direction: row;
   align-items: center;

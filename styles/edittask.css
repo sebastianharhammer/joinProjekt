@@ -245,6 +245,7 @@
 
 .editTaskTextarea{
     height: 300px;
+    color: rgb(136,136,136)
 }
 
 .edit-subtask-item{
@@ -327,7 +328,7 @@ input[type="date"] {
     outline: none;
 }
 
-.check-icon-in-edit{
+.check-icon-edit{
     height: 16px;
     width: 16px;
 }
@@ -340,24 +341,24 @@ input[type="date"] {
     border: 2px solid rgb(43,54,71); /* Dunkelgrüner Rand */
     border-radius: 4px; /* Abgerundete Ecken */
     background-color: white; /* Weißer Hintergrund */
-    display: inline-block; /* Macht es inline */
-    cursor: pointer; /* Ändert den Cursor in einen Zeiger */
-    position: relative; /* Position für den Haken */
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
 }
 
 .contact-checkbox-edit:checked {
-    background-color: white; /* Hintergrund bleibt weiß */
-    border-color: rgb(43,54,71); /* Rand bleibt dunkelgrün */
+    background-color: white;
+    border-color: rgb(43,54,71);
 }
 
 .contact-checkbox-edit:checked::after {
-    content: "✔"; /* Grüner Haken */
-    color: rgb(43,54,71); /* Farbe des Hakens */
-    font-size: 16px; /* Größe des Hakens */
-    position: absolute; /* Position relativ zur Checkbox */
-    top: 50%; /* Zentriert den Haken vertikal */
-    left: 50%; /* Zentriert den Haken horizontal */
-    transform: translate(-50%, -50%); /* Korrigiert die Zentrierung */
+    content: "✔";
+    color: rgb(43,54,71);
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .dropdown-contact-edit:hover{

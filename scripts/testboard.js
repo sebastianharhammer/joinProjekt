@@ -791,7 +791,7 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
   );
   if (editIcon) {
     editIcon.src = "./img/check.svg";
-    editIcon.classList.add("check-icon");
+    editIcon.classList.add("check-icon-edit");
     editIcon.onclick = null; // Entferne die `onclick`-Funktion
   }
 
