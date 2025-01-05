@@ -752,22 +752,95 @@ function renderEditSubtasks(task) {
 
   task.subtasks.forEach((subtask, index) => {
     const subtaskId = `edit-subtask-${task.id}-${index + 1}`; // Dynamische ID erstellen
+    const subtaskTextId = `subtask-text-${task.id}-${index}`; // Eindeutige ID für das p-Tag
 
     subtaskContainer.innerHTML += /*html*/ `
-            <div class="edit-subtask-item" id="${subtaskId}">
-                <p class="subtaskFontInEdit">• ${
-                  subtask.subtask || `Subtask ${index + 1}`
-                }</p>
-                <div class="edit-existingtask">
-                    <img src="./img/edit.svg" alt="Edit" class="edit-icon">
-                    <span>|</span>
-                    <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${
-                      task.id
-                    }, ${index})">
-                </div>
-            </div>`;
+      <div class="edit-subtask-item" id="${subtaskId}">
+        <p id="${subtaskTextId}" class="subtaskFontInEdit">• ${subtask.subtask || `Subtask ${index + 1}`}</p>
+        <div class="edit-existingtask">
+          <img src="./img/edit.svg" alt="Edit" class="edit-icon" onclick="editExistingSubtaskEditView(${task.id}, ${index})">
+          <span>|</span>
+          <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${task.id}, ${index})">
+        </div>
+      </div>`;
   });
 }
+
+function editExistingSubtaskEditView(taskId, subtaskIndex) {
+  // Identifiziere das `<p>`-Tag basierend auf der ID
+  const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
+  const subtaskTextElement = document.getElementById(subtaskTextId);
+
+  if (!subtaskTextElement) {
+    console.error(`Subtask-Text-Element mit ID ${subtaskTextId} nicht gefunden.`);
+    return;
+  }
+
+  // Erstelle ein neues `<input>`-Element
+  const inputElement = document.createElement("input");
+  inputElement.type = "text";
+  inputElement.value = subtaskTextElement.textContent.replace("• ", "").trim();
+  inputElement.className = "subtaskInputInEdit"; // Optionale Klasse für Styling
+
+  // Ersetze das `<p>`-Tag durch das `<input>`-Element
+  subtaskTextElement.replaceWith(inputElement);
+
+  // Tausche das Edit-Icon gegen ein Check-Icon
+  const editIcon = document.querySelector(
+    `#edit-subtask-${taskId}-${subtaskIndex + 1} .edit-icon`
+  );
+  if (editIcon) {
+    editIcon.src = "./img/check.svg";
+    editIcon.onclick = null; // Entferne die `onclick`-Funktion
+  }
+
+  // Füge ein Event hinzu, um die Eingabe bei Enter zu speichern
+  inputElement.addEventListener("blur", () => saveEditedSubtask(taskId, subtaskIndex, inputElement.value));
+  inputElement.focus();
+}
+
+
+function saveEditedSubtask(taskId, subtaskIndex, newValue) {
+  const task = taskArray.find((t) => t.id === taskId);
+  if (!task || !task.subtasks || !task.subtasks[subtaskIndex]) {
+    console.error("Task oder Subtask nicht gefunden.");
+    return;
+  }
+
+  // Aktualisiere den Subtask-Wert
+  task.subtasks[subtaskIndex].subtask = newValue;
+
+  // Aktualisiere Firebase (optional)
+  fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  })
+    .then(() => console.log(`Subtask ${subtaskIndex} von Task ${taskId} gespeichert.`))
+    .catch((error) => console.error("Fehler beim Speichern des Subtasks:", error));
+
+
+  const subtaskContainer = document.getElementById(`edit-subtask-${taskId}-${subtaskIndex + 1}`);
+  subtaskContainer.innerHTML = `
+    <p id="subtask-text-${taskId}-${subtaskIndex}" class="subtaskFontInEdit">• ${newValue}</p>
+    <div class="edit-existingtask">
+      <img src="./img/edit.svg" alt="Edit" class="edit-icon" onclick="editExistingSubtaskEditView(${taskId}, ${subtaskIndex})">
+      <span>|</span>
+      <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${taskId}, ${subtaskIndex})">
+    </div>`;
+
+  // Restore the original icon and behavior
+  const editIcon = document.querySelector(
+    `#edit-subtask-${taskId}-${subtaskIndex + 1} .edit-icon`
+  );
+  if (editIcon) {
+    editIcon.src = "./img/edit.svg";
+    editIcon.onclick = () => editExistingSubtaskEditView(taskId, subtaskIndex);
+  }
+}
+
+
+
 
 async function getUsersForEditDropDown() {
   try {
@@ -1046,19 +1119,21 @@ function addSubTaskInEditTempl() {
   const subtaskIndex = subtaskContainer.childElementCount; // Index des neuen Subtasks
   const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`; // Eindeutige ID erstellen
 
-  // Neues Subtask-Element mit allen zugehörigen Icons und Separator erstellen
+
   subtaskContainer.innerHTML += /*html*/ `
         <div class="edit-subtask-item" id="${subtaskId}">
             <p class="subtaskFontInEdit">• ${inputValue}</p>
             <div class="edit-existingtask">
-                <img src="./img/edit.svg" alt="Edit" class="edit-icon">
+                <img src="./img/edit.svg" alt="Edit" class="edit-icon" onclick="editExistingSubtaskEditView(${taskId}, ${subtaskIndex})">
                 <span>|</span>
                 <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${taskId}, ${subtaskIndex})">
             </div>
         </div>`;
 
-  inputField.value = ""; // Eingabefeld leeren
+  inputField.value = "";
 }
+
+
 
 function setupEditTaskEventListeners(taskId) {
   const dueDateInput = document.getElementById("edit-due-date");
@@ -1100,7 +1175,6 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
     .catch((error) => {
       console.error("Fehler beim Löschen des Subtasks in Firebase:", error);
     });
-
   const subtaskElement = document.getElementById(
     `edit-subtask-${taskId}-${subtaskIndex + 1}`
   );
