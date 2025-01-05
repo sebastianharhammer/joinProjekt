@@ -222,10 +222,10 @@ function updateTaskHTML() {
   // Tasks in die entsprechenden Spalten rendern
   for (const task of todos) {
     todoColumn.innerHTML += createTaskHTML(task);
-    createOwnerCircles(task); // Erstelle Benutzerkreise
-    findClassOfTaskCat(task); // Setze die Kategorie-Klasse
-    findPrioIcon(task); // Aktualisiere das Prio-Icon
-    findAmountOfSubtasks(task); // Zeige die Anzahl der Subtasks
+    createOwnerCircles(task);
+    findClassOfTaskCat(task);
+    findPrioIcon(task);
+    findAmountOfSubtasks(task);
   }
 
   for (const task of inProgress) {
@@ -252,11 +252,34 @@ function updateTaskHTML() {
     findAmountOfSubtasks(task);
   }
 
-  // Wenn keine Tasks in der "todo"-Spalte sind, zeige eine Nachricht
+  // Prüfe, ob keine Tasks in den Kategorien sind und füge die Nachricht ein
   if (todoColumn.children.length === 0) {
-    createNoToDosdiv();
+    createNoTasksDiv("todo", "NO TASKS TO DO");
+  }
+  if (inProgressColumn.children.length === 0) {
+    createNoTasksDiv("inProgress", "NO TASKS IN PROGRESS");
+  }
+  if (feedbackColumn.children.length === 0) {
+    createNoTasksDiv("feedback", "NO TASKS IN FEEDBACK");
+  }
+  if (doneColumn.children.length === 0) {
+    createNoTasksDiv("done", "NO TASKS DONE");
   }
 }
+
+
+function createNoTasksDiv(columnId, message) {
+  const column = document.getElementById(columnId);
+  if (column) {
+    column.innerHTML += /*html*/ `
+      <div class="noTasks">
+        <p class="font-no-tasks">${message}</p>
+      </div>
+    `;
+  }
+}
+
+
 
 function createNoToDosdiv() {
   document.getElementById("todo").innerHTML += /*html*/ `
