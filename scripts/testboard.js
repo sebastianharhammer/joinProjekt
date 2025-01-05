@@ -252,7 +252,7 @@ function updateTaskHTML() {
     findAmountOfSubtasks(task);
   }
 
-  // Prüfe, ob keine Tasks in den Kategorien sind und füge die Nachricht ein
+
   if (todoColumn.children.length === 0) {
     createNoTasksDiv("todo", "NO TASKS TO DO");
   }
@@ -1063,9 +1063,8 @@ function getEditTemplate(task) {
 
 
             <p class="firstTableColumnFont">Description:</p>
-            <textarea id="editDescription" class="editTaskTextarea">${
-              task.description
-            }</textarea>
+            <textarea id="editDescription" class="editTaskTextarea textarea-large"></textarea>
+
             
             <p class="firstTableColumnFont">Due Date:</p>
             <div class="edit-due-date">
@@ -1116,10 +1115,10 @@ function getEditTemplate(task) {
             <section id="edit-subtasks-section">
 
             <div class="add-subtask-in-edit">
-                <input class="input-subtask-in-edit" type="text" placeholder="Write a new subtask...">
+                <input id="input-subtask-in-edit" class="input-subtask-in-edit" type="text" placeholder="Write a new subtask...">
                 <div class="img-in-edit-input">
                     <div class="close-and-check-imgs">
-                        <img src="./img/close.svg" alt="close">
+                        <img onclick="emptyInput()" src="./img/close.svg" alt="close">
                     </div>
                     <div class="close-and-check-imgs">
                         <img onclick="addSubTaskInEditTempl()" src="./img/check.svg" alt="check">
@@ -1136,11 +1135,17 @@ function getEditTemplate(task) {
             <button class="btn-skip-and-confirm-edit" onclick="saveEditedTask()">Save changes</button>
             <button onclick="skipEdit(${
               task.id
-            })" class="btn-skip-and-confirm-edit">close edit</button>
+            })" class="btn-skip-and-confirm-edit">Skip edit</button>
             </section>
         </div>
     `;
 }
+
+function emptyInput() {
+  let inputField = document.getElementById('input-subtask-in-edit'); // Zugriff auf das Input-Element
+  inputField.value = "";
+}
+
 
 function addSubTaskInEditTempl() {
   const inputField = document.querySelector(".input-subtask-in-edit");
@@ -1150,10 +1155,16 @@ function addSubTaskInEditTempl() {
   }
 
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
+
+  // Entferne "Keine Subtasks vorhanden", wenn ein Subtask erstellt wird
+  const noSubtasksElement = subtaskContainer.querySelector(".noSubtasks");
+  if (noSubtasksElement) {
+    noSubtasksElement.remove();
+  }
+
   const taskId = currentTaskBeingEdited; // Verwende die aktuelle Task-ID
   const subtaskIndex = subtaskContainer.childElementCount; // Index des neuen Subtasks
   const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`; // Eindeutige ID erstellen
-
 
   subtaskContainer.innerHTML += /*html*/ `
         <div class="edit-subtask-item" id="${subtaskId}">
@@ -1167,6 +1178,7 @@ function addSubTaskInEditTempl() {
 
   inputField.value = "";
 }
+
 
 
 
@@ -1210,13 +1222,21 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
     .catch((error) => {
       console.error("Fehler beim Löschen des Subtasks in Firebase:", error);
     });
+
   const subtaskElement = document.getElementById(
     `edit-subtask-${taskId}-${subtaskIndex + 1}`
   );
   if (subtaskElement) {
     subtaskElement.remove();
   }
+
+  // Zeige "Keine Subtasks vorhanden" an, wenn keine Subtasks mehr existieren
+  const subtaskContainer = document.getElementById("rendered-subtasks-edit");
+  if (subtaskContainer.children.length === 0) {
+    subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+  }
 }
+
 
 function skipEdit(taskId) {
   const editView = document.getElementById("editTaskTempl");

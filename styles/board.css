@@ -179,7 +179,7 @@
 /* Für Firefox */
 .progressBarBoard::-moz-progress-bar {
   background-color: rgb(43, 54, 71); /* Dunkelblau für den Fortschritt */
-  border-radius: 4px; /* Gleiche Abrundung */
+  border-radius: 4px;
 }
 
 

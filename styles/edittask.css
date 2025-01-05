@@ -79,6 +79,10 @@
     color: #888;
 }
 
+.noSubtasks{
+    padding-top: 10px;
+}
+
 .dropdown-options-edit {
     display: none;
     position: absolute;
@@ -154,8 +158,8 @@
     border-radius: 8px;
     height: 48px;
     font-family: "Inter";
-    font-weight: 300;
-    font-size: 12px;
+    font-weight: 400;
+    font-size: 13px;
     color: white;
     background-color: rgb(42, 54, 71);
 }
@@ -168,7 +172,7 @@
     height: 48px;
     font-family: "Inter";
     font-weight: 400;
-    font-size: 12px;
+    font-size: 13px;
     color: rgb(42, 54, 71);
     background-color: white;
     cursor: pointer;
@@ -288,18 +292,22 @@
 
 .edit-icon{
     height: 18px;
+    border-radius: 4px;
 }
 
 .edit-icon:hover{
     cursor: pointer;
+    background-color: rgb(208, 207, 207);
 }
 
 .delete-icon{
     height: 18px;
+    border-radius: 6px;
 }
 
 .delete-icon:hover{
     cursor: pointer;
+    background-color: rgb(208, 207, 207);
 }
 
 input[type="date"] {
@@ -365,3 +373,20 @@ input[type="date"] {
     background-color: rgb(240, 240, 240);
 }
 
+.textarea-large {
+    height: 300px !important; /* Überschreibt alle vorherigen Definitionen */
+    width: 100%; /* Optional: Breite anpassen */
+    resize: none; /* Optional: verhindert, dass Benutzer die Größe ändern */
+    overflow-y: auto; /* Scrollbar anzeigen, falls nötig */
+} 
+
+.close-and-check-imgs{
+    border-radius: 8px;
+    height: 30px;
+    width: 30px;
+}
+
+.close-and-check-imgs:hover{
+    cursor: pointer;
+    background-color: rgb(231, 231, 237);
+}

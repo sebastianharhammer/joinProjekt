@@ -162,15 +162,16 @@
 }
 
 .deleteCard {
+    padding: 4px;
+    border-radius: 8px;
+    justify-content: center;
     display: flex;
     align-items: center;
     cursor: pointer;
 }
 
-
-.editDeleteFont:hover{
-    color: rgb(41, 171, 226);
-    font-weight: 800;
+.deleteCard:hover{
+    background-color: rgba(91, 190, 233, 0.701);
 }
 
 .cardSubtasks{
@@ -179,10 +180,6 @@ flex-direction: column;
 gap: 12px;
 }
 
-.deleteCard:hover img {
-    filter: brightness(0) saturate(100%) invert(38%) sepia(74%) saturate(721%) hue-rotate(172deg) brightness(93%) contrast(87%);
-    transform: scale(1.2); 
-}
 
 .closeCardParent{
     display: flex;
@@ -304,7 +301,7 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
 
 .deleteTaskButtons:hover{
     cursor: pointer;
-    background-color: rgb(227, 220, 220);
+    color: rgb(41,171,226);
 }
 
 .deleteHeaderFont{
