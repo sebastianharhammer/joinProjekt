@@ -314,6 +314,42 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
     font-weight: 400;
 }
 
+/* Scrollbar Detailview */
+
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px; 
+}
+
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(43, 54, 71);
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+::-webkit-scrollbar-button {
+    border-radius: 0;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(60, 74, 91);
+}
+
+
+::-webkit-scrollbar-button:hover {
+    background-color: rgb(60, 74, 91); /* Etwas hellere Farbe beim Hover */
+}
+
+
+
+
 @media (max-width: 480px) {
     .currentTaskCard {
         position: fixed;
