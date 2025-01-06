@@ -107,7 +107,6 @@ body {
   align-items: center;
   scrollbar-color: gray;
   scrollbar-width: thin;
-
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -120,12 +119,14 @@ body {
 .addtask-form-left-top {
   display: flex;
   flex-direction: column;
-  width: 440px;
+  width: 100%;
+  max-width: 440px;
   height: auto;
 }
 .addtask-form-right-bottom {
   flex: 1;
-  width: 440px;
+  width: 100%;
+  max-width: 440px;
 }
 
 .field-text-flex {
@@ -134,16 +135,16 @@ body {
   margin-bottom: 16px;
 }
 #addTaskDiscriptionField {
-  width: auto;
+  width: 100%;
 }
 #addTaskPopupDiscriptionField {
-  width: auto;
+  width: 100%;
 }
 
 .input-addtask {
   cursor: pointer;
   font-size: 20px;
-  width: auto;
+  width: 100%;
   border-radius: 10px;
   padding: 12px 21px;
   max-height: 48px;
@@ -151,6 +152,7 @@ body {
   font-weight: 400;
   line-height: 24px;
   border: 1px solid #d1d1d1;
+  box-sizing: border-box;
 }
 .input-addtask:focus {
   outline: 1px solid var(--darkLightBlue);
@@ -175,6 +177,8 @@ textarea {
   font-size: 20px;
   font-family: "Inter";
   resize: none;
+  width: 100%;
+  box-sizing: border-box;
 }
 textarea::placeholder {
   font-family: "Inter";
@@ -222,7 +226,6 @@ input[type="date"] {
 
 #subtasksContent {
   height: auto;
-
   list-style-type: disc;
   padding-left: 20px;
   color: black;
@@ -306,6 +309,7 @@ ul {
   justify-content: center;
   height: auto;
   margin-bottom: 56px;
+  width: 100%;
 }
 
 #addTaskCategory {
@@ -320,7 +324,6 @@ ul {
   box-sizing: border-box;
   border-radius: 12px 8px 8px 12px;
   max-height: 200px;
-
   gap: 4px;
   top: 40px;
   padding-top: 46px;
@@ -339,7 +342,6 @@ ul {
   box-sizing: border-box;
   border-radius: 12px 8px 8px 12px;
   max-height: 200px;
-
   gap: 4px;
   top: 40px;
   padding-top: 46px;
@@ -768,7 +770,6 @@ ul {
   }
   .addtask-main-content h1 {
     width: 440px;
-
     margin: 0 auto;
   }
   .separator {
@@ -838,21 +839,10 @@ ul {
 }
 
 @media (max-width: 768px) {
-/*   .addtask-form-container {
-    flex-direction: column;
-    padding: 0 13px;
-    margin: 0 auto;
-    width: 100%;
-    align-items: center;
-  } */
   .addtask-main-content h1 {
     width: 210px;
     margin: 0 auto;
   }
- /*  .prio-btn-content {
-    flex-direction: row;
-    align-items: center;
-  } */
   .addtask-buttons {
     align-items: center;
   }
@@ -899,13 +889,6 @@ ul {
 
   .addtask-main-content {
     display: flow;
-    
-  }
-
-  
-
-  #dropDownCategoryMenu {
-    padding-top: 0;
   }
 
   .addtask-main-content h1 {
@@ -931,24 +914,8 @@ ul {
     align-items: center;
     flex-direction: row;
   }
- /*  .prio-btn-content {
-    width: 20px;
-    gap: 8px;
-  } */
-
-
-
-  /* .input-addtask {
-    font-size: 14px;
-    padding: 6px 12px;
-    max-height: 36px;
-    border-radius: 6px;
-  } */
-
- 
 
   #task-success {
     display: none;
   }
 }
-
