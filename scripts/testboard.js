@@ -1,14 +1,33 @@
 let currentUser = null;
 
-function init() {
+async function init() {
   includeHTML();
   loadCurrentUser();
+  await fetchContacts();
   fetchTasks("/tasks");
   loadBoardNavigator();
 }
 
+
 let currentDraggedElement;
 let currentTaskBeingEdited = null;
+
+async function fetchContacts() {
+  try {
+    const response = await fetch(BASE_URL + "/contacts/.json", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const responseToJson = await response.json();
+    if (responseToJson) {
+      finalContacts = Object.values(responseToJson);
+      console.log("Contacts loaded:", finalContacts);
+    }
+  } catch (error) {
+    console.error("Fehler beim Laden der Kontakte:", error);
+  }
+}
+
 
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
@@ -21,13 +40,23 @@ function loadCurrentUser() {
 async function fetchTasks(path = "") {
   let response = await fetch(BASE_URL + path + ".json");
   let responseToJson = await response.json();
-  console.log(responseToJson);
   if (responseToJson) {
-    taskArray = Object.values(responseToJson);
+    taskArray = Object.values(responseToJson).map((task) => {
+      // Verknüpfe die Owner-Daten mit den finalContacts
+      if (task.owner) {
+        task.owner = task.owner.map((owner) => {
+          const contact = finalContacts.find(
+            (c) => c.firstName === owner.firstName && c.lastName === owner.lastName
+          );
+          return { ...owner, color: contact?.color || "gray" }; // Farbe hinzufügen
+        });
+      }
+      return task;
+    });
   }
-  console.log(taskArray);
   updateTaskHTML();
 }
+
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -291,31 +320,32 @@ function createNoToDosdiv() {
 function createOwnerCircles(task) {
   const userNameCircles = document.getElementById(`userNameCircles-${task.id}`);
   if (!userNameCircles) {
-      console.error("Owner-Kreis-Container nicht gefunden!");
-      return;
+    console.error("Owner-Kreis-Container nicht gefunden!");
+    return;
   }
 
   userNameCircles.innerHTML = "";
 
   if (!task.owner || task.owner.length === 0) {
-      userNameCircles.innerHTML = `
-          <svg width="34" height="34">
-              <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
-              <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">N/A</text>
-          </svg>
-      `;
-      return;
+    userNameCircles.innerHTML = `
+      <svg width="34" height="34">
+        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
+        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">N/A</text>
+      </svg>
+    `;
+    return;
   }
 
   for (const owner of task.owner) {
-      userNameCircles.innerHTML += `
-          <svg width="34" height="34">
-              <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${getRandomColor()}" />
-              <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
-                  ${owner.initials || "N/A"}
-              </text>
-          </svg>
-      `;
+    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
+    userNameCircles.innerHTML += `
+      <svg width="34" height="34">
+        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
+        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
+          ${owner.initials || "N/A"}
+        </text>
+      </svg>
+    `;
   }
 }
 
@@ -678,36 +708,23 @@ function getAssignedOwnersHTML(task) {
   }
   let ownerHTML = "";
   task.owner.forEach((owner) => {
-    const circleColor = getRandomColor();
+    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
     ownerHTML += `
-            <div class="ownerItem">
-                <svg width="34" height="34">
-                    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${circleColor}" />
-                    <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
-                        ${owner.initials || "N/A"}
-                    </text>
-                </svg>
-                <p>${owner.firstName} ${owner.lastName}</p>
-            </div>
-        `;
+      <div class="ownerItem">
+        <svg width="34" height="34">
+          <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
+          <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
+            ${owner.initials || "N/A"}
+          </text>
+        </svg>
+        <p>${owner.firstName} ${owner.lastName}</p>
+      </div>
+    `;
   });
   return ownerHTML;
 }
 
-function getRandomColor() {
-  const colors = [
-    "#FF5733",
-    "#33FF57",
-    "#3357FF",
-    "#FFC300",
-    "#8E44AD",
-    "#16A085",
-    "#E74C3C",
-    "#2ECC71",
-    "#3498DB",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
+
 
 function getPrioIcon(prio) {
   if (prio === "medium") {
@@ -894,62 +911,59 @@ function setupEditDropdownInteraction() {
 
 function returnArrayContactsEdit() {
   if (!finalContactsForEdit || Object.keys(finalContactsForEdit).length === 0) {
-      console.error("No contacts found.");
-      return;
+    console.error("No contacts found.");
+    return;
   }
 
   const editDropdown = document.getElementById("custom-dropdown-edit");
   const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
   editOptionsContainer.innerHTML = "";
+  
   Object.keys(finalContactsForEdit).forEach((key) => {
-      const contact = finalContactsForEdit[key];
-      if (!contact || !contact.firstName || !contact.lastName) return;
-      const isChecked = assignedUserArr.some(
-          (user) =>
-              user.firstName === contact.firstName &&
-              user.lastName === contact.lastName
+    const contact = finalContactsForEdit[key];
+    if (!contact || !contact.firstName || !contact.lastName) return;
+    const isChecked = assignedUserArr.some(
+      (user) =>
+        user.firstName === contact.firstName &&
+        user.lastName === contact.lastName
+    );
+
+    const optionElement = document.createElement("div");
+    optionElement.classList.add("dropdown-contact-edit");
+
+    const circleDiv = document.createElement("div");
+    circleDiv.classList.add("contact-circle-edit");
+    circleDiv.style.backgroundColor = getRandomColor(contact.firstName, contact.lastName); // Nutzt getRandomColor
+    circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
+
+    const checkboxLabel = document.createElement("label");
+    checkboxLabel.classList.add("contact-checkbox-edit-label");
+
+    const checkboxSquare = document.createElement("span");
+    checkboxSquare.classList.add("checkboxSquare");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("contact-checkbox-edit");
+    checkbox.checked = isChecked; // Zustand setzen
+    checkbox.addEventListener("change", () => {
+      handleEditContactSelection(
+        contact.firstName,
+        contact.lastName,
+        checkbox.checked
       );
+    });
+    checkboxLabel.appendChild(checkbox);
+    checkboxLabel.appendChild(checkboxSquare);
 
+    optionElement.appendChild(circleDiv);
+    optionElement.appendChild(nameSpan);
+    optionElement.appendChild(checkboxLabel);
 
-      const optionElement = document.createElement("div");
-      optionElement.classList.add("dropdown-contact-edit");
-
-
-      const circleDiv = document.createElement("div");
-      circleDiv.classList.add("contact-circle-edit");
-      circleDiv.style.backgroundColor = getRandomColor();
-      circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
-
-
-      const nameSpan = document.createElement("span");
-      nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
-
-      const checkboxLabel = document.createElement("label");
-      checkboxLabel.classList.add("contact-checkbox-edit-label");
-
-      const checkboxSquare = document.createElement("span");
-      checkboxSquare.classList.add("checkboxSquare");
-
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.classList.add("contact-checkbox-edit");
-      checkbox.checked = isChecked; // Zustand setzen
-      checkbox.addEventListener("change", () => {
-          handleEditContactSelection(
-              contact.firstName,
-              contact.lastName,
-              checkbox.checked
-          );
-      });
-      checkboxLabel.appendChild(checkbox);
-      checkboxLabel.appendChild(checkboxSquare);
-
-
-      optionElement.appendChild(circleDiv);
-      optionElement.appendChild(nameSpan);
-      optionElement.appendChild(checkboxLabel);
-
-      editOptionsContainer.appendChild(optionElement);
+    editOptionsContainer.appendChild(optionElement);
   });
 }
 
@@ -995,14 +1009,13 @@ function updateAssignedUsersDisplay() {
   assignedUsersContainer.innerHTML = "";
 
   assignedUserArr.forEach((user) => {
-    const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(
-      user.lastName
-    )}`;
+    const color = getRandomColor(user.firstName, user.lastName); // Nutzt getRandomColor
+    const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`;
     assignedUsersContainer.innerHTML += `
-            <div class="assigned-user-circle" style="background-color: ${getRandomColor()}">
-                <p>${initials}</p>
-            </div>
-        `;
+      <div class="assigned-user-circle" style="background-color: ${color}">
+        <p>${initials}</p>
+      </div>
+    `;
   });
 }
 
@@ -1010,10 +1023,16 @@ function getFirstLetter(name) {
   return name.trim().charAt(0).toUpperCase();
 }
 
-function getRandomColor() {
-  const colors = ["orange", "purple", "blue", "red", "green", "teal"];
-  return colors[Math.floor(Math.random() * colors.length)];
+function getRandomColor(firstName, lastName) {
+  // Suche in finalContacts nach dem Kontakt
+  const contact = finalContacts.find(
+    (c) => c.firstName === firstName && c.lastName === lastName
+  );
+
+  // Rückgabe der Farbe aus dem Kontaktobjekt oder Standardfarbe, falls keine definiert ist
+  return contact?.color || "gray";
 }
+
 
 function getEditTemplate(task) {
   return /*html*/ `
