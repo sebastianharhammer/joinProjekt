@@ -207,19 +207,18 @@ function updateTaskHTML() {
   let feedbackColumn = document.getElementById("feedback");
   let doneColumn = document.getElementById("done");
 
-  // Leere die Spalten vor der Aktualisierung
   todoColumn.innerHTML = "";
   inProgressColumn.innerHTML = "";
   feedbackColumn.innerHTML = "";
   doneColumn.innerHTML = "";
 
-  // Tasks nach Status filtern
+
   let todos = taskArray.filter((task) => task.status === "todo");
   let inProgress = taskArray.filter((task) => task.status === "inProgress");
   let feedback = taskArray.filter((task) => task.status === "feedback");
   let done = taskArray.filter((task) => task.status === "done");
 
-  // Tasks in die entsprechenden Spalten rendern
+
   for (const task of todos) {
     todoColumn.innerHTML += createTaskHTML(task);
     createOwnerCircles(task);
