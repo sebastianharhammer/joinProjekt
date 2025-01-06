@@ -18,8 +18,8 @@ let addTaskcategories = [
         category: "Technical Task",
         "bg-color": "#1FD7C1",
       }];
-  let assignedUser = [];
-  let localStatus = "";
+let assignedUser = [];
+let localStatus = "";
 
 function showAddTask(status) {
     console.log("wird ausgeführt in " + "#" + status + "#") 

@@ -17,10 +17,10 @@ let addTaskcategories = [
         category: "Technical Task",
         "bg-color": "#1FD7C1",
       }];
-  let assignedUser = [];
+let assignedUser = [];
 
 
-  function init() {
+function init() {
     getTasks();
     getUsers();
     includeHTML();
