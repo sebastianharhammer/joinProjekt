@@ -765,6 +765,7 @@ function showEditTaskTempl(taskId) {
     console.error("Task nicht gefunden!");
     return;
   }
+  assignedUserArr = task.owner ? [...task.owner] : []; // Kopiere die aktuellen Owner in assignedUserArr
 
   let detailView = document.getElementById("taskDetailView");
   let editView = document.getElementById("editTaskTempl");
@@ -774,10 +775,11 @@ function showEditTaskTempl(taskId) {
 
   setupEditTaskEventListeners(taskId);
   getUsersForEditDropDown();
-  updateAssignedUsersDisplay();
+  updateAssignedUsersDisplay(); // Aktualisiere die Anzeige basierend auf den aktuellen Owners
   setPriority(task.prio);
   renderEditSubtasks(task);
 }
+
 
 function renderEditSubtasks(task) {
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
@@ -924,6 +926,8 @@ function returnArrayContactsEdit() {
   Object.keys(finalContactsForEdit).forEach((key) => {
     const contact = finalContactsForEdit[key];
     if (!contact || !contact.firstName || !contact.lastName) return;
+
+    // Überprüfe, ob der Kontakt bereits assigned ist
     const isChecked = assignedUserArr.some(
       (user) =>
         user.firstName === contact.firstName &&
@@ -968,6 +972,7 @@ function returnArrayContactsEdit() {
     editOptionsContainer.appendChild(optionElement);
   });
 }
+
 
 
 
@@ -1020,6 +1025,7 @@ function updateAssignedUsersDisplay() {
     `;
   });
 }
+
 
 function getFirstLetter(name) {
   return name.trim().charAt(0).toUpperCase();
