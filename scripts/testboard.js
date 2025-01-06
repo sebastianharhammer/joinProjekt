@@ -42,13 +42,12 @@ async function fetchTasks(path = "") {
   let responseToJson = await response.json();
   if (responseToJson) {
     taskArray = Object.values(responseToJson).map((task) => {
-      // Verknüpfe die Owner-Daten mit den finalContacts
       if (task.owner) {
         task.owner = task.owner.map((owner) => {
           const contact = finalContacts.find(
             (c) => c.firstName === owner.firstName && c.lastName === owner.lastName
           );
-          return { ...owner, color: contact?.color || "gray" }; // Farbe hinzufügen
+          return { ...owner, color: contact?.color || "gray" };
         });
       }
       return task;
@@ -893,21 +892,24 @@ async function getUsersForEditDropDown() {
 
 function setupEditDropdownInteraction() {
   const editDropdown = document.getElementById("custom-dropdown-edit");
-  const editOptionsContainer = editDropdown.querySelector(
-    ".dropdown-options-edit"
-  );
+  const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
   editDropdown.addEventListener("click", (event) => {
     event.stopPropagation();
-    if (editOptionsContainer.style.display === "block") {
-      editOptionsContainer.style.display = "none";
-    } else {
+    const isDropdownOpen = editOptionsContainer.style.display === "block";
+    if (!isDropdownOpen) {
       editOptionsContainer.style.display = "block";
     }
   });
-  document.addEventListener("click", () => {
-    editOptionsContainer.style.display = "none";
+
+  document.addEventListener("click", (event) => {
+    if (
+      !editDropdown.contains(event.target)
+    ) {
+      editOptionsContainer.style.display = "none";
+    }
   });
 }
+
 
 function returnArrayContactsEdit() {
   if (!finalContactsForEdit || Object.keys(finalContactsForEdit).length === 0) {
@@ -1024,12 +1026,10 @@ function getFirstLetter(name) {
 }
 
 function getRandomColor(firstName, lastName) {
-  // Suche in finalContacts nach dem Kontakt
+
   const contact = finalContacts.find(
     (c) => c.firstName === firstName && c.lastName === lastName
   );
-
-  // Rückgabe der Farbe aus dem Kontaktobjekt oder Standardfarbe, falls keine definiert ist
   return contact?.color || "gray";
 }
 
