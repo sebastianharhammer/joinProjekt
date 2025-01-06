@@ -128,11 +128,11 @@ function createLargePanel(upcomingTask) {
 function getPriorityIcon(priority) {
   switch (priority) {
     case "urgent":
-      return "./img/up-scale-orange.png";
+      return "../img/up-scale-orange.png";
     case "medium":
-      return "./img/Prio_medium_color.svg";
+      return "../img/Prio_medium_color.svg";
     case "low":
-      return "./img/Prio_low_color.svg";
+      return "../img/Prio_low_color.svg";
   }
 }
 
