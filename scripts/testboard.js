@@ -744,7 +744,7 @@ function removeHighlight(id) {
 // edit task
 
 function showEditTaskTempl(taskId) {
-  currentTaskBeingEdited = taskId; // Speichert die aktuelle Task-ID
+  currentTaskBeingEdited = taskId;
   const task = taskArray.find((t) => t.id === taskId);
   if (!task) {
     console.error("Task nicht gefunden!");
@@ -790,7 +790,6 @@ function renderEditSubtasks(task) {
 }
 
 function editExistingSubtaskEditView(taskId, subtaskIndex) {
-  // Identifiziere das `<p>`-Tag basierend auf der ID
   const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
   const subtaskTextElement = document.getElementById(subtaskTextId);
 
@@ -798,17 +797,12 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
     console.error(`Subtask-Text-Element mit ID ${subtaskTextId} nicht gefunden.`);
     return;
   }
-
-  // Erstelle ein neues `<input>`-Element
   const inputElement = document.createElement("input");
   inputElement.type = "text";
   inputElement.value = subtaskTextElement.textContent.replace("• ", "").trim();
-  inputElement.className = "subtaskInputInEdit"; // Optionale Klasse für Styling
-
-  // Ersetze das `<p>`-Tag durch das `<input>`-Element
+  inputElement.className = "subtaskInputInEdit";
   subtaskTextElement.replaceWith(inputElement);
 
-  // Tausche das Edit-Icon gegen ein Check-Icon
   const editIcon = document.querySelector(
     `#edit-subtask-${taskId}-${subtaskIndex + 1} .edit-icon`
   );
@@ -817,8 +811,6 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
     editIcon.classList.add("check-icon-edit");
     editIcon.onclick = null; // Entferne die `onclick`-Funktion
   }
-
-  // Füge ein Event hinzu, um die Eingabe bei Enter zu speichern
   inputElement.addEventListener("blur", () => saveEditedSubtask(taskId, subtaskIndex, inputElement.value));
   inputElement.focus();
 }
@@ -830,11 +822,7 @@ function saveEditedSubtask(taskId, subtaskIndex, newValue) {
     console.error("Task oder Subtask nicht gefunden.");
     return;
   }
-
-  // Aktualisiere den Subtask-Wert
   task.subtasks[subtaskIndex].subtask = newValue;
-
-  // Aktualisiere Firebase (optional)
   fetch(`${BASE_URL}/tasks/${taskId}.json`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -884,7 +872,7 @@ async function getUsersForEditDropDown() {
     console.error("Error fetching contacts:", error);
   }
   returnArrayContactsEdit();
-  setupEditDropdownInteraction(); // Dropdown-Interaktion nach Rendern initialisieren
+  setupEditDropdownInteraction();
 }
 
 function setupEditDropdownInteraction() {
@@ -892,19 +880,14 @@ function setupEditDropdownInteraction() {
   const editOptionsContainer = editDropdown.querySelector(
     ".dropdown-options-edit"
   );
-  // Toggle-Logik für Dropdown
   editDropdown.addEventListener("click", (event) => {
-    // Verhindere, dass das Event andere Klick-Listener beeinflusst
     event.stopPropagation();
-    // Toggle-Anzeige: Flex (offen) / None (geschlossen)
     if (editOptionsContainer.style.display === "block") {
       editOptionsContainer.style.display = "none";
     } else {
       editOptionsContainer.style.display = "block";
     }
   });
-
-  // Optional: Dropdown schließen, wenn außerhalb geklickt wird
   document.addEventListener("click", () => {
     editOptionsContainer.style.display = "none";
   });
@@ -918,43 +901,36 @@ function returnArrayContactsEdit() {
 
   const editDropdown = document.getElementById("custom-dropdown-edit");
   const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
-  editOptionsContainer.innerHTML = ""; // Dropdown leeren
-
-  // Iteriere durch alle Kontakte und setze die Checkbox-Zustände
+  editOptionsContainer.innerHTML = "";
   Object.keys(finalContactsForEdit).forEach((key) => {
       const contact = finalContactsForEdit[key];
       if (!contact || !contact.firstName || !contact.lastName) return;
-
-      // Prüfen, ob der Benutzer im aktuellen Task als Owner zugewiesen ist
       const isChecked = assignedUserArr.some(
           (user) =>
               user.firstName === contact.firstName &&
               user.lastName === contact.lastName
       );
 
-      // Erstelle ein Container-DIV
+
       const optionElement = document.createElement("div");
       optionElement.classList.add("dropdown-contact-edit");
 
-      // Erstelle die Initialen-Kreise
+
       const circleDiv = document.createElement("div");
       circleDiv.classList.add("contact-circle-edit");
       circleDiv.style.backgroundColor = getRandomColor();
       circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
 
-      // Erstelle den Namen
+
       const nameSpan = document.createElement("span");
       nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
 
-      // Erstelle das Label für die Checkbox
       const checkboxLabel = document.createElement("label");
       checkboxLabel.classList.add("contact-checkbox-edit-label");
 
-      // Erstelle das Quadrat für die Checkbox
       const checkboxSquare = document.createElement("span");
       checkboxSquare.classList.add("checkboxSquare");
 
-      // Erstelle die eigentliche Checkbox
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.classList.add("contact-checkbox-edit");
@@ -966,17 +942,14 @@ function returnArrayContactsEdit() {
               checkbox.checked
           );
       });
-
-      // Füge die Checkbox und das Quadrat in das Label ein
       checkboxLabel.appendChild(checkbox);
       checkboxLabel.appendChild(checkboxSquare);
 
-      // Füge alle Elemente in das `optionElement` ein
+
       optionElement.appendChild(circleDiv);
       optionElement.appendChild(nameSpan);
       optionElement.appendChild(checkboxLabel);
 
-      // Füge das fertige `optionElement` in den `editOptionsContainer` ein
       editOptionsContainer.appendChild(optionElement);
   });
 }
@@ -999,7 +972,6 @@ function assignUserEditHTML(contact) {
 
 function handleEditContactSelection(firstName, lastName, isChecked) {
   if (isChecked) {
-    // Benutzer hinzufügen
     if (
       !assignedUserArr.some(
         (user) => user.firstName === firstName && user.lastName === lastName
@@ -1008,7 +980,6 @@ function handleEditContactSelection(firstName, lastName, isChecked) {
       assignedUserArr.push({ firstName, lastName });
     }
   } else {
-    // Benutzer entfernen
     assignedUserArr = assignedUserArr.filter(
       (user) => user.firstName !== firstName || user.lastName !== lastName
     );
@@ -1155,16 +1126,14 @@ function addSubTaskInEditTempl() {
   }
 
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
-
-  // Entferne "Keine Subtasks vorhanden", wenn ein Subtask erstellt wird
   const noSubtasksElement = subtaskContainer.querySelector(".noSubtasks");
   if (noSubtasksElement) {
     noSubtasksElement.remove();
   }
 
-  const taskId = currentTaskBeingEdited; // Verwende die aktuelle Task-ID
-  const subtaskIndex = subtaskContainer.childElementCount; // Index des neuen Subtasks
-  const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`; // Eindeutige ID erstellen
+  const taskId = currentTaskBeingEdited;
+  const subtaskIndex = subtaskContainer.childElementCount;
+  const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`;
 
   subtaskContainer.innerHTML += /*html*/ `
         <div class="edit-subtask-item" id="${subtaskId}">
@@ -1215,9 +1184,6 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
           `Fehler beim Aktualisieren in Firebase: ${response.statusText}`
         );
       }
-      console.log(
-        `Subtask ${subtaskIndex} von Task ${taskId} erfolgreich gelöscht.`
-      );
     })
     .catch((error) => {
       console.error("Fehler beim Löschen des Subtasks in Firebase:", error);
@@ -1230,7 +1196,7 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
     subtaskElement.remove();
   }
 
-  // Zeige "Keine Subtasks vorhanden" an, wenn keine Subtasks mehr existieren
+
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
   if (subtaskContainer.children.length === 0) {
     subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
@@ -1262,43 +1228,41 @@ function closeEditTask(taskId) {
 }
 
 async function saveEditedTask() {
-  const taskId = currentTaskBeingEdited; // Die ID des aktuell bearbeiteten Tasks
-  const newTitle = document.querySelector("#editTaskCard input").value; // Aktualisierter Titel
-  const newDescription = document.getElementById("editDescription").value; // Aktualisierte Beschreibung
-  const newDate = document.getElementById("edit-due-date").value; // Aktualisiertes Datum
+  const taskId = currentTaskBeingEdited; 
+  const newTitle = document.querySelector("#editTaskCard input").value;
+  const newDescription = document.getElementById("editDescription").value;
+  const newDate = document.getElementById("edit-due-date").value;
 
-  // Finde den aktuellen Task im taskArray
   const taskIndex = taskArray.findIndex((task) => task.id === taskId);
   if (taskIndex === -1) {
       console.error(`Task mit ID ${taskId} nicht im taskArray gefunden.`);
       return;
   }
 
-  // Kopiere den Task und aktualisiere die Werte
   const updatedTask = { ...taskArray[taskIndex] };
   updatedTask.title = newTitle;
   updatedTask.description = newDescription;
   updatedTask.date = newDate;
 
-  // Owner-Daten übernehmen
+
   updatedTask.owner = assignedUserArr.map((user) => ({
       ...user,
       initials: `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`
   }));
 
-  // Aktualisierte Subtasks übernehmen
+
   const subtaskElements = document.querySelectorAll(
       "#rendered-subtasks-edit .subtaskFontInEdit"
   );
   updatedTask.subtasks = Array.from(subtaskElements).map((subtaskElement) => ({
       subtask: subtaskElement.textContent.replace("• ", "").trim(), // Entferne das "• " und trimme Leerzeichen
-      checkbox: false, // Standardmäßig nicht erledigt
+      checkbox: false,
   }));
 
-  // Task im taskArray aktualisieren
+
   taskArray[taskIndex] = updatedTask;
 
-  // Daten in Firebase speichern
+ 
   try {
       await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
           method: "PUT",
@@ -1309,10 +1273,7 @@ async function saveEditedTask() {
       console.log(`Task ${taskId} erfolgreich aktualisiert.`);
       console.log("Aktualisiertes Task-Array:", taskArray);
 
-      // Aktualisiere das Board
       updateTaskHTML();
-
-      // Schließe den Edit-Dialog
       closeEditTask();
   } catch (error) {
       console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
