@@ -10,6 +10,7 @@
     right: 0;
     bottom: 0;
     background-color: hsl(0deg 0% 0% / 44%);
+    z-index: 1000;
 }
 
 .currentTaskCard {
@@ -311,6 +312,10 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
     font-weight: 400;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 /* Scrollbar Detailview */
 
 ::-webkit-scrollbar {
@@ -350,15 +355,19 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
 @media (max-width: 480px) {
     .currentTaskCard {
         position: fixed;
-        top: 15%;
+        top: 10vh;
         overflow-x: hidden;
         overflow-y: auto;
         gap: 1vh;
-        height: 600px;
+        height: 580px;
         width: 80vw;
         margin-left: 8px;
         margin-right: 8px;
         padding: 8px;
+    }
+
+    .taskDetailView{
+        z-index: 999;
     }
 
     .task-category-technicalTask-taskCard {
@@ -396,8 +405,13 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
         font-size: 16px;
     }
 
-    .styledCheckboxLabel .subtaskText {
+    .subtaskText {
         font-size: 11px;
+    }
+
+    .styledCheckboxLabel{
+        font-size: 11px;
+        margin: 0;
     }
 
     .assignedOwnersContainer{
@@ -407,4 +421,5 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
     .editAndDelete{
         bottom: 16px;
     }
+
 }

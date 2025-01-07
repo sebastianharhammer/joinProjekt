@@ -529,14 +529,17 @@ function moveTaskDown(taskId, event) {
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
   if (!task) {
-    console.error(`Task mit ID ${id} nicht gefunden.`);
-    return;
+      console.error(`Task mit ID ${id} nicht gefunden.`);
+      return;
   }
   let taskCardOverlay = document.getElementById("taskDetailView");
   taskCardOverlay.innerHTML = "";
   taskCardOverlay.classList.remove("d-none");
   taskCardOverlay.innerHTML += showTaskCardHTML(task);
+
+  document.body.classList.add("no-scroll"); // Scrollen deaktivieren
 }
+
 
 function showTaskCardHTML(task) {
   return /*html*/ `
@@ -642,7 +645,9 @@ async function deleteTask(taskId) {
 function closeDetailView() {
   let overlay = document.getElementById("taskDetailView");
   overlay.classList.add("d-none");
+  document.body.classList.remove("no-scroll"); // Scrollen wieder aktivieren
 }
+
 
 function closeQuestionDelete() {
   let deleteQuestDiv = document.getElementById("deleteConfirmation");
