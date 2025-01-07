@@ -153,8 +153,6 @@
   fill: white;
 }
 
-
-
 .progressBarBoard {
   width: 50%; /* Breite der Fortschrittsanzeige */
   height: 10px; /* Höhe der Fortschrittsanzeige */
@@ -181,7 +179,6 @@
   background-color: rgb(43, 54, 71); /* Dunkelblau für den Fortschritt */
   border-radius: 4px;
 }
-
 
 .addMarginToOverlay {
   margin-left: -11px;
@@ -499,6 +496,17 @@
   height: 24px;
 }
 
+@media (max-width: 1060px) {
+  .columnTitleFont {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 978px) {
+  .columnTitleFont {
+    font-size: 13px;
+  }
+}
 @media (max-width: 768px) {
   .column-header {
     flex-direction: row;
@@ -558,7 +566,7 @@
   .boardNavigator {
     flex-direction: column;
     gap: 16px;
-    padding: 16px;
+
     height: auto;
   }
 
