@@ -959,7 +959,7 @@ function returnArrayContactsEdit() {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("contact-checkbox-edit");
-    checkbox.checked = isChecked; // Zustand setzen
+    checkbox.checked = isChecked;
     checkbox.addEventListener("change", () => {
       handleEditContactSelection(
         contact.firstName,
@@ -977,9 +977,6 @@ function returnArrayContactsEdit() {
     editOptionsContainer.appendChild(optionElement);
   });
 }
-
-
-
 
 
 function assignUserEditHTML(contact) {
@@ -1060,19 +1057,14 @@ function getEditTemplate(task) {
                   task.title
                 }">
             </div>
-
-
             <p class="firstTableColumnFont">Description:</p>
             <textarea id="editDescription" class="editTaskTextarea textarea-large"></textarea>
-
-            
             <p class="firstTableColumnFont">Due Date:</p>
             <div class="edit-due-date">
             <input type="date" id="edit-due-date" class="edit-input" value="${
               task.date || ""
             }">
             </div>
-            
             <p class="firstTableColumnFont">Priorität:</p>
             <div class="prio-btn-content">
                 <button id="prio-urgent" class="prio-button ${
@@ -1100,7 +1092,6 @@ function getEditTemplate(task) {
                     }" src="./img/Prio_low_color.png" alt=""/>
                 </button>
             </div>
-
             <div class="field-text-flex-edit" id="addTaskAssignedTo-edit">
                 <div class="form-group-edit">
                     <label for="assigned-to-edit">Assigned to</label>
@@ -1111,9 +1102,7 @@ function getEditTemplate(task) {
                     <div class="assigned-users-short-edit" id="assigned-users-short-edit"></div>
                 </div>
             </div>
-
             <section id="edit-subtasks-section">
-
             <div class="add-subtask-in-edit">
                 <input id="input-subtask-in-edit" class="input-subtask-in-edit" type="text" placeholder="Write a new subtask...">
                 <div class="img-in-edit-input">
@@ -1125,12 +1114,9 @@ function getEditTemplate(task) {
                     </div>
                 </div>
             </div>
-
-            
             <div id="rendered-subtasks-edit">
             </div>
             </section>
-            
             <section class="editButtons">
             <button class="btn-skip-and-confirm-edit" onclick="saveEditedTask()">Save changes</button>
             <button onclick="skipEdit(${
@@ -1141,8 +1127,9 @@ function getEditTemplate(task) {
     `;
 }
 
+
 function emptyInput() {
-  let inputField = document.getElementById('input-subtask-in-edit'); // Zugriff auf das Input-Element
+  let inputField = document.getElementById('input-subtask-in-edit');
   inputField.value = "";
 }
 
@@ -1176,8 +1163,6 @@ function addSubTaskInEditTempl() {
 
   inputField.value = "";
 }
-
-
 
 
 function setupEditTaskEventListeners(taskId) {
@@ -1251,10 +1236,12 @@ function skipEdit(taskId) {
   }
 }
 
+
 function closeEditTask(taskId) {
   let overlayEdit = document.getElementById("editTaskTempl");
   overlayEdit.classList.add("d-none");
 }
+
 
 async function saveEditedTask() {
   const taskId = currentTaskBeingEdited; 
@@ -1267,31 +1254,25 @@ async function saveEditedTask() {
       console.error(`Task mit ID ${taskId} nicht im taskArray gefunden.`);
       return;
   }
-
   const updatedTask = { ...taskArray[taskIndex] };
   updatedTask.title = newTitle;
   updatedTask.description = newDescription;
   updatedTask.date = newDate;
-
-
   updatedTask.owner = assignedUserArr.map((user) => ({
       ...user,
       initials: `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`
   }));
-
-
   const subtaskElements = document.querySelectorAll(
       "#rendered-subtasks-edit .subtaskFontInEdit"
   );
   updatedTask.subtasks = Array.from(subtaskElements).map((subtaskElement) => ({
-      subtask: subtaskElement.textContent.replace("• ", "").trim(), // Entferne das "• " und trimme Leerzeichen
+      subtask: subtaskElement.textContent.replace("• ", "").trim(),
       checkbox: false,
   }));
 
 
   taskArray[taskIndex] = updatedTask;
 
- 
   try {
       await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
           method: "PUT",
