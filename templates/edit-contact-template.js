@@ -13,7 +13,7 @@ function getEditContactHTML(contact) {
             </svg>
               </div>
               <span id="edit-contact-headline">Edit contact</span>
-              <img src="../img/vector5.png" id="vector-line">
+              <img src="./img/vector5.png" id="vector-line">
           </div>
           <div id="edit-contact-interactions-container">
               <div id="edit-contact-btn-close-container">
@@ -35,19 +35,19 @@ function getEditContactHTML(contact) {
                           <input required class="edit-contact-input" id="edit-contact-name" placeholder="Name" value="${
                             contact.firstName
                           } ${contact.lastName}">
-                          <img src="../img/person.png" class="edit-contact-input-icon">
+                          <img src="./img/person.png" class="edit-contact-input-icon">
                       </div>
                       <div class="input-wrapper">
                           <input required class="edit-contact-input" id="edit-contact-email" placeholder="Email" type="email" value="${
                             contact.email
                           }">
-                          <img src="../img/login-mail.png" class="edit-contact-input-icon">
+                          <img src="./img/login-mail.png" class="edit-contact-input-icon">
                       </div>
                       <div class="input-wrapper">
                           <input required class="edit-contact-input" id="edit-contact-phone" placeholder="Phone" value="${
                             contact.phone
                           }">
-                          <img src="../img/call.png" class="edit-contact-input-icon">
+                          <img src="./img/call.png" class="edit-contact-input-icon">
                       </div>
                   </form>
               </div>

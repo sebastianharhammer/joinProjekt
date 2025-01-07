@@ -14,11 +14,11 @@ function getAddContactHTML() {
             </div>
             <span id="add-contact-headline">Add contact</span>
             <span id="add-contact-second">Tasks are better with a team!</span>
-            <img src="../img/vector5.png" id="vector-line">
+            <img src="./img/vector5.png" id="vector-line">
         </div>
         <div id="add-contact-interactions-container">
             <div id="add-contact-btn-close-container">
-                <div src="../img/close.svg" id="add-contact-btn-close" onclick="hideAddContact()">
+                <div src="./img/close.svg" id="add-contact-btn-close" onclick="hideAddContact()">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -27,20 +27,20 @@ function getAddContactHTML() {
             </div>
             <div id="add-contact-interactions">
                 <div id="add-contact-icon-container">
-                    <img id="add-contact-icon" src="../img/add_contact.png">
+                    <img id="add-contact-icon" src="./img/add_contact.png">
                 </div>
                 <form id="input-fields">
                     <div class="input-wrapper">
                         <input required class="add-contact-input" id="add-contact-name" placeholder="Name" required>
-                        <img src="../img/person.png" class="add-contact-input-icon">
+                        <img src="./img/person.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
                         <input required class="add-contact-input" id="add-contact-email" placeholder="Email" type="email" required>
-                        <img src="../img/login-mail.png" class="add-contact-input-icon">
+                        <img src="./img/login-mail.png" class="add-contact-input-icon">
                     </div>
                     <div class="input-wrapper">
                         <input required class="add-contact-input" id="add-contact-phone" placeholder="Phone">
-                        <img src="../img/call.png" class="add-contact-input-icon">
+                        <img src="./img/call.png" class="add-contact-input-icon">
                     </div>
                 </form>
 

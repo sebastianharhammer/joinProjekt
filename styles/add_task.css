@@ -238,7 +238,9 @@ ul {
 }
 
 .prio-button {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   outline: 0;
   border: 0;
   cursor: pointer;
@@ -257,7 +259,9 @@ ul {
   box-shadow: 0 8px 22px 0 rgb(37 44 97 / 15%),
     0 4px 6px 0 rgb(93 100 148 / 20%);
 }
-
+.prio-button-img {
+  padding-left: 10px;
+}
 .prio-btn-content {
   display: flex;
   justify-content: space-between;

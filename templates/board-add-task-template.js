@@ -48,15 +48,15 @@ return  /*html*/`
                 <div class="prio-btn-content">
                   <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
                     Urgent
-                    <img id="prio-image-urgent" src="../img/Prio_urgent_color.png" alt=""/>
+                    <img id="prio-image-urgent" src="./img/Prio_urgent_color.png" alt=""/>
                   </button>
                   <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
                     Medium
-                    <img id="prio-image-medium" src="../img/Prio_medium_color.png" alt=""/>
+                    <img id="prio-image-medium" src="./img/Prio_medium_color.png" alt=""/>
                   </button>
                   <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
                     Low
-                    <img id="prio-image-low" src="../img/Prio_low_color.png" alt=""/>
+                    <img id="prio-image-low" src="./img/Prio_low_color.png" alt=""/>
                   </button>
                 </div>
               </div>
@@ -66,7 +66,7 @@ return  /*html*/`
                   <span style="color: #ff8190">*</span>
                 </label>
                 <input class="input-addtask" onclick="openAddTaskCategories()" id="categoryInput" type="text" placeholder="Select task category" maxlength="40" readonly>
-                <img onclick="openAddTaskCategories()" id="arrowDropMenuCategory" src="../img/arrow_drop_down.png" alt=""/>
+                <img onclick="openAddTaskCategories()" id="arrowDropMenuCategory" src="./img/arrow_drop_down.png" alt=""/>
                 <div id="dropDownCategoryMenu"></div>
                 <span id="addCategoryError"  class="validSpanCategory"></span>
               </div>
@@ -78,11 +78,11 @@ return  /*html*/`
                   <input class="input-addtask plus-minus-drop-menu" id="subtaskInput" type="text" placeholder="Add a new subtask"  maxlength="40" onfocus="showClearButton()">
                   <div class="input-icons">
                     <div id="clear-add-icons" class="d-none">
-                      <img onclick="clearSubtaskInput()" src="../img/close.svg">
+                      <img onclick="clearSubtaskInput()" src="./img/close.svg">
                       <div class="divider"></div>
-                      <img onclick="addSubtask()" src="../img/check.svg">
+                      <img onclick="addSubtask()" src="./img/check.svg">
                     </div>
-                    <img id="subtasks-plus-icon" src="../img/add.png" type="button" onclick="addSubtask()"/>
+                    <img id="subtasks-plus-icon" src="./img/add.png" type="button" onclick="addSubtask()"/>
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
@@ -146,9 +146,9 @@ function addSubtaskHTML(liId, spanId, inputId, subtaskInput) {
               <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${subtaskInput.value}</span>
           </div>
           <div class="subtask-icon">
-              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
+              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="./img/edit.svg" alt="edit">
               <div class="divider"></div>
-              <img onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
+              <img onclick="deleteSubtask('${liId}')" src="./img/delete.svg" alt="delete">
           </div>
       </li>`;
 }
@@ -157,9 +157,9 @@ function editSubtaskHTML(liId, spanId, inputId, currentText) {
   return `<div class="subtask-input-wrapper edit-mode">
             <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
             <div class="input-icons-edit">
-                <img src ="../img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
+                <img src ="./img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
                 <div class="divider"></div>
-                <img src="../img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
+                <img src="./img/check1.svg" onclick="saveSubtask('${liId}', '${inputId}', '${spanId}')">
             </div>
         </div>`;
 }
@@ -170,8 +170,8 @@ function saveSubtaskHTML(liId, inputId, spanId, input) {
               <span id="${spanId}" onclick="editSubtask('${liId}', '${spanId}', '${inputId}')">${input.value}</span>
           </div>
           <div class="subtask-icon">
-              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="../img/edit.svg" alt="edit">
+              <img onclick="editSubtask('${liId}', '${spanId}', '${inputId}')" src="./img/edit.svg" alt="edit">
               <div class="divider"></div>
-              <img id="deleteBtn-${liId}" onclick="deleteSubtask('${liId}')" src="../img/delete.svg" alt="delete">
+              <img id="deleteBtn-${liId}" onclick="deleteSubtask('${liId}')" src="./img/delete.svg" alt="delete">
           </div>`;
 }
