@@ -18,8 +18,8 @@ let addTaskcategories = [
         category: "Technical Task",
         "bg-color": "#1FD7C1",
       }];
-  let assignedUser = [];
-  let localStatus = "";
+let assignedUser = [];
+let localStatus = "";
 
 function showAddTask(status) {
     console.log("wird ausgeführt in " + "#" + status + "#") 
@@ -312,10 +312,8 @@ function hideAddTaskCategories() {
 
 function renderAddTaskCategories() {
     let categoryContainer = document.getElementById("dropDownCategoryMenu");
-
     for (let i = 0; i < addTaskcategories.length; i++) {
     const category = addTaskcategories[i]["category"];
-
     categoryContainer.innerHTML += renderAddTaskCategoriesHTML(category);
     }
 }
@@ -323,7 +321,6 @@ function renderAddTaskCategories() {
 function selectAddTaskCategory(categoryTask) {
     let categoryInput = document.getElementById("categoryInput");
     let categoryList = document.getElementById("dropDownCategoryMenu");
-
     categoryInput.value = categoryTask;
     hideAddTaskCategories();
     categoryList.style.border = "0px";
@@ -332,8 +329,6 @@ function selectAddTaskCategory(categoryTask) {
 
 function setPriority(priority) {
     const priorities = ['urgent', 'medium', 'low'];
-
-    // Entferne die Farben und Sättigung für alle Prioritäten
     priorities.forEach((prio) => {
         const btn = document.getElementById(`prio-${prio}`);
         const img = document.getElementById(`prio-image-${prio}`);
@@ -341,11 +336,8 @@ function setPriority(priority) {
         btn.classList.remove('red', 'yellow', 'green');
         img.classList.remove('sat-0');
     });
-
-    // Aktiviere die richtige Priorität
     const selectedButton = document.getElementById(`prio-${priority}`);
     const selectedImg = document.getElementById(`prio-image-${priority}`);
-
     if (priority === 'urgent') {
         selectedButton.classList.add('red');
     } else if (priority === 'medium') {
@@ -355,7 +347,6 @@ function setPriority(priority) {
     }
     selectedImg.classList.add('sat-0');
     selectedPriority = priority;
-
     const task = taskArray.find(t => t.id === currentTaskBeingEdited);
     if (task) {
         task.prio = priority;
@@ -388,6 +379,7 @@ function addSubtask() {
     document.getElementById("subtasks-plus-icon").classList.remove("d-none");    
 }
 
+
 function editSubtask(listId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const list = document.getElementById(listId);
@@ -397,10 +389,13 @@ function editSubtask(listId, spanId, inputId) {
     list.classList.remove("subtask-item");
 }
 
+
 function deleteSubtask(listId) {
     const list = document.getElementById(listId);
     list.remove();
 }
+
+
 function saveSubtask(listId, inputId, spanId) {
     const list = document.getElementById(listId);
     const input = document.getElementById(inputId);
@@ -409,9 +404,6 @@ function saveSubtask(listId, inputId, spanId) {
     list.classList.add("subtask-item");
 }
 
-function clearSubtaskInput() {
-    document.getElementById("subtaskInput").value = "";
-}
 
 function clearSubtaskInput() {
     const input = document.getElementById("subtaskInput");
@@ -419,20 +411,8 @@ function clearSubtaskInput() {
     document.getElementById("clearButton").style.display = "none";
 }
 
-function showClearButton() {
-    document.getElementById("clear-add-icons").classList.remove("d-none");
-    document.getElementById("subtasks-plus-icon").classList.add("d-none");
-}
-
-function clearImput() {
-    document.getElementById("subtaskInput").value = "";
-}
 
 function showClearButton() {
     document.getElementById("clear-add-icons").classList.remove("d-none");
     document.getElementById("subtasks-plus-icon").classList.add("d-none");
 }
-
-function clearSubtaskInput() {
-    document.getElementById("subtaskInput").value = "";
-}   

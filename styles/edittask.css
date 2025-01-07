@@ -343,12 +343,12 @@ input[type="date"] {
 
 
 .contact-checkbox-edit {
-    appearance: none; /* Entfernt das standardmäßige Checkbox-Design */
-    width: 20px; /* Breite der Checkbox */
-    height: 20px; /* Höhe der Checkbox */
-    border: 2px solid rgb(43,54,71); /* Dunkelgrüner Rand */
-    border-radius: 4px; /* Abgerundete Ecken */
-    background-color: white; /* Weißer Hintergrund */
+    appearance: none;
+    width: 20px;
+    height: 20px; 
+    border: 2px solid rgb(43,54,71);
+    border-radius: 4px;
+    background-color: white;
     display: inline-block;
     cursor: pointer;
     position: relative;
@@ -389,4 +389,25 @@ input[type="date"] {
 .close-and-check-imgs:hover{
     cursor: pointer;
     background-color: rgb(231, 231, 237);
+}
+
+@media(max-width: 480px){
+
+    .editTaskCard {
+        position: relative;
+        top: 8px;
+        gap: 8px;
+        height: 620px;
+        width: 500px;
+        border-radius: 24px;
+        padding: 32px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index:1000;
+    }
+
+    .editTaskTempl {
+        z-index: 999;
+        height: 108vh;
+    }
 }

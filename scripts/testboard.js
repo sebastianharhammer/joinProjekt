@@ -1,14 +1,33 @@
 let currentUser = null;
 
-function init() {
+async function init() {
   includeHTML();
   loadCurrentUser();
+  await fetchContacts();
   fetchTasks("/tasks");
   loadBoardNavigator();
 }
 
+
 let currentDraggedElement;
 let currentTaskBeingEdited = null;
+
+async function fetchContacts() {
+  try {
+    const response = await fetch(BASE_URL + "/contacts/.json", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    const responseToJson = await response.json();
+    if (responseToJson) {
+      finalContacts = Object.values(responseToJson);
+      console.log("Contacts loaded:", finalContacts);
+    }
+  } catch (error) {
+    console.error("Fehler beim Laden der Kontakte:", error);
+  }
+}
+
 
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
@@ -21,13 +40,22 @@ function loadCurrentUser() {
 async function fetchTasks(path = "") {
   let response = await fetch(BASE_URL + path + ".json");
   let responseToJson = await response.json();
-  console.log(responseToJson);
   if (responseToJson) {
-    taskArray = Object.values(responseToJson);
+    taskArray = Object.values(responseToJson).map((task) => {
+      if (task.owner) {
+        task.owner = task.owner.map((owner) => {
+          const contact = finalContacts.find(
+            (c) => c.firstName === owner.firstName && c.lastName === owner.lastName
+          );
+          return { ...owner, color: contact?.color || "gray" };
+        });
+      }
+      return task;
+    });
   }
-  console.log(taskArray);
   updateTaskHTML();
 }
+
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -207,19 +235,18 @@ function updateTaskHTML() {
   let feedbackColumn = document.getElementById("feedback");
   let doneColumn = document.getElementById("done");
 
-  // Leere die Spalten vor der Aktualisierung
   todoColumn.innerHTML = "";
   inProgressColumn.innerHTML = "";
   feedbackColumn.innerHTML = "";
   doneColumn.innerHTML = "";
 
-  // Tasks nach Status filtern
+
   let todos = taskArray.filter((task) => task.status === "todo");
   let inProgress = taskArray.filter((task) => task.status === "inProgress");
   let feedback = taskArray.filter((task) => task.status === "feedback");
   let done = taskArray.filter((task) => task.status === "done");
 
-  // Tasks in die entsprechenden Spalten rendern
+
   for (const task of todos) {
     todoColumn.innerHTML += createTaskHTML(task);
     createOwnerCircles(task);
@@ -292,31 +319,32 @@ function createNoToDosdiv() {
 function createOwnerCircles(task) {
   const userNameCircles = document.getElementById(`userNameCircles-${task.id}`);
   if (!userNameCircles) {
-      console.error("Owner-Kreis-Container nicht gefunden!");
-      return;
+    console.error("Owner-Kreis-Container nicht gefunden!");
+    return;
   }
 
   userNameCircles.innerHTML = "";
 
   if (!task.owner || task.owner.length === 0) {
-      userNameCircles.innerHTML = `
-          <svg width="34" height="34">
-              <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
-              <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">N/A</text>
-          </svg>
-      `;
-      return;
+    userNameCircles.innerHTML = `
+      <svg width="34" height="34">
+        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
+        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">N/A</text>
+      </svg>
+    `;
+    return;
   }
 
   for (const owner of task.owner) {
-      userNameCircles.innerHTML += `
-          <svg width="34" height="34">
-              <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${getRandomColor()}" />
-              <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
-                  ${owner.initials || "N/A"}
-              </text>
-          </svg>
-      `;
+    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
+    userNameCircles.innerHTML += `
+      <svg width="34" height="34">
+        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
+        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
+          ${owner.initials || "N/A"}
+        </text>
+      </svg>
+    `;
   }
 }
 
@@ -501,14 +529,17 @@ function moveTaskDown(taskId, event) {
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
   if (!task) {
-    console.error(`Task mit ID ${id} nicht gefunden.`);
-    return;
+      console.error(`Task mit ID ${id} nicht gefunden.`);
+      return;
   }
   let taskCardOverlay = document.getElementById("taskDetailView");
   taskCardOverlay.innerHTML = "";
   taskCardOverlay.classList.remove("d-none");
   taskCardOverlay.innerHTML += showTaskCardHTML(task);
+
+  document.body.classList.add("no-scroll"); // Scrollen deaktivieren
 }
+
 
 function showTaskCardHTML(task) {
   return /*html*/ `
@@ -614,7 +645,9 @@ async function deleteTask(taskId) {
 function closeDetailView() {
   let overlay = document.getElementById("taskDetailView");
   overlay.classList.add("d-none");
+  document.body.classList.remove("no-scroll"); // Scrollen wieder aktivieren
 }
+
 
 function closeQuestionDelete() {
   let deleteQuestDiv = document.getElementById("deleteConfirmation");
@@ -679,36 +712,23 @@ function getAssignedOwnersHTML(task) {
   }
   let ownerHTML = "";
   task.owner.forEach((owner) => {
-    const circleColor = getRandomColor();
+    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
     ownerHTML += `
-            <div class="ownerItem">
-                <svg width="34" height="34">
-                    <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${circleColor}" />
-                    <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
-                        ${owner.initials || "N/A"}
-                    </text>
-                </svg>
-                <p>${owner.firstName} ${owner.lastName}</p>
-            </div>
-        `;
+      <div class="ownerItem">
+        <svg width="34" height="34">
+          <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
+          <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
+            ${owner.initials || "N/A"}
+          </text>
+        </svg>
+        <p>${owner.firstName} ${owner.lastName}</p>
+      </div>
+    `;
   });
   return ownerHTML;
 }
 
-function getRandomColor() {
-  const colors = [
-    "#FF5733",
-    "#33FF57",
-    "#3357FF",
-    "#FFC300",
-    "#8E44AD",
-    "#16A085",
-    "#E74C3C",
-    "#2ECC71",
-    "#3498DB",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
+
 
 function getPrioIcon(prio) {
   if (prio === "medium") {
@@ -744,12 +764,13 @@ function removeHighlight(id) {
 // edit task
 
 function showEditTaskTempl(taskId) {
-  currentTaskBeingEdited = taskId; // Speichert die aktuelle Task-ID
+  currentTaskBeingEdited = taskId;
   const task = taskArray.find((t) => t.id === taskId);
   if (!task) {
     console.error("Task nicht gefunden!");
     return;
   }
+  assignedUserArr = task.owner ? [...task.owner] : []; // Kopiere die aktuellen Owner in assignedUserArr
 
   let detailView = document.getElementById("taskDetailView");
   let editView = document.getElementById("editTaskTempl");
@@ -759,10 +780,11 @@ function showEditTaskTempl(taskId) {
 
   setupEditTaskEventListeners(taskId);
   getUsersForEditDropDown();
-  updateAssignedUsersDisplay();
+  updateAssignedUsersDisplay(); // Aktualisiere die Anzeige basierend auf den aktuellen Owners
   setPriority(task.prio);
   renderEditSubtasks(task);
 }
+
 
 function renderEditSubtasks(task) {
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
@@ -790,7 +812,6 @@ function renderEditSubtasks(task) {
 }
 
 function editExistingSubtaskEditView(taskId, subtaskIndex) {
-  // Identifiziere das `<p>`-Tag basierend auf der ID
   const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
   const subtaskTextElement = document.getElementById(subtaskTextId);
 
@@ -798,17 +819,12 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
     console.error(`Subtask-Text-Element mit ID ${subtaskTextId} nicht gefunden.`);
     return;
   }
-
-  // Erstelle ein neues `<input>`-Element
   const inputElement = document.createElement("input");
   inputElement.type = "text";
   inputElement.value = subtaskTextElement.textContent.replace("• ", "").trim();
-  inputElement.className = "subtaskInputInEdit"; // Optionale Klasse für Styling
-
-  // Ersetze das `<p>`-Tag durch das `<input>`-Element
+  inputElement.className = "subtaskInputInEdit";
   subtaskTextElement.replaceWith(inputElement);
 
-  // Tausche das Edit-Icon gegen ein Check-Icon
   const editIcon = document.querySelector(
     `#edit-subtask-${taskId}-${subtaskIndex + 1} .edit-icon`
   );
@@ -817,8 +833,6 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
     editIcon.classList.add("check-icon-edit");
     editIcon.onclick = null; // Entferne die `onclick`-Funktion
   }
-
-  // Füge ein Event hinzu, um die Eingabe bei Enter zu speichern
   inputElement.addEventListener("blur", () => saveEditedSubtask(taskId, subtaskIndex, inputElement.value));
   inputElement.focus();
 }
@@ -830,11 +844,7 @@ function saveEditedSubtask(taskId, subtaskIndex, newValue) {
     console.error("Task oder Subtask nicht gefunden.");
     return;
   }
-
-  // Aktualisiere den Subtask-Wert
   task.subtasks[subtaskIndex].subtask = newValue;
-
-  // Aktualisiere Firebase (optional)
   fetch(`${BASE_URL}/tasks/${taskId}.json`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -884,102 +894,90 @@ async function getUsersForEditDropDown() {
     console.error("Error fetching contacts:", error);
   }
   returnArrayContactsEdit();
-  setupEditDropdownInteraction(); // Dropdown-Interaktion nach Rendern initialisieren
+  setupEditDropdownInteraction();
 }
 
 function setupEditDropdownInteraction() {
   const editDropdown = document.getElementById("custom-dropdown-edit");
-  const editOptionsContainer = editDropdown.querySelector(
-    ".dropdown-options-edit"
-  );
-  // Toggle-Logik für Dropdown
+  const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
   editDropdown.addEventListener("click", (event) => {
-    // Verhindere, dass das Event andere Klick-Listener beeinflusst
     event.stopPropagation();
-    // Toggle-Anzeige: Flex (offen) / None (geschlossen)
-    if (editOptionsContainer.style.display === "block") {
-      editOptionsContainer.style.display = "none";
-    } else {
+    const isDropdownOpen = editOptionsContainer.style.display === "block";
+    if (!isDropdownOpen) {
       editOptionsContainer.style.display = "block";
     }
   });
 
-  // Optional: Dropdown schließen, wenn außerhalb geklickt wird
-  document.addEventListener("click", () => {
-    editOptionsContainer.style.display = "none";
+  document.addEventListener("click", (event) => {
+    if (
+      !editDropdown.contains(event.target)
+    ) {
+      editOptionsContainer.style.display = "none";
+    }
   });
 }
 
+
 function returnArrayContactsEdit() {
   if (!finalContactsForEdit || Object.keys(finalContactsForEdit).length === 0) {
-      console.error("No contacts found.");
-      return;
+    console.error("No contacts found.");
+    return;
   }
 
   const editDropdown = document.getElementById("custom-dropdown-edit");
   const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
-  editOptionsContainer.innerHTML = ""; // Dropdown leeren
-
-  // Iteriere durch alle Kontakte und setze die Checkbox-Zustände
+  editOptionsContainer.innerHTML = "";
+  
   Object.keys(finalContactsForEdit).forEach((key) => {
-      const contact = finalContactsForEdit[key];
-      if (!contact || !contact.firstName || !contact.lastName) return;
+    const contact = finalContactsForEdit[key];
+    if (!contact || !contact.firstName || !contact.lastName) return;
 
-      // Prüfen, ob der Benutzer im aktuellen Task als Owner zugewiesen ist
-      const isChecked = assignedUserArr.some(
-          (user) =>
-              user.firstName === contact.firstName &&
-              user.lastName === contact.lastName
+    // Überprüfe, ob der Kontakt bereits assigned ist
+    const isChecked = assignedUserArr.some(
+      (user) =>
+        user.firstName === contact.firstName &&
+        user.lastName === contact.lastName
+    );
+
+    const optionElement = document.createElement("div");
+    optionElement.classList.add("dropdown-contact-edit");
+
+    const circleDiv = document.createElement("div");
+    circleDiv.classList.add("contact-circle-edit");
+    circleDiv.style.backgroundColor = getRandomColor(contact.firstName, contact.lastName); // Nutzt getRandomColor
+    circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
+
+    const checkboxLabel = document.createElement("label");
+    checkboxLabel.classList.add("contact-checkbox-edit-label");
+
+    const checkboxSquare = document.createElement("span");
+    checkboxSquare.classList.add("checkboxSquare");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("contact-checkbox-edit");
+    checkbox.checked = isChecked; // Zustand setzen
+    checkbox.addEventListener("change", () => {
+      handleEditContactSelection(
+        contact.firstName,
+        contact.lastName,
+        checkbox.checked
       );
+    });
+    checkboxLabel.appendChild(checkbox);
+    checkboxLabel.appendChild(checkboxSquare);
 
-      // Erstelle ein Container-DIV
-      const optionElement = document.createElement("div");
-      optionElement.classList.add("dropdown-contact-edit");
+    optionElement.appendChild(circleDiv);
+    optionElement.appendChild(nameSpan);
+    optionElement.appendChild(checkboxLabel);
 
-      // Erstelle die Initialen-Kreise
-      const circleDiv = document.createElement("div");
-      circleDiv.classList.add("contact-circle-edit");
-      circleDiv.style.backgroundColor = getRandomColor();
-      circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
-
-      // Erstelle den Namen
-      const nameSpan = document.createElement("span");
-      nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
-
-      // Erstelle das Label für die Checkbox
-      const checkboxLabel = document.createElement("label");
-      checkboxLabel.classList.add("contact-checkbox-edit-label");
-
-      // Erstelle das Quadrat für die Checkbox
-      const checkboxSquare = document.createElement("span");
-      checkboxSquare.classList.add("checkboxSquare");
-
-      // Erstelle die eigentliche Checkbox
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.classList.add("contact-checkbox-edit");
-      checkbox.checked = isChecked; // Zustand setzen
-      checkbox.addEventListener("change", () => {
-          handleEditContactSelection(
-              contact.firstName,
-              contact.lastName,
-              checkbox.checked
-          );
-      });
-
-      // Füge die Checkbox und das Quadrat in das Label ein
-      checkboxLabel.appendChild(checkbox);
-      checkboxLabel.appendChild(checkboxSquare);
-
-      // Füge alle Elemente in das `optionElement` ein
-      optionElement.appendChild(circleDiv);
-      optionElement.appendChild(nameSpan);
-      optionElement.appendChild(checkboxLabel);
-
-      // Füge das fertige `optionElement` in den `editOptionsContainer` ein
-      editOptionsContainer.appendChild(optionElement);
+    editOptionsContainer.appendChild(optionElement);
   });
 }
+
 
 
 
@@ -999,7 +997,6 @@ function assignUserEditHTML(contact) {
 
 function handleEditContactSelection(firstName, lastName, isChecked) {
   if (isChecked) {
-    // Benutzer hinzufügen
     if (
       !assignedUserArr.some(
         (user) => user.firstName === firstName && user.lastName === lastName
@@ -1008,7 +1005,6 @@ function handleEditContactSelection(firstName, lastName, isChecked) {
       assignedUserArr.push({ firstName, lastName });
     }
   } else {
-    // Benutzer entfernen
     assignedUserArr = assignedUserArr.filter(
       (user) => user.firstName !== firstName || user.lastName !== lastName
     );
@@ -1025,25 +1021,29 @@ function updateAssignedUsersDisplay() {
   assignedUsersContainer.innerHTML = "";
 
   assignedUserArr.forEach((user) => {
-    const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(
-      user.lastName
-    )}`;
+    const color = getRandomColor(user.firstName, user.lastName); // Nutzt getRandomColor
+    const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`;
     assignedUsersContainer.innerHTML += `
-            <div class="assigned-user-circle" style="background-color: ${getRandomColor()}">
-                <p>${initials}</p>
-            </div>
-        `;
+      <div class="assigned-user-circle" style="background-color: ${color}">
+        <p>${initials}</p>
+      </div>
+    `;
   });
 }
+
 
 function getFirstLetter(name) {
   return name.trim().charAt(0).toUpperCase();
 }
 
-function getRandomColor() {
-  const colors = ["orange", "purple", "blue", "red", "green", "teal"];
-  return colors[Math.floor(Math.random() * colors.length)];
+function getRandomColor(firstName, lastName) {
+
+  const contact = finalContacts.find(
+    (c) => c.firstName === firstName && c.lastName === lastName
+  );
+  return contact?.color || "gray";
 }
+
 
 function getEditTemplate(task) {
   return /*html*/ `
@@ -1155,16 +1155,14 @@ function addSubTaskInEditTempl() {
   }
 
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
-
-  // Entferne "Keine Subtasks vorhanden", wenn ein Subtask erstellt wird
   const noSubtasksElement = subtaskContainer.querySelector(".noSubtasks");
   if (noSubtasksElement) {
     noSubtasksElement.remove();
   }
 
-  const taskId = currentTaskBeingEdited; // Verwende die aktuelle Task-ID
-  const subtaskIndex = subtaskContainer.childElementCount; // Index des neuen Subtasks
-  const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`; // Eindeutige ID erstellen
+  const taskId = currentTaskBeingEdited;
+  const subtaskIndex = subtaskContainer.childElementCount;
+  const subtaskId = `edit-subtask-${taskId}-${subtaskIndex + 1}`;
 
   subtaskContainer.innerHTML += /*html*/ `
         <div class="edit-subtask-item" id="${subtaskId}">
@@ -1215,9 +1213,6 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
           `Fehler beim Aktualisieren in Firebase: ${response.statusText}`
         );
       }
-      console.log(
-        `Subtask ${subtaskIndex} von Task ${taskId} erfolgreich gelöscht.`
-      );
     })
     .catch((error) => {
       console.error("Fehler beim Löschen des Subtasks in Firebase:", error);
@@ -1230,7 +1225,7 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
     subtaskElement.remove();
   }
 
-  // Zeige "Keine Subtasks vorhanden" an, wenn keine Subtasks mehr existieren
+
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
   if (subtaskContainer.children.length === 0) {
     subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
@@ -1262,43 +1257,41 @@ function closeEditTask(taskId) {
 }
 
 async function saveEditedTask() {
-  const taskId = currentTaskBeingEdited; // Die ID des aktuell bearbeiteten Tasks
-  const newTitle = document.querySelector("#editTaskCard input").value; // Aktualisierter Titel
-  const newDescription = document.getElementById("editDescription").value; // Aktualisierte Beschreibung
-  const newDate = document.getElementById("edit-due-date").value; // Aktualisiertes Datum
+  const taskId = currentTaskBeingEdited; 
+  const newTitle = document.querySelector("#editTaskCard input").value;
+  const newDescription = document.getElementById("editDescription").value;
+  const newDate = document.getElementById("edit-due-date").value;
 
-  // Finde den aktuellen Task im taskArray
   const taskIndex = taskArray.findIndex((task) => task.id === taskId);
   if (taskIndex === -1) {
       console.error(`Task mit ID ${taskId} nicht im taskArray gefunden.`);
       return;
   }
 
-  // Kopiere den Task und aktualisiere die Werte
   const updatedTask = { ...taskArray[taskIndex] };
   updatedTask.title = newTitle;
   updatedTask.description = newDescription;
   updatedTask.date = newDate;
 
-  // Owner-Daten übernehmen
+
   updatedTask.owner = assignedUserArr.map((user) => ({
       ...user,
       initials: `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`
   }));
 
-  // Aktualisierte Subtasks übernehmen
+
   const subtaskElements = document.querySelectorAll(
       "#rendered-subtasks-edit .subtaskFontInEdit"
   );
   updatedTask.subtasks = Array.from(subtaskElements).map((subtaskElement) => ({
       subtask: subtaskElement.textContent.replace("• ", "").trim(), // Entferne das "• " und trimme Leerzeichen
-      checkbox: false, // Standardmäßig nicht erledigt
+      checkbox: false,
   }));
 
-  // Task im taskArray aktualisieren
+
   taskArray[taskIndex] = updatedTask;
 
-  // Daten in Firebase speichern
+ 
   try {
       await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
           method: "PUT",
@@ -1309,10 +1302,7 @@ async function saveEditedTask() {
       console.log(`Task ${taskId} erfolgreich aktualisiert.`);
       console.log("Aktualisiertes Task-Array:", taskArray);
 
-      // Aktualisiere das Board
       updateTaskHTML();
-
-      // Schließe den Edit-Dialog
       closeEditTask();
   } catch (error) {
       console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);

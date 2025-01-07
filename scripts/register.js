@@ -44,7 +44,7 @@ async function postSignUpData(path){
     console.log(signedUsersArray);
     showSuccessOverlay();
     setTimeout(function() {
-        window.location.href = 'login.html?msg=Du hast dich erfolgreich registriert';
+        window.location.href = 'login.html';
     }, 900);
 }
 else{
