@@ -431,6 +431,7 @@
     width: 20vw;
   }
 
+
   .tasksContent {
     gap: 30px;
   }
@@ -615,6 +616,10 @@
     margin-left: 20px;
   }
 
+  .dragarea-done{
+    margin-bottom: 120px;
+  }
+
   .inputAndButtonBoard {
     position: absolute;
     bottom: -50px;
@@ -651,11 +656,15 @@
 
   .dragarea-todo,
   .dragarea-inProgress,
-  .dragarea-feedback,
-  .dragarea-done {
+  .dragarea-feedback{
     width: 90%;
-
     margin: 0 auto;
+  }
+
+  .dragarea-done{
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 80px;
   }
 
   .dragarea-todo::before,
