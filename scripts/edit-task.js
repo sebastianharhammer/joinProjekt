@@ -156,9 +156,13 @@ function setupDropdownClickListener(editDropdown, editOptionsContainer) {
 
 function setupDocumentClickListener(editDropdown, editOptionsContainer) {
     document.addEventListener("click", (event) => {
-        closeDropdownIfClickedOutside(editDropdown, editOptionsContainer, event.target);
+        const isClickInsideDropdown = editOptionsContainer.contains(event.target);
+        if (!isClickInsideDropdown) {
+            editOptionsContainer.style.display = "none";
+        }
     });
 }
+
 
 function toggleDropdown(editOptionsContainer) {
     const isDropdownOpen = editOptionsContainer.style.display === "block";
@@ -192,14 +196,19 @@ function returnArrayContactsEdit() {
 function createDropdownOption(contact, isChecked) {
     const optionElement = document.createElement("div");
     optionElement.classList.add("dropdown-contact-edit");
+    optionElement.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
     const circleDiv = createContactCircle(contact);
     const nameSpan = createContactNameSpan(contact);
     const checkboxLabel = createCheckboxLabel(contact, isChecked);
+
     optionElement.appendChild(circleDiv);
     optionElement.appendChild(nameSpan);
     optionElement.appendChild(checkboxLabel);
     return optionElement;
 }
+
 
 function createContactNameSpan(contact) {
     const nameSpan = document.createElement("span");
@@ -226,7 +235,11 @@ function createEditCheckbox(isChecked, contact) {
     checkbox.type = "checkbox";
     checkbox.classList.add("contact-checkbox-edit");
     checkbox.checked = isChecked;
-    addEditCheckboxEventListener(checkbox, contact);
+    checkbox.addEventListener("change", (event) => {
+        event.stopPropagation(); // Verhindert, dass das Klick-Event weitergeleitet wird
+        handleEditContactSelection(contact.firstName, contact.lastName, checkbox.checked);
+    });
+
     return checkbox;
 }
 
