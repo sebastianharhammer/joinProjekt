@@ -15,7 +15,6 @@ function showEditTaskTempl(taskId) {
     initializeEditTask(taskId, task);
 }
 
-
 function toggleEditAndDetailView() {
     const detailView = document.getElementById("taskDetailView");
     const editView = document.getElementById("editTaskTempl");
@@ -24,7 +23,6 @@ function toggleEditAndDetailView() {
     editView.classList.remove("d-none");
 }
 
-
 function initializeEditTask(taskId, task) {
     setupEditTaskEventListeners(taskId);
     getUsersForEditDropDown();
@@ -32,11 +30,6 @@ function initializeEditTask(taskId, task) {
     setPriority(task.prio);
     renderEditSubtasks(task);
 }
-
-
-
-
-
 
 function editExistingSubtaskEditView(taskId, subtaskIndex) {
     const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
@@ -63,7 +56,6 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
     inputElement.addEventListener("blur", () => saveEditedSubtask(taskId, subtaskIndex, inputElement.value));
     inputElement.focus();
 }
-
 
 function saveEditedSubtask(taskId, subtaskIndex, newValue) {
     const task = findTaskById(taskId);
@@ -151,21 +143,32 @@ async function getUsersForEditDropDown() {
 function setupEditDropdownInteraction() {
     const editDropdown = document.getElementById("custom-dropdown-edit");
     const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
+    setupDropdownClickListener(editDropdown, editOptionsContainer);
+    setupDocumentClickListener(editDropdown, editOptionsContainer);
+}
+
+function setupDropdownClickListener(editDropdown, editOptionsContainer) {
     editDropdown.addEventListener("click", (event) => {
         event.stopPropagation();
-        const isDropdownOpen = editOptionsContainer.style.display === "block";
-        if (!isDropdownOpen) {
-            editOptionsContainer.style.display = "block";
-        }
+        toggleDropdown(editOptionsContainer);
     });
+}
 
+function setupDocumentClickListener(editDropdown, editOptionsContainer) {
     document.addEventListener("click", (event) => {
-        if (
-            !editDropdown.contains(event.target)
-        ) {
-            editOptionsContainer.style.display = "none";
-        }
+        closeDropdownIfClickedOutside(editDropdown, editOptionsContainer, event.target);
     });
+}
+
+function toggleDropdown(editOptionsContainer) {
+    const isDropdownOpen = editOptionsContainer.style.display === "block";
+    editOptionsContainer.style.display = isDropdownOpen ? "none" : "block";
+}
+
+function closeDropdownIfClickedOutside(editDropdown, editOptionsContainer, target) {
+    if (!editDropdown.contains(target)) {
+        editOptionsContainer.style.display = "none";
+    }
 }
 
 function returnArrayContactsEdit() {
