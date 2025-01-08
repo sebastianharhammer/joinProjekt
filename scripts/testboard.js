@@ -1269,10 +1269,7 @@ async function saveEditedTask() {
       subtask: subtaskElement.textContent.replace("• ", "").trim(),
       checkbox: false,
   }));
-
-
   taskArray[taskIndex] = updatedTask;
-
   try {
       await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
           method: "PUT",
