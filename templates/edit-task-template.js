@@ -9,34 +9,34 @@ function getEditTemplate(task) {
         <p class="firstTableColumnFont">Title:</p>
         <div class="add-subtask-in-edit">
             <input class="input-title-in-edit" type="text" value="${task.title
-}">
+        }">
         </div>
         <p class="firstTableColumnFont">Description:</p>
         <textarea id="editDescription" class="editTaskTextarea textarea-large"></textarea>
         <p class="firstTableColumnFont">Due Date:</p>
         <div class="edit-due-date">
         <input type="date" id="edit-due-date" class="edit-input" value="${task.date || ""
-}">
+        }">
         </div>
         <p class="firstTableColumnFont">Priorität:</p>
         <div class="prio-btn-content">
             <button id="prio-urgent" class="prio-button ${task.prio === "urgent" ? "red" : ""
-}" onclick="setPriority('urgent')" type="button">
+        }" onclick="setPriority('urgent')" type="button">
                 Urgent
                 <img id="prio-image-urgent" class="${task.prio === "urgent" ? "sat-0" : ""
-}" src="./img/Prio_urgent_color.png" alt=""/>
+        }" src="./img/Prio_urgent_color.png" alt=""/>
             </button>
             <button id="prio-medium" class="prio-button ${task.prio === "medium" ? "yellow" : ""
-}" onclick="setPriority('medium')" type="button">
+        }" onclick="setPriority('medium')" type="button">
                 Medium
                 <img id="prio-image-medium" class="${task.prio === "medium" ? "sat-0" : ""
-}" src="./img/Prio_medium_color.png" alt=""/>
+        }" src="./img/Prio_medium_color.png" alt=""/>
             </button>
             <button id="prio-low" class="prio-button ${task.prio === "low" ? "green" : ""
-}" onclick="setPriority('low')" type="button">
+        }" onclick="setPriority('low')" type="button">
                 Low
                 <img id="prio-image-low" class="${task.prio === "low" ? "sat-0" : ""
-}" src="./img/Prio_low_color.png" alt=""/>
+        }" src="./img/Prio_low_color.png" alt=""/>
             </button>
         </div>
         <div class="field-text-flex-edit" id="addTaskAssignedTo-edit">
@@ -92,7 +92,7 @@ function createAssignedUserHTML(color, initials) {
 }
 
 function createContactEditHTML(initials, contact) {
-return /*html*/ `
+    return /*html*/ `
 <div class="contact-circle-edit" style="background-color: ${getRandomColor()}">${initials}</div>
 <span>${contact.firstName} ${contact.lastName}</span>
 <input type="checkbox" class="contact-checkbox-edit" onchange="handleEditContactSelection('${contact.firstName}', '${contact.lastName}')">
@@ -127,4 +127,46 @@ function createSubtaskHTML(task, subtask, subtaskId, subtaskTextId, index) {
 
 function getFirstLetter(name) {
     return name.trim().charAt(0).toUpperCase();
+}
+
+function renderEditSubtasks(task) {
+    const subtaskContainer = document.getElementById("rendered-subtasks-edit");
+    clearSubtaskContainer(subtaskContainer);
+
+    if (!task.subtasks || task.subtasks.length === 0) {
+        renderNoSubtasksMessage(subtaskContainer);
+        return;
+    }
+
+    task.subtasks.forEach((subtask, index) => {
+        const subtaskId = `edit-subtask-${task.id}-${index + 1}`;
+        const subtaskTextId = `subtask-text-${task.id}-${index}`;
+        const subtaskHTML = createSubtaskHTML(task, subtask, subtaskId, subtaskTextId, index);
+        subtaskContainer.innerHTML += subtaskHTML;
+    });
+}
+
+
+function clearSubtaskContainer(container) {
+    container.innerHTML = "";
+}
+
+function removeSubtaskElement(taskId, subtaskIndex) {
+    const subtaskElement = document.getElementById(
+        `edit-subtask-${taskId}-${subtaskIndex + 1}`
+    );
+    if (subtaskElement) {
+        subtaskElement.remove();
+    }
+}
+
+function getUpdatedSubtaskHTML(taskId, subtaskIndex, newValue) {
+    return /*html*/`
+
+    <p id="subtask-text-${taskId}-${subtaskIndex}" class="subtaskFontInEdit">• ${newValue}</p>
+    <div class="edit-existingtask">
+        <img src="./img/edit.svg" alt="Edit" class="edit-icon" onclick="editExistingSubtaskEditView(${taskId}, ${subtaskIndex})">
+        <span>|</span>
+        <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${taskId}, ${subtaskIndex})">
+    </div>`;
 }
