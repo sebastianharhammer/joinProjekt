@@ -25,7 +25,6 @@ function HeaderGetUser() {
     let objectToJson = JSON.parse(object);
     headerFirstName = objectToJson.firstName;
     headerLastName = objectToJson.lastName;
-    console.log("Header Local Storage Name: " + headerFirstName + " - " + headerLastName);
     headerDisplayName(headerFirstName, headerLastName);
 }
 

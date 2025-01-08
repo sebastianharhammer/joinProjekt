@@ -25,7 +25,7 @@ body {
   background-color: #2b3647;
   padding-top: 5vh;
   z-index: 10;
-  transition: all 0.3s ease;
+ /* transition: all 0.3s ease; */
 }
 
 a {
@@ -98,7 +98,7 @@ a {
     left: 0;
     width: 100vw;
     max-width: 1258px;
-    height: 6vh;
+    height: 10vh;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
@@ -126,8 +126,8 @@ a {
   }
 
   .nav-icon {
-    width: 25px;
-    height: 25px;
+    width: 45px;
+    height: 45px;
     padding-right: 4vw;
     padding-left: 4vw;
   }
@@ -151,7 +151,20 @@ a {
   }
 
   .nav-icon {
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
   }
 }
+@media (max-width: 375px) {
+  .nav-icon {
+    width: 30px;
+    height: 30px;
+  }
+}
+@media (max-width: 320px) {
+  .nav-icon {
+    width: 25px;
+    height: 25px;
+  }
+}
+  
