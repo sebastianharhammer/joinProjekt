@@ -5,46 +5,57 @@ function showEditTaskTempl(taskId) {
         console.error("Task nicht gefunden!");
         return;
     }
-    assignedUserArr = task.owner ? [...task.owner] : []; // Kopiere die aktuellen Owner in assignedUserArr
 
-    let detailView = document.getElementById("taskDetailView");
-    let editView = document.getElementById("editTaskTempl");
-    detailView.classList.add("d-none");
-    editView.classList.remove("d-none");
+    assignedUserArr = task.owner ? [...task.owner] : [];
+    toggleEditAndDetailView();
+
+    const editView = document.getElementById("editTaskTempl");
     editView.innerHTML = getEditTemplate(task);
 
+    initializeEditTask(taskId, task);
+}
+
+
+function toggleEditAndDetailView() {
+    const detailView = document.getElementById("taskDetailView");
+    const editView = document.getElementById("editTaskTempl");
+
+    detailView.classList.add("d-none");
+    editView.classList.remove("d-none");
+}
+
+
+function initializeEditTask(taskId, task) {
     setupEditTaskEventListeners(taskId);
     getUsersForEditDropDown();
-    updateAssignedUsersDisplay(); // Aktualisiere die Anzeige basierend auf den aktuellen Owners
+    updateAssignedUsersDisplay();
     setPriority(task.prio);
     renderEditSubtasks(task);
 }
 
-
 function renderEditSubtasks(task) {
     const subtaskContainer = document.getElementById("rendered-subtasks-edit");
-    subtaskContainer.innerHTML = ""; // Container leeren
+    clearSubtaskContainer(subtaskContainer);
 
     if (!task.subtasks || task.subtasks.length === 0) {
-        subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+        renderNoSubtasksMessage(subtaskContainer);
         return;
     }
 
     task.subtasks.forEach((subtask, index) => {
-        const subtaskId = `edit-subtask-${task.id}-${index + 1}`; // Dynamische ID erstellen
-        const subtaskTextId = `subtask-text-${task.id}-${index}`; // Eindeutige ID für das p-Tag
-
-        subtaskContainer.innerHTML += /*html*/ `
-        <div class="edit-subtask-item" id="${subtaskId}">
-          <p id="${subtaskTextId}" class="subtaskFontInEdit">• ${subtask.subtask || `Subtask ${index + 1}`}</p>
-          <div class="edit-existingtask">
-            <img src="./img/edit.svg" alt="Edit" class="edit-icon" onclick="editExistingSubtaskEditView(${task.id}, ${index})">
-            <span>|</span>
-            <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${task.id}, ${index})">
-          </div>
-        </div>`;
+        const subtaskId = `edit-subtask-${task.id}-${index + 1}`;
+        const subtaskTextId = `subtask-text-${task.id}-${index}`;
+        const subtaskHTML = createSubtaskHTML(task, subtask, subtaskId, subtaskTextId, index);
+        subtaskContainer.innerHTML += subtaskHTML;
     });
 }
+
+
+function clearSubtaskContainer(container) {
+    container.innerHTML = "";
+}
+
+
 
 function editExistingSubtaskEditView(taskId, subtaskIndex) {
     const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
@@ -158,7 +169,6 @@ function returnArrayContactsEdit() {
         console.error("No contacts found.");
         return;
     }
-
     const editDropdown = document.getElementById("custom-dropdown-edit");
     const editOptionsContainer = editDropdown.querySelector(".dropdown-options-edit");
     editOptionsContainer.innerHTML = "";
@@ -166,53 +176,88 @@ function returnArrayContactsEdit() {
     Object.keys(finalContactsForEdit).forEach((key) => {
         const contact = finalContactsForEdit[key];
         if (!contact || !contact.firstName || !contact.lastName) return;
-
-        // Überprüfe, ob der Kontakt bereits assigned ist
-        const isChecked = assignedUserArr.some(
-            (user) =>
-                user.firstName === contact.firstName &&
-                user.lastName === contact.lastName
-        );
-
-        const optionElement = document.createElement("div");
-        optionElement.classList.add("dropdown-contact-edit");
-
-        const circleDiv = document.createElement("div");
-        circleDiv.classList.add("contact-circle-edit");
-        circleDiv.style.backgroundColor = getRandomColor(contact.firstName, contact.lastName); // Nutzt getRandomColor
-        circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
-
-        const nameSpan = document.createElement("span");
-        nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
-
-        const checkboxLabel = document.createElement("label");
-        checkboxLabel.classList.add("contact-checkbox-edit-label");
-
-        const checkboxSquare = document.createElement("span");
-        checkboxSquare.classList.add("checkboxSquare");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.classList.add("contact-checkbox-edit");
-        checkbox.checked = isChecked;
-        checkbox.addEventListener("change", () => {
-            handleEditContactSelection(
-                contact.firstName,
-                contact.lastName,
-                checkbox.checked
-            );
-        });
-        checkboxLabel.appendChild(checkbox);
-        checkboxLabel.appendChild(checkboxSquare);
-
-        optionElement.appendChild(circleDiv);
-        optionElement.appendChild(nameSpan);
-        optionElement.appendChild(checkboxLabel);
-
+        const isChecked = checkIfContactAssigned(contact);
+        const optionElement = createDropdownOption(contact, isChecked);
         editOptionsContainer.appendChild(optionElement);
     });
 }
 
+function createDropdownOption(contact, isChecked) {
+    const optionElement = document.createElement("div");
+    optionElement.classList.add("dropdown-contact-edit");
+    const circleDiv = createContactCircle(contact);
+    const nameSpan = createContactNameSpan(contact);
+    const checkboxLabel = createCheckboxLabel(contact, isChecked);
+    optionElement.appendChild(circleDiv);
+    optionElement.appendChild(nameSpan);
+    optionElement.appendChild(checkboxLabel);
+    return optionElement;
+}
+
+function createContactNameSpan(contact) {
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = `${contact.firstName} ${contact.lastName}`;
+    return nameSpan;
+}
+
+
+function createCheckboxLabel(contact, isChecked) {
+    const checkboxLabel = createEditLabel();
+    const checkbox = createEditCheckbox(isChecked, contact);
+    const checkboxSquare = createEditCheckboxSquare();
+    assembleEditLabel(checkboxLabel, checkbox, checkboxSquare);
+    return checkboxLabel;
+}
+
+
+function createEditLabel() {
+    const label = document.createElement("label");
+    label.classList.add("contact-checkbox-edit-label");
+    return label;
+}
+
+
+function createEditCheckbox(isChecked, contact) {
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("contact-checkbox-edit");
+    checkbox.checked = isChecked;
+    addEditCheckboxEventListener(checkbox, contact);
+    return checkbox;
+}
+
+
+function addEditCheckboxEventListener(checkbox, contact) {
+    checkbox.addEventListener("change", () => {
+        handleEditContactSelection(
+            contact.firstName,
+            contact.lastName,
+            checkbox.checked
+        );
+    });
+}
+
+
+function createEditCheckboxSquare() {
+    const span = document.createElement("span");
+    span.classList.add("checkboxSquare");
+    return span;
+}
+
+
+function assembleEditLabel(label, checkbox, checkboxSquare) {
+    label.appendChild(checkbox);
+    label.appendChild(checkboxSquare);
+}
+
+
+function createContactCircle(contact) {
+    const circleDiv = document.createElement("div");
+    circleDiv.classList.add("contact-circle-edit");
+    circleDiv.style.backgroundColor = getRandomColor(contact.firstName, contact.lastName);
+    circleDiv.textContent = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+    return circleDiv;
+}
 
 function assignUserEditHTML(contact) {
     const initials = `${getFirstLetter(contact.firstName)}${getFirstLetter(
@@ -253,10 +298,6 @@ function updateAssignedUsersDisplay() {
     });
 }
 
-
-function getFirstLetter(name) {
-    return name.trim().charAt(0).toUpperCase();
-}
 
 function getRandomColor(firstName, lastName) {
 
@@ -306,14 +347,36 @@ function setupEditTaskEventListeners(taskId) {
 }
 
 function deleteSubtaskEditview(taskId, subtaskIndex) {
-    const task = taskArray.find((t) => t.id === taskId);
+    const task = findTaskById(taskId);
+    if (!isValidTask(task)) return;
+
+    deleteSubtaskFromTask(task, subtaskIndex);
+    updateTaskInFirebase(taskId, task);
+    removeSubtaskElement(taskId, subtaskIndex);
+    updateSubtaskContainer();
+}
+
+
+function findTaskById(taskId) {
+    return taskArray.find((t) => t.id === taskId);
+}
+
+
+function isValidTask(task) {
     if (!task || !task.subtasks) {
         console.error("Task oder Subtasks nicht gefunden!");
-        return;
+        return false;
     }
+    return true;
+}
 
+
+function deleteSubtaskFromTask(task, subtaskIndex) {
     task.subtasks.splice(subtaskIndex, 1);
+}
 
+
+function updateTaskInFirebase(taskId, task) {
     fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -329,15 +392,20 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
         .catch((error) => {
             console.error("Fehler beim Löschen des Subtasks in Firebase:", error);
         });
+}
 
+
+function removeSubtaskElement(taskId, subtaskIndex) {
     const subtaskElement = document.getElementById(
         `edit-subtask-${taskId}-${subtaskIndex + 1}`
     );
     if (subtaskElement) {
         subtaskElement.remove();
     }
+}
 
 
+function updateSubtaskContainer() {
     const subtaskContainer = document.getElementById("rendered-subtasks-edit");
     if (subtaskContainer.children.length === 0) {
         subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
@@ -372,44 +440,58 @@ function closeEditTask(taskId) {
 
 async function saveEditedTask() {
     const taskId = currentTaskBeingEdited;
-    const newTitle = document.querySelector("#editTaskCard input").value;
-    const newDescription = document.getElementById("editDescription").value;
-    const newDate = document.getElementById("edit-due-date").value;
+    const updatedTask = prepareUpdatedTask(taskId);
+    if (!updatedTask) return;
 
-    const taskIndex = taskArray.findIndex((task) => task.id === taskId);
-    if (taskIndex === -1) {
-        console.error(`Task mit ID ${taskId} nicht im taskArray gefunden.`);
-        return;
-    }
-    const updatedTask = { ...taskArray[taskIndex] };
-    updatedTask.title = newTitle;
-    updatedTask.description = newDescription;
-    updatedTask.date = newDate;
-    updatedTask.owner = assignedUserArr.map((user) => ({
-        ...user,
-        initials: `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`
-    }));
-    const subtaskElements = document.querySelectorAll(
-        "#rendered-subtasks-edit .subtaskFontInEdit"
-    );
-    updatedTask.subtasks = Array.from(subtaskElements).map((subtaskElement) => ({
-        subtask: subtaskElement.textContent.replace("• ", "").trim(),
-        checkbox: false,
-    }));
-    taskArray[taskIndex] = updatedTask;
     try {
-        await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedTask),
-        });
-
-        console.log(`Task ${taskId} erfolgreich aktualisiert.`);
-        console.log("Aktualisiertes Task-Array:", taskArray);
-
+        await updateTaskOnServer(taskId, updatedTask);
         updateTaskHTML();
         closeEditTask();
     } catch (error) {
         console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
     }
+}
+
+function prepareUpdatedTask(taskId) {
+    const newTitle = document.querySelector("#editTaskCard input").value;
+    const newDescription = document.getElementById("editDescription").value;
+    const newDate = document.getElementById("edit-due-date").value;
+    const taskIndex = taskArray.findIndex((task) => task.id === taskId);
+    if (taskIndex === -1) {
+        console.error(`Task mit ID ${taskId} nicht im taskArray gefunden.`);
+        return null;
+    }
+    const updatedTask = { ...taskArray[taskIndex] };
+    updatedTask.title = newTitle;
+    updatedTask.description = newDescription;
+    updatedTask.date = newDate;
+    updatedTask.owner = prepareAssignedUsers();
+    updatedTask.subtasks = extractSubtasksFromDOM();
+    taskArray[taskIndex] = updatedTask;
+    return updatedTask;
+}
+
+function prepareAssignedUsers() {
+    return assignedUserArr.map((user) => ({
+        ...user,
+        initials: `${getFirstLetter(user.firstName)}${getFirstLetter(user.lastName)}`
+    }));
+}
+
+function extractSubtasksFromDOM() {
+    const subtaskElements = document.querySelectorAll(
+        "#rendered-subtasks-edit .subtaskFontInEdit"
+    );
+    return Array.from(subtaskElements).map((subtaskElement) => ({
+        subtask: subtaskElement.textContent.replace("• ", "").trim(),
+        checkbox: false,
+    }));
+}
+
+async function updateTaskOnServer(taskId, updatedTask) {
+    await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedTask),
+    });
 }

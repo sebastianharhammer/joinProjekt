@@ -98,3 +98,33 @@ return /*html*/ `
 <input type="checkbox" class="contact-checkbox-edit" onchange="handleEditContactSelection('${contact.firstName}', '${contact.lastName}')">
 `;
 }
+
+function checkIfContactAssigned(contact) {
+    return assignedUserArr.some(
+        (user) =>
+            user.firstName === contact.firstName &&
+            user.lastName === contact.lastName
+    );
+}
+
+function renderNoSubtasksMessage(container) {
+    container.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+}
+
+
+function createSubtaskHTML(task, subtask, subtaskId, subtaskTextId, index) {
+    return /*html*/ `
+<div class="edit-subtask-item" id="${subtaskId}">
+    <p id="${subtaskTextId}" class="subtaskFontInEdit">• ${subtask.subtask || `Subtask ${index + 1}`}</p>
+    <div class="edit-existingtask">
+        <img src="./img/edit.svg" alt="Edit" class="edit-icon" onclick="editExistingSubtaskEditView(${task.id}, ${index})">
+        <span>|</span>
+        <img src="./img/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtaskEditview(${task.id}, ${index})">
+    </div>
+</div>`;
+}
+
+
+function getFirstLetter(name) {
+    return name.trim().charAt(0).toUpperCase();
+}
