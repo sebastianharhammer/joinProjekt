@@ -5,7 +5,6 @@ function showEditTaskTempl(taskId) {
         console.error("Task nicht gefunden!");
         return;
     }
-
     assignedUserArr = task.owner ? [...task.owner] : [];
     toggleEditAndDetailView();
 
@@ -44,7 +43,6 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
     inputElement.value = subtaskTextElement.textContent.replace("• ", "").trim();
     inputElement.className = "subtaskInputInEdit";
     subtaskTextElement.replaceWith(inputElement);
-
     const editIcon = document.querySelector(
         `#edit-subtask-${taskId}-${subtaskIndex + 1} .edit-icon`
     );
@@ -125,11 +123,9 @@ async function getUsersForEditDropDown() {
                 "Content-type": "application/json",
             },
         });
-
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         let responseToJson = await response.json();
         finalContactsForEdit = responseToJson || {};
         console.log(finalContactsForEdit);
@@ -162,7 +158,6 @@ function setupDocumentClickListener(editDropdown, editOptionsContainer) {
         }
     });
 }
-
 
 function toggleDropdown(editOptionsContainer) {
     const isDropdownOpen = editOptionsContainer.style.display === "block";
@@ -208,7 +203,6 @@ function createDropdownOption(contact, isChecked) {
     optionElement.appendChild(checkboxLabel);
     return optionElement;
 }
-
 
 function createContactNameSpan(contact) {
     const nameSpan = document.createElement("span");
@@ -293,8 +287,6 @@ function handleEditContactSelection(firstName, lastName, isChecked) {
             (user) => user.firstName !== firstName || user.lastName !== lastName
         );
     }
-
-    console.log("Assigned users:", assignedUserArr);
     updateAssignedUsersDisplay();
 }
 

@@ -760,8 +760,3 @@ function highlight(id) {
 function removeHighlight(id) {
   document.getElementById(id).classList.remove("dragAreaHighlight");
 }
-
-
-
-
-
