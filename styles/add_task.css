@@ -822,7 +822,7 @@ ul {
   #add-task-content {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 84vh;
+    height: 81vh;
   }
   .hide-add-task {
     transform: translateX(100vw);
@@ -1004,6 +1004,7 @@ ul {
   .addtask-buttons {
     align-items: center;
     flex-direction: row;
+    z-index: 1000;
   }
 
   #task-success {
@@ -1012,6 +1013,7 @@ ul {
   .input-addtask {
     font-size: 16px;
     border-radius: 8px;
+    z-index: 1000;
   }
   #dropDownCategoryMenu {
     font-size: 14px;

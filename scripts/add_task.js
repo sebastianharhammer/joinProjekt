@@ -32,19 +32,26 @@ function init() {
 async function createTask(event) {
     event.preventDefault();
     let title = document.getElementById('title').value;
+    const button = document.getElementById('add-task-create');
     let description = document.getElementById('description').value;
     let date = document.getElementById('addTaskInputDueDate').value;
     if (date < new Date().toISOString().split('T')[0]) {
         document.getElementById('addDateError').innerHTML = "Date can´t be in the past!";
-        
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647";
         setTimeout(() => {
             document.getElementById('addDateError').innerHTML = "";
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
+            return;
         }, 3000);
-    }
-    const category = categoryObject;
-    const priority = selectedPriority;
-    const subtasks = [...subtasksArr];
-    const assignedUsers = [...assignedUserArr];
+    } else {
+        const category = categoryObject;
+        const priority = selectedPriority;
+        const subtasks = [...subtasksArr];
+        const assignedUsers = [...assignedUserArr];
     if (validateTask(title, date, category)) {
         return;
     }
@@ -71,6 +78,7 @@ async function createTask(event) {
     } catch (error) {
         console.error("Failed to create the task:", error);
     }
+}
 }
 
 function handleCancel(event) {
