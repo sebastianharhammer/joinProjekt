@@ -204,12 +204,12 @@ input[type="date"] {
 }
 
 #arrowDropMenuCategory {
-  height: 30px;
-  width: 35px;
+  height: 15px;
+  width: 15px;
   cursor: pointer;
   position: absolute;
-  top: 4.5vh;
-  right: 0.5vw;
+  top: 55px;
+  right: 25px;
   z-index: 1000;
 }
 
@@ -237,6 +237,12 @@ input[type="date"] {
   scrollbar-width: thin;
   scrollbar-color: #A8A8A8 #F5F5F5;
 }
+#errorMessageSubtasks {
+  color: #ff3d00;
+  font-size: 14px;
+  margin-top: 5px;
+  margin-left: 10px;
+}
 
 #subtasksContent::-webkit-scrollbar {
   width: 8px;
@@ -254,6 +260,15 @@ input[type="date"] {
 
 #subtasksContent::-webkit-scrollbar-thumb:hover {
   background: #888888;
+}
+#subtasks-plus-icon {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  top: 5px;
+  right: 16px;
+  z-index: 1000;
 }
 
 ul {
@@ -697,8 +712,9 @@ ul {
   justify-content: space-evenly;
   align-items: center;
   height: 50px;
-  margin-left: 1vw;
-  margin-right: 1vw;
+  width: 130px;
+  margin-left: 0vw;
+  margin-right: 0vw;
   background-color: white;
   border-radius: 10px;
   font-weight: 700;
@@ -805,7 +821,7 @@ ul {
   #add-task-content {
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 78vh;
+    height: 84vh;
   }
   .hide-add-task {
     transform: translateX(100vw);
@@ -829,7 +845,7 @@ ul {
 
   .addtask-form-container {
     flex-direction: column;
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     align-items: center;
   }
   .addtask-main-content h1 {
@@ -843,9 +859,9 @@ ul {
     justify-content: center;
     position: fixed;
     z-index: 100;
-    bottom: 12vh;
-    left: 50vw;
-    right: 30vw;
+    bottom: 11vh;
+    left: 45vw;
+    right: 35vw;
   }
   .addtask-buttons {
     justify-content: flex-end;
@@ -868,6 +884,7 @@ ul {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  padding-bottom: 40px;
 }
 }
 
@@ -910,10 +927,6 @@ ul {
   .addtask-buttons {
     align-items: center;
   }
-  .addtask-bottom-container {
-    padding: 0 13px;
-    align-items: center;
-  }
 }
 
 @media (max-width: 576px) {
@@ -924,15 +937,6 @@ ul {
   } */
   .addtask-main-content h1 {
     font-size: 46px;
-  }
-  .addtask-buttons {
-    gap: 12px;
-    align-items: center;
-  }
-  .addtask-bottom-container {
-    align-items: center;
-    gap: 12px;
-    padding: 0 8px;
   }
 /*   .input-addtask {
     font-size: 16px;
@@ -965,13 +969,10 @@ ul {
     margin-right: 10px;
   } */
   .addtask-bottom-container {
-    margin-left: 40px;
-    margin-right: 60px;
     align-items: center;
   }
 
   .addtask-buttons {
-    gap: 6px;
     align-items: center;
     flex-direction: row;
   }
@@ -981,14 +982,10 @@ ul {
   }
   .input-addtask {
     font-size: 16px;
-    padding: 3px 6px;
-    max-height: 40px;
     border-radius: 8px;
   }
   #dropDownCategoryMenu {
-    font-size: 16px;
-    padding: 3px 6px;
-    max-height: 40px;
+    font-size: 14px;
     border-radius: 8px;
   }
 }

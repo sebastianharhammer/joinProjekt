@@ -34,11 +34,17 @@ async function createTask(event) {
     let title = document.getElementById('title').value;
     let description = document.getElementById('description').value;
     let date = document.getElementById('addTaskInputDueDate').value;
+    if (date < new Date().toISOString().split('T')[0]) {
+        document.getElementById('addDateError').innerHTML = "Date can´t be in the past!";
+        setTimeout(() => {
+            document.getElementById('addDateError').innerHTML = "";
+        }, 1500);
+        return;
+    }
     const category = categoryObject;
     const priority = selectedPriority;
     const subtasks = [...subtasksArr];
     const assignedUsers = [...assignedUserArr];
-
     if (validateTask(title, date, category)) {
         return;
     }
@@ -65,6 +71,28 @@ async function createTask(event) {
     } catch (error) {
         console.error("Failed to create the task:", error);
     }
+}
+
+function handleCancel(event) {
+    event.preventDefault();
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('addTaskInputDueDate').value = '';
+    document.getElementById('categoryInput').value = '';
+    document.getElementById('subtaskInput').value = '';
+    document.getElementById('subtasksContent').innerHTML = '';
+    subtasksArr = [];
+    assignedUserArr = [];
+    categoryObject = '';
+    selectedPriority = '';
+    document.getElementById('assigned-users-short').innerHTML = '';
+    const priorities = ['urgent', 'medium', 'low'];
+    priorities.forEach((prio) => {
+        const btn = document.getElementById(`prio-${prio}`);
+        const img = document.getElementById(`prio-image-${prio}`);
+        btn.classList.remove('red', 'yellow', 'green');
+        img.classList.remove('sat-0');
+    });
 }
 
 
@@ -148,46 +176,36 @@ async function pushTaskToFirebase(newTask) {
 function handleDropdownInteraction() {
     const dropdown = document.getElementById('custom-dropdown');
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    
     dropdown.addEventListener('click', (e) => {
         const userContainer = e.target.closest('.assigned-user-container');
         if (userContainer) {
             e.stopPropagation();
             return;
         }
-        
         e.stopPropagation();
         const isOpen = optionsContainer.style.display === 'block';
         optionsContainer.style.display = isOpen ? 'none' : 'block';
     });
-
     optionsContainer.addEventListener('click', (event) => {
         const userContainer = event.target.closest('.assigned-user-container');
         if (!userContainer) return;
-        
         event.stopPropagation();
-        
         const checkbox = userContainer.querySelector('input[type="checkbox"]');
         const firstName = userContainer.dataset.firstname;
         const lastName = userContainer.dataset.lastname;
         const color = userContainer.dataset.color;
-        
-        // Check if user is already selected
         const userIndex = assignedUserArr.findIndex(user => 
             user.firstName === firstName && 
             user.lastName === lastName
         );
         const isSelected = userIndex > -1;
-        
         if (isSelected) {
-            // Remove user from array and update UI
             assignedUserArr.splice(userIndex, 1);
             checkbox.checked = false;
             userContainer.style.backgroundColor = '';
             userContainer.style.color = '';
             userContainer.style.borderRadius = '';
         } else {
-            // Add user to array and update UI
             assignedUserArr.push({
                 firstName,
                 lastName,
@@ -199,8 +217,6 @@ function handleDropdownInteraction() {
             userContainer.style.color = 'white';
             userContainer.style.borderRadius = '10px';
         }
-        
-        // Update the assigned-users-short div
         showAssignedUsers();
     });
 }
@@ -271,13 +287,10 @@ function returnArrayContacts() {
 
 
 function assignUser(firstName, lastName, color) {
-    // Check if user already exists in the array
     const userExists = assignedUserArr.some(user => 
         user.firstName === firstName && 
         user.lastName === lastName
     );
-
-    // Only add the user if they don't already exist
     if (!userExists) {
         assignedUserArr.push({
             firstName: firstName,
@@ -293,7 +306,6 @@ function assignUser(firstName, lastName, color) {
 function showAssignedUsers() {
     let assignUsersContainer = document.getElementById("assigned-users-short");
     assignUsersContainer.innerHTML = "";
-
     assignedUserArr.forEach((contact) => {
         assignUsersContainer.innerHTML += showAssignedUsersHTML(contact);
     });
@@ -386,6 +398,12 @@ function addSubtask() {
     subtasksContent.innerHTML += newSubtaskHTML;
     subtaskInput.value = "";
     }
+    else {
+        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        setTimeout(() => {
+            errorMessageSubtasks.innerHTML = "";
+        }, 1500);
+    }
     document.getElementById("clear-add-icons").classList.add("d-none");
     document.getElementById("subtasks-plus-icon").classList.remove("d-none");    
 }
@@ -395,15 +413,16 @@ function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
-    const errorMassageSubtasks = document.getElementById("errorMassageSubtasks");
+    const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
     if ( currentText.trim() !== "") {
         li.innerHTML = editSubtaskHTML(liId, spanId, inputId, currentText);
         li.classList.add("subtask-item-on-focus");
         li.classList.remove("subtask-item");
     } else {
-        errorMassageSubtasks.innerHTML = "Subtask is required!";
+        errorMessage
+        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
         setTimeout(() => {
-            errorMassageSubtasks.innerHTML = "";
+            errorMessageSubtasks.innerHTML = "";
         }, 3000);
     }
 }
@@ -418,39 +437,27 @@ function deleteSubtask(liId) {
 function saveSubtask(liId, inputId, spanId) {
     const li = document.getElementById(liId);
     const input = document.getElementById(inputId);
-    li.innerHTML = saveSubtaskHTML(liId, inputId, spanId, input);
-    li.classList.remove("subtask-item-on-focus");
-    li.classList.add("subtask-item");
+    if (input.value.trim() !== "") {
+        li.innerHTML = saveSubtaskHTML(liId, inputId, spanId, input);
+        li.classList.remove("subtask-item-on-focus");
+        li.classList.add("subtask-item");
+    } else {
+        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        setTimeout(() => {
+            errorMessageSubtasks.innerHTML = "";
+        }, 1500);
+    }
 }
 
   
 function clearSubtaskInput() {
     const input = document.getElementById("subtaskInput");
     input.value = "";
-    document.getElementById("clearButton").style.display = "none";
+    
 }
 
 
 function showClearButton() {
-    document.getElementById("clear-add-icons").classList.remove("d-none");
-    document.getElementById("subtasks-plus-icon").classList.add("d-none");
-}
-
-
-function handleCancel(event) {
-    event.preventDefault();
-    window.location.href = 'board.html';
-}
-
-
-function assignUserHTML(contact) {
-    return `
-        <div class="assigned-user-container" 
-             data-firstname="${contact.firstName}"
-             data-lastname="${contact.lastName}"
-             data-color="${contact.color}">
-            <input type="checkbox">
-            <span>${contact.firstName} ${contact.lastName}</span>
-        </div>
-    `;
+        document.getElementById("clear-add-icons").classList.remove("d-none");
+        document.getElementById("subtasks-plus-icon").classList.add("d-none");
 }

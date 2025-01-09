@@ -129,7 +129,7 @@ function assignUserHTML(contact) {
 function showAssignedUsersHTML(contact) {
   return `<svg class="addtask-customCircle" width="50" height="50" >
             <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
-            <text class="addtask-textInCircle" stroke-width="1" font-weight="normal" stroke="white" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+            <text class="addtask-textInCircle" stroke-width="1" font-weight="normal" stroke="white"     x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
         </svg>`;
 }
 

@@ -47,7 +47,7 @@ function renderAddTaskHTML() {
                   <span style="color: #ff8190">*</span>
                 </label>
                 <div id="errorMassageTitle"></div>
-                <input class="input-addtask" id="addTaskInputDueDate" type="date" min="2024-12-01"/>
+                <input class="input-addtask" id="addTaskInputDueDate" type="date" min="2025-01-01"/>
                 <span id="addDateError" class="validSpanDate"></span>
               </div>
               <div class="prio-content field-text-flex">
@@ -73,7 +73,7 @@ function renderAddTaskHTML() {
                   <span style="color: #ff8190">*</span>
                 </label>
                 <input class="input-addtask" onclick="openAddTaskCategories()" id="categoryInput" type="text" placeholder="Select task category" maxlength="40" readonly>
-                <img onclick="openAddTaskCategories()" id="arrowDropMenuCategory" src="./img/arrow_drop_down.png" alt=""/>
+                <img onclick="openAddTaskCategories()" id="arrowDropMenuCategory" src="./img/arrow_drop_down.svg" alt=""/>
                 <div id="dropDownCategoryMenu"></div>
                 <span id="addCategoryError"  class="validSpanCategory"></span>
               </div>
@@ -90,11 +90,11 @@ function renderAddTaskHTML() {
                       <div class="divider"></div>
                       <img onclick="addSubtask()" src="./img/check.svg">
                     </div>
-                    <img id="subtasks-plus-icon" src="./img/add.png" type="button" onclick="addSubtask()"/>
+                    <img id="subtasks-plus-icon" src="./img/add.svg" type="button" onclick="addSubtask()"/>
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
-                <span id="errorMassageSubtasks"></span>
+                <span id="errorMessageSubtasks"></span>
               </div>
             </div>
             <div id="required-field-mobile">
@@ -108,7 +108,7 @@ function renderAddTaskHTML() {
                   <span>This field is required</span>
           </div>
             <div class="addtask-buttons">
-            <button id="add-task-close" class="btn-cancel">
+            <button id="add-task-close" class="btn-cancel" type="button" onclick="handleCancel(event)">
                 <span class="add-task-btn">Clear ✖</span>
               </button>
               <button onclick="createTask(event)" id="add-task-create" class="btn-create" type="button">
