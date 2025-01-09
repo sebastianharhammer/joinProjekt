@@ -352,7 +352,7 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
     if (!isValidTask(task)) return;
 
     deleteSubtaskFromTask(task, subtaskIndex);
-    updateTaskInFirebase(taskId, task);
+    updateTaskInFirebaseEdit(taskId, task);
     removeSubtaskElement(taskId, subtaskIndex);
     updateSubtaskContainer();
 }
@@ -373,23 +373,14 @@ function deleteSubtaskFromTask(task, subtaskIndex) {
     task.subtasks.splice(subtaskIndex, 1);
 }
 
-function updateTaskInFirebase(taskId, task) {
-    fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+function updateTaskInFirebaseEdit(taskId, task) {
+    return fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(task),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(
-                    `Fehler beim Aktualisieren in Firebase: ${response.statusText}`
-                );
-            }
-        })
-        .catch((error) => {
-            console.error("Fehler beim Löschen des Subtasks in Firebase:", error);
-        });
+    });
 }
+
 
 function updateSubtaskContainer() {
     const subtaskContainer = document.getElementById("rendered-subtasks-edit");

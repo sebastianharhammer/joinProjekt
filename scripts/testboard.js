@@ -258,14 +258,28 @@ function createOwnerCircles(task) {
     return;
   }
   userNameCircles.innerHTML = "";
+
   if (!task.owner || task.owner.length === 0) {
     userNameCircles.innerHTML = generateNoOwnerCircle();
     return;
   }
-  for (const owner of task.owner) {
+  const ownersToShow = task.owner.slice(0, 3);
+  const extraOwnersCount = task.owner.length - 3;
+  for (const owner of ownersToShow) {
     userNameCircles.innerHTML += generateOwnerCircle(owner);
   }
+  if (extraOwnersCount > 0) {
+    userNameCircles.innerHTML += `
+      <svg width="34" height="34">
+        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="black" />
+        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central" fill="white">
+          +${extraOwnersCount}
+        </text>
+      </svg>
+    `;
+  }
 }
+
 
 function findClassOfTaskCat(task) {
   const taskButton = document.getElementById(`taskButton-${task.id}`);
@@ -349,58 +363,6 @@ function createTaskHTML(task) {
   return getTaskHTML(task, completedSubtasks, totalSubtasks);
 }
 
-function moveTaskUp(taskId, event) {
-  event.stopPropagation();
-
-  const statusOrder = ["todo", "inProgress", "feedback", "done"];
-  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
-  if (taskIndex === -1) return;
-
-  const currentStatus = taskArray[taskIndex].status;
-  const currentPos = statusOrder.indexOf(currentStatus);
-
-  if (currentPos <= 0) {
-    return;
-  }
-
-  const newStatus = statusOrder[currentPos - 1];
-  taskArray[taskIndex].status = newStatus;
-
-  if (currentUser && currentUser.firstName !== "Guest") {
-    updateTaskInFirebase(taskArray[taskIndex])
-      .then(() => updateTaskHTML())
-      .catch((err) => console.error("Fehler beim Update:", err));
-  } else {
-    updateTaskHTML();
-  }
-}
-
-function moveTaskDown(taskId, event) {
-  event.stopPropagation();
-
-  const statusOrder = ["todo", "inProgress", "feedback", "done"];
-  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
-  if (taskIndex === -1) return;
-
-  const currentStatus = taskArray[taskIndex].status;
-  const currentPos = statusOrder.indexOf(currentStatus);
-
-  if (currentPos >= statusOrder.length - 1) {
-    console.log("Task ist bereits in der untersten Kategorie.");
-    return;
-  }
-
-  const newStatus = statusOrder[currentPos + 1];
-  taskArray[taskIndex].status = newStatus;
-
-  if (currentUser && currentUser.firstName !== "Guest") {
-    updateTaskInFirebase(taskArray[taskIndex])
-      .then(() => updateTaskHTML())
-      .catch((err) => console.error("Fehler beim Update:", err));
-  } else {
-    updateTaskHTML();
-  }
-}
 
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
@@ -419,7 +381,7 @@ function showTaskCard(id) {
 function showTaskCardHTML(task) {
   return /*html*/ `
         <div id="currentTaskCard${task.id}" class="currentTaskCard">
-            ${getTaskCategoryButtonHTML(task)}
+        ${getTaskCategoryButtonHTML(task)}
             ${getTaskDetailsHTML(task)}
             <div class="taskOwnersSection">
                 <p class="firstTableColumnFont">Assigned To:</p>
@@ -523,3 +485,64 @@ function highlight(id) {
 function removeHighlight(id) {
   document.getElementById(id).classList.remove("dragAreaHighlight");
 }
+
+async function moveTaskUp(taskId, event) {
+  event.stopPropagation(); // Verhindert, dass das Klicken auf den Pfeil das Task-Detail-Overlay öffnet
+  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
+  if (taskIndex === -1) {
+    console.error(`Task mit ID ${taskId} nicht gefunden.`);
+    return;
+  }
+
+  const task = taskArray[taskIndex];
+
+  // Verschiebe den Task nach oben in die Reihenfolge: Done -> Await Feedback -> In Progress -> To-Do
+  if (task.status === "done") {
+    task.status = "feedback";
+  } else if (task.status === "feedback") {
+    task.status = "inProgress";
+  } else if (task.status === "inProgress") {
+    task.status = "todo";
+  } else {
+    console.log("Task befindet sich bereits in der obersten Kategorie.");
+    return;
+  }
+
+  try {
+    await updateTaskInFirebase(task); // Speichere die Änderung in Firebase
+    updateTaskHTML(); // Aktualisiere die Anzeige
+  } catch (error) {
+    console.error("Fehler beim Verschieben des Tasks nach oben:", error);
+  }
+}
+
+async function moveTaskDown(taskId, event) {
+  event.stopPropagation(); // Verhindert, dass das Klicken auf den Pfeil das Task-Detail-Overlay öffnet
+  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
+  if (taskIndex === -1) {
+    console.error(`Task mit ID ${taskId} nicht gefunden.`);
+    return;
+  }
+
+  const task = taskArray[taskIndex];
+
+  // Verschiebe den Task nach unten in die Reihenfolge: To-Do -> In Progress -> Await Feedback -> Done
+  if (task.status === "todo") {
+    task.status = "inProgress";
+  } else if (task.status === "inProgress") {
+    task.status = "feedback";
+  } else if (task.status === "feedback") {
+    task.status = "done";
+  } else {
+    console.log("Task befindet sich bereits in der untersten Kategorie.");
+    return;
+  }
+
+  try {
+    await updateTaskInFirebase(task); // Speichere die Änderung in Firebase
+    updateTaskHTML(); // Aktualisiere die Anzeige
+  } catch (error) {
+    console.error("Fehler beim Verschieben des Tasks nach unten:", error);
+  }
+}
+
