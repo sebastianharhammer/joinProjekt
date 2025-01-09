@@ -112,3 +112,148 @@ function getSubtasksHTML(task) {
     });
     return subtasksHTML;
 }
+
+function getNoOwnersHTML() {
+    return `<p class="noOwners">Keine Owner zugewiesen</p>`;
+}
+
+function getOwnerItemHTML(owner) {
+    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
+    return `
+    <div class="ownerItem">
+        ${getOwnerCircleHTML(owner, color)}
+        <p>${owner.firstName} ${owner.lastName}</p>
+    </div>
+    `;
+}
+
+function getOwnerCircleHTML(owner, color) {
+    return /*html*/`
+    <svg width="34" height="34">
+        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
+        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
+        ${owner.initials || "N/A"}
+        </text>
+    </svg>
+    `;
+}
+
+function getTaskDetailsHTML(task) {
+    return /*html*/ `
+          <p class="boardFontDetail">${task.title}</p>
+          <p class="description-taskCard">${task.description}</p>
+          <table class="dueDateAndPrio">
+              <tbody>
+                  <tr>
+                      <td class="firstTableColumnFont">Due date:</td>
+                      <td>${task.date}</td>
+                  </tr>
+                  <tr>
+                      <td class="firstTableColumnFont">Priority:</td>
+                      <td>${
+                        task.prio
+                      } <img class="prioIconCard" src="${getPrioIcon(
+      task.prio
+    )}" alt=""></td>                   
+                </tr>
+            </tbody>
+        </table>
+        <div class="cardSubtasks">
+            <p class="firstTableColumnFont">Subtasks</p>
+            ${getSubtasksHTML(task)}
+        </div>
+        <div class="editAndDelete">
+            <div class="deleteCard" onclick="askFordeleteTask()">
+                <img class="deleteIcon" src="./img/delete.svg" alt="">
+                <p class="editDeleteFont">Delete</p>
+            </div>
+            <div onclick="showEditTaskTempl(${task.id})" class="deleteCard">
+            <img class="editIcon" src="./img/edit.svg" alt="">
+            <p class="editDeleteFont">Edit</p>
+            </div>
+        </div>
+            <div class="deleteConfirmation d-none" id="deleteConfirmation">
+            <p class="deleteHeaderFont">Bist du dir sicher?</p>
+            <div class="confirmation-delete-buttons">
+                <button class="deleteTaskButtons" onclick="deleteTask(${
+                    task.id
+                })">Ja, löschen</button>
+                <button class="deleteTaskButtons" onclick="closeQuestionDelete()">Nein, zurück</button>
+            </div>
+        </div>
+    `;
+}
+
+function getPrioIcon(prio) {
+    if (prio === "medium") {
+    return "./img/prio-mid.png";
+    } else if (prio === "urgent") {
+    return "./img/prio-high.png";
+    } else {
+    return "./img/prio-low.png";
+    }
+}
+
+function showTitleOfBoardColumns() {
+    return /*html*/ `
+<section id="titleOfBoardColumns" class="titleOfBoardColumns">
+<div class="columntitleToDo">
+    <p class="columnTitleFont">To do</p>
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
+</div>
+<div class="columntitleInProgress">
+    <p class="columnTitleFont">In Progress</p>
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
+</div>
+<div class="columntitleAwaitFeedback">
+    <p class="columnTitleFont">Await Feedback</p>
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
+</div>
+<div class="columntitleDone">
+    <p class="columnTitleFont">Done</p>
+    <img src="./img/plus button.png" alt="" onclick="showAddTask('done')">
+</div>
+</section>
+    `;
+}
+
+function getColumnsHTML() {
+    return /*html*/ `
+          <section class="tasksContent">
+              <div class="column-header">
+                  <span class="headline-to-do-responsive">TO DO</span>
+                  <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('todo')">
+              </div>
+              <div class="dragarea-todo" id="todo"
+                  ondrop="moveTo('todo')" 
+                  ondragleave="removeHighlight('todo')" 
+                  ondragover="allowDrop(event); highlight('todo')"></div>
+  
+              <div class="column-header">
+                  <span class="headline-in-progress-responsive">IN PROGRESS</span>
+                  <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('inProgress')">
+              </div>
+              <div class="dragarea-inProgress" id="inProgress"
+                  ondrop="moveTo('inProgress')" 
+                  ondragleave="removeHighlight('inProgress')" 
+                  ondragover="allowDrop(event); highlight('inProgress')"></div>
+  
+              <div class="column-header">
+                  <span class="headline-feedback-responsive">AWAIT FEEDBACK</span>
+                  <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('feedback')">
+              </div>
+              <div class="dragarea-feedback" id="feedback"
+                  ondrop="moveTo('feedback')" 
+                  ondragleave="removeHighlight('feedback')" 
+                  ondragover="allowDrop(event); highlight('feedback')"></div>
+  
+              <div class="column-header">
+                  <span class="headline-done-responsive">DONE</span>
+                  <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('done')">
+              </div>
+              <div class="dragarea-done" id="done"
+                  ondrop="moveTo('done')" 
+                  ondragleave="removeHighlight('done')" 
+                  ondragover="allowDrop(event); highlight('done')"></div>
+          </section>`;
+  }

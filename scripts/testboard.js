@@ -1,4 +1,6 @@
 let currentUser = null;
+let currentDraggedElement;
+let currentTaskBeingEdited = null;
 
 async function init() {
   includeHTML();
@@ -7,10 +9,6 @@ async function init() {
   fetchTasks("/tasks");
   loadBoardNavigator();
 }
-
-
-let currentDraggedElement;
-let currentTaskBeingEdited = null;
 
 async function fetchContacts() {
   try {
@@ -38,24 +36,35 @@ function loadCurrentUser() {
 }
 
 async function fetchTasks(path = "") {
-  let response = await fetch(BASE_URL + path + ".json");
-  let responseToJson = await response.json();
+  const responseToJson = await fetchTaskData(path);
   if (responseToJson) {
-    taskArray = Object.values(responseToJson).map((task) => {
-      if (task.owner) {
-        task.owner = task.owner.map((owner) => {
-          const contact = finalContacts.find(
-            (c) => c.firstName === owner.firstName && c.lastName === owner.lastName
-          );
-          return { ...owner, color: contact?.color || "gray" };
-        });
-      }
-      return task;
-    });
+    taskArray = transformTaskArray(responseToJson);
   }
   updateTaskHTML();
 }
 
+async function fetchTaskData(path) {
+  const response = await fetch(BASE_URL + path + ".json");
+  return response.json();
+}
+
+function transformTaskArray(responseToJson) {
+  return Object.values(responseToJson).map((task) => transformTask(task));
+}
+
+function transformTask(task) {
+  if (task.owner) {
+    task.owner = task.owner.map((owner) => transformOwner(owner));
+  }
+  return task;
+}
+
+function transformOwner(owner) {
+  const contact = finalContacts.find(
+    (c) => c.firstName === owner.firstName && c.lastName === owner.lastName
+  );
+  return { ...owner, color: contact?.color || "gray" };
+}
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -74,7 +83,6 @@ async function moveTo(category) {
     if (currentUser.firstName === "Guest" && currentUser.lastName === "User") {
       updateTaskHTML();
     } else {
-      console.log("Registrierter Benutzer aktualisiert Firebase.");
       await updateTaskInFirebase(taskArray[taskIndex]);
       updateTaskHTML();
     }
@@ -91,7 +99,6 @@ async function updateTaskInFirebase(task) {
       },
       body: JSON.stringify(task),
     });
-    console.log(`Task ${taskId} erfolgreich aktualisiert.`);
   } catch (error) {
     console.error(`Fehler beim Aktualisieren des Tasks ${taskId}:`, error);
   }
@@ -104,34 +111,40 @@ function loadBoardNavigator() {
   loadTitleOfBoardColumns(content);
 }
 
-
 function filterTaskFunction() {
-  let myFilter = document.getElementById("filterTask").value.toLowerCase();
-  let tasksFound = false;
+  const myFilter = getFilterValue();
+  const tasksFound = filterTasks(myFilter);
+  toggleNoResultsMessage(tasksFound, myFilter);
+}
 
-  for (let i = 0; i < taskArray.length; i++) {
-    let paramToFind = document.getElementById(`title${taskArray[i].id}`);
-    let param2ToFind = document.getElementById(`description${taskArray[i].id}`);
-    let wholeTask = document.getElementById(`boardTask${taskArray[i].id}`);
+function getFilterValue() {
+  return document.getElementById("filterTask").value.toLowerCase();
+}
+
+function filterTasks(myFilter) {
+  let tasksFound = false;
+  taskArray.forEach((task) => {
+    const paramToFind = document.getElementById(`title${task.id}`);
+    const param2ToFind = document.getElementById(`description${task.id}`);
+    const wholeTask = document.getElementById(`boardTask${task.id}`);
 
     if (paramToFind || (param2ToFind && wholeTask)) {
-      if (
-        paramToFind.innerText.toLowerCase().includes(myFilter) ||
-        param2ToFind.innerText.toLowerCase().includes(myFilter)
-      ) {
-        wholeTask.style.display = "";
-        tasksFound = true;
-      } else {
-        wholeTask.style.display = "none";
-      }
+      tasksFound = applyFilterToTask(paramToFind, param2ToFind, wholeTask, myFilter) || tasksFound;
     }
-  }
+  });
+  return tasksFound;
+}
 
-  const noResultsMessage = document.getElementById("noResults");
-  if (!tasksFound && myFilter.length > 0) {
-    noResultsMessage.style.display = "block";
+function applyFilterToTask(paramToFind, param2ToFind, wholeTask, myFilter) {
+  if (
+    paramToFind.innerText.toLowerCase().includes(myFilter) ||
+    param2ToFind.innerText.toLowerCase().includes(myFilter)
+  ) {
+    wholeTask.style.display = "";
+    return true;
   } else {
-    noResultsMessage.style.display = "none";
+    wholeTask.style.display = "none";
+    return false;
   }
 }
 
@@ -140,72 +153,17 @@ function loadTitleOfBoardColumns(content) {
   getColumns(content);
 }
 
-function showTitleOfBoardColumns() {
-  return /*html*/ `
-        <section id="titleOfBoardColumns" class="titleOfBoardColumns">
-<div class="columntitleToDo">
-    <p class="columnTitleFont">To do</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
-</div>
-<div class="columntitleInProgress">
-    <p class="columnTitleFont">In Progress</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
-</div>
-<div class="columntitleAwaitFeedback">
-    <p class="columnTitleFont">Await Feedback</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
-</div>
-<div class="columntitleDone">
-    <p class="columnTitleFont">Done</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('done')">
-</div>
-</section>
-    `;
+function toggleNoResultsMessage(tasksFound, myFilter) {
+  const noResultsMessage = document.getElementById("noResults");
+  if (!tasksFound && myFilter.length > 0) {
+    noResultsMessage.style.display = "block";
+  } else {
+    noResultsMessage.style.display = "none";
+  }
 }
 
 function getColumns(content) {
   content.innerHTML += getColumnsHTML();
-}
-
-function getColumnsHTML() {
-  return /*html*/ `
-        <section class="tasksContent">
-            <div class="column-header">
-                <span class="headline-to-do-responsive">TO DO</span>
-                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('todo')">
-            </div>
-            <div class="dragarea-todo" id="todo"
-                ondrop="moveTo('todo')" 
-                ondragleave="removeHighlight('todo')" 
-                ondragover="allowDrop(event); highlight('todo')"></div>
-
-            <div class="column-header">
-                <span class="headline-in-progress-responsive">IN PROGRESS</span>
-                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('inProgress')">
-            </div>
-            <div class="dragarea-inProgress" id="inProgress"
-                ondrop="moveTo('inProgress')" 
-                ondragleave="removeHighlight('inProgress')" 
-                ondragover="allowDrop(event); highlight('inProgress')"></div>
-
-            <div class="column-header">
-                <span class="headline-feedback-responsive">AWAIT FEEDBACK</span>
-                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('feedback')">
-            </div>
-            <div class="dragarea-feedback" id="feedback"
-                ondrop="moveTo('feedback')" 
-                ondragleave="removeHighlight('feedback')" 
-                ondragover="allowDrop(event); highlight('feedback')"></div>
-
-            <div class="column-header">
-                <span class="headline-done-responsive">DONE</span>
-                <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('done')">
-            </div>
-            <div class="dragarea-done" id="done"
-                ondrop="moveTo('done')" 
-                ondragleave="removeHighlight('done')" 
-                ondragover="allowDrop(event); highlight('done')"></div>
-        </section>`;
 }
 
 function updateTaskHTML() {
@@ -284,8 +242,6 @@ function createNoTasksDiv(columnId, message) {
     `;
   }
 }
-
-
 
 function createNoToDosdiv() {
   document.getElementById("todo").innerHTML += /*html*/ `
@@ -404,7 +360,6 @@ function moveTaskUp(taskId, event) {
   const currentPos = statusOrder.indexOf(currentStatus);
 
   if (currentPos <= 0) {
-    console.log("Task ist bereits in der obersten Kategorie.");
     return;
   }
 
@@ -457,7 +412,6 @@ function showTaskCard(id) {
   taskCardOverlay.innerHTML = "";
   taskCardOverlay.classList.remove("d-none");
   taskCardOverlay.innerHTML += showTaskCardHTML(task);
-
   document.body.classList.add("no-scroll"); // Scrollen deaktivieren
 }
 
@@ -492,52 +446,6 @@ function getTaskCategoryButtonHTML(task) {
     `;
 }
 
-function getTaskDetailsHTML(task) {
-  return /*html*/ `
-        <p class="boardFontDetail">${task.title}</p>
-        <p class="description-taskCard">${task.description}</p>
-        <table class="dueDateAndPrio">
-            <tbody>
-                <tr>
-                    <td class="firstTableColumnFont">Due date:</td>
-                    <td>${task.date}</td>
-                </tr>
-                <tr>
-                    <td class="firstTableColumnFont">Priority:</td>
-                    <td>${
-                      task.prio
-                    } <img class="prioIconCard" src="${getPrioIcon(
-    task.prio
-  )}" alt=""></td>                   
-                </tr>
-            </tbody>
-        </table>
-        <div class="cardSubtasks">
-            <p class="firstTableColumnFont">Subtasks</p>
-            ${getSubtasksHTML(task)}
-        </div>
-        <div class="editAndDelete">
-            <div class="deleteCard" onclick="askFordeleteTask()">
-                <img class="deleteIcon" src="./img/delete.svg" alt="">
-                <p class="editDeleteFont">Delete</p>
-            </div>
-            <div onclick="showEditTaskTempl(${task.id})" class="deleteCard">
-            <img class="editIcon" src="./img/edit.svg" alt="">
-            <p class="editDeleteFont">Edit</p>
-            </div>
-        </div>
-            <div class="deleteConfirmation d-none" id="deleteConfirmation">
-            <p class="deleteHeaderFont">Bist du dir sicher?</p>
-            <div class="confirmation-delete-buttons">
-                <button class="deleteTaskButtons" onclick="deleteTask(${
-                  task.id
-                })">Ja, löschen</button>
-                <button class="deleteTaskButtons" onclick="closeQuestionDelete()">Nein, zurück</button>
-            </div>
-        </div>
-    `;
-}
-
 function askFordeleteTask() {
   let deleteDiv = document.getElementById("deleteConfirmation");
   deleteDiv.classList.remove("d-none");
@@ -553,8 +461,6 @@ async function deleteTask(taskId) {
     await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
       method: "DELETE",
     });
-    console.log(`Task ${taskId} erfolgreich gelöscht.`);
-
     taskArray.splice(taskIndex, 1);
     closeDetailView();
     updateTaskHTML();
@@ -569,7 +475,6 @@ function closeDetailView() {
   document.body.classList.remove("no-scroll"); // Scrollen wieder aktivieren
 }
 
-
 function closeQuestionDelete() {
   let deleteQuestDiv = document.getElementById("deleteConfirmation");
   deleteQuestDiv.classList.add("d-none");
@@ -581,15 +486,10 @@ async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
     console.error("Task oder Subtask nicht gefunden.");
     return;
   }
-
   const subtask = task.subtasks[subtaskIndex];
   subtask.checkbox = !subtask.checkbox;
-
   try {
     await updateTaskInFirebase(task);
-    console.log(
-      `Subtask ${subtaskIndex} von Task ${taskId} erfolgreich aktualisiert.`
-    );
   } catch (error) {
     console.error(`Fehler beim Aktualisieren des Subtasks: ${error}`);
   }
@@ -598,36 +498,9 @@ async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
 
 function getAssignedOwnersHTML(task) {
   if (!task.owner || task.owner.length === 0) {
-    return `<p class="noOwners">Keine Owner zugewiesen</p>`;
+    return getNoOwnersHTML();
   }
-  let ownerHTML = "";
-  task.owner.forEach((owner) => {
-    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
-    ownerHTML += `
-      <div class="ownerItem">
-        <svg width="34" height="34">
-          <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
-          <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
-            ${owner.initials || "N/A"}
-          </text>
-        </svg>
-        <p>${owner.firstName} ${owner.lastName}</p>
-      </div>
-    `;
-  });
-  return ownerHTML;
-}
-
-
-
-function getPrioIcon(prio) {
-  if (prio === "medium") {
-    return "./img/prio-mid.png";
-  } else if (prio === "urgent") {
-    return "./img/prio-high.png";
-  } else {
-    return "./img/prio-low.png";
-  }
+  return task.owner.map(getOwnerItemHTML).join("\n");
 }
 
 function getTaskCategoryClass(taskCategory) {
