@@ -1,3 +1,10 @@
+
+html,
+body {
+  margin: 0;
+  font-family: "Inter", Sans-Serif;
+  overflow-y: auto;
+}
 #add-task-overlay-wrapper {
   display: flex;
   justify-content: center;
@@ -11,13 +18,13 @@
   justify-content: center;
   align-items: center;
   width: 75%;
-  height: 75%;
+  height: 65%;
   z-index: 10;
 }
 
 #add-task-overlay-content {
   width: 75%;
-  height: 75%;
+  height: 65%;
 }
 #add-task-background {
   position: absolute;
@@ -156,7 +163,7 @@
 .input-addtask {
   cursor: pointer;
   font-size: 20px;
-  width: auto;
+  width: 100%;
   border-radius: 10px;
   padding: 12px 21px;
   max-height: 48px;
@@ -164,6 +171,7 @@
   font-weight: 400;
   line-height: 24px;
   border: 1px solid #d1d1d1;
+  box-sizing: border-box;
 }
 .input-addtask:focus {
   outline: 1px solid var(--darkLightBlue);
@@ -737,16 +745,35 @@ ul {
 .add-task-btn {
   font-size: 16px;
 }
+.task-success {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateX(100%);
+  width: 326px;
+  background-color: var(--darkGray);
+  color: white;
+  font-size: 20px;
+  box-shadow: 0px 0px 4px 0px #00000026;
+  border-radius: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 18px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  opacity: 0;
+  display: none;
+}
 @media (max-width: 1700px) {
   .addtask-overlay-content {
     width: 90vw;
-    height: 90vh;
+    height: 70vh;
   }
 }
 @media (max-width: 1230px) {
   .addtask-overlay-content {
-    width: 90vw;
-    height: 90vh;
+    width: 70vw;
+    height: 78vh;
   }
   .addtask-form-container {
     flex-direction: column;
@@ -789,12 +816,10 @@ ul {
 }
 @media (max-width: 500px) {
   .addtask-form-left-top {
-    width: 280px;
-    padding: 0 13px;
+    width: auto;
   }
   .addtask-form-right-bottom {
-    width: 280px;
-    padding: 0 13px;
+    width: auto;
   }
   .addtask-main-content h1 {
     width: 280px;
@@ -817,24 +842,6 @@ ul {
   }
 }
 
-.task-success {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateX(100%);
-  width: 326px;
-  background-color: var(--darkGray);
-  color: white;
-  font-size: 20px;
-  box-shadow: 0px 0px 4px 0px #00000026;
-  border-radius: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px 18px;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  opacity: 0;
-  display: none;
-}
+
 
 

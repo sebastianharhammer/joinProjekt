@@ -36,7 +36,24 @@ function showAddTask(status) {
 
 function handleCancel(event) {
     event.preventDefault();
-    hideAddTask();
+    document.getElementById('title').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('addTaskInputDueDate').value = '';
+    document.getElementById('categoryInput').value = '';
+    document.getElementById('subtaskInput').value = '';
+    document.getElementById('subtasksContent').innerHTML = '';
+    subtasksArr = [];
+    assignedUserArr = [];
+    categoryObject = '';
+    selectedPriority = '';
+    document.getElementById('assigned-users-short').innerHTML = '';
+    const priorities = ['urgent', 'medium', 'low'];
+    priorities.forEach((prio) => {
+        const btn = document.getElementById(`prio-${prio}`);
+        const img = document.getElementById(`prio-image-${prio}`);
+        btn.classList.remove('red', 'yellow', 'green');
+        img.classList.remove('sat-0');
+    });
 }
 
 function hideAddTask() {
@@ -89,23 +106,42 @@ async function createTask(status, event) {
 
 function validateTask(title, date, category) { 
     let exits = false;
+    const button = document.getElementById('add-task-create');
     if (!title) {
         document.getElementById('addTitleError').innerHTML = "Title is required!";
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647";
         setTimeout(() => {
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
             document.getElementById('addTitleError').innerHTML = "";
         }, 3000);
         exits = true;
     }
     if (!date) {
         document.getElementById('addDateError').innerHTML = "Date is required!";
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647";
         setTimeout(() => {
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
             document.getElementById('addDateError').innerHTML = "";
         }, 3000);
         exits = true;
     }
     if (!category) {
         document.getElementById('addCategoryError').innerHTML = "Category is required!";
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647"; 
         setTimeout(() => {
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
             document.getElementById('addCategoryError').innerHTML = "";
         }, 3000);
         exits = true;
@@ -160,27 +196,54 @@ function showAddTaskSuccesMessage() {
 function handleDropdownInteraction() {
     const dropdown = document.getElementById('custom-dropdown');
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    const selectedUsers = [];
-
-    dropdown.addEventListener('click', () => {
+    dropdown.addEventListener('click', (e) => {
+        const userContainer = e.target.closest('.assigned-user-container');
+        if (userContainer) {
+            e.stopPropagation();
+            return;
+        }
+        e.stopPropagation();
         const isOpen = optionsContainer.style.display === 'block';
         optionsContainer.style.display = isOpen ? 'none' : 'block';
     });
-    optionsContainer.addEventListener('change', (event) => {
-        const checkbox = event.target;
-        const userName = checkbox.parentElement.querySelector('span').textContent;
-
-        if (checkbox.checked) {
-            selectedUsers.push(userName);
+    optionsContainer.addEventListener('click', (event) => {
+        const userContainer = event.target.closest('.assigned-user-container');
+        if (!userContainer) return;
+        event.stopPropagation();
+        const checkbox = userContainer.querySelector('input[type="checkbox"]');
+        const firstName = userContainer.dataset.firstname;
+        const lastName = userContainer.dataset.lastname;
+        const color = userContainer.dataset.color;
+        const userIndex = assignedUserArr.findIndex(user => 
+            user.firstName === firstName && 
+            user.lastName === lastName
+        );
+        const isSelected = userIndex > -1;
+        if (isSelected) {
+            assignedUserArr.splice(userIndex, 1);
+            checkbox.checked = false;
+            userContainer.style.backgroundColor = '';
+            userContainer.style.color = '';
+            userContainer.style.borderRadius = '';
         } else {
-            const index = selectedUsers.indexOf(userName);
-            if (index > -1) {
-                selectedUsers.splice(index, 1);
-            }
+            assignedUserArr.push({
+                firstName,
+                lastName,
+                initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+                color
+            });
+            checkbox.checked = true;
+            userContainer.style.backgroundColor = '#2b3647';
+            userContainer.style.color = 'white';
+            userContainer.style.borderRadius = '10px';
         }
-
-        console.log('Selected users:', selectedUsers);
+        showAssignedUsers();
     });
+}
+function closeDropdown() {
+    
+    const optionsContainer = document.getElementById('dropdown-options');
+    optionsContainer.style.display = 'none';
 }
 
 async function getTasks() {
@@ -227,22 +290,13 @@ function returnArrayContacts() {
         console.error("No contacts found.");
         return;
     }
-    console.log(finalContacts)
     const dropdown = document.getElementById('custom-dropdown');
-    if (!dropdown) {
-        console.error("Dropdown element not found.");
-        return;
-    }
-
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    optionsContainer.innerHTML = ""; 
-
-    Object.keys(finalContacts).forEach((key) => {
-        const contactInDrop = finalContacts[key];
-
+    optionsContainer.innerHTML = "";
+    const contactsArray = Object.values(finalContacts);
+    contactsArray.forEach(contactInDrop => {
         if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
         const optionHTML = assignUserHTML(contactInDrop);
-
         const optionElement = document.createElement("div");
         optionElement.classList.add("dropdown-contact");
         optionElement.innerHTML = optionHTML;
@@ -360,10 +414,10 @@ function addSubtask() {
     const subtasksContent = document.getElementById("subtasksContent");
     if (subtaskInput.value.trim() !== "") {
         subtaskIdCounter++;
-    const listId = "subtask-" + subtaskIdCounter;
+    const liId = "subtask-" + subtaskIdCounter;
     const spanId = "span-" + subtaskIdCounter;
     const inputId = "input-" + subtaskIdCounter;
-    const newSubtaskHTML = addSubtaskHTML(listId, spanId, inputId, subtaskInput);
+    const newSubtaskHTML = addSubtaskHTML(liId, spanId, inputId, subtaskInput);
     subtasksArr.push({
         checkbox_img: "../img/checkbox-empty.svg",
         subtask: `${subtaskInput.value}`,
@@ -375,18 +429,33 @@ function addSubtask() {
     subtasksContent.innerHTML += newSubtaskHTML;
     subtaskInput.value = "";
     }
+    else {
+        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        setTimeout(() => {
+            errorMessageSubtasks.innerHTML = "";
+        }, 1500);
+    }
     document.getElementById("clear-add-icons").classList.add("d-none");
     document.getElementById("subtasks-plus-icon").classList.remove("d-none");    
 }
 
 
-function editSubtask(listId, spanId, inputId) {
+function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
-    const list = document.getElementById(listId);
+    const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
-    list.innerHTML = editSubtaskHTML(listId, spanId, inputId, currentText);
-    list.classList.add("subtask-item-on-focus");
-    list.classList.remove("subtask-item");
+    const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
+    if ( currentText.trim() !== "") {
+        li.innerHTML = editSubtaskHTML(liId, spanId, inputId, currentText);
+        li.classList.add("subtask-item-on-focus");
+        li.classList.remove("subtask-item");
+    } else {
+        errorMessage
+        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        setTimeout(() => {
+            errorMessageSubtasks.innerHTML = "";
+        }, 3000);
+    }
 }
 
 
@@ -396,19 +465,25 @@ function deleteSubtask(listId) {
 }
 
 
-function saveSubtask(listId, inputId, spanId) {
-    const list = document.getElementById(listId);
+function saveSubtask(liId, inputId, spanId) {
+    const li = document.getElementById(liId);
     const input = document.getElementById(inputId);
-    list.innerHTML = saveSubtaskHTML(listId, inputId, spanId, input);
-    list.classList.remove("subtask-item-on-focus");
-    list.classList.add("subtask-item");
+    if (input.value.trim() !== "") {
+        li.innerHTML = saveSubtaskHTML(liId, inputId, spanId, input);
+        li.classList.remove("subtask-item-on-focus");
+        li.classList.add("subtask-item");
+    } else {
+        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        setTimeout(() => {
+            errorMessageSubtasks.innerHTML = "";
+        }, 1500);
+    }
 }
 
 
 function clearSubtaskInput() {
     const input = document.getElementById("subtaskInput");
     input.value = "";
-    document.getElementById("clearButton").style.display = "none";
 }
 
 

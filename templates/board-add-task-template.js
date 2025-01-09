@@ -86,6 +86,7 @@ return  /*html*/`
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
+                <span id="errorMessageSubtasks"></span>
               </div>
             </div>
           </div>
