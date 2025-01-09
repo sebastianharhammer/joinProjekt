@@ -11,53 +11,24 @@
   top: 356px;
 }
 
-.dragarea-todo {
-  display: flex;
-  gap: 15px;
-  flex-direction: column;
-  width: 18vw;
-  height: 700px;
-  margin-top: 0;
-  background-color: rgb(246, 247, 248);
-  border-radius: 24px;
-}
-
-.dragarea-inProgress {
-  display: flex;
-  gap: 15px;
-  flex-direction: column;
-  width: 18vw;
-  height: 700px;
-  margin-top: 0;
-  background-color: rgb(246, 247, 248);
-  border-radius: 24px;
-}
-
-.dragarea-feedback {
-  display: flex;
-  gap: 15px;
-  flex-direction: column;
-  width: 18vw;
-  height: 700px;
-  margin-top: 0;
-  background-color: rgb(246, 247, 248);
-  border-radius: 24px;
-}
-
+.dragarea-todo,
+.dragarea-inProgress,
+.dragarea-feedback,
 .dragarea-done {
   display: flex;
   gap: 15px;
   flex-direction: column;
   width: 18vw;
-  height: 700px;
+  height: 900px;
   margin-top: 0;
   background-color: rgb(246, 247, 248);
   border-radius: 24px;
+  padding: 16px;
+  overflow-y: scroll;
 }
 
+
 .todo {
-  overflow-x: hidden;
-  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   gap: 10px;
