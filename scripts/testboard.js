@@ -72,7 +72,6 @@ async function moveTo(category) {
   if (taskIndex !== -1) {
     taskArray[taskIndex].status = category;
     if (currentUser.firstName === "Guest" && currentUser.lastName === "User") {
-      console.log("Gastbenutzer verschiebt Aufgabe lokal.");
       updateTaskHTML();
     } else {
       console.log("Registrierter Benutzer aktualisiert Firebase.");
@@ -105,26 +104,6 @@ function loadBoardNavigator() {
   loadTitleOfBoardColumns(content);
 }
 
-function getBoardNavigatorHTML() {
-  return /*html*/ `
-<section class="boardNavigator">
-    <div class="searchAndAddTasks">
-        <p class="boardFont">BOARD</p>
-        <div class="inputAndButtonBoard">
-            <div class="searchAreaBoard">
-            <input id="filterTask" onkeyup="filterTaskFunction()" class="inputBoard" type="text" placeholder="Find Task">
-            <p id="noResults" style="display: none; color: red; font-size: 14px; margin-top: 5px;">Kein Task gefunden</p>
-            <span class="verticalLine">|</span>
-            <img src="./img/search.png" alt="">
-            </div>
-            <div class="addTaskButtonBoard" onclick="showAddTask('todo')">
-                <p class="buttonBoardFont">Add Task +</p>
-            </div>
-        </div>
-    </div>
-</section>
-    `;
-}
 
 function filterTaskFunction() {
   let myFilter = document.getElementById("filterTask").value.toLowerCase();
@@ -322,32 +301,15 @@ function createOwnerCircles(task) {
     console.error("Owner-Kreis-Container nicht gefunden!");
     return;
   }
-
   userNameCircles.innerHTML = "";
-
   if (!task.owner || task.owner.length === 0) {
-    userNameCircles.innerHTML = `
-      <svg width="34" height="34">
-        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
-        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">N/A</text>
-      </svg>
-    `;
+    userNameCircles.innerHTML = generateNoOwnerCircle();
     return;
   }
-
   for (const owner of task.owner) {
-    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
-    userNameCircles.innerHTML += `
-      <svg width="34" height="34">
-        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
-        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
-          ${owner.initials || "N/A"}
-        </text>
-      </svg>
-    `;
+    userNameCircles.innerHTML += generateOwnerCircle(owner);
   }
 }
-
 
 function findClassOfTaskCat(task) {
   const taskButton = document.getElementById(`taskButton-${task.id}`);
@@ -384,15 +346,13 @@ function getSubTasks(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
     return "";
   }
+  return generateSubTasksHTML(task);
+}
+
+function generateSubTasksHTML(task) {
   let subtTasksHTML = "";
   for (let i = 0; i < task.subtasks.length; i++) {
-    let subtask = task.subtasks[i];
-    subtTasksHTML += /*html*/ `
-            <div class="eachSubtaskBox">
-                <input type="checkbox" id="subtask-${task.id}-${i}" onchange="updateCompletedSubtasks(${task.id})">
-                <label for="subtask-${task.id}-${i}">${subtask}</label>
-            </div>
-        `;
+    subtTasksHTML += createSubTaskHTML(task, i);
   }
   return subtTasksHTML;
 }
@@ -613,37 +573,6 @@ function closeDetailView() {
 function closeQuestionDelete() {
   let deleteQuestDiv = document.getElementById("deleteConfirmation");
   deleteQuestDiv.classList.add("d-none");
-}
-
-function getSubtasksHTML(task) {
-  if (!task.subtasks || task.subtasks.length === 0) {
-    return `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
-  }
-  let subtasksHTML = "";
-  task.subtasks.forEach((subtask, index) => {
-    subtasksHTML += /*html*/ `
-            <div class="subtaskItem">
-                <input 
-                    type="checkbox" 
-                    id="subtask-${task.id}-${index}" 
-                    class="styledCheckbox"
-                    ${subtask.checkbox ? "checked" : ""} 
-                    onchange="toggleSubtaskCheckbox(${
-                      task.id
-                    }, ${index}); updateCompletedSubtasks(${task.id})"
-                >
-                <label for="subtask-${
-                  task.id
-                }-${index}" class="styledCheckboxLabel">
-                    <span class="checkboxSquare"></span>
-                    <p class="subtaskText">${
-                      subtask.subtask || "Unnamed Subtask"
-                    }</p>
-                </label>
-            </div>
-            `;
-  });
-  return subtasksHTML;
 }
 
 async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
