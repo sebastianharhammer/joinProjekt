@@ -39,7 +39,7 @@ a {
 
 .svgJoin {
   position: absolute;
-  margin-left: 2vw;
+  padding-left: 2.5vw;
 }
 
 #join-logo-big {
@@ -51,7 +51,6 @@ a {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 0 10px;
 }
 
 .nav-links-container {
@@ -63,15 +62,32 @@ a {
   cursor: pointer;
 }
 
+.nav-links-container-links {
+  padding: 10px;
+  display: flex;
+  padding-left: 2vw;
+  gap: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+.nav-links-container-links:hover {
+  background-color: #091931;
+  border-radius: 10px;
+}
+.nav-links-policy {
+  padding-left: 2vw;
+}
+
 .nav-links-container:hover {
   background-color: #091931;
   border-radius: 10px;
 }
 
 .nav-icon {
-  width: 20px;
-  height: 20px;
-  padding-left: 1vw;
+  width: 30px;
+  height: 30px;
+  padding-left: 2vw;
 }
 
 .nav-links {
@@ -88,9 +104,30 @@ a {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 10px;
+  
 }
-
+@media (max-width: 1645px) {
+  .nav-icon {
+    padding-left: 1.5vw;
+  }
+  .nav-links-policy {
+    padding-left: 1.5vw;
+  }
+  .svgJoin {
+    padding-left: 2vw;
+  }
+}
+@media (max-width: 1545px) {
+  .nav-icon {
+    padding-left: 1vw;
+  }
+  .nav-links-policy {
+    padding-left: 1vw;
+  }
+  .svgJoin {
+    padding-left: 1.5vw;
+  }
+}
 @media (max-width: 1258px) {
   #overlay-left {
     position: fixed;
@@ -139,10 +176,10 @@ a {
   #policy-links-container {
     display: none;
   }
-}
 .nav-links-policy {
   padding-left: 9px;
   color: #f1f1f1;
+}
 }
 
 @media (max-width: 460px) {
@@ -167,4 +204,3 @@ a {
     height: 25px;
   }
 }
-  

@@ -2,13 +2,17 @@ function renderAddTaskHTML() {
   let content = document.getElementById("add-task-content");
   content.innerHTML = /*html*/ `
       <div class="addtask-fullscreen-content">
-      <div class="addtask-main-content">
-        <div>
+      <div class="addtask-main-content" onclick="closeDropdown()">
+        
+        <form>
+        <div id="addTaskHeadlineFullscreen">
           <h1>Add Task</h1>
         </div>
-        <form>
           <div class="addtask-form-container">
             <div class="addtask-form-left-top">
+            <div id="addTaskHeadlineMobile">
+              <h1>Add Task</h1>
+            </div>
               <div class="field-text-flex">
                 <label>
                   Title
@@ -27,14 +31,12 @@ function renderAddTaskHTML() {
                     <label>Assigned to</label>
                     <div id="custom-dropdown" class="custom-dropdown input-addtask">
                       <div class="dropdown-placeholder">Select contacts to assign</div>
-                      <div class="dropdown-options"></div>
+                      <div class="dropdown-options" id="dropdown-options"></div>
                     </div>
                     <div id="assigned-users-short"></div>
                     
                   </div>
-                  <div style="display: flex; align-items: center;">
-                  <span style="color: #ff8190;" class="required-field">*</span><span class="required-field">This field is required</span>
-                  </div>
+                  
               </div>
             </div>
             <div class="separator"></div>
@@ -82,6 +84,7 @@ function renderAddTaskHTML() {
                 <div class="subtask-input-wrapper">
                   <input class="input-addtask plus-minus-drop-menu" id="subtaskInput" type="text" placeholder="Add a new subtask"  maxlength="40" onfocus="showClearButton()">
                   <div class="input-icons">
+                  
                     <div id="clear-add-icons" class="d-none">
                       <img onclick="clearSubtaskInput()" src="./img/close.svg">
                       <div class="divider"></div>
@@ -91,14 +94,19 @@ function renderAddTaskHTML() {
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
-                <span>
-
+                <span id="errorMassageSubtasks"></span>
               </div>
             </div>
+            <div id="required-field-mobile">
+                  <span style="color: #ff8190;">*</span>
+                  <span>This field is required</span>
+              </div>
           </div>
-          
           <div class="addtask-bottom-container">
-            
+          <div id="required-field">
+                  <span style="color: #ff8190;">*</span>
+                  <span>This field is required</span>
+          </div>
             <div class="addtask-buttons">
             <button id="add-task-close" class="btn-cancel">
                 <span class="add-task-btn">Clear ✖</span>
@@ -118,23 +126,25 @@ function renderAddTaskHTML() {
 
 function assignUserHTML(contact) {
   return `
+        <div class="assigned-user-container" data-firstname="${contact.firstName}" data-lastname="${contact.lastName}" data-color="${contact.color}">
         <div id="assigned-user-svg">
           <svg class="customCircle" width="50" height="50">
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
+            <text stroke="white" stroke-width="1" font-weight="normal" class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>
         <div id="assigned-user-name-container">
           <span>${contact.firstName}</span>
           <span>${contact.lastName}</span>
         </div>
-        <input class="checkbox-add-task" onclick="assignUser('${contact.firstName}', '${contact.lastName}', '${contact.color}')" type="checkbox">`;
+        <input class="checkbox-add-task" type="checkbox">
+        </div>`;
 }
 
 function showAssignedUsersHTML(contact) {
   return `<svg class="customCircle" width="50" height="50" >
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="2" fill="white"></circle>
-            <text class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
+            <text class="textInCircle"  font-weight="normal" stroke="white" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
         </svg>`;
 }
 function renderAddTaskCategoriesHTML(category) {

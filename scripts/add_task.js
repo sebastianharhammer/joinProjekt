@@ -25,7 +25,7 @@ function init() {
     getUsers();
     includeHTML();
     renderAddTaskHTML();
-    setupDropdownInteraction(); 
+    handleDropdownInteraction(); 
 }
 
 
@@ -139,8 +139,6 @@ async function pushTaskToFirebase(newTask) {
             },
             body: JSON.stringify(newTask),
         });
-        let responseToJson = await response.json();
-        console.log("Task added", responseToJson);
     } catch (error) {
         console.error("Failed to add task:", error);
     }
@@ -150,27 +148,66 @@ async function pushTaskToFirebase(newTask) {
 function handleDropdownInteraction() {
     const dropdown = document.getElementById('custom-dropdown');
     const optionsContainer = dropdown.querySelector('.dropdown-options');
-    const selectedUsers = [];
-
-    dropdown.addEventListener('click', () => {
+    
+    dropdown.addEventListener('click', (e) => {
+        const userContainer = e.target.closest('.assigned-user-container');
+        if (userContainer) {
+            e.stopPropagation();
+            return;
+        }
+        
+        e.stopPropagation();
         const isOpen = optionsContainer.style.display === 'block';
         optionsContainer.style.display = isOpen ? 'none' : 'block';
     });
-    optionsContainer.addEventListener('change', (event) => {
-        const checkbox = event.target;
-        const userName = checkbox.parentElement.querySelector('span').textContent;
 
-        if (checkbox.checked) {
-            selectedUsers.push(userName);
+    optionsContainer.addEventListener('click', (event) => {
+        const userContainer = event.target.closest('.assigned-user-container');
+        if (!userContainer) return;
+        
+        event.stopPropagation();
+        
+        const checkbox = userContainer.querySelector('input[type="checkbox"]');
+        const firstName = userContainer.dataset.firstname;
+        const lastName = userContainer.dataset.lastname;
+        const color = userContainer.dataset.color;
+        
+        // Check if user is already selected
+        const userIndex = assignedUserArr.findIndex(user => 
+            user.firstName === firstName && 
+            user.lastName === lastName
+        );
+        const isSelected = userIndex > -1;
+        
+        if (isSelected) {
+            // Remove user from array and update UI
+            assignedUserArr.splice(userIndex, 1);
+            checkbox.checked = false;
+            userContainer.style.backgroundColor = '';
+            userContainer.style.color = '';
+            userContainer.style.borderRadius = '';
         } else {
-            const index = selectedUsers.indexOf(userName);
-            if (index > -1) {
-                selectedUsers.splice(index, 1);
-            }
+            // Add user to array and update UI
+            assignedUserArr.push({
+                firstName,
+                lastName,
+                initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+                color
+            });
+            checkbox.checked = true;
+            userContainer.style.backgroundColor = '#2b3647';
+            userContainer.style.color = 'white';
+            userContainer.style.borderRadius = '10px';
         }
-
-        console.log('Selected users:', selectedUsers);
+        
+        // Update the assigned-users-short div
+        showAssignedUsers();
     });
+}
+function closeDropdown() {
+    
+    const optionsContainer = document.getElementById('dropdown-options');
+    optionsContainer.style.display = 'none';
 }
 
 
@@ -187,7 +224,6 @@ async function getTasks() {
         }
         let responseToJson = await response.json();
         localTasks = responseToJson;
-        console.log("Array Tasks: " + localTasks)
     } catch (error) {
         console.error("Error fetching contacts:", error);
     }
@@ -206,9 +242,7 @@ async function getUsers() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         let responseToJson = await response.json();
-        console.log("Fetched Contacts:", responseToJson);
         finalContacts = responseToJson || {};
-        console.log(finalContacts)
     } catch (error) {
         console.error("Error fetching contacts:", error);
     }
@@ -224,9 +258,6 @@ function returnArrayContacts() {
     const dropdown = document.getElementById('custom-dropdown');
     const optionsContainer = dropdown.querySelector('.dropdown-options');
     optionsContainer.innerHTML = "";
-    /* let sortedContacts = Object.values(finalContacts).sort((a, b) =>
-        a.firstName.localeCompare(b.firstName)
-    ); */
     const contactsArray = Object.values(finalContacts);
     contactsArray.forEach(contactInDrop => {
         if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
@@ -239,25 +270,23 @@ function returnArrayContacts() {
 }
 
 
-function setupDropdownInteraction() {
-    const dropdown = document.getElementById("custom-dropdown");
-    const optionsContainer = dropdown.querySelector(".dropdown-options");
-
-    dropdown.addEventListener("click", () => {
-        const isOpen = optionsContainer.style.display === "block";
-        optionsContainer.style.display = isOpen ? "none" : "block";
-    });
-}
-
-
 function assignUser(firstName, lastName, color) {
-    assignedUserArr.push({
-        firstName: firstName,
-        lastName: lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
-        color: color
-    });
-    showAssignedUsers();
+    // Check if user already exists in the array
+    const userExists = assignedUserArr.some(user => 
+        user.firstName === firstName && 
+        user.lastName === lastName
+    );
+
+    // Only add the user if they don't already exist
+    if (!userExists) {
+        assignedUserArr.push({
+            firstName: firstName,
+            lastName: lastName,
+            initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+            color: color
+        });
+        showAssignedUsers();
+    }
 }
 
 
@@ -266,7 +295,6 @@ function showAssignedUsers() {
     assignUsersContainer.innerHTML = "";
 
     assignedUserArr.forEach((contact) => {
-        console.log(contact);
         assignUsersContainer.innerHTML += showAssignedUsersHTML(contact);
     });
 }
@@ -367,9 +395,17 @@ function editSubtask(liId, spanId, inputId) {
     const spanElement = document.getElementById(spanId);
     const li = document.getElementById(liId);
     const currentText = spanElement.textContent;
-    li.innerHTML = editSubtaskHTML(liId, spanId, inputId, currentText);
-    li.classList.add("subtask-item-on-focus");
-    li.classList.remove("subtask-item");
+    const errorMassageSubtasks = document.getElementById("errorMassageSubtasks");
+    if ( currentText.trim() !== "") {
+        li.innerHTML = editSubtaskHTML(liId, spanId, inputId, currentText);
+        li.classList.add("subtask-item-on-focus");
+        li.classList.remove("subtask-item");
+    } else {
+        errorMassageSubtasks.innerHTML = "Subtask is required!";
+        setTimeout(() => {
+            errorMassageSubtasks.innerHTML = "";
+        }, 3000);
+    }
 }
 
 
@@ -404,4 +440,17 @@ function showClearButton() {
 function handleCancel(event) {
     event.preventDefault();
     window.location.href = 'board.html';
+}
+
+
+function assignUserHTML(contact) {
+    return `
+        <div class="assigned-user-container" 
+             data-firstname="${contact.firstName}"
+             data-lastname="${contact.lastName}"
+             data-color="${contact.color}">
+            <input type="checkbox">
+            <span>${contact.firstName} ${contact.lastName}</span>
+        </div>
+    `;
 }
