@@ -622,6 +622,17 @@
     font-size: 16px;
   }
 }
+@media (max-width: 1258px){
+.boardNavigator{
+  left: 1vw;
+}
+
+.tasksContent{
+  left: 1vw;
+  padding-bottom: 10vh;
+}
+}
+
 
 @media (max-width: 440px) {
   .tasksContent {

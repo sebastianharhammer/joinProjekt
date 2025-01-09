@@ -263,8 +263,8 @@ function createOwnerCircles(task) {
     userNameCircles.innerHTML = generateNoOwnerCircle();
     return;
   }
-  const ownersToShow = task.owner.slice(0, 3);
-  const extraOwnersCount = task.owner.length - 3;
+  const ownersToShow = task.owner.slice(0, 2);
+  const extraOwnersCount = task.owner.length - 2;
   for (const owner of ownersToShow) {
     userNameCircles.innerHTML += generateOwnerCircle(owner);
   }
