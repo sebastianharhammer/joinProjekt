@@ -104,6 +104,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding-bottom: 5vh;
   
 }
 @media (max-width: 1645px) {
@@ -163,8 +164,8 @@ a {
   }
 
   .nav-icon {
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     padding-right: 4vw;
     padding-left: 4vw;
   }
@@ -187,20 +188,10 @@ a {
     padding: 5px;
   }
 
-  .nav-icon {
-    width: 35px;
-    height: 35px;
-  }
 }
 @media (max-width: 375px) {
   .nav-icon {
     width: 30px;
     height: 30px;
-  }
-}
-@media (max-width: 320px) {
-  .nav-icon {
-    width: 25px;
-    height: 25px;
   }
 }

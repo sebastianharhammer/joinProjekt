@@ -70,6 +70,7 @@ body {
   width: 100%;
   background-color: #fff;
   border: 1px solid #ccc;
+  border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   max-height: 200px;
@@ -867,16 +868,45 @@ ul {
     justify-content: flex-end;
 }
 
-.dropdown-contact {
-  display: flex;
-  justify-content: space-between;
-  
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-}
+
 #required-field {
   display: none;
+}
+.checkbox-add-task {
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border: 2px solid #2A3647;
+  border-radius: 3px;
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.checkbox-add-task:hover {
+  border-color: #29ABE2;
+  box-shadow: 0 0 4px rgba(41, 171, 226, 0.4);
+}
+
+.checkbox-add-task:checked {
+  background-color: #0c0f13;
+  border-color: #2A3647;
+}
+
+.checkbox-add-task:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 #required-field-mobile {
@@ -890,8 +920,8 @@ ul {
 
 @media (max-width: 992px) {
   #task-succes {
-    height: 10%;
-    width: 66%;
+    height: 15%;
+    width: 67%;
   }
 
   .show-add-task {
@@ -937,6 +967,10 @@ ul {
   } */
   .addtask-main-content h1 {
     font-size: 46px;
+  }
+  #task-succes {
+    height: 15%;
+    width: 76%;
   }
 /*   .input-addtask {
     font-size: 16px;

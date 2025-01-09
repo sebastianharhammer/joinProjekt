@@ -36,10 +36,10 @@ async function createTask(event) {
     let date = document.getElementById('addTaskInputDueDate').value;
     if (date < new Date().toISOString().split('T')[0]) {
         document.getElementById('addDateError').innerHTML = "Date can´t be in the past!";
+        
         setTimeout(() => {
             document.getElementById('addDateError').innerHTML = "";
-        }, 1500);
-        return;
+        }, 3000);
     }
     const category = categoryObject;
     const priority = selectedPriority;
@@ -98,23 +98,42 @@ function handleCancel(event) {
 
 function validateTask(title, date, category) { 
     let exits = false;
+    const button = document.getElementById('add-task-create');
     if (!title) {
         document.getElementById('addTitleError').innerHTML = "Title is required!";
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647";
         setTimeout(() => {
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
             document.getElementById('addTitleError').innerHTML = "";
         }, 3000);
         exits = true;
     }
     if (!date) {
         document.getElementById('addDateError').innerHTML = "Date is required!";
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647";
         setTimeout(() => {
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
             document.getElementById('addDateError').innerHTML = "";
         }, 3000);
         exits = true;
     }
     if (!category) {
         document.getElementById('addCategoryError').innerHTML = "Category is required!";
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647"; 
         setTimeout(() => {
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
             document.getElementById('addCategoryError').innerHTML = "";
         }, 3000);
         exits = true;
