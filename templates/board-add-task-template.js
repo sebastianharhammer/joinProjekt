@@ -1,11 +1,17 @@
 function addTaskOverlayHTML() {
 return  /*html*/`
 <div id="templateTaskDetailView" class="addtask-overlay-content">
-<div class="addtask-main-content">
-        <div>
-          <h1>Add Task</h1>
+<div class="addtask-main-content" onclick="closeDropdown()">
+        <div id="addTaskHeaderContainer">
+          
+          <div id="addTaskOverlayCloseContainer" onclick="hideAddTask()">
+            <img id="addTaskOverlayClose" src="./img/close.svg" alt="close">
+          </div>
         </div>
         <form>
+        <div id="addTaskOverlayHeadline">
+            <h1>Add Task</h1>
+          </div>
           <div class="addtask-form-container">
             <div class="addtask-form-left-top">
               <div class="field-text-flex">
@@ -111,7 +117,7 @@ return  /*html*/`
         </form>
       </div>
     </div>
-    <div id="task-message-container">
+    <div id="task-message-container" class="d-none">
     <div id="task-succes" class="hide-add-task"><span>Task successfully created</span></div>
     </div>`;
 }
@@ -121,13 +127,13 @@ function assignUserHTML(contact) {
         <div class="assigned-user-container" data-firstname="${contact.firstName}" data-lastname="${contact.lastName}" data-color="${contact.color}">
         <div id="assigned-user-svg">
           <svg class="customCircle" width="50" height="50">
-            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
-            <text stroke="white" stroke-width="1" font-weight="normal" class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+            <circle id="user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
+            <text stroke="white" stroke-width="1" font-weight="normal" class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>
         <div id="assigned-user-name-container">
-          <span>${contact.firstName}</span>
-          <span>${contact.lastName}</span>
+          <span class="assigned-user-name">${contact.firstName}</span>
+          <span class="assigned-user-name">${contact.lastName}</span>
         </div>
         <input class="checkbox-add-task" type="checkbox">
         </div>`;

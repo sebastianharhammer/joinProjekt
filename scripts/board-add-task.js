@@ -27,8 +27,14 @@ function showAddTask(status) {
     getTasks();
     let addTaskContent = document.getElementById('add-task-content');
     let background = document.getElementById('add-task-background');
+    let navBackground = document.getElementById('overlay-left');
+   /*  let navLinks = document.querySelector('.nav-links');
+    let navIcons = document.querySelector('.nav-icon'); */
     addTaskContent.classList.add('show-add-task');
     background.classList.remove('d-none');
+   /*  navBackground.style.backgroundColor = "hsl(218, 24%, 7%)"; */
+    /* navLinks.style.color = "#a9a9a9";
+    navIcons.style.color = "#a9a9a9"; */
     addTaskContent.innerHTML =  addTaskOverlayHTML();
     getUsers();
     handleDropdownInteraction();
@@ -59,13 +65,17 @@ function handleCancel(event) {
 function hideAddTask() {
     let addContactTemplate = document.getElementById('add-task-content');
     let background = document.getElementById('add-task-background');
+    let headerName = document.getElementById('header-current-user');
     addContactTemplate.classList.remove('show-add-task');
+
     setTimeout(() => {
         background.classList.add('d-none');
-      }, 750);
+      }, 250);
     setTimeout(() => {
-        window.location.href = "testboard.html";
-      }, 750);
+        init();
+        headerName.style.color = '#29ABE2';
+        
+      }, 250);
 }
 
 async function createTask(status, event) {
@@ -119,6 +129,19 @@ function validateTask(title, date, category) {
             document.getElementById('addTitleError').innerHTML = "";
         }, 3000);
         exits = true;
+    }
+    if (date < new Date().toISOString().split('T')[0]) {
+        document.getElementById('addDateError').innerHTML = "Date can´t be in the past!";
+        button.disabled = true;
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#2B3647";
+        setTimeout(() => {
+            document.getElementById('addDateError').innerHTML = "";
+            button.disabled = false;
+            button.style.backgroundColor = "#2B3647";
+            button.style.color = "#FFFFFF";
+            return;
+        }, 3000);
     }
     if (!date) {
         document.getElementById('addDateError').innerHTML = "Date is required!";

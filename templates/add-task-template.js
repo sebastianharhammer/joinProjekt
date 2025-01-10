@@ -19,7 +19,7 @@ function renderAddTaskHTML() {
                   <span style="color: #ff8190">*</span>
                 </label>
                 <div id="errorMassageTitle"></div>
-                <input class="input-addtask" id="title" type="text" placeholder="Enter a title" maxlength="40"/>
+                <input class="input-addtask" id="title" type="text" placeholder="Enter a title" maxlength="30"/>
                 <span id="addTitleError" class="validSpanTitle"></span>
               </div>
               <div class="field-text-flex" id="addTaskDiscription">
@@ -82,7 +82,7 @@ function renderAddTaskHTML() {
                   Subtasks
                 </label>
                 <div class="subtask-input-wrapper">
-                  <input class="input-addtask plus-minus-drop-menu" id="subtaskInput" type="text" placeholder="Add a new subtask"  maxlength="40" onfocus="showClearButton()">
+                  <input class="input-addtask plus-minus-drop-menu" id="subtaskInput" type="text" placeholder="Add a new subtask"  maxlength="20" onfocus="showClearButton()">
                   <div class="input-icons">
                   
                     <div id="clear-add-icons" class="d-none">
@@ -169,7 +169,7 @@ function addSubtaskHTML(liId, spanId, inputId, subtaskInput) {
 
 function editSubtaskHTML(liId, spanId, inputId, currentText) {
   return `<div class="subtask-input-wrapper edit-mode">
-            <input id="${inputId}" class="edit-subtask-input" type="text" value="${currentText}">
+            <input id="${inputId}" class="edit-subtask-input" type="text" maxlength="20" value="${currentText}">
             <div class="input-icons-edit">
                 <img src ="./img/deletecopy.svg" onclick="deleteSubtask('${liId}')">
                 <div class="divider"></div>
