@@ -31,7 +31,7 @@ function showAddTask(status) {
     background.classList.remove('d-none');
     addTaskContent.innerHTML =  addTaskOverlayHTML();
     getUsers();
-    setupDropdownInteraction();
+    handleDropdownInteraction();
 }
 
 function handleCancel(event) {
@@ -304,24 +304,22 @@ function returnArrayContacts() {
     });
 }
 
-function setupDropdownInteraction() {
-    const dropdown = document.getElementById("custom-dropdown");
-    const optionsContainer = dropdown.querySelector(".dropdown-options");
 
-    dropdown.addEventListener("click", () => {
-        const isOpen = optionsContainer.style.display === "block";
-        optionsContainer.style.display = isOpen ? "none" : "block";
-    });
-}
 
 function assignUser(firstName, lastName, color) {
-    assignedUserArr.push({
-        firstName: firstName,
-        lastName: lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
-        color: color
-    });
-    showAssignedUsers();
+    const userExists = assignedUserArr.some(user => 
+        user.firstName === firstName && 
+        user.lastName === lastName
+    );
+    if (!userExists) {
+        assignedUserArr.push({
+            firstName: firstName,
+            lastName: lastName,
+            initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+            color: color
+        });
+        showAssignedUsers();
+    }
 }
 
 function showAssignedUsers() {

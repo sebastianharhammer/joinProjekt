@@ -23,10 +23,10 @@ return  /*html*/`
               </div>
               <div class="field-text-flex" id="addTaskAssignedTo">
                   <div class="form-group">
-                    <label>Assigned to</label>
+                  <label>Assigned to</label>
                     <div id="custom-dropdown" class="custom-dropdown input-addtask">
                       <div class="dropdown-placeholder">Select contacts to assign</div>
-                      <div class="dropdown-options"></div>
+                      <div class="dropdown-options" id="dropdown-options"></div>
                     </div>
                     <div id="assigned-users-short"></div>
                   </div>
@@ -40,7 +40,7 @@ return  /*html*/`
                   <span style="color: #ff8190">*</span>
                 </label>
                 <div id="errorMassageTitle"></div>
-                <input class="input-addtask" id="addTaskInputDueDate" type="date" min="2024-12-01"/>
+                <input class="input-addtask" id="addTaskInputDueDate" type="date" min="2025-01-01"/>
                 <span id="addDateError" class="validSpanDate"></span>
               </div>
               <div class="prio-content field-text-flex">
@@ -48,15 +48,15 @@ return  /*html*/`
                 <div class="prio-btn-content">
                   <button id="prio-urgent" class="prio-button" onclick="setPriority('urgent')" type="button">
                     Urgent
-                    <img id="prio-image-urgent" src="./img/Prio_urgent_color.png" alt=""/>
+                    <img id="prio-image-urgent" src="./img/Prio_urgent_color.svg" alt=""/>
                   </button>
                   <button id="prio-medium" class="prio-button" onclick="setPriority('medium')" type="button">
                     Medium
-                    <img id="prio-image-medium" src="./img/Prio_medium_color.png" alt=""/>
+                    <img id="prio-image-medium" src="./img/Prio_medium_color.svg" alt=""/>
                   </button>
                   <button id="prio-low" class="prio-button" onclick="setPriority('low')" type="button">
                     Low
-                    <img id="prio-image-low" src="./img/Prio_low_color.png" alt=""/>
+                    <img id="prio-image-low" src="./img/Prio_low_color.svg" alt=""/>
                   </button>
                 </div>
               </div>
@@ -66,7 +66,7 @@ return  /*html*/`
                   <span style="color: #ff8190">*</span>
                 </label>
                 <input class="input-addtask" onclick="openAddTaskCategories()" id="categoryInput" type="text" placeholder="Select task category" maxlength="40" readonly>
-                <img onclick="openAddTaskCategories()" id="arrowDropMenuCategory" src="./img/arrow_drop_down.png" alt=""/>
+                <img onclick="openAddTaskCategories()" id="arrowDropMenuCategory" src="./img/arrow_drop_down.svg" alt=""/>
                 <div id="dropDownCategoryMenu"></div>
                 <span id="addCategoryError"  class="validSpanCategory"></span>
               </div>
@@ -82,7 +82,7 @@ return  /*html*/`
                       <div class="divider"></div>
                       <img onclick="addSubtask()" src="./img/check.svg">
                     </div>
-                    <img id="subtasks-plus-icon" src="./img/add.png" type="button" onclick="addSubtask()"/>
+                    <img id="subtasks-plus-icon" src="./img/add.svg" type="button" onclick="addSubtask()"/>
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
@@ -90,11 +90,15 @@ return  /*html*/`
               </div>
             </div>
           </div>
+          <div id="required-field-mobile">
+                  <span style="color: #ff8190;">*</span>
+                  <span>This field is required</span>
+              </div>
           <div class="addtask-bottom-container">
-            <span>
-              <span style="color: #ff8190">*</span>
-              This field is required
-            </span>
+          <div id="required-field">
+                  <span style="color: #ff8190;">*</span>
+                  <span>This field is required</span>
+          </div>
             <div class="addtask-buttons">
               <button id="add-task-close" class="btn-cancel" type="button" onclick="handleCancel(event)">
                 <span class="add-task-btn">Clear ✖</span>
@@ -114,17 +118,19 @@ return  /*html*/`
 
 function assignUserHTML(contact) {
   return `
+        <div class="assigned-user-container" data-firstname="${contact.firstName}" data-lastname="${contact.lastName}" data-color="${contact.color}">
         <div id="assigned-user-svg">
-          <svg class="addtask-customCircle" width="50" height="50">
-            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
-            <text class="addtask-textInCircle" stroke-width="1" font-weight="normal" stroke="white" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+          <svg class="customCircle" width="50" height="50">
+            <circle id="user-circle" class="circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
+            <text stroke="white" stroke-width="1" font-weight="normal" class="textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>
         <div id="assigned-user-name-container">
           <span>${contact.firstName}</span>
           <span>${contact.lastName}</span>
         </div>
-        <input class="checkbox-addtask" onclick="assignUser('${contact.firstName}', '${contact.lastName}', '${contact.color}')" type="checkbox">`;
+        <input class="checkbox-add-task" type="checkbox">
+        </div>`;
 }
 
 function showAssignedUsersHTML(contact) {

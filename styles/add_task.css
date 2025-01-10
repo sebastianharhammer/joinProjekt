@@ -339,7 +339,11 @@ ul {
 .green {
   background-color: #7ae229;
 }
-
+#prio-medium {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
 .separator {
   height: 424px;
@@ -360,7 +364,12 @@ ul {
 #addTaskCategory {
   position: relative;
 }
-
+#categoryInput {
+  z-index: 1001;
+}
+#addTaskCategory img {
+  z-index: 1002;
+}
 #dropDownCategoryMenu {
   position: absolute;
   z-index: 1;
@@ -461,9 +470,7 @@ ul {
   height: 58px;
 }
 
-#categoryInput {
-  z-index: 999;
-}
+
 
 .contact-assigned:hover {
   background-color: rgb(236, 235, 235);
@@ -804,6 +811,42 @@ ul {
 .assigned-user-container:hover {
   background-color: #f0f0f0;
   border-radius: 8px;
+}
+.checkbox-add-task {
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border: 2px solid #2A3647;
+  border-radius: 3px;
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.checkbox-add-task:hover {
+  border-color: #29ABE2;
+  box-shadow: 0 0 4px rgba(41, 171, 226, 0.4);
+}
+
+.checkbox-add-task:checked {
+  background-color: #0c0f13;
+  border-color: #2A3647;
+}
+
+.checkbox-add-task:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 @media (min-width: 1200px) {
