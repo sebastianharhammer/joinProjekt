@@ -116,8 +116,8 @@ function validateTask(title, date, category) {
             button.disabled = false;
             button.style.backgroundColor = "#2B3647";
             button.style.color = "#FFFFFF";
-            return;
         }, 3000);
+        exits = true;
     }
     if (!date) {
         document.getElementById('addDateError').innerHTML = "Date is required!";

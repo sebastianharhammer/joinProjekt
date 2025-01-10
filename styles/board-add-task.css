@@ -119,8 +119,7 @@ body {
 .dropdown-contact{
   display: flex;
   justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   gap: 16px;
@@ -869,12 +868,17 @@ ul {
 #required-field-mobile{
   padding-bottom: 50px;
 }
+
 @media (min-width: 1400px) {
   #required-field-mobile {
     display: none;
   }
   #addTaskHeadlineMobile {
     display: none;
+  }
+  .addtask-overlay-content {
+    width: 1000px;
+    height: 1000px;
   }
  
 }

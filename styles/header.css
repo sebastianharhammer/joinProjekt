@@ -90,7 +90,7 @@ header {
   display: flex;
   justify-content: flex-end;
   padding: 10px;
-  color: rgba(18, 18, 232, 0.997);
+  color: rgba(18, 18, 232, 0.997) !important;
   z-index: 999;
 }
 

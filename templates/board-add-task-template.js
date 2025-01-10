@@ -1,6 +1,6 @@
 function addTaskOverlayHTML() {
 return  /*html*/`
-<div id="templateTaskDetailView" class="addtask-overlay-content">
+<div id="templateTaskDetailView" class="addtask-overlay-content" >
 <div class="addtask-main-content" onclick="closeDropdown()">
         <div id="addTaskHeaderContainer">
           

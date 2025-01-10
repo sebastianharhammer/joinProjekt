@@ -27,14 +27,8 @@ function showAddTask(status) {
     getTasks();
     let addTaskContent = document.getElementById('add-task-content');
     let background = document.getElementById('add-task-background');
-    let navBackground = document.getElementById('overlay-left');
-   /*  let navLinks = document.querySelector('.nav-links');
-    let navIcons = document.querySelector('.nav-icon'); */
     addTaskContent.classList.add('show-add-task');
     background.classList.remove('d-none');
-   /*  navBackground.style.backgroundColor = "hsl(218, 24%, 7%)"; */
-    /* navLinks.style.color = "#a9a9a9";
-    navIcons.style.color = "#a9a9a9"; */
     addTaskContent.innerHTML =  addTaskOverlayHTML();
     getUsers();
     handleDropdownInteraction();
@@ -74,7 +68,7 @@ function hideAddTask() {
     setTimeout(() => {
         init();
         headerName.style.color = '#29ABE2';
-        
+
       }, 250);
 }
 
@@ -140,8 +134,8 @@ function validateTask(title, date, category) {
             button.disabled = false;
             button.style.backgroundColor = "#2B3647";
             button.style.color = "#FFFFFF";
-            return;
         }, 3000);
+        exits = true;
     }
     if (!date) {
         document.getElementById('addDateError').innerHTML = "Date is required!";
@@ -373,7 +367,7 @@ function openAddTaskCategories() {
     } else {
     categoriesContainerClick = false;
     categoryList.style.border = "0px";
-    hideAddTaskCategories();
+    AddTaskCategories();
     }
     document.getElementById("categoryInput").classList.toggle("outline");}
 
