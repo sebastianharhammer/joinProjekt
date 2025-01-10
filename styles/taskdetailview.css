@@ -365,7 +365,7 @@ body.no-scroll {
     .currentTaskCard {
         position: fixed;
         top: 50%;
-        left: 50%;
+        left: 46%;
         transform: translate(-50%, -50%);
         overflow-x: hidden;
         overflow-y: auto;
