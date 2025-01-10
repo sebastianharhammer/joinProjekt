@@ -27,6 +27,10 @@
   overflow-y: scroll;
 }
 
+d-none{
+  display: none;
+}
+
 
 .todo {
   display: flex;
@@ -392,10 +396,8 @@
 }
 
 
-#wholeBoard.no-scroll {
+html.no-scroll, body.no-scroll {
   overflow: hidden;
-  position: fixed;
-  width: 100%;
   height: 100%;
 }
 

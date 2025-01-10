@@ -404,13 +404,11 @@ input[type="date"] {
         overflow-x: hidden;
         overflow-y: auto;
         gap: 1vh;
-        margin-left: 8px;
-        margin-right: 8px;
         padding: 8px;
     }
 
     .editTaskTempl {
         z-index: 999;
-        height: 108vh;
+        height: 100vh;
     }
 }

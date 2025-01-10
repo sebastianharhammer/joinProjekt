@@ -367,15 +367,34 @@ function createTaskHTML(task) {
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
   if (!task) {
-      console.error(`Task mit ID ${id} nicht gefunden.`);
-      return;
+    console.error(`Task mit ID ${id} nicht gefunden.`);
+    return;
   }
-  let taskCardOverlay = document.getElementById("taskDetailView");
+  const taskCardOverlay = document.getElementById("taskDetailView");
   taskCardOverlay.innerHTML = "";
   taskCardOverlay.classList.remove("d-none");
   taskCardOverlay.innerHTML += showTaskCardHTML(task);
-  document.body.classList.add("no-scroll"); // Scrollen deaktivieren
+  document.body.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden";
 }
+
+
+
+function closeDetailView() {
+  console.log("closeDetailView aufgerufen");
+  const taskCardOverlay = document.getElementById("taskDetailView");
+  taskCardOverlay.classList.add("d-none");
+
+  console.log("Setze body.style.overflow zurück");
+  document.body.style.overflow = "";
+  document.documentElement.style.overflow = "";
+
+  console.log("Aktueller overflow-Wert von body:", document.body.style.overflow);
+  console.log("Aktueller overflow-Wert von html:", document.documentElement.style.overflow);
+}
+
+
+
 
 
 function showTaskCardHTML(task) {
@@ -431,12 +450,6 @@ async function deleteTask(taskId) {
   }
 }
 
-function closeDetailView() {
-  let overlay = document.getElementById("taskDetailView");
-  overlay.classList.add("d-none");
-  document.body.classList.remove("no-scroll"); // Scrollen wieder aktivieren
-}
-
 function closeQuestionDelete() {
   let deleteQuestDiv = document.getElementById("deleteConfirmation");
   deleteQuestDiv.classList.add("d-none");
@@ -473,10 +486,6 @@ function getTaskCategoryClass(taskCategory) {
   return "task-category-undefined";
 }
 
-function closeDetailView() {
-  let taskCardOverlay = document.getElementById("taskDetailView");
-  taskCardOverlay.classList.add("d-none");
-}
 
 function highlight(id) {
   document.getElementById(id).classList.add("dragAreaHighlight");
