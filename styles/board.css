@@ -391,6 +391,14 @@
   justify-content: right;
 }
 
+
+#wholeBoard.no-scroll {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
 @media (max-width: 1024px) {
   .dragarea-todo,
   .dragarea-inProgress,
@@ -459,10 +467,9 @@
 .mobile-arrows {
   display: flex;
   gap: 10px;
-  position: relative; /* anpassen, wie du willst */
+  position: relative;
 }
 
-/* Icons anpassen */
 .arrow-btn img {
   width: 24px;
   height: 24px;
