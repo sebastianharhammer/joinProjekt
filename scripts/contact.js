@@ -212,7 +212,10 @@ function toggleContactDetail(firebaseKey) {
   if (isMobile) {
     contactListContainer.style.display = "none";
     detailViewContainer.style.display = "flex";
-    detailViewContainer.innerHTML = getMobileDetailHTML(selectedContact, firebaseKey);
+    detailViewContainer.innerHTML = getMobileDetailHTML(
+      selectedContact,
+      firebaseKey
+    );
   } else {
     if (clickedItem && clickedItem.classList.contains("selected")) {
       clickedItem.classList.remove("selected");
@@ -221,7 +224,10 @@ function toggleContactDetail(firebaseKey) {
     }
     contactItems.forEach((item) => item.classList.remove("selected"));
     if (clickedItem) clickedItem.classList.add("selected");
-    detailViewContainer.innerHTML = getDesktopDetailHTML(selectedContact, firebaseKey);
+    detailViewContainer.innerHTML = getDesktopDetailHTML(
+      selectedContact,
+      firebaseKey
+    );
   }
 }
 

@@ -5,7 +5,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-console.log("Firebase initialisiert:", firebase);
 
 async function initSummary() {
   await includeHTML();
