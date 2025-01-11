@@ -1,6 +1,6 @@
 let categoriesContainerClick = false;
 let contacts = [];
-let selectedPriority = "";
+let selectedPriority = "medium";
 let subtasksArr = [];
 let assignedUserArr = [];
 let localTasks = [];
@@ -25,7 +25,8 @@ function init() {
     getUsers();
     includeHTML();
     renderAddTaskHTML();
-    handleDropdownInteraction(); 
+    handleDropdownInteraction();
+    setPriority('medium');
 }
 
 
@@ -80,13 +81,7 @@ function handleCancel(event) {
     categoryObject = '';
     selectedPriority = '';
     document.getElementById('assigned-users-short').innerHTML = '';
-    const priorities = ['urgent', 'medium', 'low'];
-    priorities.forEach((prio) => {
-        const btn = document.getElementById(`prio-${prio}`);
-        const img = document.getElementById(`prio-image-${prio}`);
-        btn.classList.remove('red', 'yellow', 'green');
-        img.classList.remove('sat-0');
-    });
+    setPriority('medium');
 }
 
 

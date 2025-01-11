@@ -1,7 +1,7 @@
 const ADD_TASK_BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 let categoriesContainerClick = false;
 let contacts = [];
-let selectedPriority = "";
+let selectedPriority = "medium";
 let subtasksArr = [];
 let assignedUserArr = [];
 let localTasks = [];
@@ -32,6 +32,7 @@ function showAddTask(status) {
     addTaskContent.innerHTML =  addTaskOverlayHTML();
     getUsers();
     handleDropdownInteraction();
+    setPriority('medium');
 }
 
 function handleCancel(event) {
@@ -47,13 +48,7 @@ function handleCancel(event) {
     categoryObject = '';
     selectedPriority = '';
     document.getElementById('assigned-users-short').innerHTML = '';
-    const priorities = ['urgent', 'medium', 'low'];
-    priorities.forEach((prio) => {
-        const btn = document.getElementById(`prio-${prio}`);
-        const img = document.getElementById(`prio-image-${prio}`);
-        btn.classList.remove('red', 'yellow', 'green');
-        img.classList.remove('sat-0');
-    });
+    setPriority('medium');
 }
 
 function hideAddTask() {
