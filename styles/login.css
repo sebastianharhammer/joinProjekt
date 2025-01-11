@@ -13,12 +13,12 @@
   top: 0;
   display: flex;
   justify-content: space-between;
-  width: 98vw;
+  width: 94vw;
   height: 10vh;
   max-width: 1900px;
   padding: 16px;
   margin-left: 8px;
-  margin-right: 8px;
+  margin-right: 6vw;
 }
 
 .signUpArea {
@@ -349,10 +349,6 @@ button:hover {
   .guestLogInUpButton {
     width: 100%;
     max-width: 300px;
-  }
-
-  .headAreaOfLogin {
-    margin-right: 6vw;
   }
 
   .headAreaOfLogin img {
