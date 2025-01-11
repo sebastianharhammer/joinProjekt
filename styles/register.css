@@ -87,7 +87,8 @@ d-none {
   background-color: white;
   height: 53px;
   border-radius: 10px;
-  width: 350px;
+  width: 100%;
+  max-width: 340px;
   justify-content: space-between;
 }
 
@@ -240,7 +241,7 @@ button.button-signup:disabled {
     margin-bottom: 15px;
   }
   .signUpPasswordConfirmDiv {
-    width: 100%;
+    max-width: 332px;
   }
 
   .inputMailPw {
