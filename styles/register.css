@@ -108,7 +108,7 @@ d-none {
   font-family: "Inter";
   font-weight: 400;
   font-size: 12px;
-  color: rgb(238, 56, 56);
+  color: red;
   margin: 0;
 }
 
@@ -212,7 +212,7 @@ button.button-signup:disabled {
 .alert-email p {
   color: red;
   font-size: 12px;
-  margin-top: 5px;
+  margin-top: 3px;
 }
 
 
@@ -334,5 +334,9 @@ button.button-signup:disabled {
   }
   .fontPrivacyPolicy {
     font-size: 15px;
+  }
+
+  .signUpPasswordConfirmDiv{
+    margin-bottom: 12px;
   }
 }

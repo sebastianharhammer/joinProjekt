@@ -112,7 +112,7 @@ function showResultsMessage(foundPassword){
     if(foundPassword){
         alertDiv.innerHTML += /*html*/`
             <p class="correctPasswordFont">Your password matches and is correct.</p>
-            <p class="correctPasswordFontNotice">Accept the privacy policy and sign up to become a member.</p>
+            <p class="correctPasswordFontNotice">Accept the privacy policy to sign up.</p>
         `
     }
     else{
