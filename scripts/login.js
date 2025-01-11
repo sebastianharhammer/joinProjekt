@@ -8,7 +8,6 @@ function init() {
     loadRememberedUser();
 }
 
-
 let urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get('msg');
 const msgBox = document.getElementById('msgBox')
@@ -23,32 +22,20 @@ function loadLoginContent(){
 }
 
 function showStartSlide() {
-    const logo = document.getElementById('logo'); // Hauptlogo
-    const headerLogo = document.querySelector('.v-hidden'); // Header-Logo oben links
-
-    // Hauptlogo von der Mitte nach oben links bewegen
+    const logo = document.getElementById('logo');
+    const headerLogo = document.querySelector('.v-hidden');
     setTimeout(() => {
-        logo.classList.add('animate'); // Bewegung und Opacity-Animation starten
-    }, 700); // Startet nach 700ms
-    logo.classList.remove('d-none'); // Hauptlogo sichtbar machen
-
-    // Header-Logo sichtbar machen, NACHDEM die Bewegung abgeschlossen ist
+        logo.classList.add('animate');
+    }, 700);
+    logo.classList.remove('d-none');
     setTimeout(() => {
-        headerLogo.style.transition = 'none'; // Transition zurücksetzen
-        headerLogo.offsetHeight; // Reflow erzwingen
-        headerLogo.style.transition = 'opacity 2.5s ease-in-out'; // Transition neu setzen
-
-        // Sichtbarkeitsanimation starten
-        headerLogo.classList.remove('v-hidden'); // Unsichtbarkeit entfernen
+        headerLogo.style.transition = 'none';
+        headerLogo.offsetHeight;
+        headerLogo.style.transition = 'opacity 2.5s ease-in-out';
+        headerLogo.classList.remove('v-hidden');
         headerLogo.classList.add('fade-in');
     }, 1200);
 }
-
-
-
-
-
-
 
 function loadRememberedUser() {
     const rememberedUser = localStorage.getItem('rememberedUser');
