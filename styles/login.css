@@ -33,15 +33,14 @@
   transition: opacity 2.5s ease-out, transform 2.5s ease-out;
 }
 
-.d-none{
-  display: none;
-}
-
 .logo.animate {
   opacity: 0;
   transform: translate(-100vw, -100vh);
 }
 
+.d-none{
+  display: none;
+}
 
 .headAreaOfLogin {
   position: fixed;
