@@ -1,18 +1,19 @@
 function getLoginTemplate(){
     return /*html*/`
-        <div class="d-none logo animated-logo" id="logo">
-            <img class="joinLogoBig" src="img/logo-join-blue-big.png" alt="Join-Logo" />
-        </div>
             <section class="loginContent">
-        <div class="headAreaOfLogin">
-            <img src="./img/logo-join-blue-big.png" alt="">      
-            <div class="signUpArea">
-                <p class="interFontLogin">Not a Join user?</p>
-                <a href="./register.html">
-                <div class="signUpButton interFontLoginButton">Sign up</div>
-                </a>
-            </div>
-        </div>
+            <div class="headAreaOfLogin">
+    <!-- Header-Logo mit der Klasse v-hidden -->
+    <img class="startSlideLogoJoin v-hidden" src="./img/logo-join-blue-big.png" alt="Join Logo Header">
+    <div class="signUpArea">
+        <p class="interFontLogin">Not a Join user?</p>
+        <a href="./register.html">
+            <div class="signUpButton interFontLoginButton">Sign up</div>
+        </a>
+    </div>
+</div>
+<div class="d-none logo" id="logo">
+    <img class="joinLogoBig" src="./img/logo-join-blue-big.png" alt="Join Logo Haupt">
+</div>
 
         <form class="loginForm">
             <h1 class="FontOfOfLogin">Log in</h1>

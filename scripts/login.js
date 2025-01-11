@@ -23,12 +23,31 @@ function loadLoginContent(){
 }
 
 function showStartSlide() {
-    const logo = document.getElementById('logo');
+    const logo = document.getElementById('logo'); // Hauptlogo
+    const headerLogo = document.querySelector('.v-hidden'); // Header-Logo oben links
+
+    // Hauptlogo von der Mitte nach oben links bewegen
     setTimeout(() => {
-        logo.classList.add('animate');
-    }, 300);
-    logo.classList.remove('d-none');
+        logo.classList.add('animate'); // Bewegung und Opacity-Animation starten
+    }, 700); // Startet nach 700ms
+    logo.classList.remove('d-none'); // Hauptlogo sichtbar machen
+
+    // Header-Logo sichtbar machen, NACHDEM die Bewegung abgeschlossen ist
+    setTimeout(() => {
+        headerLogo.style.transition = 'none'; // Transition zurücksetzen
+        headerLogo.offsetHeight; // Reflow erzwingen
+        headerLogo.style.transition = 'opacity 2.5s ease-in-out'; // Transition neu setzen
+
+        // Sichtbarkeitsanimation starten
+        headerLogo.classList.remove('v-hidden'); // Unsichtbarkeit entfernen
+        headerLogo.classList.add('fade-in');
+    }, 1200);
 }
+
+
+
+
+
 
 
 function loadRememberedUser() {
