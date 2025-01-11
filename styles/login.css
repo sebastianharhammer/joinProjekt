@@ -5,14 +5,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .headAreaOfLogin {
+  position: fixed;
+  top: 0;
   display: flex;
   justify-content: space-between;
-  width: 95vw;
-  padding-top: 1vh;
-  padding-bottom: 1vh;
+  width: 98vw;
+  height: 10vh;
+  max-width: 1900px;
+  padding: 16px;
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 .signUpArea {
@@ -83,7 +89,7 @@ button:disabled {
 }
 
 .loginForm {
-  padding-top: 20px;
+  padding: 16px;
   height: 40vh;
   width: 40vw;
   background-color: white;
@@ -108,8 +114,9 @@ d-none {
   border-radius: 10px;
   border: 1px solid rgb(168, 168, 168);
   margin-top: 1vh;
-  width: 350px;
   justify-content: space-between;
+  width: 35vw;
+  max-width: 340px;
 }
 
 .loginNameInput img {
@@ -222,6 +229,7 @@ button:hover {
   font-family: "Inter";
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 16px;
   height: 5vh;
 }
@@ -271,7 +279,8 @@ button:hover {
 
 .rememberMe {
   height: 40px;
-  width: 350px;
+  width: 35vw;
+  max-width: 340px;
   display: flex;
   justify-content: start;
   align-items: center;
@@ -326,21 +335,10 @@ button:hover {
 }
 
 @media (max-width: 909px) {
-  .loginContent {
-    height: 100%;
-    padding-bottom: 20px;
-  }
 
-  .loginForm {
-    margin-top: 100px;
-    width: 85vw;
-    height: auto;
-    padding: 20px;
-  }
-
-  .inputMailPw {
-    width: 100%;
-  }
+.loginForm{
+  width: 80vw;
+}
 
   .loginButtons {
     flex-direction: column;
@@ -354,11 +352,8 @@ button:hover {
   }
 
   .headAreaOfLogin {
-    align-items: center;
-    width: 100%;
+    margin-right: 6vw;
   }
-
-
 
   .headAreaOfLogin img {
     height: 80px;
@@ -370,24 +365,9 @@ button:hover {
   }
 
   .footerRegisterLogin {
-    margin-top: 20px;
     font-size: 14px;
   }
 
-  .signUpArea {
-    justify-content: center;
-    margin-top: 20px;
-    width: 100%;
-    flex-direction: row;
-    gap: 10px;
-    margin-left: 120px;
-  }
-
-  .signUpArea {
-    margin-top: 20px;
-    justify-content: center;
-    width: 100%;
-  }
 
   .signUpButton {
     width: 100%;
@@ -395,13 +375,23 @@ button:hover {
     padding: 8px;
   }
 
-  .loginForm {
-    margin-bottom: 30px;
-  }
 
   .interFontLoginButton{
     font-weight: 500;
     font-size: 12px;
+  }
+
+  .loginNameInput{
+    width: 50vw;
+  }
+
+  .rememberMe {
+    width: 50vw;
+  }
+
+  .inputMailPw{
+    font-size: 14px;
+    padding-left: 3px;
   }
 
 }
@@ -411,6 +401,10 @@ button:hover {
 @media (max-width: 480px) {
   .loginForm {
     width: 85vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   .rememberMe{
@@ -458,23 +452,35 @@ button:hover {
     margin-right: 0px;
   }
 
-  .loginForm {
-    margin-bottom: 30px;
-  }
-
   .footerRegisterLogin {
     margin-top: 0px;
     margin-left: 40px;
   }
 
-  .loginNameInput{
-    margin-top: 6px;
-    width: 290px;
+.loginNameInput{
+  width: 70vw;
+}
+
+.rememberMe{
+  width: 70vw;
+}
+
+.inputMailPw{
+  width: 200px;
+  font-size: 14px;
+}
+
+  .headAreaOfLogin {
+    width: 92vw;
   }
 }
 
 @media (max-width: 390px) {
   .interFontLogin {
     font-size: 12px;
+  }
+
+  .loginForm{
+    height: 50vh;
   }
 }
