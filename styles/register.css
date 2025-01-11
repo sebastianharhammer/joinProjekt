@@ -209,6 +209,13 @@ button.button-signup:disabled {
   color: rgb(41, 171, 226);
 }
 
+.alert-email p {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
 @media (max-width: 768px) {
   .signUpForm {
     width: 60vw;

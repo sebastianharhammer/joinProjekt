@@ -65,10 +65,11 @@
             type="email"
             placeholder="Email"
             required
-            oninput="validate()"
+            oninput="validateEmail(); validate()"
           />
           <img src="./img/login-mail.png" alt="" />
         </div>
+        <div id="emailAlert" class="alert-email"></div>        
         <div class="loginNameInput">
           <input
             id="loginPassword"

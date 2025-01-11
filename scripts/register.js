@@ -141,6 +141,22 @@ async function getNextUserId(path) {
     return nextId;
 }
 
+function validateEmail() {
+    const emailField = document.getElementById('loginMail');
+    const emailAlert = document.getElementById('emailAlert');
+    const emailValue = emailField.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    emailAlert.innerHTML = '';
+
+    if (emailValue === '') {
+        emailAlert.innerHTML = `<p class="alertEmailFont">Email field cannot be empty.</p>`;
+    } else if (!emailRegex.test(emailValue)) {
+        emailAlert.innerHTML = `<p class="alertEmailFont">Please enter a valid email address.</p>`;
+    }
+}
+
+
 
 
 
