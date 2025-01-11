@@ -96,6 +96,7 @@ button:disabled {
   border-radius: 30px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   max-width: 900px;
 }
@@ -333,6 +334,8 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+
+
 
 @media (max-width: 909px) {
 

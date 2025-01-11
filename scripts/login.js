@@ -1,11 +1,13 @@
 let signedUsersArrayLogin="[]";
 let currentUser = null;
 
-function init(){
+function init() {
+    loadLoginContent();
     showStartSlide();
     loadSignedUsers("/signed_users");
     loadRememberedUser();
 }
+
 
 let urlParams = new URLSearchParams(window.location.search);
 const msg = urlParams.get('msg');
@@ -14,13 +16,20 @@ if (msg) {
 msgBox.innerHTML = msg;
 }
 
-function showStartSlide(){
-    let startOverlay = document.getElementById('logo');
-    startOverlay.classList.remove('d-none');
-    setTimeout(function() {
-        startOverlay.classList.add('animate');
-    }, 100);
+function loadLoginContent(){
+    let loginContent = document.getElementById('wholeLoginContent');
+    loginContent.innerHTML = '';
+    loginContent.innerHTML += getLoginTemplate();
 }
+
+function showStartSlide() {
+    const logo = document.getElementById('logo');
+    setTimeout(() => {
+        logo.classList.add('animate');
+    }, 300);
+    logo.classList.remove('d-none');
+}
+
 
 function loadRememberedUser() {
     const rememberedUser = localStorage.getItem('rememberedUser');
