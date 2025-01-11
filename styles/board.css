@@ -27,10 +27,9 @@
   overflow-y: scroll;
 }
 
-d-none{
+d-none {
   display: none;
 }
-
 
 .todo {
   display: flex;
@@ -395,8 +394,8 @@ d-none{
   justify-content: right;
 }
 
-
-html.no-scroll, body.no-scroll {
+html.no-scroll,
+body.no-scroll {
   overflow: hidden;
   height: 100%;
 }
@@ -408,7 +407,6 @@ html.no-scroll, body.no-scroll {
   .dragarea-done {
     width: 20vw;
   }
-
 
   .tasksContent {
     gap: 30px;
@@ -596,7 +594,7 @@ html.no-scroll, body.no-scroll {
 
 @media (max-width: 560px) {
   .boardFont {
-    margin-left: 14px;
+    margin-left: 80px;
     font-size: 70px;
   }
   .buttonBoardFont {
@@ -604,14 +602,14 @@ html.no-scroll, body.no-scroll {
     margin-left: 20px;
   }
 
-  .dragarea-done{
+  .dragarea-done {
     margin-bottom: 120px;
   }
 
   .inputAndButtonBoard {
     position: absolute;
     bottom: -50px;
-    left: -20px;
+    left: 70px;
   }
 
   .addTaskButtonBoard {
@@ -631,17 +629,16 @@ html.no-scroll, body.no-scroll {
     font-size: 16px;
   }
 }
-@media (max-width: 1258px){
-.boardNavigator{
-  left: 1vw;
-}
+@media (max-width: 1258px) {
+  .boardNavigator {
+    left: 1vw;
+  }
 
-.tasksContent{
-  left: 1vw;
-  padding-bottom: 10vh;
+  .tasksContent {
+    left: 1vw;
+    padding-bottom: 10vh;
+  }
 }
-}
-
 
 @media (max-width: 440px) {
   .tasksContent {
@@ -655,12 +652,12 @@ html.no-scroll, body.no-scroll {
 
   .dragarea-todo,
   .dragarea-inProgress,
-  .dragarea-feedback{
+  .dragarea-feedback {
     width: 90%;
     margin: 0 auto;
   }
 
-  .dragarea-done{
+  .dragarea-done {
     width: 90%;
     margin: 0 auto;
     margin-bottom: 80px;
