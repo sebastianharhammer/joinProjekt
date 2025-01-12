@@ -149,3 +149,49 @@ function getRandomColor() {
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 }
+
+function handleContactCreation() {
+  const isValid = validateInputs();
+  if (isValid) {
+    processContactInfo();
+  }
+}
+
+function validateInputs() {
+  const nameInput = document.getElementById("add-contact-name");
+  const emailInput = document.getElementById("add-contact-email");
+  const phoneInput = document.getElementById("add-contact-phone");
+  const nameError = document.getElementById("name-error");
+  const emailError = document.getElementById("email-error");
+  const phoneError = document.getElementById("phone-error");
+
+  let isValid = true;
+
+  // Name validation
+  if (!nameInput.value.trim()) {
+    nameError.style.display = "block";
+    isValid = false;
+  } else {
+    nameError.style.display = "none";
+  }
+
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
+    emailError.style.display = "block";
+    isValid = false;
+  } else {
+    emailError.style.display = "none";
+  }
+
+  // Phone validation
+  const phoneRegex = /^[0-9+]*$/;
+  if (!phoneInput.value.trim() || !phoneRegex.test(phoneInput.value)) {
+    phoneError.style.display = "block";
+    isValid = false;
+  } else {
+    phoneError.style.display = "none";
+  }
+
+  return isValid;
+}
