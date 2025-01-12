@@ -27,6 +27,12 @@
   overflow-y: scroll;
 }
 
+.column-header-desktop{
+  display: flex;
+  justify-content: space-between;
+  width: 18vw;
+}
+
 d-none {
   display: none;
 }
@@ -329,6 +335,7 @@ d-none {
   align-items: center;
 }
 
+
 .columntitleInProgress {
   display: flex;
   gap: 15px;
@@ -392,6 +399,10 @@ d-none {
 .tasksContent img {
   display: none;
   justify-content: right;
+}
+
+.tasksContent img.showInDesktopVersion {
+  display: block !important;
 }
 
 html.no-scroll,

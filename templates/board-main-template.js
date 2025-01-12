@@ -220,40 +220,73 @@ function showTitleOfBoardColumns() {
 function getColumnsHTML() {
     return /*html*/ `
           <section class="tasksContent">
+
               <div class="column-header">
                   <span class="headline-to-do-responsive">TO DO</span>
                   <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('todo')">
               </div>
+
+              
+              <div class="wholeDragArea">
+                    <div class="column-header-desktop">
+                        <p class="columnTitleFont">To do</p>
+                        <img class="showInDesktopVersion" src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
+                    </div>
               <div class="dragarea-todo" id="todo"
                   ondrop="moveTo('todo')" 
                   ondragleave="removeHighlight('todo')" 
                   ondragover="allowDrop(event); highlight('todo')"></div>
-  
+             </div>
+
+
+             
               <div class="column-header">
                   <span class="headline-in-progress-responsive">IN PROGRESS</span>
                   <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('inProgress')">
+              </div>
+
+              <div class="wholeDragArea">
+              <div class="column-header-desktop">
+                        <p class="columnTitleFont">In Progress</p>
+                        <img class="showInDesktopVersion" src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
               </div>
               <div class="dragarea-inProgress" id="inProgress"
                   ondrop="moveTo('inProgress')" 
                   ondragleave="removeHighlight('inProgress')" 
                   ondragover="allowDrop(event); highlight('inProgress')"></div>
-  
+             </div>
+
+
               <div class="column-header">
                   <span class="headline-feedback-responsive">AWAIT FEEDBACK</span>
                   <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('feedback')">
+              </div>
+
+              <div class="wholeDragArea">
+              <div class="column-header-desktop">
+                        <p class="columnTitleFont">Await Feedback</p>
+                        <img class="showInDesktopVersion" src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
               </div>
               <div class="dragarea-feedback" id="feedback"
                   ondrop="moveTo('feedback')" 
                   ondragleave="removeHighlight('feedback')" 
                   ondragover="allowDrop(event); highlight('feedback')"></div>
-  
+             </div>
+
+
               <div class="column-header">
                   <span class="headline-done-responsive">DONE</span>
                   <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('done')">
+              </div>
+              <div class="wholeDragArea">
+              <div class="column-header-desktop">
+                        <p class="columnTitleFont">Done</p>
+                        <img class="showInDesktopVersion" src="./img/plus button.png" alt="" onclick="showAddTask('done')">
               </div>
               <div class="dragarea-done" id="done"
                   ondrop="moveTo('done')" 
                   ondragleave="removeHighlight('done')" 
                   ondragover="allowDrop(event); highlight('done')"></div>
+            </div>
           </section>`;
   }
