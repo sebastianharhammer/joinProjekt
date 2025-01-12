@@ -194,28 +194,7 @@ function getPrioIcon(prio) {
     }
 }
 
-function showTitleOfBoardColumns() {
-    return /*html*/ `
-<section id="titleOfBoardColumns" class="titleOfBoardColumns">
-<div class="columntitleToDo">
-    <p class="columnTitleFont">To do</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('todo')">
-</div>
-<div class="columntitleInProgress">
-    <p class="columnTitleFont">In Progress</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('inProgress')">
-</div>
-<div class="columntitleAwaitFeedback">
-    <p class="columnTitleFont">Await Feedback</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('feedback')">
-</div>
-<div class="columntitleDone">
-    <p class="columnTitleFont">Done</p>
-    <img src="./img/plus button.png" alt="" onclick="showAddTask('done')">
-</div>
-</section>
-    `;
-}
+
 
 function getColumnsHTML() {
     return /*html*/ `

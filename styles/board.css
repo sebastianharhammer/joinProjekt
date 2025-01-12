@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 50px;
+  gap: 8px;
   background-color: rgb(246, 247, 248);
   padding-top: 16px;
   position: absolute;
@@ -31,6 +31,8 @@
   display: flex;
   justify-content: space-between;
   width: 18vw;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 d-none {
@@ -419,10 +421,6 @@ body.no-scroll {
     width: 20vw;
   }
 
-  .tasksContent {
-    gap: 30px;
-  }
-
   .titleOfBoardColumns {
     gap: 30px;
   }
@@ -650,8 +648,9 @@ body.no-scroll {
   }
 
   .tasksContent {
-    left: 1vw;
     padding-bottom: 10vh;
+    left: 2vw;
+    width: 96vw;
   }
 }
 
