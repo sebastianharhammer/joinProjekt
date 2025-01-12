@@ -259,6 +259,17 @@
   font-size: 16px;
 }
 
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none;
+}
+
+.add-contact-input:invalid + .error-message {
+  display: block;
+}
+
 @media (max-width: 1050px) {
   #contact-panel {
     flex-direction: column;
