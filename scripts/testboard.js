@@ -113,13 +113,22 @@ function loadBoardNavigator() {
 
 
 function filterTaskFunction() {
-  const myFilter = getFilterValue();
-  const tasksFound = filterTasks(myFilter);
-  toggleNoResultsMessage(tasksFound, myFilter);
+  filterTasksByInput("filterTask");
 }
 
-function getFilterValue() {
-  return document.getElementById("filterTask").value.toLowerCase();
+function filterTaskFunctionMobile() {
+  filterTasksByInput("filterTask-mobile");
+}
+
+function filterTasksByInput(inputId) {
+  const myFilter = getFilterValue(inputId);
+  const tasksFound = filterTasks(myFilter);
+  toggleNoResultsMessage(tasksFound, myFilter, inputId);
+}
+
+
+function getFilterValue(inputId) {
+  return document.getElementById(inputId).value.toLowerCase();
 }
 
 function filterTasks(myFilter) {
@@ -149,8 +158,8 @@ function applyFilterToTask(paramToFind, param2ToFind, wholeTask, myFilter) {
   }
 }
 
-function toggleNoResultsMessage(tasksFound, myFilter) {
-  const noResultsMessage = document.getElementById("noResults");
+function toggleNoResultsMessage(tasksFound, myFilter, inputId) {
+  const noResultsMessage = document.querySelector(`#${inputId} ~ p#noResults`);
   if (!tasksFound && myFilter.length > 0) {
     noResultsMessage.style.display = "block";
   } else {

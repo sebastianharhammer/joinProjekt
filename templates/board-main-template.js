@@ -55,7 +55,7 @@ function getBoardNavigatorHTML() {
 <section class="boardNavigator-mobile">
     <div class="navig-mobile-first-line">
         <p class="boardFont-mobile">BOARD</p>
-        <img onclick="showAddTask('todo')" class="btn-board-mobile" src="./img/plus button.png" alt="">
+        <img onclick="showAddTask('todo')" class="btn-board-mobile" src="./img/plus-mobile-task.png" alt="">
     </div>
 
     <div class="mobile-input-search">

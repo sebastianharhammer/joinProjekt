@@ -642,14 +642,14 @@ body.no-scroll {
     flex-direction: column;
     position: absolute;
     top: 116px;
-    height:120px;
     width: 98vw;
+    gap: 32px;
   }
 
   .boardFont-mobile {
     font-family: "Inter";
     font-weight: 700;
-    font-size: 61px;
+    font-size: 48px;
     color: black;
   }
 
