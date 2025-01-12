@@ -29,19 +29,19 @@ function getAddContactHTML() {
                 <div id="add-contact-icon-container">
                     <img id="add-contact-icon" src="./img/add_contact.png">
                 </div>
-                <form id="input-fields" autocomplete="new-password">
+                <form id="input-fields">
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-name" autocomplete="new-password" data-dummy="name" placeholder="Firstname Lastname" required>
+                        <input required class="add-contact-input" id="add-contact-name" placeholder="Firstname Lastname" required>
                         <img src="./img/person.png" class="add-contact-input-icon">
                         <small class="error-message" id="name-error">Name ist erforderlich</small>
                     </div>
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" id="add-contact-email" autocomplete="new-password" data-dummy="email" placeholder="Email" type="email" required>
+                        <input required class="add-contact-input" type="email" id="add-contact-email" placeholder="Email" type="email" required>
                         <img src="./img/login-mail.png" class="add-contact-input-icon">
                         <small class="error-message" id="email-error">Ungültige Email-Adresse</small>
                     </div>
                     <div class="input-wrapper">
-                        <input required class="add-contact-input" data-dummy="phone" id="add-contact-phone" autocomplete="new-password" pattern="^[0-9+]*$" placeholder="Phone">
+                        <input required class="add-contact-input" type="tel" id="add-contact-phone" placeholder="Phone">
                         <img src="./img/call.png" class="add-contact-input-icon">
                         <small class="error-message" id="phone-error">Nur Zahlen und + sind erlaubt</small>
                     </div>
