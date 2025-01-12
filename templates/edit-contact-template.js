@@ -26,28 +26,33 @@ function getEditContactHTML(contact) {
               </div>
               <div id="edit-contact-interactions">
                   <div id="edit-contact-icon-container">
-                      <div id="edit-contact-icon" style="background-color: ${getRandomColor()};">
+                      <div id="edit-contact-icon" style="background-color: ${
+                        contact.color
+                      };">
                           ${getInitials(contact.firstName, contact.lastName)}
                       </div>
                   </div>
                   <form id="input-fields">
                       <div class="input-wrapper">
-                          <input required class="edit-contact-input" id="edit-contact-name" placeholder="Name" value="${
+                          <input required class="edit-contact-input" id="edit-contact-name" placeholder="Firstname Lastname" value="${
                             contact.firstName
                           } ${contact.lastName}">
                           <img src="./img/person.png" class="edit-contact-input-icon">
+                          <small class="error-message" id="edit-name-error"></small>
                       </div>
                       <div class="input-wrapper">
-                          <input required class="edit-contact-input" id="edit-contact-email" placeholder="Email" type="email" value="${
+                          <input required class="edit-contact-input" type="email" id="edit-contact-email" placeholder="Email" type="email" value="${
                             contact.email
                           }">
                           <img src="./img/login-mail.png" class="edit-contact-input-icon">
+                          <small class="error-message" id="edit-email-error"></small>
                       </div>
                       <div class="input-wrapper">
-                          <input required class="edit-contact-input" id="edit-contact-phone" placeholder="Phone" value="${
+                          <input required class="edit-contact-input" type="tel" id="edit-contact-phone" placeholder="Phone" value="${
                             contact.phone
                           }">
                           <img src="./img/call.png" class="edit-contact-input-icon">
+                          <small class="error-message" id="edit-phone-error"></small>
                       </div>
                   </form>
               </div>

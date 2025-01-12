@@ -60,15 +60,6 @@ function showSuccessMessage() {
   }
 }
 
-function showErrorMessage() {
-  const content = document.getElementById("add-contact-message");
-  if (content) {
-    content.classList.remove("d-none");
-    showErrorMessageHTML();
-    setTimeout(() => content.classList.add("d-none"), 2500);
-  }
-}
-
 function clearAddContactInput() {
   const nameInput = document.getElementById("add-contact-name");
   const emailInput = document.getElementById("add-contact-email");
@@ -167,7 +158,6 @@ function validateInputs() {
 
   let isValid = true;
 
-  // Name validation
   if (!nameInput.value.trim()) {
     nameError.style.display = "block";
     isValid = false;
@@ -175,7 +165,6 @@ function validateInputs() {
     nameError.style.display = "none";
   }
 
-  // Email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
     emailError.style.display = "block";
@@ -184,8 +173,7 @@ function validateInputs() {
     emailError.style.display = "none";
   }
 
-  // Phone validation
-  const phoneRegex = /^[0-9+]*$/;
+  const phoneRegex = /^[0-9+ ]*$/;
   if (!phoneInput.value.trim() || !phoneRegex.test(phoneInput.value)) {
     phoneError.style.display = "block";
     isValid = false;

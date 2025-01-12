@@ -61,15 +61,6 @@ function getAddContactHTML() {
     `;
 }
 
-function showErrorMessageHTML() {
-  let content = document.getElementById("add-contact-message");
-  content.innerHTML = `
-    <div id="add-contact-error-message-container">
-    <span id="add-contact-error-message">Vor- und nachname sowie Email sind notwendig</span>
-    </div>
-    `;
-}
-
 function showSuccessMessageHTML() {
   let content = document.getElementById("add-contact-message");
   content.innerHTML = `
