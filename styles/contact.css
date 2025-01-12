@@ -1,3 +1,7 @@
+body {
+  overflow-y: hidden;
+}
+
 #contact-content {
   position: relative;
   display: flex;
@@ -402,6 +406,10 @@ hr {
 /*  Ab 1300px und kleiner (Desktop) */
 /* =============================== */
 @media (max-width: 1300px) {
+  #add-new-contact-button-container {
+    top: -20px;
+  }
+
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
@@ -421,7 +429,7 @@ hr {
     display: none;
     top: 100;
     width: 100%;
-    height: calc(100vh - 147px);
+    height: calc(100vh - 10vh);
     overflow-y: auto;
   }
 
@@ -615,7 +623,7 @@ hr {
     width: 100%;
     padding-top: 0;
     width: 100%;
-    height: calc(100vh - 10vh);
+    height: calc(1000px - 288px);
 
     /* Hier scrollen wir! */
     overflow-y: auto;
@@ -700,10 +708,6 @@ hr {
     height: 0px;
     width: 0px;
     padding: 0px;
-  }
-
-  #contact-content {
-    padding-top: 80px;
   }
 }
 
