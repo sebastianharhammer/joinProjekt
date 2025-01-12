@@ -5,6 +5,15 @@ body {
   font-family: "Inter", Sans-Serif;
   overflow-y: auto;
 }
+.overflow-hidden {
+  overflow: hidden;
+}
+.position-fixed {
+  position: fixed;
+}
+.position-static {
+  position: static;
+}
 #addTaskHeaderContainer{
   display: flex;
   justify-content: center;

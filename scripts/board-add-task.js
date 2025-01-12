@@ -29,11 +29,31 @@ function showAddTask(status) {
     let background = document.getElementById('add-task-background');
     addTaskContent.classList.add('show-add-task');
     background.classList.remove('d-none');
+    document.body.classList.add('overflow-hidden');
+    addTaskContent.classList.add('position-static');
     addTaskContent.innerHTML =  addTaskOverlayHTML();
     getUsers();
     handleDropdownInteraction();
     setPriority('medium');
 }
+
+function hideAddTask() {
+    let addContactTemplate = document.getElementById('add-task-content');
+    let background = document.getElementById('add-task-background');
+    let headerName = document.getElementById('header-current-user');
+    addContactTemplate.classList.remove('show-add-task');
+    document.body.classList.remove('overflow-hidden');
+
+    setTimeout(() => {
+        background.classList.add('d-none');
+      }, 250);
+    setTimeout(() => {
+        init();
+        headerName.style.color = '#29ABE2';
+
+      }, 250);
+}
+
 
 function handleCancel(event) {
     event.preventDefault();
@@ -51,21 +71,6 @@ function handleCancel(event) {
     setPriority('medium');
 }
 
-function hideAddTask() {
-    let addContactTemplate = document.getElementById('add-task-content');
-    let background = document.getElementById('add-task-background');
-    let headerName = document.getElementById('header-current-user');
-    addContactTemplate.classList.remove('show-add-task');
-
-    setTimeout(() => {
-        background.classList.add('d-none');
-      }, 250);
-    setTimeout(() => {
-        init();
-        headerName.style.color = '#29ABE2';
-
-      }, 250);
-}
 
 async function createTask(status, event) {
     console.log(status);
