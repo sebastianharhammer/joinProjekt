@@ -51,6 +51,22 @@ function getBoardNavigatorHTML() {
         </div>
     </div>
 </section>
+
+<section class="boardNavigator-mobile">
+    <div class="navig-mobile-first-line">
+        <p class="boardFont-mobile">BOARD</p>
+        <img onclick="showAddTask('todo')" class="btn-board-mobile" src="./img/plus button.png" alt="">
+    </div>
+
+    <div class="mobile-input-search">
+    <input class="inputBoard-mobile" id="filterTask-mobile" onkeyup="filterTaskFunctionMobile()" type="text" placeholder="Find Task">
+    <p id="noResults" style="display: none; color: red; font-size: 12px; margin-top: 2px;">Kein Task gefunden</p>
+    <div class="icon-input-mobile">
+    <span class="verticalLine-mobile">|</span>
+    <img class="lens" src="./img/search.png" alt="">
+    </div>
+    </div>
+</section>
     `;
 }
 
