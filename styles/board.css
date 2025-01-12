@@ -676,6 +676,10 @@ body.no-scroll {
   .lens{
     height: 24px;
   }
+
+  .lens:hover{
+    cursor: pointer;
+  }
   .buttonBoardFont {
     font-size: 0;
     margin-left: 20px;
