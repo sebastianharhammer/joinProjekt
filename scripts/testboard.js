@@ -108,8 +108,9 @@ function loadBoardNavigator() {
   let content = document.getElementById("wholeBoard");
   content.innerHTML = "";
   content.innerHTML += getBoardNavigatorHTML();
-  loadTitleOfBoardColumns(content);
+  content.innerHTML += getColumnsHTML();
 }
+
 
 function filterTaskFunction() {
   const myFilter = getFilterValue();
@@ -146,11 +147,6 @@ function applyFilterToTask(paramToFind, param2ToFind, wholeTask, myFilter) {
     wholeTask.style.display = "none";
     return false;
   }
-}
-
-function loadTitleOfBoardColumns(content) {
-  content.innerHTML += showTitleOfBoardColumns();
-  getColumns(content);
 }
 
 function toggleNoResultsMessage(tasksFound, myFilter) {
