@@ -1,10 +1,17 @@
 function onloadFunc(){
     loadUsers("signed_users");
+    loadRegisterForm();
 }
 
 
 const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/"
 let signedUsersArray="[]";
+
+function loadRegisterForm(){
+    let registerContent = document.getElementById('registerContent');
+    registerContent.innerHTML='';
+    registerContent.innerHTML += getRegisterContent()
+}
 
 async function loadUsers(path){
     let response = await fetch(BASE_URL + path + ".json");
@@ -103,8 +110,6 @@ function validate(){
             signUpButton.disabled = true;
         }
 }
-
-
 
 function showResultsMessage(foundPassword){
     let alertDiv = document.getElementById('alert-password');
