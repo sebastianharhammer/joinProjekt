@@ -92,7 +92,7 @@ function saveTaskToServer(taskId, task) {
     body: JSON.stringify(task),
   })
     .then(() =>
-      console.log(`Subtask ${subtaskIndex} von Task ${taskId} gespeichert.`)
+      console.log(`.`)
     )
     .catch((error) =>
       console.error("Fehler beim Speichern des Subtasks:", error)
@@ -148,7 +148,6 @@ async function getUsersForEditDropDown() {
     }
     let responseToJson = await response.json();
     finalContactsForEdit = responseToJson || {};
-    console.log(finalContactsForEdit);
   } catch (error) {
     console.error("Error fetching contacts:", error);
   }
@@ -454,7 +453,6 @@ function setupEditTaskEventListeners(taskId) {
       const task = taskArray.find((t) => t.id === taskId);
       if (task) {
         task.date = dueDateInput.value;
-        console.log("Updated date:", task.date);
       }
     });
   }

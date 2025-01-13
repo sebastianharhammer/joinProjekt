@@ -29,7 +29,6 @@ function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
   if (storedUser) {
     currentUser = JSON.parse(storedUser);
-    console.log(currentUser);
   }
 }
 
@@ -381,11 +380,8 @@ function showTaskCard(id) {
 }
 
 function closeDetailView() {
-  console.log("closeDetailView aufgerufen");
   const taskCardOverlay = document.getElementById("taskDetailView");
   taskCardOverlay.classList.add("d-none");
-
-  console.log("Setze body.style.overflow zurück");
   document.body.style.overflow = "";
   document.documentElement.style.overflow = "";
 }
@@ -504,7 +500,6 @@ async function moveTaskUp(taskId, event) {
   } else if (task.status === "inProgress") {
     task.status = "todo";
   } else {
-    console.log("Task befindet sich bereits in der obersten Kategorie.");
     return;
   }
 
@@ -533,7 +528,6 @@ async function moveTaskDown(taskId, event) {
   } else if (task.status === "feedback") {
     task.status = "done";
   } else {
-    console.log("Task befindet sich bereits in der untersten Kategorie.");
     return;
   }
 
