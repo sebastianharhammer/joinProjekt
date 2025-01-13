@@ -302,20 +302,17 @@ body {
     text-align: center;
   }
   .panel-row:nth-child(1) {
-    /* Wir machen die row schmaler/breiter je nach Bedarf */
     width: 80% !important;
 
-    /* Damit Panels nicht an die Außenkanten gedrückt werden: */
     justify-content: flex-start !important;
-    gap: 130px !important; /* falls du gar keinen Abstand möchtest */
+    gap: 130px !important;
   }
 
   .panel-row:nth-child(1) .panel {
-    /* Verhindert, dass sie sich ausdehnen */
     flex: 0 0 auto !important;
-    /* Z. B. 48% pro Panel = 96% + minimaler gap passt rein */
+
     width: 408% !important;
-    margin: 0 !important; /* remove margins if any */
+    margin: 0 !important;
   }
   .panel-row:nth-child(1) {
     gap: 0px;

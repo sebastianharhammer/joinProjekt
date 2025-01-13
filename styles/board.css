@@ -27,7 +27,7 @@
   overflow-y: scroll;
 }
 
-.column-header-desktop{
+.column-header-desktop {
   display: flex;
   justify-content: space-between;
   width: 18vw;
@@ -136,29 +136,27 @@ d-none {
 }
 
 .progressBarBoard {
-  width: 50%; /* Breite der Fortschrittsanzeige */
-  height: 10px; /* Höhe der Fortschrittsanzeige */
-  appearance: none; /* Entfernt standardmäßige Browser-Stile */
-  background-color: #f9f9f9; /* Zartes Hellgrau für den Hintergrund */
-  border: 1px solid #e6e6e6; /* Rahmen in zartem Hellgrau */
-  border-radius: 4px; /* Leicht abgerundete Ecken */
-  overflow: hidden; /* Verhindert Überlauf */
+  width: 50%;
+  height: 10px;
+  appearance: none;
+  background-color: #f9f9f9;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-/* Für Webkit-basierte Browser (Chrome, Safari) */
 .progressBarBoard::-webkit-progress-bar {
-  background-color: #f9f9f9; /* Gleicher Hintergrund wie der Container */
-  border-radius: 4px; /* Gleiche Abrundung */
+  background-color: #f9f9f9;
+  border-radius: 4px;
 }
 
 .progressBarBoard::-webkit-progress-value {
-  background-color: rgb(29, 129, 224); /* Dunkelblau für den Fortschritt */
-  border-radius: 4px; /* Gleiche Abrundung */
+  background-color: rgb(29, 129, 224);
+  border-radius: 4px;
 }
 
-/* Für Firefox */
 .progressBarBoard::-moz-progress-bar {
-  background-color: rgb(43, 54, 71); /* Dunkelblau für den Fortschritt */
+  background-color: rgb(43, 54, 71);
   border-radius: 4px;
 }
 
@@ -337,7 +335,6 @@ d-none {
   align-items: center;
 }
 
-
 .columntitleInProgress {
   display: flex;
   gap: 15px;
@@ -469,10 +466,8 @@ body.no-scroll {
   border: none;
   background: transparent;
   cursor: pointer;
-  /* falls du willst, position: absolute; ... */
 }
 
-/* Container, der sie umschließt */
 .mobile-arrows {
   display: flex;
   gap: 10px;
@@ -484,7 +479,7 @@ body.no-scroll {
   height: 24px;
 }
 
-.boardNavigator-mobile{
+.boardNavigator-mobile {
   display: none;
 }
 
@@ -496,34 +491,34 @@ body.no-scroll {
   .boardFont {
     font-weight: 600;
     font-size: 26px;
-}
+  }
 
-.addTaskButtonBoard{
-  height: 40px;
-  width: 96px;
-}
+  .addTaskButtonBoard {
+    height: 40px;
+    width: 96px;
+  }
 
-.buttonBoardFont{
-  font-size: 14px;
-}
+  .buttonBoardFont {
+    font-size: 14px;
+  }
 
-.boardNavigator{
-  top: 116px;
-}
+  .boardNavigator {
+    top: 116px;
+  }
 
-.searchAreaBoard {
-  gap: 2px;
-  height: 40px;
-}
+  .searchAreaBoard {
+    gap: 2px;
+    height: 40px;
+  }
 
-.tasksContent{
-  top: 172px;
-}
+  .tasksContent {
+    top: 172px;
+  }
 
-.inputBoard{
-  height: 34px;
-  width: 180px;
-}
+  .inputBoard {
+    height: 34px;
+    width: 180px;
+  }
 }
 
 @media (max-width: 978px) {
@@ -539,7 +534,7 @@ body.no-scroll {
     margin-bottom: 10px;
   }
 
-  .column-header-desktop{
+  .column-header-desktop {
     display: none;
   }
 
@@ -636,8 +631,7 @@ body.no-scroll {
 }
 
 @media (max-width: 560px) {
-
-  .boardNavigator-mobile{
+  .boardNavigator-mobile {
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -653,7 +647,7 @@ body.no-scroll {
     color: black;
   }
 
-  .btn-board-mobile{
+  .btn-board-mobile {
     height: 28px;
   }
   .verticalLine-mobile {
@@ -663,21 +657,21 @@ body.no-scroll {
     font-weight: 300;
   }
 
-  .icon-input-mobile{
+  .icon-input-mobile {
     display: flex;
     align-items: center;
     margin-left: 4px;
   }
 
-.inputBoard-mobile:focus {
+  .inputBoard-mobile:focus {
     outline: none;
-}
+  }
 
-  .lens{
+  .lens {
     height: 24px;
   }
 
-  .lens:hover{
+  .lens:hover {
     cursor: pointer;
   }
   .buttonBoardFont {
@@ -685,17 +679,17 @@ body.no-scroll {
     margin-left: 20px;
   }
 
-  .tasksContent{
+  .tasksContent {
     top: 280px;
   }
 
-  .navig-mobile-first-line{
+  .navig-mobile-first-line {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .mobile-input-search{
+  .mobile-input-search {
     width: 98vw;
     height: 40px;
     display: flex;
@@ -719,13 +713,13 @@ body.no-scroll {
     font-weight: 400;
     font-size: 14px;
     color: gray;
-}
+  }
 
-  .btn-board-mobile:hover{
+  .btn-board-mobile:hover {
     cursor: pointer;
   }
 
-  .searchAndAddTasks{
+  .searchAndAddTasks {
     justify-content: center;
   }
 
@@ -751,7 +745,7 @@ body.no-scroll {
     font-weight: bold;
   }
 
-  .boardNavigator{
+  .boardNavigator {
     display: none;
   }
 

@@ -232,7 +232,7 @@ input.styledCheckbox {
     flex-shrink: 0;
 }
 
-/* Haken für Checkbox */
+
 .styledCheckboxLabel .checkboxSquare::after {
     content: "";
     position: absolute;
@@ -316,7 +316,6 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
     overflow: hidden;
 }
 
-/* Scrollbar Detailview */
 
 ::-webkit-scrollbar {
     width: 5px;
@@ -346,7 +345,7 @@ input.styledCheckbox:checked + .styledCheckboxLabel .checkboxSquare::after {
 
 
 ::-webkit-scrollbar-button:hover {
-    background-color: rgb(60, 74, 91); /* Etwas hellere Farbe beim Hover */
+    background-color: rgb(60, 74, 91); /
 }
 
 body.no-scroll {

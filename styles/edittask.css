@@ -1,414 +1,406 @@
-.editTaskTempl{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100dvh;
-    width: 100dvw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: hsl(0deg 0% 0% / 44%);
+.editTaskTempl {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  width: 100dvw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: hsl(0deg 0% 0% / 44%);
 }
 
-.editTaskCard{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    background-color: white;
-    height: 800px;
-    width: 500px;
-    border-radius: 24px;
-    padding: 32px;
-    overflow-x: hidden;
-    overflow-y: auto;
+.editTaskCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: white;
+  height: 800px;
+  width: 500px;
+  border-radius: 24px;
+  padding: 32px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-
-.closeEditView{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
+.closeEditView {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
 }
 
-.closeEditView:hover{
-    background-color: rgb(222, 222, 222);
-    cursor: pointer;
+.closeEditView:hover {
+  background-color: rgb(222, 222, 222);
+  cursor: pointer;
 }
 
 .field-text-flex-edit {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
 }
 
 .custom-dropdown-edit {
-    position: relative;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 8px;
-    width: 300px;
-    cursor: pointer;
-    background-color: #fff;
-    font-family: Arial, sans-serif;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 300px;
+  cursor: pointer;
+  background-color: #fff;
+  font-family: Arial, sans-serif;
 }
 
 .input-addtask-edit {
-    cursor: pointer;
-    font-size: 20px;
-    width: auto;
-    border-radius: 10px;
-    padding: 12px 21px;
-    max-height: 48px;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    border: 1px solid #d1d1d1;
+  cursor: pointer;
+  font-size: 20px;
+  width: auto;
+  border-radius: 10px;
+  padding: 12px 21px;
+  max-height: 48px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  border: 1px solid #d1d1d1;
 }
 .input-addtask-edit:focus {
-    outline: 1px solid var(--darkLightBlue);
-    border: 1px solid var(--darkLightBlue);
+  outline: 1px solid var(--darkLightBlue);
+  border: 1px solid var(--darkLightBlue);
 }
 
 .dropdown-placeholder-edit {
-    color: #888;
+  color: #888;
 }
 
-.noSubtasks{
-    padding-top: 10px;
+.noSubtasks {
+  padding-top: 10px;
 }
 
 .dropdown-options-edit {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    max-height: 200px;
-    overflow-y: auto;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-.d-none{
-    display: none;
+.d-none {
+  display: none;
 }
 
-.dropdown-contact-edit{
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    padding: 4px;
-    align-items: center;
+.dropdown-contact-edit {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 4px;
+  align-items: center;
 }
 
 .contact-circle-edit {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px; 
-    border-radius: 50%;
-    font-size: 14px;
-    font-family: "Inter";
-    font-weight: 400; 
-    font-weight: bold;
-    color: white; 
-    background-color: #ccc; 
-    flex-shrink: 0; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 14px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-weight: bold;
+  color: white;
+  background-color: #ccc;
+  flex-shrink: 0;
 }
 
-.assigned-users-short-edit{
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    padding: 6px;
+.assigned-users-short-edit {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 6px;
 }
 
-.subtaskFontInEdit{
-    font-family: "Inter", sans-serif;
-    color: gray;
-    font-size: 18px;
-
+.subtaskFontInEdit {
+  font-family: "Inter", sans-serif;
+  color: gray;
+  font-size: 18px;
 }
 
 .assigned-user-circle {
-    margin-top: 12px;
-    width: 22px;
-    border-radius: 50%;
-    padding: 10px;
-    font-family: "Inter", sans-serif;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-top: 12px;
+  width: 22px;
+  border-radius: 50%;
+  padding: 10px;
+  font-family: "Inter", sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-skip-and-confirm-edit{
-    width: 100px;
-    height: 60px;
-    border: unset;
-    border-radius: 8px;
-    height: 48px;
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 13px;
-    color: white;
-    background-color: rgb(42, 54, 71);
+.btn-skip-and-confirm-edit {
+  width: 100px;
+  height: 60px;
+  border: unset;
+  border-radius: 8px;
+  height: 48px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 13px;
+  color: white;
+  background-color: rgb(42, 54, 71);
 }
 
-.btn-skip-and-confirm-edit:hover{
-    width: 100px;
-    height: 60px;
-    border: unset;
-    border-radius: 8px;
-    height: 48px;
-    font-family: "Inter";
-    font-weight: 400;
-    font-size: 13px;
-    color: rgb(42, 54, 71);
-    background-color: white;
-    cursor: pointer;
-    border: 1px solid rgb(42, 54, 71);
+.btn-skip-and-confirm-edit:hover {
+  width: 100px;
+  height: 60px;
+  border: unset;
+  border-radius: 8px;
+  height: 48px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 13px;
+  color: rgb(42, 54, 71);
+  background-color: white;
+  cursor: pointer;
+  border: 1px solid rgb(42, 54, 71);
 }
 
-.editButtons{
-    display: flex;
-    justify-content: center;
-    gap: 8px;
+.editButtons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
-.add-subtask-in-edit{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 4px;
-    height: 40px;
+.add-subtask-in-edit {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 4px;
+  height: 40px;
 }
 
-.img-in-edit-input{
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
+.img-in-edit-input {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
 }
 
-.closeEditLine{
-    display: flex;
-    justify-content: end;
+.closeEditLine {
+  display: flex;
+  justify-content: end;
 }
 
-.img-in-edit-input img{
-    height: 12px;  
+.img-in-edit-input img {
+  height: 12px;
 }
 
-.input-subtask-in-edit{
-    width: 70%;
-    height: 40px;
-    padding: 4px;
-    border: none;
-    color: rgb(136,136,136);
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    outline: none;
+.input-subtask-in-edit {
+  width: 70%;
+  height: 40px;
+  padding: 4px;
+  border: none;
+  color: rgb(136, 136, 136);
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  outline: none;
 }
 
-.input-title-in-edit{
-    width: 70%;
-    height: 40px;
-    padding: 4px;
-    border: none;
-    color: rgb(136,136,136);
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    outline: none;
+.input-title-in-edit {
+  width: 70%;
+  height: 40px;
+  padding: 4px;
+  border: none;
+  color: rgb(136, 136, 136);
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  outline: none;
 }
 
-.close-and-check-imgs{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 18px;
-    width: 18px;
-    border-radius: 50%;
+.close-and-check-imgs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
 }
 
-
-.editTaskTextarea{
-    height: 300px;
-    color: rgb(136,136,136)
+.editTaskTextarea {
+  height: 300px;
+  color: rgb(136, 136, 136);
 }
 
-.edit-subtask-item{
-    width: 100%;
-    padding: 4px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
+.edit-subtask-item {
+  width: 100%;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
 }
 
 .edit-existingtask {
-    display: none;
-    margin-left: auto;
-    gap: 8px;
-    align-items: center;
+  display: none;
+  margin-left: auto;
+  gap: 8px;
+  align-items: center;
 }
 
-.edit-existingtask:hover{
-    display: flex;
-    margin-left: auto;
-    gap: 8px;
-    align-items: center;
+.edit-existingtask:hover {
+  display: flex;
+  margin-left: auto;
+  gap: 8px;
+  align-items: center;
 }
-
 
 .edit-subtask-item:hover .edit-existingtask {
-    display: flex;
+  display: flex;
 }
 
 .edit-subtask-item:hover {
-    background-color: #F0F0F0;
+  background-color: #f0f0f0;
 }
 
-#rendered-subtasks-edit{
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+#rendered-subtasks-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-
-.edit-icon{
-    height: 18px;
-    border-radius: 4px;
+.edit-icon {
+  height: 18px;
+  border-radius: 4px;
 }
 
-.edit-icon:hover{
-    cursor: pointer;
-    background-color: rgb(208, 207, 207);
+.edit-icon:hover {
+  cursor: pointer;
+  background-color: rgb(208, 207, 207);
 }
 
-.delete-icon{
-    height: 18px;
-    border-radius: 6px;
+.delete-icon {
+  height: 18px;
+  border-radius: 6px;
 }
 
-.delete-icon:hover{
-    cursor: pointer;
-    background-color: rgb(208, 207, 207);
+.delete-icon:hover {
+  cursor: pointer;
+  background-color: rgb(208, 207, 207);
 }
 
 input[type="date"] {
-    border: 1px solid #ccc;
-    height: 40px;
-    border-radius: 8px;
-    width: 100%;
-    font-family: "Inter";
-    font-size: 20px;
-    font-weight: 400;
-    color: #d1d1d1;
-    padding: 4px;
+  border: 1px solid #ccc;
+  height: 40px;
+  border-radius: 8px;
+  width: 100%;
+  font-family: "Inter";
+  font-size: 20px;
+  font-weight: 400;
+  color: #d1d1d1;
+  padding: 4px;
 }
-
 
 .subtaskInputInEdit {
-    width: 70%;
-    height: 40px;
-    padding: 4px;
-    border: none;
-    color: rgb(136, 136, 136);
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    outline: none;
+  width: 70%;
+  height: 40px;
+  padding: 4px;
+  border: none;
+  color: rgb(136, 136, 136);
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  outline: none;
 }
 
-.check-icon-edit{
-    height: 16px;
-    width: 16px;
+.check-icon-edit {
+  height: 16px;
+  width: 16px;
 }
-
 
 .contact-checkbox-edit {
-    appearance: none;
-    width: 20px;
-    height: 20px; 
-    border: 2px solid rgb(43,54,71);
-    border-radius: 4px;
-    background-color: white;
-    display: inline-block;
-    cursor: pointer;
-    position: relative;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(43, 54, 71);
+  border-radius: 4px;
+  background-color: white;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
 }
 
 .contact-checkbox-edit:checked {
-    background-color: white;
-    border-color: rgb(43,54,71);
+  background-color: white;
+  border-color: rgb(43, 54, 71);
 }
 
 .contact-checkbox-edit:checked::after {
-    content: "✔";
-    color: rgb(43,54,71);
-    font-size: 16px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  content: "✔";
+  color: rgb(43, 54, 71);
+  font-size: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.dropdown-contact-edit:hover{
-    background-color: rgb(240, 240, 240);
+.dropdown-contact-edit:hover {
+  background-color: rgb(240, 240, 240);
 }
 
 .textarea-large {
-    height: 300px !important; /* Überschreibt alle vorherigen Definitionen */
-    width: 100%; /* Optional: Breite anpassen */
-    resize: none; /* Optional: verhindert, dass Benutzer die Größe ändern */
-    overflow-y: auto; /* Scrollbar anzeigen, falls nötig */
-} 
-
-.close-and-check-imgs{
-    border-radius: 8px;
-    height: 30px;
-    width: 30px;
+  height: 300px !important;
+  width: 100%;
+  resize: none;
+  overflow-y: auto;
 }
 
-.close-and-check-imgs:hover{
-    cursor: pointer;
-    background-color: rgb(231, 231, 237);
+.close-and-check-imgs {
+  border-radius: 8px;
+  height: 30px;
+  width: 30px;
 }
 
-@media(max-width: 480px){
+.close-and-check-imgs:hover {
+  cursor: pointer;
+  background-color: rgb(231, 231, 237);
+}
 
-    .editTaskCard {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        gap: 10vh;
-        height: 580px;
-        width: 80vw;
-        overflow-x: hidden;
-        overflow-y: auto;
-        gap: 1vh;
-        padding: 8px;
-    }
+@media (max-width: 480px) {
+  .editTaskCard {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 10vh;
+    height: 580px;
+    width: 80vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 1vh;
+    padding: 8px;
+  }
 
-    .editTaskTempl {
-        z-index: 999;
-        height: 100vh;
-    }
+  .editTaskTempl {
+    z-index: 999;
+    height: 100vh;
+  }
 }

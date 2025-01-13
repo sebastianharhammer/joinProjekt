@@ -26,7 +26,6 @@ async function fetchContacts() {
   }
 }
 
-
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
   if (storedUser) {
@@ -111,7 +110,6 @@ function loadBoardNavigator() {
   content.innerHTML += getColumnsHTML();
 }
 
-
 function filterTaskFunction() {
   filterTasksByInput("filterTask");
 }
@@ -126,7 +124,6 @@ function filterTasksByInput(inputId) {
   toggleNoResultsMessage(tasksFound, myFilter, inputId);
 }
 
-
 function getFilterValue(inputId) {
   return document.getElementById(inputId).value.toLowerCase();
 }
@@ -139,7 +136,9 @@ function filterTasks(myFilter) {
     const wholeTask = document.getElementById(`boardTask${task.id}`);
 
     if (paramToFind || (param2ToFind && wholeTask)) {
-      tasksFound = applyFilterToTask(paramToFind, param2ToFind, wholeTask, myFilter) || tasksFound;
+      tasksFound =
+        applyFilterToTask(paramToFind, param2ToFind, wholeTask, myFilter) ||
+        tasksFound;
     }
   });
   return tasksFound;
@@ -182,12 +181,10 @@ function updateTaskHTML() {
   feedbackColumn.innerHTML = "";
   doneColumn.innerHTML = "";
 
-
   let todos = taskArray.filter((task) => task.status === "todo");
   let inProgress = taskArray.filter((task) => task.status === "inProgress");
   let feedback = taskArray.filter((task) => task.status === "feedback");
   let done = taskArray.filter((task) => task.status === "done");
-
 
   for (const task of todos) {
     todoColumn.innerHTML += createTaskHTML(task);
@@ -221,7 +218,6 @@ function updateTaskHTML() {
     findAmountOfSubtasks(task);
   }
 
-
   if (todoColumn.children.length === 0) {
     createNoTasksDiv("todo", "NO TASKS TO DO");
   }
@@ -235,7 +231,6 @@ function updateTaskHTML() {
     createNoTasksDiv("done", "NO TASKS DONE");
   }
 }
-
 
 function createNoTasksDiv(columnId, message) {
   const column = document.getElementById(columnId);
@@ -284,7 +279,6 @@ function createOwnerCircles(task) {
     `;
   }
 }
-
 
 function findClassOfTaskCat(task) {
   const taskButton = document.getElementById(`taskButton-${task.id}`);
@@ -368,7 +362,6 @@ function createTaskHTML(task) {
   return getTaskHTML(task, completedSubtasks, totalSubtasks);
 }
 
-
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
   if (!task) {
@@ -383,8 +376,6 @@ function showTaskCard(id) {
   document.documentElement.style.overflow = "hidden";
 }
 
-
-
 function closeDetailView() {
   console.log("closeDetailView aufgerufen");
   const taskCardOverlay = document.getElementById("taskDetailView");
@@ -394,13 +385,15 @@ function closeDetailView() {
   document.body.style.overflow = "";
   document.documentElement.style.overflow = "";
 
-  console.log("Aktueller overflow-Wert von body:", document.body.style.overflow);
-  console.log("Aktueller overflow-Wert von html:", document.documentElement.style.overflow);
+  console.log(
+    "Aktueller overflow-Wert von body:",
+    document.body.style.overflow
+  );
+  console.log(
+    "Aktueller overflow-Wert von html:",
+    document.documentElement.style.overflow
+  );
 }
-
-
-
-
 
 function showTaskCardHTML(task) {
   return /*html*/ `
@@ -491,7 +484,6 @@ function getTaskCategoryClass(taskCategory) {
   return "task-category-undefined";
 }
 
-
 function highlight(id) {
   document.getElementById(id).classList.add("dragAreaHighlight");
 }
@@ -501,7 +493,7 @@ function removeHighlight(id) {
 }
 
 async function moveTaskUp(taskId, event) {
-  event.stopPropagation(); // Verhindert, dass das Klicken auf den Pfeil das Task-Detail-Overlay öffnet
+  event.stopPropagation();
   const taskIndex = taskArray.findIndex((task) => task.id === taskId);
   if (taskIndex === -1) {
     console.error(`Task mit ID ${taskId} nicht gefunden.`);
@@ -510,7 +502,6 @@ async function moveTaskUp(taskId, event) {
 
   const task = taskArray[taskIndex];
 
-  // Verschiebe den Task nach oben in die Reihenfolge: Done -> Await Feedback -> In Progress -> To-Do
   if (task.status === "done") {
     task.status = "feedback";
   } else if (task.status === "feedback") {
@@ -523,15 +514,15 @@ async function moveTaskUp(taskId, event) {
   }
 
   try {
-    await updateTaskInFirebase(task); // Speichere die Änderung in Firebase
-    updateTaskHTML(); // Aktualisiere die Anzeige
+    await updateTaskInFirebase(task);
+    updateTaskHTML();
   } catch (error) {
     console.error("Fehler beim Verschieben des Tasks nach oben:", error);
   }
 }
 
 async function moveTaskDown(taskId, event) {
-  event.stopPropagation(); // Verhindert, dass das Klicken auf den Pfeil das Task-Detail-Overlay öffnet
+  event.stopPropagation();
   const taskIndex = taskArray.findIndex((task) => task.id === taskId);
   if (taskIndex === -1) {
     console.error(`Task mit ID ${taskId} nicht gefunden.`);
@@ -540,7 +531,6 @@ async function moveTaskDown(taskId, event) {
 
   const task = taskArray[taskIndex];
 
-  // Verschiebe den Task nach unten in die Reihenfolge: To-Do -> In Progress -> Await Feedback -> Done
   if (task.status === "todo") {
     task.status = "inProgress";
   } else if (task.status === "inProgress") {
@@ -553,10 +543,9 @@ async function moveTaskDown(taskId, event) {
   }
 
   try {
-    await updateTaskInFirebase(task); // Speichere die Änderung in Firebase
-    updateTaskHTML(); // Aktualisiere die Anzeige
+    await updateTaskInFirebase(task);
+    updateTaskHTML();
   } catch (error) {
     console.error("Fehler beim Verschieben des Tasks nach unten:", error);
   }
 }
-

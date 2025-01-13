@@ -402,9 +402,6 @@ hr {
   text-align: left;
 }
 
-/* =============================== */
-/*  Ab 1300px und kleiner (Desktop) */
-/* =============================== */
 @media (max-width: 1300px) {
   #add-new-contact-button-container {
     top: -20px;
@@ -498,7 +495,7 @@ hr {
 
   .menu-button {
     position: absolute;
-    bottom: 60px;
+    bottom: 100px;
     right: 20px;
     font-size: 24px;
     color: white;
@@ -513,7 +510,6 @@ hr {
     box-shadow: 0px 4px 4px 0px #00000040;
   }
 
-  /* Dropdown-Menü (falls vorhanden) */
   .dropdown-menu {
     position: absolute;
     bottom: 60px;
@@ -571,9 +567,6 @@ hr {
   }
 }
 
-/* ============================= */
-/*   Ab 992px und kleiner        */
-/* ============================= */
 @media (max-width: 992px) {
   #contact-side-panel {
     width: 100%;
@@ -589,9 +582,6 @@ hr {
   }
 }
 
-/* ============================= */
-/*   Ab 768px und kleiner        */
-/* ============================= */
 @media (max-width: 768px) {
   #contact-side-panel {
     width: 100%;
@@ -603,9 +593,6 @@ hr {
   }
 }
 
-/* ============================= */
-/*   Ab 576px und kleiner        */
-/* ============================= */
 @media (max-width: 576px) {
   #contact-big {
     width: 0dvw;
@@ -615,19 +602,14 @@ hr {
     font-size: 34px;
   }
 
-  /* 
-     Wichtig: Hier lässt du das Panel scrollen (wie im Original) 
-     und entfernst starre Höhen bei #contact-list
-  */
   #contact-side-panel {
     width: 100%;
     padding-top: 0;
     width: 100%;
-    height: calc(1000px - 288px);
+    height: calc(1000px - 246px);
 
-    /* Hier scrollen wir! */
     overflow-y: auto;
-    overflow-y: scroll; /* scroll oder auto, je nach Geschmack */
+    overflow-y: scroll;
   }
 
   #add-contact-btn {
@@ -655,18 +637,9 @@ hr {
     margin: 0;
   }
 
-  /* 
-     Ursprünglich: 
-       #contact-list {
-         height: calc(100vh - 200px);
-         overflow-y: auto;
-       }
-     => Das führt zu abgeschnittenem Inhalt & zweitem Scrollbalken.
-     => Deshalb ändern wir das:
-  */
   #contact-list {
-    height: auto; /* oder einfach weglassen */
-    overflow-y: visible; /* Panel scrollt, nicht die Liste selbst */
+    height: auto;
+    overflow-y: visible;
   }
 
   #contact-item- {
@@ -675,9 +648,6 @@ hr {
   }
 }
 
-/* ============================= */
-/*   Ab 440px und kleiner        */
-/* ============================= */
 @media (max-width: 440px) {
   #contact-big {
     width: 0dvw;
@@ -711,27 +681,18 @@ hr {
   }
 }
 
-/* ============================= */
-/*   Ab 410px und kleiner        */
-/* ============================= */
 @media (max-width: 410px) {
   .menu-button {
     margin-left: -60px;
   }
 }
 
-/* ============================= */
-/*   Ab 368px und kleiner        */
-/* ============================= */
 @media (max-width: 368px) {
   .contact-detail-header-right-headline {
     font-size: 24px;
   }
 }
 
-/* ============================= */
-/*   Ab 354px und kleiner        */
-/* ============================= */
 @media (max-width: 354px) {
   .menu-button {
     margin-left: -95px;

@@ -30,7 +30,6 @@ body {
   width: 80%;
   padding: 25px;
   margin: 25px;
-  
 }
 #add-task-headline {
   font-size: 48px;
@@ -236,7 +235,7 @@ input[type="date"] {
   max-height: 100px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #A8A8A8 #F5F5F5;
+  scrollbar-color: #a8a8a8 #f5f5f5;
 }
 #errorMessageSubtasks {
   color: #ff3d00;
@@ -250,12 +249,12 @@ input[type="date"] {
 }
 
 #subtasksContent::-webkit-scrollbar-track {
-  background: #F5F5F5;
+  background: #f5f5f5;
   border-radius: 4px;
 }
 
 #subtasksContent::-webkit-scrollbar-thumb {
-  background: #A8A8A8;
+  background: #a8a8a8;
   border-radius: 4px;
 }
 
@@ -470,8 +469,6 @@ ul {
   height: 58px;
 }
 
-
-
 .contact-assigned:hover {
   background-color: rgb(236, 235, 235);
 }
@@ -492,7 +489,7 @@ ul {
   display: flex;
 }
 .required-field {
- margin-top: 20px;
+  margin-top: 20px;
 }
 .dot {
   height: 5px;
@@ -816,7 +813,7 @@ ul {
   width: 22px;
   height: 22px;
   background-color: white;
-  border: 2px solid #2A3647;
+  border: 2px solid #2a3647;
   border-radius: 3px;
   position: relative;
   flex-shrink: 0;
@@ -828,17 +825,17 @@ ul {
 }
 
 .checkbox-add-task:hover {
-  border-color: #29ABE2;
+  border-color: #29abe2;
   box-shadow: 0 0 4px rgba(41, 171, 226, 0.4);
 }
 
 .checkbox-add-task:checked {
   background-color: #0c0f13;
-  border-color: #2A3647;
+  border-color: #2a3647;
 }
 
 .checkbox-add-task:checked::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 5px;
   top: 2px;
@@ -856,7 +853,6 @@ ul {
   #addTaskHeadlineMobile {
     display: none;
   }
- 
 }
 @media (max-width: 1200px) {
   #addTaskHeadlineFullscreen {
@@ -909,56 +905,55 @@ ul {
   }
   .addtask-buttons {
     justify-content: flex-end;
-}
+  }
 
+  #required-field {
+    display: none;
+  }
+  .checkbox-add-task {
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    border: 2px solid #2a3647;
+    border-radius: 3px;
+    position: relative;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
 
-#required-field {
-  display: none;
-}
-.checkbox-add-task {
-  width: 22px;
-  height: 22px;
-  background-color: white;
-  border: 2px solid #2A3647;
-  border-radius: 3px;
-  position: relative;
-  flex-shrink: 0;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
+  .checkbox-add-task:hover {
+    border-color: #29abe2;
+    box-shadow: 0 0 4px rgba(41, 171, 226, 0.4);
+  }
 
-.checkbox-add-task:hover {
-  border-color: #29ABE2;
-  box-shadow: 0 0 4px rgba(41, 171, 226, 0.4);
-}
+  .checkbox-add-task:checked {
+    background-color: #0c0f13;
+    border-color: #2a3647;
+  }
 
-.checkbox-add-task:checked {
-  background-color: #0c0f13;
-  border-color: #2A3647;
-}
+  .checkbox-add-task:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
 
-.checkbox-add-task:checked::after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-#required-field-mobile {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  padding-bottom: 40px;
-}
+  #required-field-mobile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 40px;
+  }
 }
 
 @media (max-width: 992px) {
@@ -971,13 +966,12 @@ ul {
     transform: translateY(-70vh);
   }
 
- /*  .addtask-form-container {
+  /*  .addtask-form-container {
     flex-direction: column;
     padding: 0 20px;
     width: 100%;
     margin-bottom: 32px;
   } */
-  
 
   .addtask-main-content {
     padding: 0;
@@ -1003,7 +997,7 @@ ul {
 }
 
 @media (max-width: 576px) {
-/*   .addtask-form-container {
+  /*   .addtask-form-container {
     margin-bottom: 16px;
     align-items: center;
     padding: 0 8px;
@@ -1015,7 +1009,6 @@ ul {
     height: 15%;
     width: 76%;
   }
-
 }
 
 @media (max-width: 490px) {
@@ -1025,12 +1018,11 @@ ul {
   }
   .prio-btn-content {
     gap: 10px;
-    
   }
 
   .addtask-main-content {
     display: flow;
-    padding: 10px
+    padding: 10px;
   }
 
   .addtask-main-content h1 {

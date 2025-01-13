@@ -8,8 +8,27 @@ const db = firebase.database();
 
 async function initSummary() {
   await includeHTML();
+
+  updateGreeting();
+
   loadUserData();
   loadTasksFromFirebase();
+}
+
+function updateGreeting() {
+  const greetingElement = document.querySelector(".greeting-text h1");
+  if (!greetingElement) return;
+
+  const now = new Date();
+  const hour = now.getHours();
+
+  if (hour < 12) {
+    greetingElement.textContent = "Good morning,";
+  } else if (hour < 18) {
+    greetingElement.textContent = "Good afternoon,";
+  } else {
+    greetingElement.textContent = "Good evening,";
+  }
 }
 
 function loadUserData() {
@@ -63,14 +82,14 @@ function renderPanels(stats) {
   panelContainer.innerHTML = "";
 
   const panelsHTML = `
-      <div class="panel-row">
-        ${createPanel("To-do", stats.toDo, "./img/edit-pencil.png")}
-        ${createPanel("Done", stats.done, "./img/done-mark.png")}
-      </div>
-      <div class="panel-row">
-        ${createLargePanel(stats.upcomingTask)}
-      </div>
-      <div class="panel-row">
+    <div class="panel-row">
+      ${createPanel("To-do", stats.toDo, "./img/edit-pencil.png")}
+      ${createPanel("Done", stats.done, "./img/done-mark.png")}
+    </div>
+    <div class="panel-row">
+      ${createLargePanel(stats.upcomingTask)}
+    </div>
+    <div class="panel-row">
       ${createPanel("Tasks in Board", stats.totalTasks, null, "panel-bottom")}  
       ${createPanel(
         "Tasks in progress",
@@ -79,23 +98,23 @@ function renderPanels(stats) {
         "panel-bottom"
       )}
       ${createPanel("Awaiting Feedback", stats.feedback, null, "panel-bottom")}
-      </div>
-    `;
+    </div>
+  `;
   panelContainer.innerHTML = panelsHTML;
 }
 
 function createPanel(title, value, imgSrc = "", extraClass = "") {
   return `
-      <a href="testboard.html" class="panel-link">
-        <div class="panel ${extraClass}">
-          ${imgSrc ? `<img src="${imgSrc}" alt="${title} Icon" />` : ""}
-          <div class="panel-content">
-            <p>${value}</p>
-            <span>${title}</span>
-          </div>
+    <a href="testboard.html" class="panel-link">
+      <div class="panel ${extraClass}">
+        ${imgSrc ? `<img src="${imgSrc}" alt="${title} Icon" />` : ""}
+        <div class="panel-content">
+          <p>${value}</p>
+          <span>${title}</span>
         </div>
-      </a>
-    `;
+      </div>
+    </a>
+  `;
 }
 
 function createLargePanel(upcomingTask) {
@@ -106,22 +125,22 @@ function createLargePanel(upcomingTask) {
   const priorityIcon = getPriorityIcon(priority);
 
   return `
-      <a href="testboard.html" class="panel-link">
-        <div class="panel large">
+    <a href="testboard.html" class="panel-link">
+      <div class="panel large">
         <img class="panel-img-prio" src="${priorityIcon}" alt="${priority} Priority Icon" />
-          <div class="panel-content">
-            <p>${priority}</p>
-            <span>Upcoming Task</span>
-          </div>
-          <div class="divider"></div>
-          <div class="panel-right">
-            <span>${date}</span>
-            <br />
-            <span>Upcoming Deadline</span>
-          </div>
+        <div class="panel-content">
+          <p>${priority}</p>
+          <span>Upcoming Task</span>
         </div>
-      </a>
-    `;
+        <div class="divider"></div>
+        <div class="panel-right">
+          <span>${date}</span>
+          <br />
+          <span>Upcoming Deadline</span>
+        </div>
+      </div>
+    </a>
+  `;
 }
 
 function getPriorityIcon(priority) {
@@ -132,6 +151,9 @@ function getPriorityIcon(priority) {
       return "./img/Prio_medium_color.svg";
     case "low":
       return "./img/Prio_low_color.svg";
+    default:
+      // Fallback-Icon, falls ein unbekannter Prio-Wert reinkommt
+      return "./img/placeholder-icon.png";
   }
 }
 

@@ -15,7 +15,7 @@ body {
   position: fixed;
   left: 0;
   width: 10vw;
-  /* 200px verbuggt */
+
   max-width: 1200px;
   min-width: 150px;
   height: 95vh;
@@ -25,7 +25,6 @@ body {
   background-color: #2b3647;
   padding-top: 5vh;
   z-index: 10;
- /* transition: all 0.3s ease; */
 }
 
 a {
@@ -105,7 +104,6 @@ a {
   flex-direction: column;
   gap: 10px;
   padding-bottom: 5vh;
-  
 }
 @media (max-width: 1645px) {
   .nav-icon {
@@ -177,17 +175,16 @@ a {
   #policy-links-container {
     display: none;
   }
-.nav-links-policy {
-  padding-left: 9px;
-  color: #f1f1f1;
-}
+  .nav-links-policy {
+    padding-left: 9px;
+    color: #f1f1f1;
+  }
 }
 
 @media (max-width: 460px) {
   .nav-links-container {
     padding: 5px;
   }
-
 }
 @media (max-width: 375px) {
   .nav-icon {
