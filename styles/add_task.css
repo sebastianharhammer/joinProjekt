@@ -101,7 +101,9 @@ body {
   font-size: 15px;
   font-weight: 100;
 }
-
+#addtask-overlay-close:hover {
+  background-color: #2b3647;
+}
 .addtask-main-content {
   padding: 80px 0;
   display: flex;

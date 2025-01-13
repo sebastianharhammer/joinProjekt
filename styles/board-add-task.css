@@ -26,13 +26,18 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items:flex-start;
-  width: 100%;
   position: absolute;
   top: 10vh;
   right: 5vw;
 }
 #addTaskOverlayClose{
   cursor: pointer;
+  padding: 7px;
+}
+#addTaskOverlayClose:hover{
+  background-color: #e5efff;
+  border: 1px dashed rgb(42, 54, 71);
+  border-radius: 45px;
 }
 #addTaskOverlayHeadline{
   display: flex;
