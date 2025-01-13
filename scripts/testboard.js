@@ -19,7 +19,6 @@ async function fetchContacts() {
     const responseToJson = await response.json();
     if (responseToJson) {
       finalContacts = Object.values(responseToJson);
-      console.log("Contacts loaded:", finalContacts);
     }
   } catch (error) {
     console.error("Fehler beim Laden der Kontakte:", error);
