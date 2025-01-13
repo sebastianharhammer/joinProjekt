@@ -2,7 +2,7 @@ function getEditTemplate(task) {
     return /*html*/ `
     <div id="editTaskCard" class="editTaskCard">
         <div class="closeEditLine">
-        <div class="closeEditView">
+        <div class="closeEditView" >
             <img class="closeCard" onclick="closeEditTask()" src="./img/close.svg" alt="">
         </div>
         </div>

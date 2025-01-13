@@ -157,28 +157,123 @@ async function getUsersForEditDropDown() {
 }
 
 function setupEditDropdownInteraction() {
-  const editDropdown = document.getElementById("custom-dropdown-edit");
+  const dropdown = document.getElementById('custom-dropdown-edit');
+    const optionsContainer = dropdown.querySelector('.dropdown-options-edit');
+    dropdown.addEventListener('click', (e) => {
+        const userContainer = e.target.closest('.assigned-user-container-edit');
+        if (userContainer) {
+            e.stopPropagation();
+            return;
+        }
+        e.stopPropagation();
+        const isOpen = optionsContainer.style.display === 'block';
+        optionsContainer.style.display = isOpen ? 'none' : 'block';
+    });
+    optionsContainer.addEventListener('click', (event) => {
+        const userContainer = event.target.closest('.assigned-user-container-edit');
+        if (!userContainer) return;
+        event.stopPropagation();
+        const checkbox = userContainer.querySelector('input[type="checkbox"]');
+        const firstName = userContainer.dataset.firstname;
+        const lastName = userContainer.dataset.lastname;
+        const color = userContainer.dataset.color;
+        const userIndex = assignedUserArr.findIndex(user => 
+            user.firstName === firstName && 
+            user.lastName === lastName
+        );
+        const isSelected = userIndex > -1;
+        if (isSelected) {
+            assignedUserArr.splice(userIndex, 1);
+            checkbox.checked = false;
+            userContainer.style.backgroundColor = '';
+            userContainer.style.color = '';
+            userContainer.style.borderRadius = '';
+        } else {
+            assignedUserArr.push({
+                firstName,
+                lastName,
+                initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+                color
+            });
+            checkbox.checked = true;
+            userContainer.style.backgroundColor = '#2b3647';
+            userContainer.style.color = 'white';
+            userContainer.style.borderRadius = '10px';
+            showAssignedUsersEdit();
+        }
+    });
+  /* const editDropdown = document.getElementById("custom-dropdown-edit");
   const editOptionsContainer = editDropdown.querySelector(
     ".dropdown-options-edit"
   );
   setupDropdownClickListener(editDropdown, editOptionsContainer);
-  setupDocumentClickListener(editDropdown, editOptionsContainer);
+  setupDocumentClickListener(editDropdown, editOptionsContainer); */
+}
+function assignUserEdit(firstName, lastName, color) {
+  const userExists = assignedUserArr.some(user => 
+      user.firstName === firstName && 
+      user.lastName === lastName
+  );
+  if (!userExists) {
+      assignedUserArr.push({
+          firstName: firstName,
+          lastName: lastName,
+          initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+          color: color
+      });
+      showAssignedUsersEdit();
+  }
 }
 
-function setupDropdownClickListener(editDropdown, editOptionsContainer) {
-  editDropdown.addEventListener("click", (event) => {
-    event.stopPropagation();
-    toggleDropdown(editOptionsContainer);
-  });
-}
-
-function setupDocumentClickListener(editDropdown, editOptionsContainer) {
-  document.addEventListener("click", (event) => {
-    const isClickInsideDropdown = editOptionsContainer.contains(event.target);
-    if (!isClickInsideDropdown) {
-      editOptionsContainer.style.display = "none";
+function returnArrayContactsEdit() {
+    if (!finalContacts || Object.keys(finalContacts).length === 0) {
+        console.error("No contacts found.");
+        return;
     }
-  });
+    const dropdown = document.getElementById('custom-dropdown-edit');
+    const optionsContainer = dropdown.querySelector('.dropdown-options-edit');
+    optionsContainer.innerHTML = "";
+    const contactsArray = Object.values(finalContacts);
+    contactsArray.forEach(contactInDrop => {
+        if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
+        // Create a container div for each user
+        const userContainer = document.createElement('div');
+        userContainer.classList.add('assigned-user-container-edit');
+        userContainer.dataset.firstname = contactInDrop.firstName;
+        userContainer.dataset.lastname = contactInDrop.lastName;
+        userContainer.dataset.color = contactInDrop.color;
+        
+        // Check if user is already assigned
+        const isAssigned = assignedUserArr.some(user => 
+            user.firstName === contactInDrop.firstName && 
+            user.lastName === contactInDrop.lastName
+        );
+        
+        // Set initial styles if assigned
+        if (isAssigned) {
+            userContainer.style.backgroundColor = '#2b3647';
+            userContainer.style.color = 'white';
+            userContainer.style.borderRadius = '10px';
+        }
+        
+        userContainer.innerHTML = assignUserHTML(contactInDrop);
+        optionsContainer.appendChild(userContainer);
+    });
+}
+
+function showAssignedUsersEdit() {
+  let assignUsers = document.getElementById('assigned-users-short-edit');
+  assignUsers.innerHTML = "";
+  for (let i=0; i < assignedUserArr.length; i++) {
+      assignUsers.innerHTML += showAssignedUsersHTML(assignedUserArr[i]);
+  }
+}
+
+
+  function closeDropdown() {
+    
+    const optionsContainer = document.getElementById('dropdown-options-edit');
+    optionsContainer.style.display = 'none';
 }
 
 function toggleDropdown(editOptionsContainer) {
@@ -196,25 +291,7 @@ function closeDropdownIfClickedOutside(
   }
 }
 
-function returnArrayContactsEdit() {
-  if (!finalContactsForEdit || Object.keys(finalContactsForEdit).length === 0) {
-    console.error("No contacts found.");
-    return;
-  }
-  const editDropdown = document.getElementById("custom-dropdown-edit");
-  const editOptionsContainer = editDropdown.querySelector(
-    ".dropdown-options-edit"
-  );
-  editOptionsContainer.innerHTML = "";
 
-  Object.keys(finalContactsForEdit).forEach((key) => {
-    const contact = finalContactsForEdit[key];
-    if (!contact || !contact.firstName || !contact.lastName) return;
-    const isChecked = checkIfContactAssigned(contact);
-    const optionElement = createDropdownOption(contact, isChecked);
-    editOptionsContainer.appendChild(optionElement);
-  });
-}
 
 function createDropdownOption(contact, isChecked) {
   const optionElement = document.createElement("div");
