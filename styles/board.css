@@ -39,6 +39,8 @@ d-none {
   display: none;
 }
 
+
+
 .todo {
   display: flex;
   flex-direction: column;
@@ -502,6 +504,10 @@ body.no-scroll {
     font-size: 14px;
   }
 
+  .todo{
+    width: 320px;
+  }
+
   .boardNavigator {
     top: 116px;
   }
@@ -564,7 +570,7 @@ body.no-scroll {
   .dragarea-inProgress,
   .dragarea-feedback,
   .dragarea-done {
-    width: 74%;
+    width: 100%;
     margin-bottom: 20px;
     height: 100%;
   }
@@ -674,6 +680,21 @@ body.no-scroll {
   .lens:hover {
     cursor: pointer;
   }
+
+  .todo{
+    width: 220px;
+  }
+
+  .wholeDragArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.todo{
+  width: 220px;
+}
+
   .buttonBoardFont {
     font-size: 0;
     margin-left: 20px;
