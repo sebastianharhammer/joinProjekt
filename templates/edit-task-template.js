@@ -12,7 +12,7 @@ function getEditTemplate(task) {
         }">
         </div>
         <p class="firstTableColumnFont">Description:</p>
-        <textarea id="editDescription" class="editTaskTextarea textarea-large"></textarea>
+        <textarea id="editDescription"  class="editTaskTextarea textarea-large"></textarea>
         <p class="firstTableColumnFont">Due Date:</p>
         <div class="edit-due-date">
         <input type="date" id="edit-due-date" class="edit-input" value="${task.date || ""

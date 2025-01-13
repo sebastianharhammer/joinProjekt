@@ -366,11 +366,16 @@ input[type="date"] {
   background-color: rgb(240, 240, 240);
 }
 
+
 .textarea-large {
-  height: 300px !important;
-  width: 100%;
+  min-height: 100px !important;
+  width: 95%;
   resize: none;
   overflow-y: auto;
+}
+
+.textarea-large:focus {
+  border: 1px solid rgb(136, 136, 136);
 }
 
 .close-and-check-imgs {
