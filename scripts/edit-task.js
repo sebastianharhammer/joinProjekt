@@ -519,10 +519,15 @@ function skipEdit(taskId) {
   }
 }
 
-function closeEditTask(taskId) {
-  let overlayEdit = document.getElementById("editTaskTempl");
-  overlayEdit.classList.add("d-none");
+function closeEditTask() {
+  const overlayEdit = document.getElementById("editTaskTempl");
+  if (overlayEdit) {
+    overlayEdit.classList.add("d-none");
+  }
+  document.body.style.overflow = "";
+  document.documentElement.style.overflow = "";
 }
+
 
 async function saveEditedTask() {
   const taskId = currentTaskBeingEdited;

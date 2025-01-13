@@ -223,7 +223,7 @@
 }
 
 .input-title-in-edit {
-  width: 70%;
+  width: 90%;
   height: 40px;
   padding: 4px;
   border: none;
@@ -408,4 +408,23 @@ input[type="date"] {
     z-index: 999;
     height: 100vh;
   }
+
+  .add-subtask-in-edit {
+    width: 97%;
+  }
+
+  .textarea-large {
+    min-height: 100px !important;
+    width: 90%;
+  }
+
+  .edit-input{
+    width: 97% !important;
+  }
+
+  #header-overlay-top {
+    z-index: 0;
+}
+
+
 }
