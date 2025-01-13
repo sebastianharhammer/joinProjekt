@@ -17,8 +17,7 @@ async function loadUsers(path){
     let response = await fetch(BASE_URL + path + ".json");
     let responseToJson = await response.json();
     if (responseToJson) {
-        signedUsersArray = Object.values(responseToJson);  
-        console.log(signedUsersArray); 
+        signedUsersArray = Object.values(responseToJson); 
     }
 }
 
@@ -48,14 +47,13 @@ async function postSignUpData(path){
     })
     const responseToJson = await response.json();
     signedUsersArray.push(responseToJson);
-    console.log(signedUsersArray);
     showSuccessOverlay();
     setTimeout(function() {
         window.location.href = 'login.html';
     }, 900);
 }
 else{
-    console.log('Bitte akzeptiere die Privacy policy')
+    console.log('')
 }
     }
 
