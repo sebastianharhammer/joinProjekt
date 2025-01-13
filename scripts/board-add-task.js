@@ -67,6 +67,15 @@ function handleCancel(event) {
     assignedUserArr = [];
     categoryObject = '';
     selectedPriority = '';
+    const dropdownOptions = document.querySelectorAll('.assigned-user-container');
+    dropdownOptions.forEach(container => {
+        const checkbox = container.querySelector('input[type="checkbox"]');
+        checkbox.checked = false;
+        container.style.backgroundColor = '';
+        container.style.color = '';
+        container.style.borderRadius = '';
+    });
+    document.getElementById('custom-dropdown').innerHTML = '';
     document.getElementById('assigned-users-short').innerHTML = '';
     setPriority('medium');
 }
@@ -258,7 +267,6 @@ function handleDropdownInteraction() {
     });
 }
 function closeDropdown() {
-    
     const optionsContainer = document.getElementById('dropdown-options');
     optionsContainer.style.display = 'none';
 }

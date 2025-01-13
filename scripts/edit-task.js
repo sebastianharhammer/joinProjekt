@@ -236,26 +236,20 @@ function returnArrayContactsEdit() {
     const contactsArray = Object.values(finalContacts);
     contactsArray.forEach(contactInDrop => {
         if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
-        // Create a container div for each user
         const userContainer = document.createElement('div');
         userContainer.classList.add('assigned-user-container-edit');
         userContainer.dataset.firstname = contactInDrop.firstName;
         userContainer.dataset.lastname = contactInDrop.lastName;
         userContainer.dataset.color = contactInDrop.color;
-        
-        // Check if user is already assigned
         const isAssigned = assignedUserArr.some(user => 
             user.firstName === contactInDrop.firstName && 
             user.lastName === contactInDrop.lastName
         );
-        
-        // Set initial styles if assigned
         if (isAssigned) {
             userContainer.style.backgroundColor = '#2b3647';
             userContainer.style.color = 'white';
             userContainer.style.borderRadius = '10px';
         }
-        
         userContainer.innerHTML = assignUserHTML(contactInDrop);
         optionsContainer.appendChild(userContainer);
     });
@@ -270,8 +264,7 @@ function showAssignedUsersEdit() {
 }
 
 
-  function closeDropdown() {
-    
+  function closeDropdownEdit() {
     const optionsContainer = document.getElementById('dropdown-options-edit');
     optionsContainer.style.display = 'none';
 }
