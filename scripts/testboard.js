@@ -330,21 +330,25 @@ function updateCompletedSubtasks(taskId) {
   const task = taskArray.find((t) => t.id === taskId);
   if (!task || !task.subtasks) return;
 
-  const completedCount = task.subtasks.filter(
-    (subtask) => subtask.checkbox
-  ).length;
+  const completedCount = task.subtasks.filter((subtask) => subtask.checkbox).length;
   const totalSubtasks = task.subtasks.length;
 
   const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
-  if (renderCompleted) {
-    renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
-  }
-
   const progressBar = document.getElementById(`progress-${taskId}`);
-  if (progressBar) {
-    progressBar.value = (completedCount / totalSubtasks) * 100;
+
+  if (renderCompleted && progressBar) {
+    if (totalSubtasks > 0) {
+      renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
+      progressBar.value = (completedCount / totalSubtasks) * 100;
+      renderCompleted.style.display = "";
+      progressBar.style.display = "";
+    } else {
+      renderCompleted.style.display = "none";
+      progressBar.style.display = "none";
+    }
   }
 }
+
 
 function findAmountOfSubtasks(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
@@ -361,6 +365,7 @@ function createTaskHTML(task) {
 
   return getTaskHTML(task, completedSubtasks, totalSubtasks);
 }
+
 
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
