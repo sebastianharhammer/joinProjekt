@@ -504,10 +504,6 @@ body.no-scroll {
     font-size: 14px;
   }
 
-  .todo{
-    width: 320px;
-  }
-
   .boardNavigator {
     top: 116px;
   }
@@ -782,7 +778,7 @@ body.no-scroll {
 
   .tasksContent {
     padding-bottom: 10vh;
-    left: 2vw;
+    left: 1vw;
     width: 96vw;
   }
 }

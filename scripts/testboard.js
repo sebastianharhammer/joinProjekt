@@ -389,15 +389,6 @@ function closeDetailView() {
   console.log("Setze body.style.overflow zurück");
   document.body.style.overflow = "";
   document.documentElement.style.overflow = "";
-
-  console.log(
-    "Aktueller overflow-Wert von body:",
-    document.body.style.overflow
-  );
-  console.log(
-    "Aktueller overflow-Wert von html:",
-    document.documentElement.style.overflow
-  );
 }
 
 function showTaskCardHTML(task) {
