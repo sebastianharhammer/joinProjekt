@@ -369,7 +369,7 @@ body.no-scroll {
         overflow-x: hidden;
         overflow-y: auto;
         gap: 1vh;
-        height: 80vh;
+        height: 540px;
         width: 80vw;
         padding: 8px;
     }

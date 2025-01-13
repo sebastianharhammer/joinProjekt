@@ -391,7 +391,7 @@ input[type="date"] {
     left: 49%;
     transform: translate(-50%, -50%);
     gap: 10vh;
-    height: 80vh;
+    height: 540px;
     width: 80vw;
     overflow-x: hidden;
     overflow-y: auto;
