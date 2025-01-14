@@ -77,6 +77,14 @@ function handleCancel(event) {
   categoryObject = "";
   selectedPriority = "";
   document.getElementById("assigned-users-short").innerHTML = "";
+  const userContainers = document.querySelectorAll('.assigned-user-container');
+  userContainers.forEach(container => {
+    container.style.backgroundColor = "";
+    container.style.color = "";
+    container.style.borderRadius = "";
+    const checkbox = container.querySelector('input[type="checkbox"]');
+    if (checkbox) checkbox.checked = false;
+  });
   setPriority("medium");
 }
 
