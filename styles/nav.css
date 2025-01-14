@@ -69,18 +69,36 @@ a {
   padding: 10px;
   transition: background-color 0.3s ease;
   cursor: pointer;
+  text-decoration: none;
 }
-.nav-links-container-links:hover {
-  background-color: #091931;
-  border-radius: 10px;
-}
+
 .nav-links-policy {
   padding-left: 2vw;
+  text-decoration: none;
 }
 
 .nav-links-container:hover {
   background-color: #091931;
   border-radius: 10px;
+}
+.nav-links-policy:hover {
+  color: #0B8CE9;
+  
+  text-decoration: none;
+}
+#nav-privacy-policy {
+  text-decoration: none;
+  font-weight: 200;
+}
+#nav-privacy-policy:hover { 
+  font-weight: 800;
+}
+#nav-legal-notice {
+  text-decoration: none;
+  font-weight: 200;
+}
+#nav-legal-notice:hover {
+  font-weight: 800;
 }
 
 
