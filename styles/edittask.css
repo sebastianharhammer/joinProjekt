@@ -48,13 +48,8 @@
 
 .custom-dropdown-edit {
   position: relative;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 8px;
-  width: 300px;
+  width: 100%;
   cursor: pointer;
-  background-color: #fff;
-  font-family: Arial, sans-serif;
 }
 
 .input-addtask-edit {
@@ -88,9 +83,9 @@
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
   z-index: 1000;
   max-height: 200px;
   overflow-y: auto;
@@ -126,8 +121,8 @@
 
 .assigned-users-short-edit {
   display: flex;
-  flex-direction: row;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 6px;
   padding: 6px;
 }
 
@@ -428,3 +423,62 @@ input[type="date"] {
 
 
 }
+
+.assigned-user-container-edit {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.assigned-user-container-edit:hover {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+.checkbox-add-task-edit {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border: 2px solid #2a3647;
+  border-radius: 10px;
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.checkbox-add-task-edit:hover {
+  border-color: #29abe2;
+  box-shadow: 0 0 8px rgba(41, 171, 226, 0.3);
+  transform: scale(1.05);
+}
+
+.checkbox-add-task-edit:checked {
+  background-color: #29abe2;
+  border-color: #29abe2;
+  transform: scale(1.1);
+}
+
+.checkbox-add-task-edit:checked::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.23, 1);
+  opacity: 1;
+  transform-origin: center;
+}
+
+

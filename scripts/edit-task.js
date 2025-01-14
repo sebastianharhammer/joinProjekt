@@ -157,57 +157,63 @@ async function getUsersForEditDropDown() {
 
 function setupEditDropdownInteraction() {
   const dropdown = document.getElementById('custom-dropdown-edit');
-    const optionsContainer = dropdown.querySelector('.dropdown-options-edit');
-    dropdown.addEventListener('click', (e) => {
-        const userContainer = e.target.closest('.assigned-user-container-edit');
-        if (userContainer) {
-            e.stopPropagation();
-            return;
-        }
-        e.stopPropagation();
-        const isOpen = optionsContainer.style.display === 'block';
-        optionsContainer.style.display = isOpen ? 'none' : 'block';
-    });
-    optionsContainer.addEventListener('click', (event) => {
-        const userContainer = event.target.closest('.assigned-user-container-edit');
-        if (!userContainer) return;
-        event.stopPropagation();
-        const checkbox = userContainer.querySelector('input[type="checkbox"]');
-        const firstName = userContainer.dataset.firstname;
-        const lastName = userContainer.dataset.lastname;
-        const color = userContainer.dataset.color;
-        const userIndex = assignedUserArr.findIndex(user => 
-            user.firstName === firstName && 
-            user.lastName === lastName
-        );
-        const isSelected = userIndex > -1;
-        if (isSelected) {
-            assignedUserArr.splice(userIndex, 1);
-            checkbox.checked = false;
-            userContainer.style.backgroundColor = '';
-            userContainer.style.color = '';
-            userContainer.style.borderRadius = '';
-        } else {
-            assignedUserArr.push({
-                firstName,
-                lastName,
-                initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
-                color
-            });
-            checkbox.checked = true;
-            userContainer.style.backgroundColor = '#2b3647';
-            userContainer.style.color = 'white';
-            userContainer.style.borderRadius = '10px';
-            showAssignedUsersEdit();
-        }
-    });
-  /* const editDropdown = document.getElementById("custom-dropdown-edit");
-  const editOptionsContainer = editDropdown.querySelector(
-    ".dropdown-options-edit"
-  );
-  setupDropdownClickListener(editDropdown, editOptionsContainer);
-  setupDocumentClickListener(editDropdown, editOptionsContainer); */
+  const optionsContainer = dropdown.querySelector('.dropdown-options-edit');
+
+  dropdown.addEventListener('click', (e) => {
+    const userContainer = e.target.closest('.assigned-user-container-edit');
+    if (userContainer) {
+      e.stopPropagation();
+      return;
+    }
+    e.stopPropagation();
+    const isOpen = optionsContainer.style.display === 'block';
+    optionsContainer.style.display = isOpen ? 'none' : 'block';
+  });
+
+  optionsContainer.addEventListener('click', (event) => {
+    const userContainer = event.target.closest('.assigned-user-container-edit');
+    if (!userContainer) return;
+    
+    event.stopPropagation();
+    const checkbox = userContainer.querySelector('input[type="checkbox"]');
+    const firstName = userContainer.dataset.firstname;
+    const lastName = userContainer.dataset.lastname;
+    const color = userContainer.dataset.color;
+    
+    const userIndex = assignedUserArr.findIndex(
+      user => user.firstName === firstName && user.lastName === lastName
+    );
+    
+    const isSelected = userIndex > -1;
+    
+    if (isSelected) {
+      assignedUserArr.splice(userIndex, 1);
+      checkbox.checked = false;
+      userContainer.style.backgroundColor = '';
+      userContainer.style.color = '';
+      userContainer.style.borderRadius = '';
+    } else {
+      assignedUserArr.push({
+        firstName,
+        lastName,
+        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+        color
+      });
+      checkbox.checked = true;
+      userContainer.style.backgroundColor = '#2b3647';
+      userContainer.style.color = 'white';
+      userContainer.style.borderRadius = '10px';
+    }
+    showAssignedUsersEdit();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!dropdown.contains(e.target)) {
+      optionsContainer.style.display = 'none';
+    }
+  });
 }
+
 function assignUserEdit(firstName, lastName, color) {
   const userExists = assignedUserArr.some(user => 
       user.firstName === firstName && 
@@ -229,36 +235,39 @@ function returnArrayContactsEdit() {
         console.error("No contacts found.");
         return;
     }
-    const dropdown = document.getElementById('custom-dropdown-edit');
-    const optionsContainer = dropdown.querySelector('.dropdown-options-edit');
-    optionsContainer.innerHTML = "";
+    const dropdownEdit = document.getElementById('custom-dropdown-edit');
+    const optionsContainerEdit = dropdownEdit.querySelector('.dropdown-options-edit');
+    optionsContainerEdit.innerHTML = "";
     const contactsArray = Object.values(finalContacts);
     contactsArray.forEach(contactInDrop => {
         if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
-        const userContainer = document.createElement('div');
-        userContainer.classList.add('assigned-user-container-edit');
-        userContainer.dataset.firstname = contactInDrop.firstName;
-        userContainer.dataset.lastname = contactInDrop.lastName;
-        userContainer.dataset.color = contactInDrop.color;
+        const userContainerEdit = document.createElement('div');
+        userContainerEdit.classList.add('assigned-user-container-edit');
+        userContainerEdit.dataset.firstname = contactInDrop.firstName;
+        userContainerEdit.dataset.lastname = contactInDrop.lastName;
+        userContainerEdit.dataset.color = contactInDrop.color;
+        
         const isAssigned = assignedUserArr.some(user => 
             user.firstName === contactInDrop.firstName && 
             user.lastName === contactInDrop.lastName
         );
+        
         if (isAssigned) {
-            userContainer.style.backgroundColor = '#2b3647';
-            userContainer.style.color = 'white';
-            userContainer.style.borderRadius = '10px';
+            userContainerEdit.style.backgroundColor = '#2b3647';
+            userContainerEdit.style.color = 'white';
+            userContainerEdit.style.borderRadius = '10px';
         }
-        userContainer.innerHTML = assignUserHTML(contactInDrop);
-        optionsContainer.appendChild(userContainer);
+        
+        userContainerEdit.innerHTML = assignUserEditHTML(contactInDrop, isAssigned);
+        optionsContainerEdit.appendChild(userContainerEdit);
     });
 }
 
 function showAssignedUsersEdit() {
-  let assignUsers = document.getElementById('assigned-users-short-edit');
-  assignUsers.innerHTML = "";
+  let assignUsersEdit = document.getElementById('assigned-users-short-edit');
+  assignUsersEdit.innerHTML = "";
   for (let i=0; i < assignedUserArr.length; i++) {
-      assignUsers.innerHTML += showAssignedUsersHTML(assignedUserArr[i]);
+      assignUsersEdit.innerHTML += showAssignedUsersEditHTML(assignedUserArr[i]);
   }
 }
 
@@ -273,7 +282,7 @@ function toggleDropdown(editOptionsContainer) {
   editOptionsContainer.style.display = isDropdownOpen ? "none" : "block";
 }
 
-function closeDropdownIfClickedOutside(
+ function closeDropdownIfClickedOutside(
   editDropdown,
   editOptionsContainer,
   target
@@ -281,11 +290,10 @@ function closeDropdownIfClickedOutside(
   if (!editDropdown.contains(target)) {
     editOptionsContainer.style.display = "none";
   }
-}
+} 
 
 
-
-function createDropdownOption(contact, isChecked) {
+ function createDropdownOption(contact, isChecked) {
   const optionElement = document.createElement("div");
   optionElement.classList.add("dropdown-contact-edit");
   optionElement.addEventListener("click", (event) => {
@@ -336,7 +344,7 @@ function createEditCheckbox(isChecked, contact) {
   });
 
   return checkbox;
-}
+} 
 
 function addEditCheckboxEventListener(checkbox, contact) {
   checkbox.addEventListener("change", () => {
@@ -346,9 +354,9 @@ function addEditCheckboxEventListener(checkbox, contact) {
       checkbox.checked
     );
   });
-}
+} 
 
-function createEditCheckboxSquare() {
+ function createEditCheckboxSquare() {
   const span = document.createElement("span");
   span.classList.add("checkboxSquare");
   return span;
@@ -372,11 +380,16 @@ function createContactCircle(contact) {
   return circleDiv;
 }
 
-function assignUserEditHTML(contact) {
-  const initials = `${getFirstLetter(contact.firstName)}${getFirstLetter(
-    contact.lastName
-  )}`;
-  return createContactEditHTML(initials, contact);
+function assignUserEditHTML(contact, isAssigned) {
+    const initials = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
+    return `
+        <div class="contact-circle-edit" style="background-color: ${contact.color}">${initials}</div>
+        <span>${contact.firstName} ${contact.lastName}</span>
+        <label class="contact-checkbox-edit-label">
+            <input type="checkbox" class="contact-checkbox-edit" ${isAssigned ? 'checked' : ''}>
+            <span class="checkboxSquare"></span>
+        </label>
+    `;
 }
 
 function handleEditContactSelection(firstName, lastName, isChecked) {
