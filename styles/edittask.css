@@ -384,46 +384,6 @@ input[type="date"] {
   background-color: rgb(231, 231, 237);
 }
 
-@media (max-width: 480px) {
-  .editTaskCard {
-    position: fixed;
-    top: 47%;
-    left: 49%;
-    transform: translate(-50%, -50%);
-    gap: 10vh;
-    height: 540px;
-    width: 80vw;
-    overflow-x: hidden;
-    overflow-y: auto;
-    gap: 1vh;
-    padding: 8px;
-}
-
-  .editTaskTempl {
-    z-index: 999;
-    height: 100vh;
-  }
-
-  .add-subtask-in-edit {
-    width: 97%;
-  }
-
-  .textarea-large {
-    min-height: 100px !important;
-    width: 90%;
-  }
-
-  .edit-input{
-    width: 97% !important;
-  }
-
-  #header-overlay-top {
-    z-index: 0;
-}
-
-
-}
-
 .assigned-user-container-edit {
   display: flex;
   justify-content: space-between;
@@ -480,5 +440,83 @@ input[type="date"] {
   opacity: 1;
   transform-origin: center;
 }
+
+@media (max-width: 480px) {
+  .editTaskCard {
+    position: fixed;
+    top: 47%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    gap: 10vh;
+    height: 540px;
+    width: 80vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 1vh;
+    padding: 8px;
+}
+
+
+  .editTaskTempl {
+    z-index: 999;
+    height: 100vh;
+  }
+
+  .add-subtask-in-edit {
+    width: 97%;
+  }
+
+  .textarea-large {
+    min-height: 100px !important;
+    width: 90%;
+  }
+
+  .edit-input{
+    width: 97% !important;
+  }
+
+  #header-overlay-top {
+    z-index: 0;
+}
+
+.assigned-user-name-edit{
+  font-size: 14px;
+}
+
+.assigned-user-container-edit {
+  gap: 12px;
+  width: 99%;
+}
+
+.addtask-textInCircle {
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+}
+
+.customCircle{
+  width: 40px;
+  height: 40px;
+}
+
+.checkbox-add-task-edit{
+  height: 18px !important;
+  width: 18px !important;
+}
+
+.checkbox-add-task-edit:checked::after {
+  left: 4px !important;
+  top: -1px;
+  width: 5px;
+}
+
+
+.assigned-user-container-edit{
+  margin-top: 1px;
+}
+
+
+}
+
+
 
 
