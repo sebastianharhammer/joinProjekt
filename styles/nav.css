@@ -75,31 +75,39 @@ a {
 .nav-links-policy {
   padding-left: 2vw;
   text-decoration: none;
+  font-size: 16px
 }
 
-.nav-links-container:hover {
-  background-color: #091931;
+.nav-links-container:hover:not(.link-active) {
+  background-color: #2A3D59;
   border-radius: 10px;
 }
 .nav-links-policy:hover {
   color: #0B8CE9;
+  font-weight: 1000;
+  font-size: 17px;
   
   text-decoration: none;
 }
 #nav-privacy-policy {
   text-decoration: none;
-  font-weight: 200;
+  font-weight: 100;
+  font-size: 16px;
 }
-#nav-privacy-policy:hover { 
-  font-weight: 800;
+#nav-privacy-policy:hover {
+  font-weight: 1000;
+  font-size: 17px;
 }
 #nav-legal-notice {
   text-decoration: none;
-  font-weight: 200;
+  font-weight: 100;
+  font-size: 16px;
 }
 #nav-legal-notice:hover {
-  font-weight: 800;
+  font-weight: 1000;
+  font-size: 17px;
 }
+
 
 
 .nav-icon {

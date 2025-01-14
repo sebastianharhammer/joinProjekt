@@ -85,7 +85,14 @@ header {
   height: 50%;
   object-fit: contain;
 }
-
+#header-help-btn-img {
+  width: 25px;
+  height: 25px;
+}
+#header-help-btn-img:hover {
+  width: 30px;
+  height: 30px;
+}
 #header-current-user {
   display: flex;
   justify-content: flex-end;
