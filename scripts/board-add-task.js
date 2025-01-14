@@ -39,7 +39,6 @@ function showAddTask(status) {
 function hideAddTask() {
   let addContactTemplate = document.getElementById("add-task-content");
   let background = document.getElementById("add-task-background");
-  let headerName = document.getElementById("header-current-user");
   addContactTemplate.classList.remove("show-add-task");
   document.body.classList.remove("overflow-hidden");
 
@@ -48,7 +47,6 @@ function hideAddTask() {
   }, 250);
   setTimeout(() => {
     init();
-    headerName.style.color = "#29ABE2";
   }, 250);
 }
 

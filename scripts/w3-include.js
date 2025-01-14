@@ -10,4 +10,7 @@ async function includeHTML() {
             element.innerHTML = 'Page not found';
         }
     }
+    waitForElement('#header-user-name', () => {
+        headerGetUser();
+    });
 }
