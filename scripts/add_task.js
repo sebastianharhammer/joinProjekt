@@ -242,7 +242,6 @@ function handleDropdownInteraction() {
     });
 }
 function closeDropdown() {
-    
     const optionsContainer = document.getElementById('dropdown-options');
     optionsContainer.style.display = 'none';
 }
@@ -357,6 +356,14 @@ function openAddTaskCategories() {
 
 function hideAddTaskCategories() {
     categoriesContainerClick = false;
+    let categoryList = document.getElementById("dropDownCategoryMenu");
+    let icon = document.getElementById("arrowDropMenuCategory");
+    icon.style.transform = "rotate(0deg)";
+    categoryList.innerHTML = "";
+}
+
+function hideAddTaskCategoriesCategory() {
+    categoriesContainerClick = true;
     let categoryList = document.getElementById("dropDownCategoryMenu");
     let icon = document.getElementById("arrowDropMenuCategory");
     icon.style.transform = "rotate(0deg)";
