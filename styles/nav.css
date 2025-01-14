@@ -50,6 +50,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  text-decoration: none;
 }
 
 .nav-links-container {
@@ -59,6 +60,7 @@ a {
   padding: 10px;
   transition: background-color 0.3s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .nav-links-container-links {
@@ -81,31 +83,25 @@ a {
 .nav-links-container:hover:not(.link-active) {
   background-color: #2A3D59;
   border-radius: 10px;
+  text-decoration: none;
 }
 .nav-links-policy:hover {
   color: #0B8CE9;
-  font-weight: 1000;
   font-size: 17px;
-  
   text-decoration: none;
 }
 #nav-privacy-policy {
   text-decoration: none;
   font-weight: 100;
-  font-size: 16px;
 }
 #nav-privacy-policy:hover {
-  font-weight: 1000;
-  font-size: 17px;
+  text-decoration: none;
 }
 #nav-legal-notice {
   text-decoration: none;
-  font-weight: 100;
-  font-size: 16px;
 }
 #nav-legal-notice:hover {
-  font-weight: 1000;
-  font-size: 17px;
+  text-decoration: none;
 }
 
 
