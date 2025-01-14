@@ -1,4 +1,3 @@
-
 html,
 body {
   margin: 0;
@@ -223,7 +222,6 @@ body {
   border-radius: 10px;
   padding: 12px 21px;
   max-height: 48px;
-  font-size: 20px;
   font-weight: 400;
   line-height: 24px;
   border: 1px solid #d1d1d1;
@@ -845,40 +843,46 @@ ul {
   border-radius: 8px;
 }
 .checkbox-add-task {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   background-color: white;
-  border: 2px solid #2A3647;
-  border-radius: 3px;
+  border: 2px solid #2a3647;
+  border-radius: 10px;
   position: relative;
   flex-shrink: 0;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .checkbox-add-task:hover {
-  border-color: #29ABE2;
-  box-shadow: 0 0 4px rgba(41, 171, 226, 0.4);
+  border-color: #29abe2;
+  box-shadow: 0 0 8px rgba(41, 171, 226, 0.3);
+  transform: scale(1.05);
 }
 
 .checkbox-add-task:checked {
-  background-color: #0c0f13;
-  border-color: #2A3647;
+  background-color: #29abe2;
+  border-color: #29abe2;
+  transform: scale(1.1);
 }
 
 .checkbox-add-task:checked::after {
-  content: '';
+  content: "";
   position: absolute;
-  left: 5px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 12px;
   border: solid white;
-  border-width: 0 2px 2px 0;
+  border-width: 0 2.5px 2.5px 0;
   transform: rotate(45deg);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.23, 1);
+  opacity: 1;
+  transform-origin: center; 
 }
 #required-field-mobile{
   padding-bottom: 50px;
@@ -985,9 +989,16 @@ ul {
 }
 
 @media (max-width: 620px) {
-/*   #add-task-content {
-    position: absolute;
-  } */
+  .assigned-user-name{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 10px;
+  }
+  .assigned-user-container{
+    gap: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   #add-task-background {
     display: none;
   }
@@ -1001,7 +1012,7 @@ ul {
     font-size: 16px;
   }
   .input-addtask {
-    font-size: 16px;
+    font-size: 12px;
   }
   .addtask-form-left-top {
     display: flex;
@@ -1026,7 +1037,13 @@ ul {
     margin-left: auto;
     margin-right: auto;
   }
+  .assigned-user-name{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 5px;
+  }
 }
+
 
 
 

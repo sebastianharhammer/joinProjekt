@@ -64,16 +64,15 @@ function handleCancel(event) {
   assignedUserArr = [];
   categoryObject = "";
   selectedPriority = "";
-  const dropdownOptions = document.querySelectorAll(".assigned-user-container");
-  dropdownOptions.forEach((container) => {
-    const checkbox = container.querySelector('input[type="checkbox"]');
-    checkbox.checked = false;
+  document.getElementById("assigned-users-short").innerHTML = "";
+  const userContainers = document.querySelectorAll('.assigned-user-container');
+  userContainers.forEach(container => {
     container.style.backgroundColor = "";
     container.style.color = "";
     container.style.borderRadius = "";
+    const checkbox = container.querySelector('input[type="checkbox"]');
+    if (checkbox) checkbox.checked = false;
   });
-  document.getElementById("custom-dropdown").innerHTML = "";
-  document.getElementById("assigned-users-short").innerHTML = "";
   setPriority("medium");
 }
 
