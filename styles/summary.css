@@ -265,8 +265,8 @@ body {
 
 @media (max-width: 688px) {
   .panel-link .panel img {
-    width: 46px;
-    height: 47px;
+    width: 31px;
+    height: 36px;
   }
 }
 
@@ -332,9 +332,16 @@ body {
 }
 
 @media (max-width: 459px) {
+  .panel-link .panel {
+    height: 0px;
+  }
+
   .panel {
     min-height: 150px;
     padding: 8px;
+    position: absolute;
+    left: 5px;
+    bottom: 45px;
   }
   .panel img {
     max-width: 35px;
