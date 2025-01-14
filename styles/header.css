@@ -172,6 +172,7 @@ header {
 
 }
 @media (max-width: 770px) {
+
   #header-content {
     display: block;
   }
@@ -210,7 +211,11 @@ header {
 }
 
 }
-
+@media (max-width: 720px) {
+  #header-overlay-top {
+    z-index: 1111;
+  }
+}
 @media (max-width: 500px) {
     #header-user-overlay {
     right: 4vw;
