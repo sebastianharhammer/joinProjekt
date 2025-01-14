@@ -44,7 +44,6 @@ function loadRememberedUser() {
         document.getElementById('loginMailUser').value = userData.email;
         document.getElementById('loginPasswordUser').value = userData.password;
         document.getElementById('checkboxLogin').checked = true;
-        console.log('User data loaded from Local Storage');
     }
 }
 
@@ -53,7 +52,6 @@ async function loadSignedUsers(path){
     let responseToJson = await response.json();
     if (responseToJson) {
         signedUsersArrayLogin = Object.values(responseToJson);  
-        console.log(signedUsersArrayLogin); 
     }
 }
 
@@ -65,7 +63,6 @@ function loginGuest(event){
     }
     localStorage.setItem('currentUser',JSON.stringify(guestUser));
     currentUser = guestUser
-    console.log("Gastbenutzer erfolgreich gesetzt:", currentUser);
     window.location.href = 'summary.html';
 }
 
@@ -80,7 +77,6 @@ async function loginUser(event) {
             await changeLoginStatus(signedUser);
             localStorage.setItem('currentUser', JSON.stringify(signedUser));
             currentUser = signedUser;
-            console.log("Aktueller Benutzer:", currentUser);
             if (rememberMe) {
                 saveData(signedUser);
             }
@@ -89,7 +85,6 @@ async function loginUser(event) {
             console.error('Fehler beim Ändern des Login-Status:', error);
         }
     } else {
-        console.log('User not found');
         showDomOfFailedLogin();
     }
 }
@@ -111,12 +106,6 @@ async function changeLoginStatus(signedUser) {
             },
             body: JSON.stringify({isLoggedin: true})
         });
-        
-        if (response.ok) {
-            console.log(`Login-Status für Benutzer ${signedUser.email} erfolgreich geändert.`);
-        } else {
-            console.error("fehler");
-        }
     } catch (error) {
         console.error("Fehler beim Ändern des Login-Status:", error);
     }

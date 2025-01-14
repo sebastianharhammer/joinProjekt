@@ -223,7 +223,7 @@
 }
 
 .input-title-in-edit {
-  width: 70%;
+  width: 90%;
   height: 40px;
   padding: 4px;
   border: none;
@@ -366,11 +366,16 @@ input[type="date"] {
   background-color: rgb(240, 240, 240);
 }
 
+
 .textarea-large {
-  height: 300px !important;
-  width: 100%;
+  min-height: 100px !important;
+  width: 95%;
   resize: none;
   overflow-y: auto;
+}
+
+.textarea-large:focus {
+  border: 1px solid rgb(136, 136, 136);
 }
 
 .close-and-check-imgs {
@@ -387,20 +392,39 @@ input[type="date"] {
 @media (max-width: 480px) {
   .editTaskCard {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 47%;
+    left: 49%;
     transform: translate(-50%, -50%);
     gap: 10vh;
-    height: 580px;
+    height: 540px;
     width: 80vw;
     overflow-x: hidden;
     overflow-y: auto;
     gap: 1vh;
     padding: 8px;
-  }
+}
 
   .editTaskTempl {
     z-index: 999;
     height: 100vh;
   }
+
+  .add-subtask-in-edit {
+    width: 97%;
+  }
+
+  .textarea-large {
+    min-height: 100px !important;
+    width: 90%;
+  }
+
+  .edit-input{
+    width: 97% !important;
+  }
+
+  #header-overlay-top {
+    z-index: 0;
+}
+
+
 }

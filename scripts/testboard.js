@@ -19,7 +19,6 @@ async function fetchContacts() {
     const responseToJson = await response.json();
     if (responseToJson) {
       finalContacts = Object.values(responseToJson);
-      console.log("Contacts loaded:", finalContacts);
     }
   } catch (error) {
     console.error("Fehler beim Laden der Kontakte:", error);
@@ -30,7 +29,6 @@ function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
   if (storedUser) {
     currentUser = JSON.parse(storedUser);
-    console.log(currentUser);
   }
 }
 
@@ -330,21 +328,25 @@ function updateCompletedSubtasks(taskId) {
   const task = taskArray.find((t) => t.id === taskId);
   if (!task || !task.subtasks) return;
 
-  const completedCount = task.subtasks.filter(
-    (subtask) => subtask.checkbox
-  ).length;
+  const completedCount = task.subtasks.filter((subtask) => subtask.checkbox).length;
   const totalSubtasks = task.subtasks.length;
 
   const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
-  if (renderCompleted) {
-    renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
-  }
-
   const progressBar = document.getElementById(`progress-${taskId}`);
-  if (progressBar) {
-    progressBar.value = (completedCount / totalSubtasks) * 100;
+
+  if (renderCompleted && progressBar) {
+    if (totalSubtasks > 0) {
+      renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
+      progressBar.value = (completedCount / totalSubtasks) * 100;
+      renderCompleted.style.display = "";
+      progressBar.style.display = "";
+    } else {
+      renderCompleted.style.display = "none";
+      progressBar.style.display = "none";
+    }
   }
 }
+
 
 function findAmountOfSubtasks(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
@@ -362,6 +364,7 @@ function createTaskHTML(task) {
   return getTaskHTML(task, completedSubtasks, totalSubtasks);
 }
 
+
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
   if (!task) {
@@ -377,22 +380,10 @@ function showTaskCard(id) {
 }
 
 function closeDetailView() {
-  console.log("closeDetailView aufgerufen");
   const taskCardOverlay = document.getElementById("taskDetailView");
   taskCardOverlay.classList.add("d-none");
-
-  console.log("Setze body.style.overflow zurück");
   document.body.style.overflow = "";
   document.documentElement.style.overflow = "";
-
-  console.log(
-    "Aktueller overflow-Wert von body:",
-    document.body.style.overflow
-  );
-  console.log(
-    "Aktueller overflow-Wert von html:",
-    document.documentElement.style.overflow
-  );
 }
 
 function showTaskCardHTML(task) {
@@ -509,7 +500,6 @@ async function moveTaskUp(taskId, event) {
   } else if (task.status === "inProgress") {
     task.status = "todo";
   } else {
-    console.log("Task befindet sich bereits in der obersten Kategorie.");
     return;
   }
 
@@ -538,7 +528,6 @@ async function moveTaskDown(taskId, event) {
   } else if (task.status === "feedback") {
     task.status = "done";
   } else {
-    console.log("Task befindet sich bereits in der untersten Kategorie.");
     return;
   }
 

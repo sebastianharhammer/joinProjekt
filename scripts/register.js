@@ -1,17 +1,23 @@
 function onloadFunc(){
     loadUsers("signed_users");
+    loadRegisterForm();
 }
 
 
 const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/"
 let signedUsersArray="[]";
 
+function loadRegisterForm(){
+    let registerContent = document.getElementById('registerContent');
+    registerContent.innerHTML='';
+    registerContent.innerHTML += getRegisterContent()
+}
+
 async function loadUsers(path){
     let response = await fetch(BASE_URL + path + ".json");
     let responseToJson = await response.json();
     if (responseToJson) {
-        signedUsersArray = Object.values(responseToJson);  
-        console.log(signedUsersArray); 
+        signedUsersArray = Object.values(responseToJson); 
     }
 }
 
@@ -41,14 +47,13 @@ async function postSignUpData(path){
     })
     const responseToJson = await response.json();
     signedUsersArray.push(responseToJson);
-    console.log(signedUsersArray);
     showSuccessOverlay();
     setTimeout(function() {
         window.location.href = 'login.html';
     }, 900);
 }
 else{
-    console.log('Bitte akzeptiere die Privacy policy')
+    console.log('')
 }
     }
 
@@ -103,8 +108,6 @@ function validate(){
             signUpButton.disabled = true;
         }
 }
-
-
 
 function showResultsMessage(foundPassword){
     let alertDiv = document.getElementById('alert-password');

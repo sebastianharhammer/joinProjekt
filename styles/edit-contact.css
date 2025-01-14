@@ -304,6 +304,10 @@
   #edit-contact-interactions {
     flex-direction: column;
   }
+
+  .edit-contact-input {
+    width: 90%;
+  }
 }
 
 @media (max-width: 428px) {
@@ -313,6 +317,10 @@
 }
 
 @media (max-width: 385px) {
+  #edit-contact-interactions {
+    flex-direction: row;
+  }
+
   #back-button {
     margin-left: -30px;
   }
