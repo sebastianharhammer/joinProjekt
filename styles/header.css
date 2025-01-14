@@ -71,6 +71,17 @@ header {
   border-radius: 50%;
 }
 
+.header-circleBorder:hover {
+  fill: #e1e5e9;
+}
+.header-customCircle {
+  z-index: 2;
+}
+
+.header-user-icon:hover .header-circleBorder {
+  fill: #e1e5e9;
+}
+
 #header-logo-container {
   position: absolute;
   top: 80%;
@@ -103,6 +114,7 @@ header {
 
 #header-current-user:hover {
   cursor: pointer;
+  fill: #e1e5ec;
 }
 
 #header-user-overlay {
