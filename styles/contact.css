@@ -504,7 +504,7 @@ hr {
     cursor: pointer;
     width: 56px;
     height: 56px;
-    left: 356px;
+    left: 756px;
     padding: 12px;
     border-radius: 56px;
     border: 1px solid #2a3647;
@@ -579,8 +579,13 @@ hr {
   }
 
   #contact-big {
-    align-items: baseline;
-    width: 0dvw;
+    align-items: center;
+    padding-left: 50px;
+    display: none;
+    top: 100;
+    width: 100%;
+    height: calc(100vh - 10vh);
+    overflow-y: auto;
   }
 
   #contact-content {
@@ -601,7 +606,13 @@ hr {
 
 @media (max-width: 576px) {
   #contact-big {
-    width: 0dvw;
+    align-items: center;
+    padding-left: 50px;
+    display: none;
+    top: 100;
+    width: 100%;
+    height: calc(100vh - 10vh);
+    overflow-y: auto;
   }
 
   #add-contact-headline {
@@ -655,7 +666,13 @@ hr {
 
 @media (max-width: 440px) {
   #contact-big {
-    width: 0dvw;
+    align-items: center;
+    padding-left: 50px;
+    display: none;
+    top: 100;
+    width: 100%;
+    height: calc(100vh - 10vh);
+    overflow-y: auto;
   }
 
   #add-contact-btn {

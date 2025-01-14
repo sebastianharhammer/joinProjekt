@@ -1,5 +1,5 @@
-function getLoginTemplate(){
-    return /*html*/`
+function getLoginTemplate() {
+  return /*html*/ `
             <section class="loginContent">
             <div class="headAreaOfLogin">
     <!-- Header-Logo mit der Klasse v-hidden -->
@@ -43,11 +43,11 @@ function getLoginTemplate(){
         <div class="msgBox" id="msgBox"></div>
     </section>
     <div class="footerRegisterLogin">
-        <a class="footerFont" href="./Privacy-Policy.html"><p>Privacy Policy</p></a>
-        <a class="footerFont" href="./legal-notice.html"><p>Legal Notice</p></a>
+        <a class="footerFont" href="./Privacy-Policy-start.html"><p>Privacy Policy</p></a>
+        <a class="footerFont" href="./Legal-notice-start.html"><p>Legal Notice</p></a>
     </div>
     <div class="d-none logo" id="logo">
         <img class="joinLogoBig" src="img/logo-join-blue-big.png" alt="Join-Logo" />
     </div>
-    `
+    `;
 }
