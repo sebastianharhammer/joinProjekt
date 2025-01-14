@@ -43,22 +43,30 @@ async function processContactInfo() {
   const phone = document.getElementById("add-contact-phone").value.trim();
 
   if (firstName && lastName && email) {
-    showSuccessMessage();
     await pushContactInfo(firstName, lastName, email, phone);
     hideAddContact();
-  } else {
-    showErrorMessage();
+    setTimeout(() => showSuccessMessage(), 300);
   }
 }
 
+
 function showSuccessMessage() {
-  const content = document.getElementById("add-contact-message");
-  if (content) {
-    content.classList.remove("d-none");
-    showSuccessMessageHTML();
-    setTimeout(() => content.classList.add("d-none"), 2500);
-  }
+  const message = document.createElement("div");
+  message.id = "success-message-container";
+  message.innerHTML = "Kontakt erfolgreich erstellt!";
+  document.body.appendChild(message);
+
+  
+  setTimeout(() => {
+    message.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    message.classList.remove("show");
+    setTimeout(() => message.remove(), 500);
+  }, 2500);
 }
+
 
 function clearAddContactInput() {
   const nameInput = document.getElementById("add-contact-name");
