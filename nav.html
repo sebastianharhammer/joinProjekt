@@ -33,29 +33,30 @@
       </svg>
     </div>
     <div id="navigation-links-container">
-        <a class="nav-links-container" href="./summary.html">
+        <a class="nav-links-container" id="nav-summary" href="./summary.html" onclick="navLinksOnFocus('summary')">
             <img class="nav-icon" src="./img/summary-icon.svg">
-            <span class="nav-links">Summary</span>
+            <span class="nav-links" >Summary</span>
         </a>
-        <a class="nav-links-container" href="./add_task.html">
+        <a class="nav-links-container" id="nav-add-task" href="./add_task.html" onclick="navLinksOnFocus('addTask')">
             <img class="nav-icon" src="./img/add-task-icon.svg">
-            <span class="nav-links">Add Task</span>
+            <span class="nav-links" >Add Task</span>
         </a>
-        <a class="nav-links-container" href="./testboard.html">
+        <a class="nav-links-container" id="nav-board" href="./testboard.html" onclick="navLinksOnFocus('board')">
             <img class="nav-icon" src="./img/board-icon.svg">
             <span class="nav-links" >Board</span>
         </a>
-        <a class="nav-links-container" href="./contact.html">
+        <a class="nav-links-container" id="nav-contacts" href="./contact.html" onclick="navLinksOnFocus('contacts')">
             <img class="nav-icon" src="./img/contacts-icon.svg">
             <span class="nav-links" >Contacts</span>            
         </a>
     </div>
     <div id="policy-links-container">
-        <div class="nav-links-container-links">
-            <a class="nav-links-policy" href="./Privacy-Policy.html">Privacy Policy</a>
-        </div>
-        <div class="nav-links-container-links">
-        <a class="nav-links-policy" href="./legal-notice.html">Legal notice</a>
+        <a class="nav-links-container-links" id="nav-privacy-policy" href="./Privacy-Policy.html" onclick="navLinksOnFocus('policy')">
+            <span class="nav-links-policy">Privacy Policy</span>
+        </a>
+        <a class="nav-links-container-links" id="nav-legal-notice" href="./Legal-notice.html" onclick="navLinksOnFocus('legalNotice')">
+          <span class="nav-links-policy">Legal notice</span>
+        </a>
     </div>
   </div>
 </nav>

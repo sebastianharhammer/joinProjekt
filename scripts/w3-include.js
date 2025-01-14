@@ -13,4 +13,5 @@ async function includeHTML() {
     waitForElement('#header-user-name', () => {
         headerGetUser();
     });
+    setLinkActive();
 }
