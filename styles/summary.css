@@ -332,10 +332,6 @@ body {
 }
 
 @media (max-width: 459px) {
-  .panel-link .panel {
-    height: 0px;
-  }
-
   .panel {
     min-height: 150px;
     padding: 8px;
@@ -357,6 +353,18 @@ body {
   }
   .greeting-text h2 {
     font-size: 28px;
+  }
+}
+
+@media (max-width: 390px) {
+  .panel-row {
+    width: 86%;
+  }
+}
+
+@media (max-width: 365px) {
+  .panel-row {
+    width: 90%;
   }
 }
 
