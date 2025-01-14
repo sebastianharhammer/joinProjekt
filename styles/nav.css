@@ -8,7 +8,7 @@ body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  font-family: Arial, sans-serif;
+  font-family: "inter", sans-serif;
 }
 
 #overlay-left {
@@ -77,16 +77,16 @@ a {
 .nav-links-policy {
   padding-left: 2vw;
   text-decoration: none;
-  font-size: 16px
+  font-size: 16px;
 }
 
 .nav-links-container:hover:not(.link-active) {
-  background-color: #2A3D59;
+  background-color: #2a3d59;
   border-radius: 10px;
   text-decoration: none;
 }
 .nav-links-policy:hover {
-  color: #0B8CE9;
+  color: #0b8ce9;
   font-size: 17px;
   text-decoration: none;
 }
@@ -103,8 +103,6 @@ a {
 #nav-legal-notice:hover {
   text-decoration: none;
 }
-
-
 
 .nav-icon {
   width: 30px;
@@ -168,9 +166,9 @@ a {
     padding: 0;
     z-index: 10;
   }
-.link-active {
-  border-radius: 15px;
-}
+  .link-active {
+    border-radius: 15px;
+  }
 
   #logo-container-sidebar {
     display: none;
@@ -189,7 +187,6 @@ a {
     justify-content: center;
     height: 100%;
     padding: 0;
- 
   }
 
   .nav-icon {
@@ -217,4 +214,3 @@ a {
     padding-right: 2vw;
   }
 }
-
