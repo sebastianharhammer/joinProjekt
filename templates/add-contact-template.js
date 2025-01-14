@@ -57,15 +57,5 @@ function getAddContactHTML() {
             </div>  
         </div>
     </div>
-    <div id="add-contact-message" class="d-none"></div>
-    `;
-}
-
-function showSuccessMessageHTML() {
-  let content = document.getElementById("add-contact-message");
-  content.innerHTML = `
-    <div id="add-contact-succes-message-container">
-    <span id="add-contact-succes-message">Kontakt erfolgreich erstellt</span>
-    </div>
     `;
 }

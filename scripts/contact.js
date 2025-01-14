@@ -2,8 +2,7 @@ const firebaseConfig = {
   databaseURL:
     "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
 };
-const BASE_URL =
-  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app";
+const BASE_URL = firebaseConfig.databaseURL;
 const app = firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 

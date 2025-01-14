@@ -42,13 +42,10 @@ async function processContactInfo() {
   const email = document.getElementById("add-contact-email").value.trim();
   const phone = document.getElementById("add-contact-phone").value.trim();
 
-  if (firstName && lastName && email) {
-    await pushContactInfo(firstName, lastName, email, phone);
-    hideAddContact();
-    setTimeout(() => showSuccessMessage(), 300);
-  }
+  await pushContactInfo(firstName, lastName, email, phone);
+  hideAddContact();
+  setTimeout(() => showSuccessMessage(), 300);
 }
-
 
 function showSuccessMessage() {
   const message = document.createElement("div");
@@ -56,7 +53,6 @@ function showSuccessMessage() {
   message.innerHTML = "Kontakt erfolgreich erstellt!";
   document.body.appendChild(message);
 
-  
   setTimeout(() => {
     message.classList.add("show");
   }, 10);
@@ -66,7 +62,6 @@ function showSuccessMessage() {
     setTimeout(() => message.remove(), 500);
   }, 2500);
 }
-
 
 function clearAddContactInput() {
   const nameInput = document.getElementById("add-contact-name");
@@ -92,10 +87,9 @@ function extractNameParts() {
 async function getContactInfo() {
   try {
     const response = await fetch(`${BASE_URL}/contacts/.json`);
-    const responseToJson = await response.json();
-    localContacts = responseToJson || {};
+    localContacts = (await response.json()) || {};
   } catch {
-    localContacts = {};
+    console.error("Failed to fetch contacts.");
   }
 }
 

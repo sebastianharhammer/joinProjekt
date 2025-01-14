@@ -20,7 +20,7 @@ body {
   align-items: center;
   width: 456px;
   overflow-y: scroll;
-  height: calc(100vh - 10vh);
+  height: calc(100vh - 100px);
   scrollbar-width: 24px;
   overflow-x: hidden;
   left: 10vw;
@@ -613,7 +613,6 @@ hr {
     padding-top: 0;
     width: 100%;
     height: calc(1000px - 246px);
-
     overflow-y: auto;
     overflow-y: scroll;
   }
