@@ -99,7 +99,8 @@
 .ownerItem {
     display: flex;
     align-items: center;
-    gap: 12px; 
+    gap: 12px;
+    margin-top: 4px;
 }
 
 .fontInNameCircle {
