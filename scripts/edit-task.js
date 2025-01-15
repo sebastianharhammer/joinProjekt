@@ -31,20 +31,35 @@ function initializeEditTask(taskId, task) {
 }
 
 function editExistingSubtaskEditView(taskId, subtaskIndex) {
+  const subtaskTextElement = editFindSubtaskElement(taskId, subtaskIndex);
+  if (!subtaskTextElement) return;
+  
+  const inputElement = editCreateInputElement(subtaskTextElement);
+  editUpdateEditIcon(taskId, subtaskIndex);
+  editSetupInputBehavior(inputElement, taskId, subtaskIndex);
+}
+
+function editFindSubtaskElement(taskId, subtaskIndex) {
   const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
   const subtaskTextElement = document.getElementById(subtaskTextId);
-
+  
   if (!subtaskTextElement) {
-    console.error(
-      `Subtask-Text-Element mit ID ${subtaskTextId} nicht gefunden.`
-    );
-    return;
+    console.error(`Subtask-Text-Element mit ID ${subtaskTextId} nicht gefunden.`);
+    return null;
   }
+  return subtaskTextElement;
+}
+
+function editCreateInputElement(subtaskTextElement) {
   const inputElement = document.createElement("input");
   inputElement.type = "text";
   inputElement.value = subtaskTextElement.textContent.replace("• ", "").trim();
   inputElement.className = "subtaskInputInEdit";
   subtaskTextElement.replaceWith(inputElement);
+  return inputElement;
+}
+
+function editUpdateEditIcon(taskId, subtaskIndex) {
   const editIcon = document.querySelector(
     `#edit-subtask-${taskId}-${subtaskIndex + 1} .edit-icon`
   );
@@ -53,6 +68,9 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
     editIcon.classList.add("check-icon-edit");
     editIcon.onclick = null;
   }
+}
+
+function editSetupInputBehavior(inputElement, taskId, subtaskIndex) {
   inputElement.addEventListener("blur", () =>
     saveEditedSubtask(taskId, subtaskIndex, inputElement.value)
   );
@@ -159,52 +177,88 @@ function setupEditDropdownInteraction() {
   const dropdown = document.getElementById('custom-dropdown-edit');
   const optionsContainer = dropdown.querySelector('.dropdown-options-edit');
 
+  editSetupDropdownClick(dropdown, optionsContainer);
+  editSetupOptionsContainerClick(optionsContainer);
+  editSetupDocumentClick(dropdown, optionsContainer);
+}
+
+function editSetupDropdownClick(dropdown, optionsContainer) {
   dropdown.addEventListener('click', (e) => {
-    const userContainer = e.target.closest('.assigned-user-container-edit');
-    if (userContainer) {
+    if (e.target.closest('.assigned-user-container-edit')) {
       e.stopPropagation();
       return;
     }
     e.stopPropagation();
-    const isOpen = optionsContainer.style.display === 'block';
-    optionsContainer.style.display = isOpen ? 'none' : 'block';
+    editToggleOptionsDisplay(optionsContainer);
   });
+}
 
+function editToggleOptionsDisplay(optionsContainer) {
+  const isOpen = optionsContainer.style.display === 'block';
+  optionsContainer.style.display = isOpen ? 'none' : 'block';
+}
+
+function editSetupOptionsContainerClick(optionsContainer) {
   optionsContainer.addEventListener('click', (event) => {
     const userContainer = event.target.closest('.assigned-user-container-edit');
     if (!userContainer) return;
     
     event.stopPropagation();
-    const checkbox = userContainer.querySelector('input[type="checkbox"]');
-    const firstName = userContainer.dataset.firstname;
-    const lastName = userContainer.dataset.lastname;
-    const color = userContainer.dataset.color;
-    
-    const userIndex = assignedUserArr.findIndex(
-      user => user.firstName === firstName && user.lastName === lastName
-    );
-    
-    checkbox.checked = !checkbox.checked;
-    
-    if (userIndex > -1) {
-      assignedUserArr.splice(userIndex, 1);
-      userContainer.style.backgroundColor = '';
-      userContainer.style.color = '';
-      userContainer.style.borderRadius = '';
-    } else {
-      assignedUserArr.push({
-        firstName,
-        lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
-        color
-      });
-      userContainer.style.backgroundColor = '#2b3647';
-      userContainer.style.color = 'white';
-      userContainer.style.borderRadius = '10px';
-    }
-    showAssignedUsersEdit();
+    editHandleUserSelection(userContainer);
   });
+}
 
+function editHandleUserSelection(userContainer) {
+  const checkbox = userContainer.querySelector('input[type="checkbox"]');
+  const firstName = userContainer.dataset.firstname;
+  const lastName = userContainer.dataset.lastname;
+  const color = userContainer.dataset.color;
+  
+  checkbox.checked = !checkbox.checked;
+  editUpdateUserAssignment(userContainer, firstName, lastName, color);
+}
+
+function editUpdateUserAssignment(userContainer, firstName, lastName, color) {
+  const userIndex = assignedUserArr.findIndex(
+    user => user.firstName === firstName && user.lastName === lastName
+  );
+  
+  if (userIndex > -1) {
+    editRemoveUser(userContainer, userIndex);
+  } else {
+    editAddUser(userContainer, firstName, lastName, color);
+  }
+  showAssignedUsersEdit();
+}
+
+function editRemoveUser(userContainer, userIndex) {
+  assignedUserArr.splice(userIndex, 1);
+  editResetUserContainerStyle(userContainer);
+}
+
+function editResetUserContainerStyle(userContainer) {
+  userContainer.style.backgroundColor = '';
+  userContainer.style.color = '';
+  userContainer.style.borderRadius = '';
+}
+
+function editAddUser(userContainer, firstName, lastName, color) {
+  assignedUserArr.push({
+    firstName,
+    lastName,
+    initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
+    color
+  });
+  editSetSelectedUserContainerStyle(userContainer);
+}
+
+function editSetSelectedUserContainerStyle(userContainer) {
+  userContainer.style.backgroundColor = '#2b3647';
+  userContainer.style.color = 'white';
+  userContainer.style.borderRadius = '10px';
+}
+
+function editSetupDocumentClick(dropdown, optionsContainer) {
   document.addEventListener('click', (e) => {
     if (!dropdown.contains(e.target)) {
       optionsContainer.style.display = 'none';
@@ -228,37 +282,64 @@ function assignUserEdit(firstName, lastName, color) {
   }
 }
 
-function returnArrayContactsEdit() {
-    if (!finalContacts || Object.keys(finalContacts).length === 0) {
-        console.error("No contacts found.");
-        return;
-    }
+function editReturnArrayContacts() {
+    if (!editValidateContacts()) return;
+    
     const dropdownEdit = document.getElementById('custom-dropdown-edit');
     const optionsContainerEdit = dropdownEdit.querySelector('.dropdown-options-edit');
     optionsContainerEdit.innerHTML = "";
+    
     const contactsArray = Object.values(finalContacts);
     contactsArray.forEach(contactInDrop => {
-        if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName) return;
-        const userContainerEdit = document.createElement('div');
-        userContainerEdit.classList.add('assigned-user-container-edit');
-        userContainerEdit.dataset.firstname = contactInDrop.firstName;
-        userContainerEdit.dataset.lastname = contactInDrop.lastName;
-        userContainerEdit.dataset.color = contactInDrop.color;
-        
-        const isAssigned = assignedUserArr.some(user => 
-            user.firstName === contactInDrop.firstName && 
-            user.lastName === contactInDrop.lastName
-        );
-        
-        if (isAssigned) {
-            userContainerEdit.style.backgroundColor = '#2b3647';
-            userContainerEdit.style.color = 'white';
-            userContainerEdit.style.borderRadius = '10px';
-        }
-        
-        userContainerEdit.innerHTML = assignUserEditHTML(contactInDrop, isAssigned);
+        if (!editValidateContact(contactInDrop)) return;
+        const userContainerEdit = editCreateUserContainer(contactInDrop);
         optionsContainerEdit.appendChild(userContainerEdit);
     });
+}
+
+function editValidateContacts() {
+    if (!finalContacts || Object.keys(finalContacts).length === 0) {
+        console.error("No contacts found.");
+        return false;
+    }
+    return true;
+}
+
+function editValidateContact(contact) {
+    return contact && contact.firstName && contact.lastName;
+}
+
+function editCreateUserContainer(contact) {
+    const userContainerEdit = document.createElement('div');
+    userContainerEdit.classList.add('assigned-user-container-edit');
+    editSetUserContainerData(userContainerEdit, contact);
+    
+    const isAssigned = editCheckIfUserAssigned(contact);
+    if (isAssigned) {
+        editStyleAssignedUser(userContainerEdit);
+    }
+    
+    userContainerEdit.innerHTML = assignUserEditHTML(contact, isAssigned);
+    return userContainerEdit;
+}
+
+function editSetUserContainerData(container, contact) {
+    container.dataset.firstname = contact.firstName;
+    container.dataset.lastname = contact.lastName;
+    container.dataset.color = contact.color;
+}
+
+function editCheckIfUserAssigned(contact) {
+    return assignedUserArr.some(user => 
+        user.firstName === contact.firstName && 
+        user.lastName === contact.lastName
+    );
+}
+
+function editStyleAssignedUser(container) {
+    container.style.backgroundColor = '#2b3647';
+    container.style.color = 'white';
+    container.style.borderRadius = '10px';
 }
 
 function showAssignedUsersEdit() {
