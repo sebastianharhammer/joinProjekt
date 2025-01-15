@@ -13,6 +13,7 @@ header {
   display: flex;
   justify-content: center;
   width: 100%;
+  z-index: 9999;
 }
 
 #header-overlay-top {
@@ -25,7 +26,7 @@ header {
   height: 100px;
   background-color: #ffffff;
   filter: drop-shadow(1px 2px 3px rgba(174, 173, 173, 0.5));
-  z-index: 9;
+  z-index: 9999;
 }
 #header-content {
   width: 100%;
@@ -41,7 +42,7 @@ header {
   font-size: 24px;
   font-weight: 300;
   padding-left: 2vw;
-  z-index: 1;
+  z-index: 9999;
   margin-left: 0;
   color: black;
 }
@@ -75,7 +76,7 @@ header {
   fill: #e1e5e9;
 }
 .header-customCircle {
-  z-index: 2;
+  z-index: 9999;
 }
 
 .header-user-icon:hover .header-circleBorder {
@@ -109,7 +110,7 @@ header {
   justify-content: flex-end;
   padding: 10px;
   color: rgba(18, 18, 232, 0.997) !important;
-  z-index: 999;
+  z-index: 9999;
 }
 
 #header-current-user:hover {
@@ -122,7 +123,7 @@ header {
   flex-direction: column;
   position: fixed;
   margin-top: 100px;
-  z-index: 1112;
+  z-index: 9999;
   right: 6vw max(1920px);
   top: 0px;
   background-color: #2b3647;
@@ -220,9 +221,4 @@ header {
     z-index: 9999;
   }
 }
-@media (max-width: 500px) {
-    #header-user-overlay {
-    right: 4vw;
-    top: -17px;
-  }
-}
+

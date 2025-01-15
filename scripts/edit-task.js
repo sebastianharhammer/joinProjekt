@@ -184,11 +184,10 @@ function setupEditDropdownInteraction() {
       user => user.firstName === firstName && user.lastName === lastName
     );
     
-    const isSelected = userIndex > -1;
+    checkbox.checked = !checkbox.checked;
     
-    if (isSelected) {
+    if (userIndex > -1) {
       assignedUserArr.splice(userIndex, 1);
-      checkbox.checked = false;
       userContainer.style.backgroundColor = '';
       userContainer.style.color = '';
       userContainer.style.borderRadius = '';
@@ -199,7 +198,6 @@ function setupEditDropdownInteraction() {
         initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
         color
       });
-      checkbox.checked = true;
       userContainer.style.backgroundColor = '#2b3647';
       userContainer.style.color = 'white';
       userContainer.style.borderRadius = '10px';
@@ -380,17 +378,7 @@ function createContactCircle(contact) {
   return circleDiv;
 }
 
-function assignUserEditHTML(contact, isAssigned) {
-    const initials = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
-    return `
-        <div class="contact-circle-edit" style="background-color: ${contact.color}">${initials}</div>
-        <span>${contact.firstName} ${contact.lastName}</span>
-        <label class="contact-checkbox-edit-label">
-            <input type="checkbox" class="contact-checkbox-edit" ${isAssigned ? 'checked' : ''}>
-            <span class="checkboxSquare"></span>
-        </label>
-    `;
-}
+
 
 function handleEditContactSelection(firstName, lastName, isChecked) {
   if (isChecked) {

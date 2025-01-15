@@ -91,22 +91,17 @@ function createAssignedUserHTML(color, initials) {
 </div>`;
 }
 
-function assignUserEditHTML(contact) {
+function assignUserEditHTML(contact, isAssigned) {
+    const initials = `${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}`;
     return `
-          <div class="assigned-user-container-edit" data-firstname="${contact.firstName}" data-lastname="${contact.lastName}" data-color="${contact.color}">
-          <div id="assigned-user-svg">
-            <svg class="customCircle" width="50" height="50">
-              <circle id="user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
-              <text stroke="white" stroke-width="1" font-weight="normal" class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
-            </svg>
-          </div>
-          <div id="assigned-user-name-container-edit">
-            <span class="assigned-user-name-edit">${contact.firstName}</span>
-            <span class="assigned-user-name-edit">${contact.lastName}</span>
-          </div>
-          <input class="checkbox-add-task-edit" type="checkbox">
-          </div>`;
-  }
+        <div class="contact-circle-edit" style="background-color: ${contact.color}">${initials}</div>
+        <span>${contact.firstName} ${contact.lastName}</span>
+        <label class="contact-checkbox-edit-label">
+            <input type="checkbox" class="checkbox-add-task-edit" ${isAssigned ? 'checked' : ''}>
+            <span class="checkboxSquare"></span>
+        </label>
+    `;
+}
 
   function showAssignedUsersEditHTML(contact) {
     return `<svg class="addtask-customCircle" width="50" height="50" >
