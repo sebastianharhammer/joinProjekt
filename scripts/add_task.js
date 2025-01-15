@@ -29,43 +29,65 @@ function init() {
 
 async function createTask(event) {
   event.preventDefault();
-  let title = document.getElementById("title").value;
-  const button = document.getElementById("add-task-create");
-  let description = document.getElementById("description").value;
-  let date = document.getElementById("addTaskInputDueDate").value;
-  const category = categoryObject;
-  const priority = selectedPriority;
-  const subtasks = [...subtasksArr];
-  const assignedUsers = [...assignedUserArr];
-  if (validateTask(title, date, category)) {
+  const taskData = getTaskFormData();
+  if (validateTask(taskData.title, taskData.date, taskData.category)) {
     return;
   }
   try {
-    const nextId = await getNextTaskId();
-    let newTask = {
-      id: nextId,
-      status: "todo",
-      title: title,
-      description: description,
-      date: date,
-      taskCategory: category || "Undefined Category",
-      prio: priority,
-      subtasks: subtasks,
-      owner: assignedUsers,
-    };
-    taskArray.push(newTask);
-    await pushTaskToFirebase(newTask);
-    showAddTaskSuccesMessage();
-    setTimeout(() => {
-      window.location.href = "testboard.html";
-    }, 1500);
+    const newTask = await buildNewTask(taskData);
+    await saveTask(newTask);
+    handleSuccessfulTaskCreation();
   } catch (error) {
     console.error("Failed to create the task:", error);
   }
 }
 
+function getTaskFormData() {
+  return {
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    date: document.getElementById("addTaskInputDueDate").value,
+    category: categoryObject,
+    priority: selectedPriority,
+    subtasks: [...subtasksArr],
+    assignedUsers: [...assignedUserArr]
+  };
+}
+
+async function buildNewTask(taskData) {
+  const nextId = await getNextTaskId();
+  return {
+    id: nextId,
+    status: "todo",
+    title: taskData.title,
+    description: taskData.description,
+    date: taskData.date,
+    taskCategory: taskData.category || "Undefined Category",
+    prio: taskData.priority,
+    subtasks: taskData.subtasks,
+    owner: taskData.assignedUsers,
+  };
+}
+
+async function saveTask(newTask) {
+  taskArray.push(newTask);
+  await pushTaskToFirebase(newTask);
+}
+
+function handleSuccessfulTaskCreation() {
+  showAddTaskSuccesMessage();
+  setTimeout(() => {
+    window.location.href = "testboard.html";
+  }, 1500);
+}
+
 function handleCancel(event) {
   event.preventDefault();
+  resetFormValues();
+  resetUIElements();
+}
+
+function resetFormValues() {
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
   document.getElementById("addTaskInputDueDate").value = "";
@@ -76,6 +98,9 @@ function handleCancel(event) {
   assignedUserArr = [];
   categoryObject = "";
   selectedPriority = "";
+}
+
+function resetUIElements() {
   document.getElementById("assigned-users-short").innerHTML = "";
   const userContainers = document.querySelectorAll('.assigned-user-container');
   userContainers.forEach(container => {
@@ -89,63 +114,53 @@ function handleCancel(event) {
 }
 
 function validateTask(title, date, category) {
-  let exits = false;
-  const button = document.getElementById("add-task-create");
+  let hasErrors = false;
+  if (!validateTitle(title)) hasErrors = true;
+  if (!validateDate(date)) hasErrors = true;
+  if (!validateCategory(category)) hasErrors = true;
+  return hasErrors;
+}
+
+function validateTitle(title) {
   if (!title) {
-    document.getElementById("addTitleError").innerHTML = "Title is required!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-      document.getElementById("addTitleError").innerHTML = "";
-    }, 3000);
-    exits = true;
+    showFieldError("addTitleError", "Title is required!");
+    return false;
+  }
+  return true;
+}
+
+function validateDate(date) {
+  if (!date) {
+    showFieldError("addDateError", "Date is required!");
+    return false;
   }
   if (date < new Date().toISOString().split("T")[0]) {
-    document.getElementById("addDateError").innerHTML =
-      "Date can´t be in the past!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      document.getElementById("addDateError").innerHTML = "";
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-    }, 3000);
-    exits = true;
+    showFieldError("addDateError", "Date can´t be in the past!");
+    return false;
   }
-  if (!date) {
-    document.getElementById("addDateError").innerHTML = "Date is required!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-      document.getElementById("addDateError").innerHTML = "";
-    }, 3000);
-    exits = true;
-  }
+  return true;
+}
+
+function validateCategory(category) {
   if (!category) {
-    document.getElementById("addCategoryError").innerHTML =
-      "Category is required!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-      document.getElementById("addCategoryError").innerHTML = "";
-    }, 3000);
-    exits = true;
+    showFieldError("addCategoryError", "Category is required!");
+    return false;
   }
-  return exits;
+  return true;
+}
+
+function showFieldError(elementId, message) {
+  const button = document.getElementById("add-task-create");
+  document.getElementById(elementId).innerHTML = message;
+  button.disabled = true;
+  button.style.backgroundColor = "#000000";
+  button.style.color = "#2B3647";
+  setTimeout(() => {
+    button.disabled = false;
+    button.style.backgroundColor = "#2B3647";
+    button.style.color = "#FFFFFF";
+    document.getElementById(elementId).innerHTML = "";
+  }, 3000);
 }
 
 function showAddTaskSuccesMessage() {
@@ -198,49 +213,80 @@ async function pushTaskToFirebase(newTask) {
 function handleDropdownInteraction() {
   const dropdown = document.getElementById("custom-dropdown");
   const optionsContainer = dropdown.querySelector(".dropdown-options");
-  dropdown.addEventListener("click", (e) => {
-    const userContainer = e.target.closest(".assigned-user-container");
-    if (userContainer) {
-      e.stopPropagation();
-      return;
-    }
-    e.stopPropagation();
-    const isOpen = optionsContainer.style.display === "block";
-    optionsContainer.style.display = isOpen ? "none" : "block";
-  });
-  optionsContainer.addEventListener("click", (event) => {
-    const userContainer = event.target.closest(".assigned-user-container");
-    if (!userContainer) return;
+  dropdown.addEventListener("click", (e) => handleDropdownClick(e, optionsContainer));
+  optionsContainer.addEventListener("click", handleOptionsClick);
+}
+
+function handleDropdownClick(event, optionsContainer) {
+  const userContainer = event.target.closest(".assigned-user-container");
+  if (userContainer) {
     event.stopPropagation();
-    const checkbox = userContainer.querySelector('input[type="checkbox"]');
-    const firstName = userContainer.dataset.firstname;
-    const lastName = userContainer.dataset.lastname;
-    const color = userContainer.dataset.color;
-    const userIndex = assignedUserArr.findIndex(
-      (user) => user.firstName === firstName && user.lastName === lastName
-    );
-    const isSelected = userIndex > -1;
-    if (isSelected) {
-      assignedUserArr.splice(userIndex, 1);
-      checkbox.checked = false;
-      userContainer.style.backgroundColor = "";
-      userContainer.style.color = "";
-      userContainer.style.borderRadius = "";
-    } else {
-      assignedUserArr.push({
-        firstName,
-        lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
-        color,
-      });
-      checkbox.checked = true;
-      userContainer.style.backgroundColor = "#2b3647";
-      userContainer.style.color = "white";
-      userContainer.style.borderRadius = "10px";
-    }
-    showAssignedUsers();
+    return;
+  }
+  event.stopPropagation();
+  toggleDropdown(optionsContainer);
+}
+
+function toggleDropdown(optionsContainer) {
+  const isOpen = optionsContainer.style.display === "block";
+  optionsContainer.style.display = isOpen ? "none" : "block";
+}
+
+function handleOptionsClick(event) {
+  const userContainer = event.target.closest(".assigned-user-container");
+  if (!userContainer) return;
+  event.stopPropagation();
+  const userData = extractUserData(userContainer);
+  toggleUserSelection(userData, userContainer);
+  showAssignedUsers();
+}
+
+function extractUserData(userContainer) {
+  return {
+    firstName: userContainer.dataset.firstname,
+    lastName: userContainer.dataset.lastname,
+    color: userContainer.dataset.color
+  };
+}
+
+function toggleUserSelection(userData, userContainer) {
+  const checkbox = userContainer.querySelector('input[type="checkbox"]');
+  const userIndex = findUserIndex(userData);
+  if (userIndex > -1) {
+    removeUser(userIndex);
+    updateUserContainer(userContainer, checkbox, false);
+  } else {
+    addUser(userData);
+    updateUserContainer(userContainer, checkbox, true);
+  }
+}
+
+function findUserIndex(userData) {
+  return assignedUserArr.findIndex(
+    user => user.firstName === userData.firstName && user.lastName === userData.lastName
+  );
+}
+
+function removeUser(userIndex) {
+  assignedUserArr.splice(userIndex, 1);
+}
+
+function addUser(userData) {
+  assignedUserArr.push({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    initials: `${getFirstLetter(userData.firstName)}${getFirstLetter(userData.lastName)}`,
+    color: userData.color
   });
 }
+
+function updateUserContainer(userContainer, checkbox, isSelected) {
+  checkbox.checked = isSelected;
+  userContainer.style.backgroundColor = isSelected ? "#2b3647" : "";
+  userContainer.style.color = isSelected ? "white" : "";
+  userContainer.style.borderRadius = isSelected ? "10px" : "";
+}
+
 function closeDropdown() {
     const optionsContainer = document.getElementById('dropdown-options');
     optionsContainer.style.display = 'none';
@@ -363,7 +409,6 @@ function hideAddTaskCategoriesCategory() {
     categoryList.innerHTML = "";
 }
 
-
 function renderAddTaskCategories() {
   let categoryContainer = document.getElementById("dropDownCategoryMenu");
   for (let i = 0; i < addTaskcategories.length; i++) {
@@ -402,29 +447,58 @@ function setPriority(priority) {
 
 function addSubtask() {
   const subtaskInput = document.getElementById("subtaskInput");
-  const subtasksContent = document.getElementById("subtasksContent");
-  if (subtaskInput.value.trim() !== "") {
-    subtaskIdCounter++;
-    const liId = "subtask-" + subtaskIdCounter;
-    const spanId = "span-" + subtaskIdCounter;
-    const inputId = "input-" + subtaskIdCounter;
-    const newSubtaskHTML = addSubtaskHTML(liId, spanId, inputId, subtaskInput);
-    subtasksArr.push({
-      checkbox_img: "../img/checkbox-empty.svg",
-      subtask: `${subtaskInput.value}`,
-    });
-    subtasksEdit.push({
-      checkbox_img: "../img/checkbox-empty.svg",
-      subtask: `${subtaskInput.value}`,
-    });
-    subtasksContent.innerHTML += newSubtaskHTML;
-    subtaskInput.value = "";
-  } else {
-    errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
-    setTimeout(() => {
-      errorMessageSubtasks.innerHTML = "";
-    }, 1500);
+  
+  if (!validateSubtaskInput(subtaskInput.value)) {
+    showSubtaskError();
+    return;
   }
+  createAndAddSubtask(subtaskInput.value);
+  resetSubtaskInput(subtaskInput);
+  updateSubtaskIcons();
+}
+
+function validateSubtaskInput(value) {
+  return value.trim() !== "";
+}
+
+function showSubtaskError() {
+  errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+  setTimeout(() => {
+    errorMessageSubtasks.innerHTML = "";
+  }, 1500);
+}
+
+function createAndAddSubtask(subtaskValue) {
+  subtaskIdCounter++;
+  const ids = generateSubtaskIds(subtaskIdCounter);
+  addSubtaskToArrays(subtaskValue);
+  const subtasksContent = document.getElementById("subtasksContent");
+  const newSubtaskHTML = addSubtaskHTML(ids.liId, ids.spanId, ids.inputId, { value: subtaskValue });
+  subtasksContent.innerHTML += newSubtaskHTML;
+}
+
+function generateSubtaskIds(counter) {
+  return {
+    liId: `subtask-${counter}`,
+    spanId: `span-${counter}`,
+    inputId: `input-${counter}`
+  };
+}
+
+function addSubtaskToArrays(subtaskValue) {
+  const newSubtask = {
+    checkbox_img: "../img/checkbox-empty.svg",
+    subtask: subtaskValue
+  };
+  subtasksArr.push({ ...newSubtask });
+  subtasksEdit.push({ ...newSubtask });
+}
+
+function resetSubtaskInput(input) {
+  input.value = "";
+}
+
+function updateSubtaskIcons() {
   document.getElementById("clear-add-icons").classList.add("d-none");
   document.getElementById("subtasks-plus-icon").classList.remove("d-none");
 }

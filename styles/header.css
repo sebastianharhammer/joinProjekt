@@ -122,7 +122,7 @@ header {
   flex-direction: column;
   position: fixed;
   margin-top: 100px;
-  z-index: 999;
+  z-index: 1112;
   right: 6vw max(1920px);
   top: 0px;
   background-color: #2b3647;
@@ -197,6 +197,10 @@ header {
     margin-left: 0;
     }
 
+    #header-logo-container img {
+      width: 100%;
+    }
+
 
   #header-current-user {
     margin-left: auto;
@@ -213,7 +217,7 @@ header {
 }
 @media (max-width: 720px) {
   #header-overlay-top {
-    z-index: 1111;
+    z-index: 9999;
   }
 }
 @media (max-width: 500px) {

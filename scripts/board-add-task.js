@@ -52,17 +52,30 @@ function hideAddTask() {
 
 function handleCancel(event) {
   event.preventDefault();
+  resetFormInputs();
+  resetArrays();
+  resetUserSelections();
+  setPriority("medium");
+}
+
+function resetFormInputs() {
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
   document.getElementById("addTaskInputDueDate").value = "";
   document.getElementById("categoryInput").value = "";
   document.getElementById("subtaskInput").value = "";
   document.getElementById("subtasksContent").innerHTML = "";
+}
+
+function resetArrays() {
   subtasksArr = [];
   assignedUserArr = [];
   categoryObject = "";
   selectedPriority = "";
   document.getElementById("assigned-users-short").innerHTML = "";
+}
+
+function resetUserSelections() {
   const userContainers = document.querySelectorAll('.assigned-user-container');
   userContainers.forEach(container => {
     container.style.backgroundColor = "";
@@ -71,101 +84,97 @@ function handleCancel(event) {
     const checkbox = container.querySelector('input[type="checkbox"]');
     if (checkbox) checkbox.checked = false;
   });
-  setPriority("medium");
 }
 
 async function createTask(status, event) {
   event.preventDefault();
-  let title = document.getElementById("title").value;
-  let description = document.getElementById("description").value;
-  let date = document.getElementById("addTaskInputDueDate").value;
-  const category = categoryObject;
-  const priority = selectedPriority;
-  const subtasks = [...subtasksArr];
-  const assignedUsers = [...assignedUserArr];
-  if (validateTask(title, date, category)) {
+  const taskData = getTaskFormData();
+  if (validateTask(taskData.title, taskData.date, taskData.category)) {
     return;
   }
   try {
     const nextId = await getNextTaskId();
-    let newTask = {
-      id: nextId,
-      status: localStatus,
-      title: title,
-      description: description,
-      date: date,
-      taskCategory: category || "Undefined Category",
-      prio: priority,
-      subtasks: subtasks,
-      owner: assignedUsers,
-    };
+    const newTask = createTaskObject(nextId, taskData);
     taskArray.push(newTask);
     await pushTaskToFirebase(newTask);
-    showAddTaskSuccesMessage();
-    hideAddTask();
+    handleTaskCreationSuccess();
   } catch (error) {
     console.error("Failed to create the task:", error);
   }
 }
 
+function getTaskFormData() {
+  return {
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    date: document.getElementById("addTaskInputDueDate").value,
+    category: categoryObject,
+    priority: selectedPriority,
+    subtasks: [...subtasksArr],
+    assignedUsers: [...assignedUserArr]
+  };
+}
+
+function createTaskObject(id, taskData) {
+  return {
+    id: id,
+    status: localStatus,
+    title: taskData.title,
+    description: taskData.description,
+    date: taskData.date,
+    taskCategory: taskData.category || "Undefined Category",
+    prio: taskData.priority,
+    subtasks: taskData.subtasks,
+    owner: taskData.assignedUsers,
+  };
+}
+
+function handleTaskCreationSuccess() {
+  showAddTaskSuccesMessage();
+  hideAddTask();
+}
+
 function validateTask(title, date, category) {
   let exits = false;
-  const button = document.getElementById("add-task-create");
   if (!title) {
-    document.getElementById("addTitleError").innerHTML = "Title is required!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-      document.getElementById("addTitleError").innerHTML = "";
-    }, 3000);
+    showValidationError("addTitleError", "Title is required!");
     exits = true;
   }
   if (date < new Date().toISOString().split("T")[0]) {
-    document.getElementById("addDateError").innerHTML =
-      "Date can´t be in the past!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      document.getElementById("addDateError").innerHTML = "";
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-    }, 3000);
+    showValidationError("addDateError", "Date can´t be in the past!");
     exits = true;
   }
   if (!date) {
-    document.getElementById("addDateError").innerHTML = "Date is required!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-      document.getElementById("addDateError").innerHTML = "";
-    }, 3000);
+    showValidationError("addDateError", "Date is required!");
     exits = true;
   }
   if (!category) {
-    document.getElementById("addCategoryError").innerHTML =
-      "Category is required!";
-    button.disabled = true;
-    button.style.backgroundColor = "#000000";
-    button.style.color = "#2B3647";
-    setTimeout(() => {
-      button.disabled = false;
-      button.style.backgroundColor = "#2B3647";
-      button.style.color = "#FFFFFF";
-      document.getElementById("addCategoryError").innerHTML = "";
-    }, 3000);
+    showValidationError("addCategoryError", "Category is required!");
     exits = true;
   }
   return exits;
+}
+
+function showValidationError(elementId, message) {
+  const button = document.getElementById("add-task-create");
+  document.getElementById(elementId).innerHTML = message;
+  disableButton(button);
+  setTimeout(() => {
+    enableButton(button);
+    document.getElementById(elementId).innerHTML = "";
+  }, 3000);
+}
+
+function disableButton(button) {
+  button.disabled = true;
+  button.style.backgroundColor = "#000000";
+  button.style.color = "#2B3647";
+}
+
+function enableButton(button) {
+  button.disabled = false;
+  button.style.backgroundColor = "#2B3647";
+  button.style.color = "#FFFFFF";
 }
 
 async function getNextTaskId() {
@@ -213,49 +222,87 @@ function showAddTaskSuccesMessage() {
 function handleDropdownInteraction() {
   const dropdown = document.getElementById("custom-dropdown");
   const optionsContainer = dropdown.querySelector(".dropdown-options");
-  dropdown.addEventListener("click", (e) => {
-    const userContainer = e.target.closest(".assigned-user-container");
-    if (userContainer) {
-      e.stopPropagation();
-      return;
-    }
-    e.stopPropagation();
-    const isOpen = optionsContainer.style.display === "block";
-    optionsContainer.style.display = isOpen ? "none" : "block";
-  });
-  optionsContainer.addEventListener("click", (event) => {
-    const userContainer = event.target.closest(".assigned-user-container");
-    if (!userContainer) return;
-    event.stopPropagation();
-    const checkbox = userContainer.querySelector('input[type="checkbox"]');
-    const firstName = userContainer.dataset.firstname;
-    const lastName = userContainer.dataset.lastname;
-    const color = userContainer.dataset.color;
-    const userIndex = assignedUserArr.findIndex(
-      (user) => user.firstName === firstName && user.lastName === lastName
-    );
-    const isSelected = userIndex > -1;
-    if (isSelected) {
-      assignedUserArr.splice(userIndex, 1);
-      checkbox.checked = false;
-      userContainer.style.backgroundColor = "";
-      userContainer.style.color = "";
-      userContainer.style.borderRadius = "";
-    } else {
-      assignedUserArr.push({
-        firstName,
-        lastName,
-        initials: `${getFirstLetter(firstName)}${getFirstLetter(lastName)}`,
-        color,
-      });
-      checkbox.checked = true;
-      userContainer.style.backgroundColor = "#2b3647";
-      userContainer.style.color = "white";
-      userContainer.style.borderRadius = "10px";
-    }
-    showAssignedUsers();
-  });
+  dropdown.addEventListener("click", (e) => addTaskHandleDropdownClick(e, optionsContainer));
+  optionsContainer.addEventListener("click", addTaskHandleOptionsClick);
 }
+
+function addTaskHandleDropdownClick(e, optionsContainer) {
+  const userContainer = e.target.closest(".assigned-user-container");
+  if (userContainer) {
+    e.stopPropagation();
+    return;
+  }
+  e.stopPropagation();
+  addTaskToggleOptionsDisplay(optionsContainer);
+}
+
+function addTaskToggleOptionsDisplay(optionsContainer) {
+  const isOpen = optionsContainer.style.display === "block";
+  optionsContainer.style.display = isOpen ? "none" : "block";
+}
+
+function addTaskHandleOptionsClick(event) {
+  const userContainer = event.target.closest(".assigned-user-container");
+  if (!userContainer) return;
+  event.stopPropagation();
+  const userData = addTaskGetUserData(userContainer);
+  addTaskToggleUserSelection(userContainer, userData);
+  showAssignedUsers();
+}
+
+function addTaskGetUserData(userContainer) {
+  return {
+    firstName: userContainer.dataset.firstname,
+    lastName: userContainer.dataset.lastname,
+    color: userContainer.dataset.color
+  };
+}
+
+function addTaskToggleUserSelection(userContainer, userData) {
+  const checkbox = userContainer.querySelector('input[type="checkbox"]');
+  const userIndex = addTaskFindUserIndex(userData);
+  if (userIndex > -1) {
+    addTaskRemoveUser(userIndex, userContainer, checkbox);
+  } else {
+    addTaskAddUser(userData, userContainer, checkbox);
+  }
+}
+
+function addTaskFindUserIndex(userData) {
+  return assignedUserArr.findIndex(
+    user => user.firstName === userData.firstName && user.lastName === userData.lastName
+  );
+}
+
+function addTaskRemoveUser(userIndex, userContainer, checkbox) {
+  assignedUserArr.splice(userIndex, 1);
+  checkbox.checked = false;
+  addTaskResetUserContainerStyle(userContainer);
+}
+
+function addTaskAddUser(userData, userContainer, checkbox) {
+  assignedUserArr.push({
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    initials: `${getFirstLetter(userData.firstName)}${getFirstLetter(userData.lastName)}`,
+    color: userData.color
+  });
+  checkbox.checked = true;
+  addTaskSetSelectedUserContainerStyle(userContainer);
+}
+
+function addTaskResetUserContainerStyle(container) {
+  container.style.backgroundColor = "";
+  container.style.color = "";
+  container.style.borderRadius = "";
+}
+
+function addTaskSetSelectedUserContainerStyle(container) {
+  container.style.backgroundColor = "#2b3647";
+  container.style.color = "white";
+  container.style.borderRadius = "10px";
+}
+
 function closeDropdown() {
   const optionsContainer = document.getElementById("dropdown-options");
   optionsContainer.style.display = "none";
@@ -397,7 +444,6 @@ function setPriority(priority) {
   priorities.forEach((prio) => {
     const btn = document.getElementById(`prio-${prio}`);
     const img = document.getElementById(`prio-image-${prio}`);
-
     btn.classList.remove("red", "yellow", "green");
     img.classList.remove("sat-0");
   });
@@ -418,24 +464,12 @@ function setPriority(priority) {
   }
 }
 
-function addSubtask() {
+function addTaskSubtask() {
   const subtaskInput = document.getElementById("subtaskInput");
   const subtasksContent = document.getElementById("subtasksContent");
   if (subtaskInput.value.trim() !== "") {
-    subtaskIdCounter++;
-    const liId = "subtask-" + subtaskIdCounter;
-    const spanId = "span-" + subtaskIdCounter;
-    const inputId = "input-" + subtaskIdCounter;
-    const newSubtaskHTML = addSubtaskHTML(liId, spanId, inputId, subtaskInput);
-    subtasksArr.push({
-      checkbox_img: "../img/checkbox-empty.svg",
-      subtask: `${subtaskInput.value}`,
-    });
-    subtasksEdit.push({
-      checkbox_img: "../img/checkbox-empty.svg",
-      subtask: `${subtaskInput.value}`,
-    });
-    subtasksContent.innerHTML += newSubtaskHTML;
+    const subtaskData = addTaskCreateSubtask(subtaskInput.value);
+    subtasksContent.innerHTML += subtaskData.html;
     subtaskInput.value = "";
   } else {
     errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
@@ -445,6 +479,24 @@ function addSubtask() {
   }
   document.getElementById("clear-add-icons").classList.add("d-none");
   document.getElementById("subtasks-plus-icon").classList.remove("d-none");
+}
+
+function addTaskCreateSubtask(subtaskValue) {
+  subtaskIdCounter++;
+  const liId = "subtask-" + subtaskIdCounter;
+  const spanId = "span-" + subtaskIdCounter;
+  const inputId = "input-" + subtaskIdCounter;
+  subtasksArr.push({
+    checkbox_img: "../img/checkbox-empty.svg",
+    subtask: subtaskValue,
+  });
+  subtasksEdit.push({
+    checkbox_img: "../img/checkbox-empty.svg",
+    subtask: subtaskValue,
+  });
+  return {
+    html: addSubtaskHTML(liId, spanId, inputId, { value: subtaskValue })
+  };
 }
 
 function editSubtask(liId, spanId, inputId) {
