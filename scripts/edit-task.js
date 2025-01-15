@@ -7,10 +7,8 @@ function showEditTaskTempl(taskId) {
   }
   assignedUserArr = task.owner ? [...task.owner] : [];
   toggleEditAndDetailView();
-
   const editView = document.getElementById("editTaskTempl");
   editView.innerHTML = getEditTemplate(task);
-
   initializeEditTask(taskId, task);
 }
 
@@ -33,7 +31,6 @@ function initializeEditTask(taskId, task) {
 function editExistingSubtaskEditView(taskId, subtaskIndex) {
   const subtaskTextElement = editFindSubtaskElement(taskId, subtaskIndex);
   if (!subtaskTextElement) return;
-  
   const inputElement = editCreateInputElement(subtaskTextElement);
   editUpdateEditIcon(taskId, subtaskIndex);
   editSetupInputBehavior(inputElement, taskId, subtaskIndex);
@@ -42,7 +39,6 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
 function editFindSubtaskElement(taskId, subtaskIndex) {
   const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
   const subtaskTextElement = document.getElementById(subtaskTextId);
-  
   if (!subtaskTextElement) {
     console.error(`Subtask-Text-Element mit ID ${subtaskTextId} nicht gefunden.`);
     return null;
@@ -176,7 +172,6 @@ async function getUsersForEditDropDown() {
 function setupEditDropdownInteraction() {
   const dropdown = document.getElementById('custom-dropdown-edit');
   const optionsContainer = dropdown.querySelector('.dropdown-options-edit');
-
   editSetupDropdownClick(dropdown, optionsContainer);
   editSetupOptionsContainerClick(optionsContainer);
   editSetupDocumentClick(dropdown, optionsContainer);
@@ -202,7 +197,6 @@ function editSetupOptionsContainerClick(optionsContainer) {
   optionsContainer.addEventListener('click', (event) => {
     const userContainer = event.target.closest('.assigned-user-container-edit');
     if (!userContainer) return;
-    
     event.stopPropagation();
     editHandleUserSelection(userContainer);
   });
@@ -213,7 +207,6 @@ function editHandleUserSelection(userContainer) {
   const firstName = userContainer.dataset.firstname;
   const lastName = userContainer.dataset.lastname;
   const color = userContainer.dataset.color;
-  
   checkbox.checked = !checkbox.checked;
   editUpdateUserAssignment(userContainer, firstName, lastName, color);
 }
@@ -284,11 +277,9 @@ function assignUserEdit(firstName, lastName, color) {
 
 function editReturnArrayContacts() {
     if (!editValidateContacts()) return;
-    
     const dropdownEdit = document.getElementById('custom-dropdown-edit');
     const optionsContainerEdit = dropdownEdit.querySelector('.dropdown-options-edit');
     optionsContainerEdit.innerHTML = "";
-    
     const contactsArray = Object.values(finalContacts);
     contactsArray.forEach(contactInDrop => {
         if (!editValidateContact(contactInDrop)) return;
@@ -313,7 +304,6 @@ function editCreateUserContainer(contact) {
     const userContainerEdit = document.createElement('div');
     userContainerEdit.classList.add('assigned-user-container-edit');
     editSetUserContainerData(userContainerEdit, contact);
-    
     const isAssigned = editCheckIfUserAssigned(contact);
     if (isAssigned) {
         editStyleAssignedUser(userContainerEdit);
@@ -350,7 +340,6 @@ function showAssignedUsersEdit() {
   }
 }
 
-
   function closeDropdownEdit() {
     const optionsContainer = document.getElementById('dropdown-options-edit');
     optionsContainer.style.display = 'none';
@@ -371,7 +360,6 @@ function toggleDropdown(editOptionsContainer) {
   }
 } 
 
-
  function createDropdownOption(contact, isChecked) {
   const optionElement = document.createElement("div");
   optionElement.classList.add("dropdown-contact-edit");
@@ -381,7 +369,6 @@ function toggleDropdown(editOptionsContainer) {
   const circleDiv = createContactCircle(contact);
   const nameSpan = createContactNameSpan(contact);
   const checkboxLabel = createCheckboxLabel(contact, isChecked);
-
   optionElement.appendChild(circleDiv);
   optionElement.appendChild(nameSpan);
   optionElement.appendChild(checkboxLabel);
@@ -421,7 +408,6 @@ function createEditCheckbox(isChecked, contact) {
       checkbox.checked
     );
   });
-
   return checkbox;
 } 
 
@@ -483,7 +469,6 @@ function updateAssignedUsersDisplay() {
     "assigned-users-short-edit"
   );
   assignedUsersContainer.innerHTML = "";
-
   assignedUserArr.forEach((user) => {
     const color = getRandomColor(user.firstName, user.lastName);
     const initials = `${getFirstLetter(user.firstName)}${getFirstLetter(
@@ -607,7 +592,6 @@ function closeEditTask() {
   document.body.style.overflow = "";
   document.documentElement.style.overflow = "";
 }
-
 
 async function saveEditedTask() {
   const taskId = currentTaskBeingEdited;
