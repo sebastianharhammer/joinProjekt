@@ -50,7 +50,7 @@ d-none {
   background-color: #ffffff;
   border-radius: 24px;
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.22);
-  max-width: 320px;
+  width: 240px;
 }
 
 .todo:hover {
@@ -112,6 +112,7 @@ d-none {
   font-weight: 300;
   font-size: 12px;
   color: gray;
+  overflow-x: hidden;
 }
 
 .open-sans-bold {
@@ -485,7 +486,22 @@ body.no-scroll {
   display: none;
 }
 
+@media (max-width: 1500px) {
+.todo {
+  width: 170px;
+}
+
+.dragarea-todo, .dragarea-inProgress, .dragarea-feedback, .dragarea-done {
+  align-items: center;
+}
+}
+
 @media (max-width: 1060px) {
+
+  .todo {
+    width: 120px;
+  }
+
   .columnTitleFont {
     font-size: 19px;
   }
@@ -557,6 +573,10 @@ body.no-scroll {
     width: 100%;
     left: 0;
   }
+
+  .todo {
+    width: 240px;
+}
 
   .tasksContent img {
     display: block;
@@ -772,6 +792,11 @@ body.no-scroll {
   }
 }
 @media (max-width: 1258px) {
+
+  .dragarea-todo, .dragarea-inProgress, .dragarea-feedback, .dragarea-done {
+    padding: 4px;
+
+}
   .boardNavigator {
     left: 1vw;
   }
@@ -796,7 +821,7 @@ body.no-scroll {
   .dragarea-todo,
   .dragarea-inProgress,
   .dragarea-feedback {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
   }
 
