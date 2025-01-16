@@ -124,7 +124,7 @@ function createLargePanel(upcomingTask) {
   const priority = upcomingTask ? upcomingTask.prio : "No priority";
   const priorityIcon = getPriorityIcon(priority);
 
-  return `
+  return /*html*/`
     <a href="testboard.html" class="panel-link">
       <div class="panel large">
         <img class="panel-img-prio" src="${priorityIcon}" alt="${priority} Priority Icon" />
@@ -132,7 +132,9 @@ function createLargePanel(upcomingTask) {
           <p>${priority}</p>
           <span>Upcoming Task</span>
         </div>
-        <div class="divider"></div>
+        <div class="divider">
+          <hr class="dividerSummary">
+        </div>
         <div class="panel-right">
           <span>${date}</span>
           <br />
@@ -140,7 +142,7 @@ function createLargePanel(upcomingTask) {
         </div>
       </div>
     </a>
-  `;
+    `;
 }
 
 function getPriorityIcon(priority) {
