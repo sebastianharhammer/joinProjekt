@@ -169,7 +169,7 @@
   justify-content: space-evenly;
   width: 70%;
   height: 100%;
-  margin-top: 10%;
+  margin-top: 0 !important;
 }
 .add-contact-input {
   width: 100%;
@@ -342,7 +342,7 @@
 .add-contact-input:invalid + .error-message {
   display: block;
 }
-@media (min-width: 1500px) {
+@media (min-width: 1920px) {
   #add-contact-btn-placeholder {
     width: 30%;
     height: 5vh;
@@ -365,6 +365,13 @@
   #add-contact-icon-mobile {
     display: none;
   }
+/*   #add-contact-btn-placeholder {
+    width: 30%;
+    height: 5vh;
+  }
+  #add-contact-btn-container {
+    height: 0;
+  } */
 }
 @media (max-width: 1050px) {
   #vector-line {
