@@ -491,6 +491,10 @@ body.no-scroll {
   width: 170px;
 }
 
+.noTasks {
+  width: 170px;
+}
+
 .dragarea-todo, .dragarea-inProgress, .dragarea-feedback, .dragarea-done {
   align-items: center;
 }
@@ -499,6 +503,10 @@ body.no-scroll {
 @media (max-width: 1060px) {
 
   .todo {
+    width: 120px;
+  }
+
+  .noTasks {
     width: 120px;
   }
 
@@ -576,6 +584,10 @@ body.no-scroll {
 
   .todo {
     width: 240px;
+}
+
+.noTasks {
+  width: 240px;
 }
 
   .tasksContent img {
@@ -660,6 +672,10 @@ body.no-scroll {
     top: 116px;
     width: 98vw;
     gap: 32px;
+  }
+
+  .noTasks {
+    width: 220px;
   }
 
   .boardFont-mobile {
@@ -826,7 +842,7 @@ body.no-scroll {
   }
 
   .dragarea-done {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     margin-bottom: 80px;
   }
