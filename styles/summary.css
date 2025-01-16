@@ -312,6 +312,10 @@ body {
 }
 
 @media (max-width: 480px) {
+  .panel.large {
+    padding: 24px 8px;
+  }
+
   .greeting-text h1 {
     display: none;
   }
@@ -348,6 +352,16 @@ body {
 
   .panel.large .panel-right span:last-child {
     font-size: 14.4px;
+  }
+}
+
+@media (max-width: 350px) {
+  .panels {
+    margin-left: -20px;
+  }
+
+  .panel.large {
+    padding: 24px 8px;
   }
 }
 
