@@ -1,3 +1,4 @@
+/* Grundlegende Stile (Desktop-Ansicht) */
 body {
   font-family: "Inter", sans-serif;
   color: gray;
@@ -13,92 +14,94 @@ body {
 
 .main-content {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 180px;
+  flex-direction: row; /* Reihen nebeneinander */
+  align-items: flex-start;
+  padding: 20px; /* 1.25rem -> 20px */
   background-color: #f5f5f5;
-  width: 100%;
-  height: calc(100vh - 60px);
+  width: calc(100% - 10vw); /* Berücksichtigung der Navbar (10vw) */
   box-sizing: border-box;
-  margin-left: 120px;
-  margin-top: 100px;
+  margin: 100px 0 0 10vw; /* 6.25rem -> 100px oben, 10vw links */
 }
 
-.main-content h1 {
-  font-size: 56px;
+.content-wrapper {
+  display: flex;
+  flex-direction: row; /* Reihen nebeneinander beibehalten */
+  align-items: flex-start;
+  gap: 20px; /* 1.25rem -> 20px Abstand zwischen Begrüßung und Panels */
+  width: 100%;
+}
+
+.greeting-text {
+  flex: 0 0 300px; /* Feste Breite für den Begrüßungstext */
+  text-align: left; /* Links ausrichten */
+  margin-left: 50px;
+  margin-top: 270px;
+}
+
+.greeting-text h1 {
+  font-size: 45px; /* 2rem -> 32px */
   font-weight: bold;
   color: #222;
-  margin-bottom: 10px;
+  margin: 0;
 }
 
-.main-content span {
-  font-size: 18px;
-  color: #666;
-  margin-top: 65px;
+.greeting-text h2 {
+  font-size: 56px; /* 2.5rem -> 40px */
+  font-weight: bold;
+  color: #364d6d;
+  margin: 10px 0 0 0; /* 0.625rem -> 10px */
 }
 
-.header-container {
-  display: flex;
-  align-items: flex-start;
-}
-
-.divider-line {
-  width: 2px;
-  height: 80px;
-  background-color: #00bcd4;
-  margin: 24px 24px 0 16px;
-  align-self: center;
-}
-
+/* Panels Container */
 .panels {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 1000px;
+  flex-direction: column; /* Reihen werden vertikal gestapelt */
+  gap: 20px; /* 1.25rem -> 20px */
+
+  max-width: 1200px; /* 75rem -> 1200px */
+  justify-content: center;
 }
 
+/* Panel-Stile */
 .panel-link {
   text-decoration: none;
   color: inherit;
-  display: block;
+  flex: 1 1 200px; /* Angepasst von 250px auf 200px */
+  min-width: 200px; /* Angepasst von 250px auf 200px */
 }
 
-.panel-link:hover .panel {
-  transform: scale(1.05);
-  background-color: #2a3647;
-  color: white;
-}
-
-.panel-img-prio {
-  width: 60px;
-  height: 60px;
-}
-
-.panel-row {
+.panel {
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  width: 100%;
-}
-
-.panel-link .panel {
-  display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: white;
-  border-radius: 32px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px; /* 1rem -> 16px */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 0 0.25rem 0.625rem -> 0 4px 10px */
   text-align: center;
-  padding: 18px;
-  flex: 1;
+  padding: 20px; /* 1.25rem -> 20px */
   transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   position: relative;
-  width: 264px;
-  height: 168px;
-  gap: 16px;
+  width: 100%;
+  min-height: 150px; /* 9.375rem -> 150px */
+  box-sizing: border-box;
 }
 
-.panel-link:hover .panel {
+.panel.large {
+  flex: 1 1 100%; /* 100% */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 200px; /* 12.5rem -> 200px */
+  padding: 20px 40px; /* 1.25rem 2.5rem -> 20px 40px */
+}
+
+.panel.small {
+  flex: 1 1 150px;
+  min-height: 120px; /* 7.5rem -> 120px */
+}
+
+.panel:hover {
   transform: scale(1.05);
   background-color: #2a3647;
   color: white;
@@ -108,67 +111,47 @@ body {
   filter: brightness(1.5);
 }
 
-.panel-link .panel img {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 10px;
-  filter: brightness(100%);
+.panel img {
+  width: 50px; /* 3.125rem -> 50px */
+  height: 50px; /* 3.125rem -> 50px */
+  object-fit: contain;
+  margin-bottom: 10px; /* 0.625rem -> 10px */
   transition: filter 0.2s ease;
 }
 
-.panel-link .panel:hover img {
-  filter: brightness(1.5);
+.panel.large img {
+  width: 60px; /* 3.75rem -> 60px */
+  height: 60px; /* 3.75rem -> 60px */
+  margin: 0 20px 0 0; /* 0 1.25rem 0 0 -> 0 20px 0 0 */
 }
 
-.panel p {
-  font-size: 56px;
+.panel-content p {
+  font-size: 24px; /* 1.5rem -> 24px */
   font-weight: bold;
   margin: 0;
   color: #222;
   transition: color 0.2s ease;
 }
 
-.panel:hover p {
-  color: white;
-}
-
-.panel span {
-  font-size: 14px;
+.panel-content span {
+  font-size: 16px; /* 1rem -> 16px */
   color: #555;
   transition: color 0.2s ease;
 }
 
-.panel:hover span {
-  color: white;
-}
-
-.panel-bottom {
-  height: 168px;
-  max-width: 168px;
-}
-
-.panel.large {
-  flex-direction: row;
-  justify-content: space-evenly;
-  padding: 20px 45px;
-  max-width: 100%;
-  height: 168px;
-  width: 560px;
-}
-
 .panel.large .panel-right span:first-child {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 19.2px; /* 1.2rem -> 19.2px */
   color: #222;
 }
 
 .panel.large .panel-right span:last-child {
-  font-size: 14px;
+  font-size: 14.4px; /* 0.9rem -> 14.4px */
   color: #666;
 }
 
 .panel.large .panel-right span {
-  font-size: 14px;
+  font-size: 14px; /* 0.875rem -> 14px */
   color: #666;
   transition: color 0.2s ease;
 }
@@ -178,10 +161,10 @@ body {
 }
 
 .panel.large .divider {
-  width: 2px;
+  width: 2px; /* 0.125rem -> 2px */
   background-color: #ddd;
-  margin: 0 20px;
-  align-self: stretch;
+  height: 60%;
+  margin: 0 20px; /* 0 1.25rem -> 0 20px */
   transition: background-color 0.2s ease;
 }
 
@@ -189,225 +172,218 @@ body {
   background-color: white;
 }
 
-.panel.small {
-  max-width: 150px;
-  height: 120px;
+/* Hover-Effekte */
+.panel:hover .panel-content p,
+.panel:hover .panel-content span {
+  color: white;
 }
 
-.panel {
-  height: 100px;
-}
-
-.panel.large {
-  height: 150px;
-}
-
-.panel.large img {
-  margin-left: 30px;
-}
-
-.panel.small {
-  height: 90px;
-}
-
-.greeting-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  margin-left: 50px;
-  align-items: flex-start;
-}
-
-.greeting-text h1 {
-  font-size: 48px;
-  font-weight: bold;
-  color: black;
-  margin: 0;
-}
-
-.greeting-text h2 {
-  font-size: 74px;
-  font-weight: bold;
-  color: #364d6d;
-  margin: 10px 0 0 0;
-}
-
-@media (max-width: 1160px) {
-  .greeting-text h1 {
-    display: none;
+/* Desktop-Ansicht (Standard: ≥1200px) */
+/* Hier definieren wir das gewünschte Layout für Desktop */
+@media (min-width: 1200px) {
+  /* 75rem -> 1200px */
+  .panels {
+    flex-direction: column; /* Reihen bleiben vertikal gestapelt */
+    gap: 20px; /* 1.25rem -> 20px */
+    padding: 50px;
   }
-  #nameOfUser {
-    display: none;
-  }
-}
 
-@media (max-width: 894px) {
-  .main-content {
-    padding: 70px;
-  }
-}
-
-@media (max-width: 788px) {
-  .main-content {
-    padding: 0px;
-  }
-}
-
-@media (max-width: 708px) {
-  .panel.large {
-    padding: 0px;
-  }
-  .panel-link .panel {
-    padding: 0px;
-  }
-}
-
-@media (max-width: 688px) {
-  .panel-link .panel img {
-    width: 31px;
-    height: 36px;
-  }
-}
-
-@media (max-width: 576px) {
-  .panel-row {
-    width: 80%;
+  /* Erste Reihe: Zwei Panels nebeneinander */
+  .panel-row-mid {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .panel {
-    min-height: 120px;
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .panel img {
-    max-width: 40px;
-    height: auto;
-  }
-  .panel p {
-    font-size: 20px;
-    margin: 6px 0 0;
-  }
-  .panel span {
-    font-size: 12px;
-    margin: 4px 0 0;
-    text-align: center;
-  }
-  .panel-row:nth-child(1) {
-    width: 80% !important;
-
-    justify-content: flex-start !important;
-    gap: 130px !important;
-  }
-
-  .panel-row:nth-child(1) .panel {
-    flex: 0 0 auto !important;
-
-    width: 408% !important;
-    margin: 0 !important;
-  }
-  .panel-row:nth-child(1) {
-    gap: 0px;
-  }
-  .panel-row:nth-child(2) .panel {
+    flex-direction: row;
+    gap: 20px; /* 1.25rem -> 20px */
     width: 100%;
+    justify-content: center;
   }
-  .panel-row:nth-child(3) .panel {
-    width: 99.3%;
+
+  .panel-row-mid .panel-link {
+    flex: 1 1 calc(50% - 20px); /* Zwei Panels pro Reihe */
+    min-width: calc(50% - 20px);
   }
-  .greeting-text h1 {
-    font-size: 26px;
+
+  /* Zweite Reihe: Ein großes Panel */
+  .panel-row-large {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* 1.25rem -> 20px */
+    width: 100%;
+    justify-content: center;
   }
-  .greeting-text h2 {
-    font-size: 32px;
+
+  .panel-row-large .panel {
+    flex: 1 1 100%; /* Ein Panel pro Reihe */
+    min-width: 100%;
+  }
+
+  /* Dritte Reihe: Drei Panels nebeneinander */
+  .panel-row-small {
+    display: flex;
+    flex-direction: row;
+    gap: 20px; /* 1.25rem -> 20px */
+    width: 100%;
+    justify-content: center;
+  }
+
+  .panel-row-small .panel-link {
+    flex: 1 1 calc(33.333% - 20px); /* Drei Panels pro Reihe */
+    min-width: calc(33.333% - 20px);
   }
 }
 
-@media (max-width: 459px) {
+/* Responsive Anpassungen für kleinere Bildschirmgrößen */
+@media (max-width: 1200px) {
+  /* 75rem -> 1200px */
+  /* Beibehalten der Desktop-Anordnung auf allen Bildschirmgrößen */
+  /* Entferne flex-direction: column */
+
+  .panel-row-mid,
+  .panel-row-large,
+  .panel-row-small {
+    display: flex;
+    flex-direction: row; /* Beibehalten als row */
+    gap: 20px; /* 1.25rem -> 20px */
+    width: 100%;
+    justify-content: flex-start; /* Links ausrichten */
+  }
+
+  .panel-row-mid .panel-link {
+    flex: 1 1 calc(50% - 10px); /* Angepasst für schmalere Panels */
+    min-width: calc(50% - 10px);
+  }
+
+  .panel-row-large .panel {
+    flex: 1 1 100%; /* Ein Panel pro Reihe */
+    min-width: 100%;
+  }
+
+  .panel-row-small .panel-link {
+    flex: 1 1 calc(33.333% - 13.33px); /* Drei Panels pro Reihe */
+    min-width: calc(33.333% - 13.33px);
+  }
+
+  .main-content {
+    padding: 0px;
+    margin-top: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 0px;
+    margin-top: 200px;
+  }
+
+  /* 48rem -> 768px */
+  .greeting-text h1 {
+    font-size: 24px; /* 1.5rem -> 24px */
+  }
+
+  .greeting-text h2 {
+    font-size: 32px; /* 2rem -> 32px */
+  }
+
   .panel {
-    min-height: 150px;
-    padding: 8px;
-    position: absolute;
-    left: 5px;
-    bottom: 45px;
+    min-height: auto;
+    padding: 16px; /* 1rem -> 16px */
   }
+
   .panel img {
-    max-width: 35px;
+    width: 48px; /* 3rem -> 48px */
+    height: 48px;
   }
-  .panel p {
-    font-size: 18px;
+
+  .panel-content p {
+    font-size: 24px; /* 1.5rem -> 24px */
   }
-  .panel span {
-    font-size: 11px;
+
+  .panel-content span {
+    font-size: 17.6px; /* 1.1rem -> 17.6px */
   }
+
+  .panel.large {
+    padding: 24px 48px; /* 1.5rem 3rem -> 24px 48px */
+  }
+
+  .panel.large img {
+    margin: 0 24px 0 0; /* 1.5rem -> 24px */
+  }
+
+  .panel.large .panel-right span:first-child {
+    font-size: 20.8px; /* 1.3rem -> 20.8px */
+  }
+
+  .panel.large .panel-right span:last-child {
+    font-size: 16px; /* 1rem -> 16px */
+  }
+}
+
+@media (max-width: 670px) {
   .greeting-text h1 {
-    font-size: 24px;
+    display: none;
   }
+
   .greeting-text h2 {
-    font-size: 28px;
+    display: none;
   }
 }
 
-@media (max-width: 390px) {
-  .panel-row {
-    width: 86%;
+@media (max-width: 480px) {
+  .greeting-text h1 {
+    display: none;
   }
-}
 
-@media (max-width: 365px) {
-  .panel-row {
-    width: 90%;
+  .greeting-text h2 {
+    display: none;
   }
-}
 
-@media (max-width: 360px) {
+  .main-content {
+    padding: 0px;
+    margin-top: 200px;
+  }
+
   .panel {
-    min-height: 100px;
-    padding: 6px;
+    padding: 16px; /* 1rem -> 16px */
   }
+
   .panel img {
-    max-width: 30px;
+    width: 48px; /* 3rem -> 48px */
+    height: 48px;
   }
-  .panel p {
-    font-size: 16px;
+
+  .panel-content p {
+    font-size: 20.8px; /* 1.3rem -> 20.8px */
   }
-  .panel span {
-    font-size: 10px;
+
+  .panel-content span {
+    font-size: 16px; /* 1rem -> 16px */
   }
-  .greeting-text h1 {
-    font-size: 22px;
+
+  .panel.large .panel-right span:first-child {
+    font-size: 17.6px; /* 1.1rem -> 17.6px */
   }
-  .greeting-text h2 {
-    font-size: 26px;
+
+  .panel.large .panel-right span:last-child {
+    font-size: 14.4px; /* 0.9rem -> 14.4px */
   }
 }
 
 @media (max-width: 320px) {
+  /* 20rem -> 320px */
   .panel {
-    min-height: 90px;
-    padding: 4px;
+    padding: 12px; /* 0.75rem -> 12px */
   }
+
   .panel img {
-    max-width: 28px;
+    width: 40px; /* 2.5rem -> 40px */
+    height: 40px;
   }
-  .panel p {
-    font-size: 14px;
+
+  .panel-content p {
+    font-size: 17.6px; /* 1.1rem -> 17.6px */
   }
-  .panel span {
-    font-size: 9px;
-  }
-  .greeting-text h1 {
-    font-size: 20px;
-  }
-  .greeting-text h2 {
-    font-size: 24px;
+
+  .panel-content span {
+    font-size: 14.4px; /* 0.9rem -> 14.4px */
   }
 }

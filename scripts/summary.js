@@ -82,14 +82,14 @@ function renderPanels(stats) {
   panelContainer.innerHTML = "";
 
   const panelsHTML = `
-    <div class="panel-row">
+    <div class="panel-row-mid">
       ${createPanel("To-do", stats.toDo, "./img/edit-pencil.png")}
       ${createPanel("Done", stats.done, "./img/done-mark.png")}
     </div>
-    <div class="panel-row">
+    <div class="panel-row-large">
       ${createLargePanel(stats.upcomingTask)}
     </div>
-    <div class="panel-row">
+    <div class="panel-row-small">
       ${createPanel("Tasks in Board", stats.totalTasks, null, "panel-bottom")}  
       ${createPanel(
         "Tasks in progress",
