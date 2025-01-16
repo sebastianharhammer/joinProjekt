@@ -165,7 +165,7 @@ async function getUsersForEditDropDown() {
   } catch (error) {
     console.error("Error fetching contacts:", error);
   }
-  returnArrayContactsEdit();
+  editReturnArrayContacts();
   setupEditDropdownInteraction();
 }
 
