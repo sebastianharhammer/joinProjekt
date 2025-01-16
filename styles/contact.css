@@ -20,7 +20,6 @@ body {
   align-items: center;
   width: 456px;
   overflow-y: scroll;
-  height: calc(100vh - 100px);
   scrollbar-width: 24px;
   overflow-x: hidden;
   left: 10vw;
@@ -567,7 +566,11 @@ hr {
     cursor: pointer;
   }
 }
-
+@media (max-width: 1260px) {
+  #contact-side-panel {
+      margin-bottom: 11vh;
+  }
+}
 @media (max-width: 992px) {
   .back-button {
     left: 320px;
@@ -623,7 +626,6 @@ hr {
     width: 100%;
     padding-top: 0;
     width: 100%;
-    height: calc(1000px - 246px);
     overflow-y: auto;
     overflow-y: scroll;
   }
