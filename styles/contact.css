@@ -513,7 +513,7 @@ hr {
 
   .dropdown-menu {
     position: absolute;
-    bottom: 60px;
+    bottom: 67px;
     left: 296px;
     width: 116px;
     height: 100px;
@@ -717,6 +717,49 @@ hr {
 
 @media (max-width: 354px) {
   .menu-button {
-    margin-left: -95px;
+    margin-left: -500px;
   }
+
+  #contact-headline-container {
+    left: 16px;
+    top: 110px;
+  }
+
+  .contact-detail {
+    top: 220px;
+    left: 16px;
+  }
+
+  .contact-detail-header {
+    height: 80px;
+    gap: 10px;
+  }
+
+  .contact-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .back-button {
+  margin-left: -50px;  
+  }
+  #contact-detail-email {
+    gap: 15px;
+  }
+
+  #contact-detail-phone {
+    gap: 15px;
+  }
+
+  .contact-detail-header-right-headline {
+    width: 226px;
+  }
+
+  .letter-header {
+    width: 265px;
+  }
+  #contact-side-panel{
+    max-height: calc(100vh - 167px);
+  }
+  
 }

@@ -27,6 +27,7 @@
   transform: translateX(0vw);
 }
 #contact-panel {
+  max-width: 1212px;
   position: absolute;
   display: flex;
   justify-content: center;
