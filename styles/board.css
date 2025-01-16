@@ -743,7 +743,7 @@ body.no-scroll {
   }
 
   .mobile-input-search {
-    width: 98vw;
+    width: 95vw;
     height: 40px;
     display: flex;
     justify-content: space-between;
