@@ -57,7 +57,8 @@ function loadTasksFromFirebase() {
   tasksRef.once("value", (snapshot) => {
     const tasks = snapshot.val();
     if (tasks) {
-      calculateTaskSummary(Object.values(tasks));
+      const taskSummary = calculateTaskSummary(Object.values(tasks));
+      renderPanels(taskSummary);
     } else {
       console.error("Keine Aufgaben in der Firebase-Datenbank gefunden.");
     }
@@ -65,7 +66,7 @@ function loadTasksFromFirebase() {
 }
 
 function calculateTaskSummary(tasks) {
-  const stats = {
+  return {
     toDo: tasks.filter((t) => t.status === "todo").length,
     inProgress: tasks.filter((t) => t.status === "inProgress").length,
     feedback: tasks.filter((t) => t.status === "feedback").length,
@@ -73,8 +74,6 @@ function calculateTaskSummary(tasks) {
     totalTasks: tasks.length,
     upcomingTask: findUpcomingDeadline(tasks),
   };
-
-  renderPanels(stats);
 }
 
 function renderPanels(stats) {
@@ -117,23 +116,23 @@ function createPanel(title, value, imgSrc = "", extraClass = "") {
   `;
 }
 
-function createLargePanel(upcomingTask) {
+function createLargePanel(upcomingData) {
+  const upcomingTask = upcomingData.task;
+  const count = upcomingData.count;
+
   const date = upcomingTask
     ? formatDate(new Date(upcomingTask.date))
     : "Keine Fristen verfügbar";
   const priority = upcomingTask ? upcomingTask.prio : "No priority";
   const priorityIcon = getPriorityIcon(priority);
 
-  return /*html*/`
+  return /*html*/ `
     <a href="testboard.html" class="panel-link">
       <div class="panel large">
-
-
         <div class="upComingTaskInfo">
-        <p>1</p>
-        <img class="panel-img-prio" src="${priorityIcon}" alt="${priority} Priority Icon" />
+          <p>${count}</p>
+          <img class="panel-img-prio" src="${priorityIcon}" alt="${priority} Priority Icon" />
         </div>
-        
         <div class="panel-content">
           <p>${priority}</p>
           <span>Upcoming Task</span>
@@ -148,8 +147,9 @@ function createLargePanel(upcomingTask) {
         </div>
       </div>
     </a>
-    `;
+  `;
 }
+
 
 function getPriorityIcon(priority) {
   switch (priority) {
@@ -170,8 +170,17 @@ function findUpcomingDeadline(tasks) {
     .filter((t) => t.date)
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  return tasksWithDates.length > 0 ? tasksWithDates[0] : null;
+  if (tasksWithDates.length > 0) {
+    const nextDeadline = tasksWithDates[0].date;
+    const tasksUntilDeadline = tasksWithDates.filter(
+      (t) => new Date(t.date).getTime() === new Date(nextDeadline).getTime()
+    );
+    return { task: tasksWithDates[0], count: tasksUntilDeadline.length };
+  }
+
+  return { task: null, count: 0 };
 }
+
 
 function formatDate(date) {
   return date.toLocaleDateString("de-DE", {
