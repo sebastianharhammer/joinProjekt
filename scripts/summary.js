@@ -127,7 +127,13 @@ function createLargePanel(upcomingTask) {
   return /*html*/`
     <a href="testboard.html" class="panel-link">
       <div class="panel large">
+
+
+        <div class="upComingTaskInfo">
+        <p>1</p>
         <img class="panel-img-prio" src="${priorityIcon}" alt="${priority} Priority Icon" />
+        </div>
+        
         <div class="panel-content">
           <p>${priority}</p>
           <span>Upcoming Task</span>
