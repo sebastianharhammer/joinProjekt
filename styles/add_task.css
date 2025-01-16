@@ -863,6 +863,10 @@ ul {
   #addTaskHeadlineMobile {
     display: none;
   }
+  #task-succes {
+    height: 10%;
+    max-width: 350px;
+  }
 }
 @media (max-width: 1200px) {
   #addTaskHeadlineFullscreen {
