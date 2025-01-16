@@ -22,8 +22,10 @@ function getAddContactHTML() {
                     </svg>
                 </div>
             </div>
-            <span id="add-contact-second">Tasks are better with a team!</span>
-            <div id="vector-line-container"> <img src="./img/vector5.png" id="vector-line"> </div>
+            <div id="second-vector-container">
+                <span id="add-contact-second">Tasks are better with a team!</span>
+                <div id="vector-line-container"> <img src="./img/vector5.png" id="vector-line"> </div>
+            </div>
             <div id="add-contact-icon-container-mobile">
                     <img id="add-contact-icon-mobile" src="./img/add_contact.png">
                 </div>
