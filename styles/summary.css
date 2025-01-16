@@ -1,4 +1,3 @@
-/* Grundlegende Stile (Desktop-Ansicht) */
 body {
   font-family: "Inter", sans-serif;
   color: gray;
@@ -14,60 +13,57 @@ body {
 
 .main-content {
   display: flex;
-  flex-direction: row; /* Reihen nebeneinander */
+  flex-direction: row;
   align-items: flex-start;
-  padding: 20px; /* 1.25rem -> 20px */
+  padding: 20px;
   background-color: #f5f5f5;
-  width: calc(100% - 10vw); /* Berücksichtigung der Navbar (10vw) */
+  width: calc(100% - 10vw);
   box-sizing: border-box;
-  margin: 100px 0 0 10vw; /* 6.25rem -> 100px oben, 10vw links */
+  margin: 100px 0 0 10vw;
 }
 
 .content-wrapper {
   display: flex;
-  flex-direction: row; /* Reihen nebeneinander beibehalten */
+  flex-direction: row;
   align-items: flex-start;
-  gap: 20px; /* 1.25rem -> 20px Abstand zwischen Begrüßung und Panels */
+  gap: 20px;
   width: 100%;
 }
 
 .greeting-text {
-  flex: 0 0 300px; /* Feste Breite für den Begrüßungstext */
-  text-align: left; /* Links ausrichten */
+  flex: 0 0 300px;
+  text-align: left;
   margin-left: 50px;
   margin-top: 270px;
 }
 
 .greeting-text h1 {
-  font-size: 45px; /* 2rem -> 32px */
+  font-size: 45px;
   font-weight: bold;
   color: #222;
   margin: 0;
 }
 
 .greeting-text h2 {
-  font-size: 56px; /* 2.5rem -> 40px */
+  font-size: 56px;
   font-weight: bold;
   color: #364d6d;
-  margin: 10px 0 0 0; /* 0.625rem -> 10px */
+  margin: 10px 0 0 0;
 }
 
-/* Panels Container */
 .panels {
   display: flex;
-  flex-direction: column; /* Reihen werden vertikal gestapelt */
-  gap: 20px; /* 1.25rem -> 20px */
-
-  max-width: 1200px; /* 75rem -> 1200px */
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1200px;
   justify-content: center;
 }
 
-/* Panel-Stile */
 .panel-link {
   text-decoration: none;
   color: inherit;
-  flex: 1 1 200px; /* Angepasst von 250px auf 200px */
-  min-width: 200px; /* Angepasst von 250px auf 200px */
+  flex: 1 1 200px;
+  min-width: 200px;
 }
 
 .panel {
@@ -76,29 +72,29 @@ body {
   align-items: center;
   justify-content: center;
   background-color: white;
-  border-radius: 16px; /* 1rem -> 16px */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 0 0.25rem 0.625rem -> 0 4px 10px */
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  padding: 20px; /* 1.25rem -> 20px */
+  padding: 20px;
   transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   position: relative;
   width: 100%;
-  min-height: 150px; /* 9.375rem -> 150px */
+  min-height: 150px;
   box-sizing: border-box;
 }
 
 .panel.large {
-  flex: 1 1 100%; /* 100% */
+  flex: 1 1 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  min-height: 200px; /* 12.5rem -> 200px */
-  padding: 20px 40px; /* 1.25rem 2.5rem -> 20px 40px */
+  min-height: 200px;
+  padding: 20px 40px;
 }
 
 .panel.small {
   flex: 1 1 150px;
-  min-height: 120px; /* 7.5rem -> 120px */
+  min-height: 120px;
 }
 
 .panel:hover {
@@ -112,21 +108,21 @@ body {
 }
 
 .panel img {
-  width: 50px; /* 3.125rem -> 50px */
-  height: 50px; /* 3.125rem -> 50px */
+  width: 50px;
+  height: 50px;
   object-fit: contain;
-  margin-bottom: 10px; /* 0.625rem -> 10px */
+  margin-bottom: 10px;
   transition: filter 0.2s ease;
 }
 
 .panel.large img {
-  width: 60px; /* 3.75rem -> 60px */
-  height: 60px; /* 3.75rem -> 60px */
-  margin: 0 20px 0 0; /* 0 1.25rem 0 0 -> 0 20px 0 0 */
+  width: 60px;
+  height: 60px;
+  margin: 0 20px 0 0;
 }
 
 .panel-content p {
-  font-size: 24px; /* 1.5rem -> 24px */
+  font-size: 24px;
   font-weight: bold;
   margin: 0;
   color: #222;
@@ -134,24 +130,24 @@ body {
 }
 
 .panel-content span {
-  font-size: 16px; /* 1rem -> 16px */
+  font-size: 16px;
   color: #555;
   transition: color 0.2s ease;
 }
 
 .panel.large .panel-right span:first-child {
   font-weight: bold;
-  font-size: 19.2px; /* 1.2rem -> 19.2px */
+  font-size: 19.2px;
   color: #222;
 }
 
 .panel.large .panel-right span:last-child {
-  font-size: 14.4px; /* 0.9rem -> 14.4px */
+  font-size: 14.4px;
   color: #666;
 }
 
 .panel.large .panel-right span {
-  font-size: 14px; /* 0.875rem -> 14px */
+  font-size: 14px;
   color: #666;
   transition: color 0.2s ease;
 }
@@ -161,10 +157,10 @@ body {
 }
 
 .panel.large .divider {
-  width: 2px; /* 0.125rem -> 2px */
+  width: 2px;
   background-color: #ddd;
   height: 60%;
-  margin: 0 20px; /* 0 1.25rem -> 0 20px */
+  margin: 0 20px;
   transition: background-color 0.2s ease;
 }
 
@@ -172,93 +168,81 @@ body {
   background-color: white;
 }
 
-/* Hover-Effekte */
 .panel:hover .panel-content p,
 .panel:hover .panel-content span {
   color: white;
 }
 
-/* Desktop-Ansicht (Standard: ≥1200px) */
-/* Hier definieren wir das gewünschte Layout für Desktop */
 @media (min-width: 1200px) {
-  /* 75rem -> 1200px */
   .panels {
-    flex-direction: column; /* Reihen bleiben vertikal gestapelt */
-    gap: 20px; /* 1.25rem -> 20px */
+    flex-direction: column;
+    gap: 20px;
     padding: 50px;
   }
 
-  /* Erste Reihe: Zwei Panels nebeneinander */
   .panel-row-mid {
     display: flex;
     flex-direction: row;
-    gap: 20px; /* 1.25rem -> 20px */
+    gap: 20px;
     width: 100%;
     justify-content: center;
   }
 
   .panel-row-mid .panel-link {
-    flex: 1 1 calc(50% - 20px); /* Zwei Panels pro Reihe */
+    flex: 1 1 calc(50% - 20px);
     min-width: calc(50% - 20px);
   }
 
-  /* Zweite Reihe: Ein großes Panel */
   .panel-row-large {
     display: flex;
     flex-direction: row;
-    gap: 20px; /* 1.25rem -> 20px */
+    gap: 20px;
     width: 100%;
     justify-content: center;
   }
 
   .panel-row-large .panel {
-    flex: 1 1 100%; /* Ein Panel pro Reihe */
+    flex: 1 1 100%;
     min-width: 100%;
   }
 
-  /* Dritte Reihe: Drei Panels nebeneinander */
   .panel-row-small {
     display: flex;
     flex-direction: row;
-    gap: 20px; /* 1.25rem -> 20px */
+    gap: 20px;
     width: 100%;
     justify-content: center;
   }
 
   .panel-row-small .panel-link {
-    flex: 1 1 calc(33.333% - 20px); /* Drei Panels pro Reihe */
+    flex: 1 1 calc(33.333% - 20px);
     min-width: calc(33.333% - 20px);
   }
 }
 
-/* Responsive Anpassungen für kleinere Bildschirmgrößen */
 @media (max-width: 1200px) {
-  /* 75rem -> 1200px */
-  /* Beibehalten der Desktop-Anordnung auf allen Bildschirmgrößen */
-  /* Entferne flex-direction: column */
-
   .panel-row-mid,
   .panel-row-large,
   .panel-row-small {
     display: flex;
-    flex-direction: row; /* Beibehalten als row */
-    gap: 20px; /* 1.25rem -> 20px */
+    flex-direction: row;
+    gap: 20px;
     width: 100%;
-    justify-content: flex-start; /* Links ausrichten */
+    justify-content: flex-start;
   }
 
   .panel-row-mid .panel-link {
-    flex: 1 1 calc(50% - 10px); /* Angepasst für schmalere Panels */
+    flex: 1 1 calc(50% - 10px);
     min-width: calc(50% - 10px);
   }
 
   .panel-row-large .panel {
-    flex: 1 1 100%; /* Ein Panel pro Reihe */
+    flex: 1 1 100%;
     min-width: 100%;
   }
 
   .panel-row-small .panel-link {
-    flex: 1 1 calc(33.333% - 13.33px); /* Drei Panels pro Reihe */
+    flex: 1 1 calc(33.333% - 13.33px);
     min-width: calc(33.333% - 13.33px);
   }
 
@@ -274,47 +258,46 @@ body {
     margin-top: 200px;
   }
 
-  /* 48rem -> 768px */
   .greeting-text h1 {
-    font-size: 24px; /* 1.5rem -> 24px */
+    font-size: 24px;
   }
 
   .greeting-text h2 {
-    font-size: 32px; /* 2rem -> 32px */
+    font-size: 32px;
   }
 
   .panel {
     min-height: auto;
-    padding: 16px; /* 1rem -> 16px */
+    padding: 16px;
   }
 
   .panel img {
-    width: 48px; /* 3rem -> 48px */
+    width: 48px;
     height: 48px;
   }
 
   .panel-content p {
-    font-size: 24px; /* 1.5rem -> 24px */
+    font-size: 24px;
   }
 
   .panel-content span {
-    font-size: 17.6px; /* 1.1rem -> 17.6px */
+    font-size: 17.6px;
   }
 
   .panel.large {
-    padding: 24px 48px; /* 1.5rem 3rem -> 24px 48px */
+    padding: 24px 48px;
   }
 
   .panel.large img {
-    margin: 0 24px 0 0; /* 1.5rem -> 24px */
+    margin: 0 24px 0 0;
   }
 
   .panel.large .panel-right span:first-child {
-    font-size: 20.8px; /* 1.3rem -> 20.8px */
+    font-size: 20.8px;
   }
 
   .panel.large .panel-right span:last-child {
-    font-size: 16px; /* 1rem -> 16px */
+    font-size: 16px;
   }
 }
 
@@ -343,47 +326,46 @@ body {
   }
 
   .panel {
-    padding: 16px; /* 1rem -> 16px */
+    padding: 16px;
   }
 
   .panel img {
-    width: 48px; /* 3rem -> 48px */
+    width: 48px;
     height: 48px;
   }
 
   .panel-content p {
-    font-size: 20.8px; /* 1.3rem -> 20.8px */
+    font-size: 20.8px;
   }
 
   .panel-content span {
-    font-size: 16px; /* 1rem -> 16px */
+    font-size: 16px;
   }
 
   .panel.large .panel-right span:first-child {
-    font-size: 17.6px; /* 1.1rem -> 17.6px */
+    font-size: 17.6px;
   }
 
   .panel.large .panel-right span:last-child {
-    font-size: 14.4px; /* 0.9rem -> 14.4px */
+    font-size: 14.4px;
   }
 }
 
 @media (max-width: 320px) {
-  /* 20rem -> 320px */
   .panel {
-    padding: 12px; /* 0.75rem -> 12px */
+    padding: 12px;
   }
 
   .panel img {
-    width: 40px; /* 2.5rem -> 40px */
+    width: 40px;
     height: 40px;
   }
 
   .panel-content p {
-    font-size: 17.6px; /* 1.1rem -> 17.6px */
+    font-size: 17.6px;
   }
 
   .panel-content span {
-    font-size: 14.4px; /* 0.9rem -> 14.4px */
+    font-size: 14.4px;
   }
 }
