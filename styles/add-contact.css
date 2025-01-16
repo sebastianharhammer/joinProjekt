@@ -342,13 +342,19 @@
 .add-contact-input:invalid + .error-message {
   display: block;
 }
-@media (min-width: 1920px) {
+@media (min-width: 1500px) {
   #add-contact-btn-placeholder {
     width: 30%;
     height: 5vh;
   }
   #add-contact-btn-container {
     height: 0;
+  }
+  #input-fields {
+    height: 75% !important;
+  }
+  #add-contact-interactions { 
+    height: 60% !important;
   }
 }
 
