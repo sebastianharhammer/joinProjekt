@@ -270,7 +270,6 @@ function getColumnsHTML() {
                   ondragover="allowDrop(event); highlight('feedback')"></div>
              </div>
 
-
               <div class="column-header">
                   <span class="headline-done-responsive">DONE</span>
                   <img class="plus-button" src="./img/plus button.png" alt="Add" onclick="showAddTask('done')">
@@ -285,5 +284,16 @@ function getColumnsHTML() {
                   ondragleave="removeHighlight('done')" 
                   ondragover="allowDrop(event); highlight('done')"></div>
             </div>
-          </section>`;
-  }
+        </section>`;
+}
+
+function getExtraOwnersCountCircle(extraOwnersCount) {
+    return `
+    <svg width="34" height="34">
+        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="black" />
+        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central" fill="white">
+        +${extraOwnersCount}
+        </text>
+    </svg>
+    `;
+}

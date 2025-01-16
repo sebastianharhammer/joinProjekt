@@ -261,22 +261,19 @@ function createOwnerCircles(task) {
     userNameCircles.innerHTML = generateNoOwnerCircle();
     return;
   }
+
   const ownersToShow = task.owner.slice(0, 2);
   const extraOwnersCount = task.owner.length - 2;
+
   for (const owner of ownersToShow) {
     userNameCircles.innerHTML += generateOwnerCircle(owner);
   }
+
   if (extraOwnersCount > 0) {
-    userNameCircles.innerHTML += `
-      <svg width="34" height="34">
-        <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="black" />
-        <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central" fill="white">
-          +${extraOwnersCount}
-        </text>
-      </svg>
-    `;
+    userNameCircles.innerHTML += getExtraOwnersCountCircle(extraOwnersCount);
   }
 }
+
 
 function findClassOfTaskCat(task) {
   const taskButton = document.getElementById(`taskButton-${task.id}`);
