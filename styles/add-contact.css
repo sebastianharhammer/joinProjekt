@@ -27,7 +27,8 @@
   transform: translateX(0vw);
 }
 #contact-panel {
-  max-width: 1212px;
+  max-width: 400px;
+  max-height: 700px;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -341,11 +342,16 @@
 .add-contact-input:invalid + .error-message {
   display: block;
 }
-@media (max-width: 1200px) {
-  #add-contact-side-panel {
-    width: 75%;
+@media (min-width: 1500px) {
+  #add-contact-btn-placeholder {
+    width: 30%;
+    height: 5vh;
+  }
+  #add-contact-btn-container {
+    height: 0;
   }
 }
+
 @media (min-width: 1050px) {
   #add-contact-btn-close-mobile {
     display: none !important;
