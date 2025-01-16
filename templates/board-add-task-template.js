@@ -117,17 +117,16 @@ return  /*html*/`
         </form>
       </div>
     </div>
-    <div id="task-message-container" class="d-none">
-    <div id="task-succes" class="hide-add-task"><span>Task successfully created</span></div>
-    </div>`;
+    
+    `;
 }
 
 function assignUserHTML(contact) {
   return `
         <div class="assigned-user-container" data-firstname="${contact.firstName}" data-lastname="${contact.lastName}" data-color="${contact.color}">
         <div id="assigned-user-svg">
-          <svg class="customCircle" width="50" height="50">
-            <circle id="user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
+          <svg class="addtask-customCircle" width="50" height="50">
+            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
             <text stroke="white" stroke-width="1" font-weight="normal" class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>
@@ -187,4 +186,10 @@ function saveSubtaskHTML(liId, inputId, spanId, input) {
               <div class="divider"></div>
               <img id="deleteBtn-${liId}" onclick="deleteSubtask('${liId}')" src="./img/delete.svg" alt="delete">
           </div>`;
+}
+
+function taskSuccesMessageHTML() {
+  return `<div id="task-message-container" /* class="d-none" */>
+    <div id="task-succes" class="show-add-task-message"><span>Task successfully created</span></div>
+    </div>`;
 }

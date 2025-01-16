@@ -34,6 +34,9 @@ function showAddTask(status) {
   getUsers();
   handleDropdownInteraction();
   setPriority("medium");
+  window.scrollTo(0, 0);
+  document.documentElement.style.overflow = 'hidden';
+  document.body.scroll = "no";
 }
 
 function hideAddTask() {
@@ -41,11 +44,10 @@ function hideAddTask() {
   let background = document.getElementById("add-task-background");
   addContactTemplate.classList.remove("show-add-task");
   document.body.classList.remove("overflow-hidden");
-
+  document.documentElement.style.overflow = 'scroll';
+  document.body.scroll = "yes";
   setTimeout(() => {
     background.classList.add("d-none");
-  }, 250);
-  setTimeout(() => {
     init();
   }, 250);
 }
@@ -215,8 +217,20 @@ async function pushTaskToFirebase(newTask) {
 }
 
 function showAddTaskSuccesMessage() {
+  let taskOverlayWrapper = document.getElementById("add-task-overlay-wrapper");
+  taskOverlayWrapper.innerHTML += taskSuccesMessageHTML();
   let succes = document.getElementById("task-succes");
-  succes.classList.add("show-add-task");
+  let messageContainer = document.getElementById("task-message-container");
+  if (succes && messageContainer) {
+    messageContainer.classList.remove("d-none");
+    
+    setTimeout(() => {
+      messageContainer.classList.add("d-none");
+      succes.classList.remove("show-add-task");
+    }, 750);
+  } else {
+    console.error('Required elements not found for success message');
+  }
 }
 
 function handleDropdownInteraction() {
