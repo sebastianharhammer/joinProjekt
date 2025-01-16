@@ -320,6 +320,12 @@
 @media (max-width: 385px) {
   #edit-contact-interactions {
     flex-direction: row;
+  
+  }
+
+  #edit-contact-interactions-container {
+    width: 320px;
+    height: 667px;
   }
 
   #back-button {
@@ -342,8 +348,21 @@
 
   #edit-contact-side-panel {
     width: 320px;
-    height: 667px;
+    height: 352px;
     gap: 49px;
-    border-radius: 30px;
+  }
+
+  #header-overlay-top {
+    z-index: 0;
+  }
+
+  #edit-contact-btn-close-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+
+  #contact-panel {
+    align-items: center;
   }
 }
