@@ -86,9 +86,9 @@ return  /*html*/`
                     <div id="clear-add-icons" class="d-none">
                       <img onclick="clearSubtaskInput()" src="./img/close.svg">
                       <div class="divider"></div>
-                      <img onclick="addSubtask()" src="./img/check.svg">
+                      <img onclick="addTaskSubtask()" src="./img/check.svg">
                     </div>
-                    <img id="subtasks-plus-icon" src="./img/add.svg" type="button" onclick="addSubtask()"/>
+                    <img id="subtasks-plus-icon" src="./img/add.svg" type="button" onclick="addTaskSubtask()"/>
                   </div>
                 </div>
                 <ul id="subtasksContent"></ul>
