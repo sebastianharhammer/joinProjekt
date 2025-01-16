@@ -53,11 +53,11 @@ function getEditTemplate(task) {
         <div class="add-subtask-in-edit">
             <input id="input-subtask-in-edit" class="input-subtask-in-edit" type="text" placeholder="Write a new subtask...">
             <div class="img-in-edit-input">
-                <div class="close-and-check-imgs">
-                    <img onclick="emptyInput()" src="./img/close.svg" alt="close">
+                <div class="close-and-check-imgs" onclick="emptyInput()">
+                    <img  src="./img/close.svg" alt="close">
                 </div>
-                <div class="close-and-check-imgs">
-                    <img onclick="addSubTaskInEditTempl()" src="./img/check.svg" alt="check">
+                <div class="close-and-check-imgs" onclick="addSubTaskInEditTempl()">
+                    <img  src="./img/check.svg" alt="check">
                 </div>
             </div>
         </div>

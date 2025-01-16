@@ -70,3 +70,17 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+
+@media(max-width: 600px){
+.arrow-icon {
+  top: 4vh;
+  position: absolute;
+  left: 100%;
+  margin-left: -10px;
+  width: 28px;
+  height: auto;
+  cursor: pointer;
+}
+}
+

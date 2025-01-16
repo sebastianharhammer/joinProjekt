@@ -129,16 +129,16 @@ async function pushContactInfo(firstName, lastName, email, phone) {
 
 function getRandomColor() {
   const colors = [
-    "#FAD4D8",
-    "#AECBFA",
-    "#C5E1A5",
-    "#FFF9C4",
-    "#D7BDE2",
-    "#FFDAB9",
-    "#B2DFDB",
-    "#E6E6FA",
-    "#D0F0C0",
-    "#FFC1A1",
+    "#FF5733",
+    "#33A1FF",
+    "#33FF99",
+    "#FF33A8",
+    "#FFC300",
+    "#8C33FF",
+    "#FF6F61",
+    "#33FFC6",
+    "#FF9F1C",
+    "#5CDB95", 
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 }

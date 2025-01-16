@@ -27,6 +27,7 @@
   transform: translateX(0vw);
 }
 #contact-panel {
+  max-width: 1212px;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -319,6 +320,12 @@
 @media (max-width: 385px) {
   #edit-contact-interactions {
     flex-direction: row;
+  
+  }
+
+  #edit-contact-interactions-container {
+    width: 320px;
+    height: 667px;
   }
 
   #back-button {
@@ -328,7 +335,7 @@
 
 @media (max-width: 385px) {
   #back-button {
-    margin-left: -100px;
+    margin-left: -50px;
   }
 
   .edit-contact-input-icon {
@@ -336,6 +343,26 @@
   }
 
   .dropdown-menu:not(.hidden) {
-    margin-left: -175px;
+    margin-left: -115px;
+  }
+
+  #edit-contact-side-panel {
+    width: 320px;
+    height: 352px;
+    gap: 49px;
+  }
+
+  #header-overlay-top {
+    z-index: 0;
+  }
+
+  #edit-contact-btn-close-container {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+
+  #contact-panel {
+    align-items: center;
   }
 }

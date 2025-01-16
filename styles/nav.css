@@ -89,6 +89,7 @@ a {
   color: #0b8ce9;
   font-size: 17px;
   text-decoration: none;
+  border-radius: 8px;
 }
 #nav-privacy-policy {
   text-decoration: none;
