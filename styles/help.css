@@ -97,4 +97,8 @@ a:hover {
   li {
     font-size: 14px;
   }
+
+  .container{
+    padding-bottom: 72px;
+  }
 }
