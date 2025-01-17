@@ -8,7 +8,6 @@
   color: white;
 }
 
-
 #add-contact-content {
   position: fixed;
   display: flex;
@@ -76,7 +75,7 @@
   color: white;
   font-size: 22px;
   font-weight: 200;
-  
+
   text-align: center;
 }
 #second-vector-container {
@@ -306,7 +305,7 @@
   color: white;
   border-radius: 8px;
   font-size: 20px;
-  box-shadow: 0px 0px 4px 0px #0000001A;
+  box-shadow: 0px 0px 4px 0px #0000001a;
   transition: transform 0.5s ease-in-out, right 0.5s ease-in-out;
   z-index: 9995;
   opacity: 0;
@@ -319,10 +318,9 @@
 }
 
 #success-message-container.show {
-  transform: translateX(50%) translateY(0); 
-  opacity: 1; 
+  transform: translateX(50%) translateY(0);
+  opacity: 1;
 }
-
 
 #add-contact-succes-message-container {
   position: fixed;
@@ -378,10 +376,9 @@
   #input-fields {
     height: 75% !important;
   }
-  #add-contact-interactions { 
+  #add-contact-interactions {
     height: 60% !important;
   }
- 
 }
 @media (max-width: 1500px) {
   #add-contact-icon {
@@ -389,7 +386,6 @@
   }
 }
 @media (max-width: 1400px) {
-  
 }
 @media (min-width: 1050px) {
   #add-contact-btn-close-mobile {
@@ -399,14 +395,14 @@
     display: flex;
     justify-content: space-between;
   }
-  
+
   #add-contact-icon-container-mobile {
     display: none;
   }
   #add-contact-icon-mobile {
     display: none;
   }
-/*   #add-contact-btn-placeholder {
+  /*   #add-contact-btn-placeholder {
     width: 30%;
     height: 5vh;
   }
@@ -453,9 +449,9 @@
   }
   .add-contact-input {
     width: 100%;
-  margin-top: 1px;
-  margin-bottom: 1px;
-  padding: 5px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    padding: 5px;
   }
   #add-contact-interactions-container {
     border-radius: 0 0 20px 20px;
@@ -506,14 +502,13 @@
   }
   .add-contact-input {
     width: 100%;
-  margin-top: 1px;
-  margin-bottom: 1px;
-  padding: 5px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    padding: 5px;
   }
   #add-contact-headline {
     font-size: 30px;
   }
- 
 
   #add-contact-icon {
     height: 75px;
@@ -531,20 +526,15 @@
   #add-contact-second {
     font-size: 16px;
   }
-
-  
-
 }
 
 @media (max-width: 414px) {
   #add-contact-second {
     font-size: 15px;
-  
   }
 
   #add-contact-headline {
     font-size: 26px;
-   
   }
 }
 

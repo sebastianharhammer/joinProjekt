@@ -577,7 +577,7 @@ hr {
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
-    height: calc(100vh - 235px);
+    height: calc(100vh - 100px - 10vh);
   }
 
   #contact-big {
