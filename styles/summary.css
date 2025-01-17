@@ -157,6 +157,10 @@ body {
   color: white;
 }
 
+.panel.large:hover p {
+  color: white;
+}
+
 .dividerSummary {
   width: 2px;
   border: none;
