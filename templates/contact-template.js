@@ -24,10 +24,6 @@ function contactsTemplate(contact) {
 
 function getMobileDetailHTML(contact, firebaseKey) {
   return `
-    <div id="contact-headline-container">
-      <h3 id="contact-headline">Contacts</h3>
-      <h2 id="bwat-headline">Better with a team</h2>
-    </div>
     <button id="back-button" class="back-button" onclick="renderContactList()">
       <img src="./img/arrow-left-line.svg" alt="arrow left">
     </button>
@@ -69,10 +65,6 @@ function getMobileDetailHTML(contact, firebaseKey) {
 
 function getDesktopDetailHTML(contact, firebaseKey) {
   return `
-    <div id="contact-headline-container">
-      <h3 id="contact-headline">Contacts</h3>
-      <h2 id="bwat-headline">Better with a team</h2>
-    </div>
     <div class="contact-detail">
       <div class="contact-detail-header">
         <div class="contact-avatar" style="background-color: ${
@@ -107,3 +99,4 @@ function getDesktopDetailHTML(contact, firebaseKey) {
     </div>
   `;
 }
+

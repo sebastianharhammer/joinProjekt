@@ -199,36 +199,28 @@ function contactsTemplate(contact) {
 function toggleContactDetail(firebaseKey) {
   const contactItems = document.querySelectorAll(".contact-item");
   const detailViewContainer = document.getElementById("contact-big");
-  const contactListContainer = document.getElementById("contact-side-panel");
-  const selectedContact = contactsData.find(
-    (c) => c.firebaseKey === firebaseKey
-  );
-  const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
-  if (!selectedContact) return;
-  if (!detailViewContainer) return;
+  const mobileDetailView = document.getElementById("mobile-contact-detail");
+  const desktopDetailView = document.getElementById("desktop-contact-detail");
 
-  const isMobile = window.matchMedia("(max-width: 1300px)").matches;
-  if (isMobile) {
-    contactListContainer.style.display = "none";
-    detailViewContainer.style.display = "flex";
-    detailViewContainer.innerHTML = getMobileDetailHTML(
-      selectedContact,
-      firebaseKey
-    );
-  } else {
-    if (clickedItem && clickedItem.classList.contains("selected")) {
-      clickedItem.classList.remove("selected");
-      detailViewContainer.innerHTML = "";
-      return;
-    }
-    contactItems.forEach((item) => item.classList.remove("selected"));
-    if (clickedItem) clickedItem.classList.add("selected");
-    detailViewContainer.innerHTML = getDesktopDetailHTML(
-      selectedContact,
-      firebaseKey
-    );
+  const selectedContact = contactsData.find((c) => c.firebaseKey === firebaseKey);
+  const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
+
+  if (!selectedContact) return;
+
+  if (clickedItem && clickedItem.classList.contains("selected")) {
+    clickedItem.classList.remove("selected");
+    return;
   }
+
+  contactItems.forEach((item) => item.classList.remove("selected"));
+  if (clickedItem) clickedItem.classList.add("selected");
+
+  // HTML für beide Templates setzen
+  mobileDetailView.innerHTML = getMobileDetailHTML(selectedContact, firebaseKey);
+  desktopDetailView.innerHTML = getDesktopDetailHTML(selectedContact, firebaseKey);
 }
+
+
 
 function renderContactList() {
   const contactListContainer = document.getElementById("contact-side-panel");
