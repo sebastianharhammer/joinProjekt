@@ -577,6 +577,7 @@ hr {
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
+    height: calc(100vh - 235px);
   }
 
   #contact-big {
@@ -598,6 +599,7 @@ hr {
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
+
   }
 
   #add-contact-btn {
