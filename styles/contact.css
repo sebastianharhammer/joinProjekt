@@ -89,6 +89,7 @@ body {
   align-items: center;
   top: 206px;
   cursor: default;
+  width: 90vw;
 }
 
 #contact-headline {
@@ -96,7 +97,9 @@ body {
   font-size: 61px;
   font-weight: 700;
   border-right: 3px solid #29abe2;
+  width: 80vw;
 }
+
 
 #bwat-headline {
   font-size: 27px;
@@ -454,11 +457,16 @@ hr {
   }
 
   #contact-headline {
-    padding-right: 25px;
     font-size: 47px;
     font-weight: 700;
     border: none;
+    padding-right: 25px;
+    font-size: 61px;
+    font-weight: 700;
+    border-right: 3px solid #29abe2;
+    width: 92vw;
   }
+
 
   #bwat-headline {
     font-size: 27px;
@@ -721,11 +729,6 @@ hr {
 #contact-big{
   width: 100vw;
   padding: 0;
-}
-
-#contact-headline{
-  padding: 0;
-  width: 98vw;
 }
 
 #bwat-headline{
