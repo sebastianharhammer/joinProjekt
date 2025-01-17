@@ -214,8 +214,6 @@ function toggleContactDetail(firebaseKey) {
 
   contactItems.forEach((item) => item.classList.remove("selected"));
   if (clickedItem) clickedItem.classList.add("selected");
-
-  // HTML für beide Templates setzen
   mobileDetailView.innerHTML = getMobileDetailHTML(selectedContact, firebaseKey);
   desktopDetailView.innerHTML = getDesktopDetailHTML(selectedContact, firebaseKey);
 }

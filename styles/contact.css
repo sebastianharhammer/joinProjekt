@@ -405,59 +405,9 @@ hr {
   text-align: left;
 }
 
-@media (max-width: 1258px) {
-  .hidden {
-    transform: translateX(100%);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 300ms ease-in-out;
-  }
 
-  #contact-big {
-    align-items: center;
-    padding-left: 50px;
-    top: 100;
-    width: 100%;
-    height: calc(100vh - 10vh);
-    overflow-y: auto;
-  }
 
-  .contact-avatar {
-    width: 80px;
-    height: 80px;
-    font-size: 27px;
-  }
 
-  .contact-detail-header-right-headline {
-    font-size: 36px;
-  }
-
-  .contact-detail-header {
-    gap: 20px;
-  }
-
-  .contact-detail-header-right {
-    align-items: center;
-  }
-
-  #contact-headline {
-    font-size: 47px;
-    font-weight: 700;
-    border: none;
-    padding-right: 25px;
-    font-size: 61px;
-    font-weight: 700;
-    width: 92vw;
-  }
-
-  #bwat-headline {
-    font-size: 27px;
-    font-weight: 400;
-    width: 100vw;
-    padding-left: 0;
-    padding-bottom: 3px;
-}
-}
 
   #bwat-headline::after {
     content: "";
@@ -601,6 +551,59 @@ hr {
   }
 
 @media (max-width: 1256px) {
+
+    .hidden {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 300ms ease-in-out;
+  }
+
+  #contact-big {
+    align-items: center;
+    padding-left: 50px;
+    top: 100;
+    width: 100%;
+    height: calc(100vh - 10vh);
+    overflow-y: auto;
+  }
+
+  .contact-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 27px;
+  }
+
+  .contact-detail-header-right-headline {
+    font-size: 36px;
+  }
+
+  .contact-detail-header {
+    gap: 20px;
+  }
+
+  .contact-detail-header-right {
+    align-items: center;
+  }
+
+  #contact-headline {
+    font-size: 47px;
+    font-weight: 700;
+    border: none;
+    padding-right: 25px;
+    font-size: 61px;
+    font-weight: 700;
+    width: 92vw;
+  }
+
+  #bwat-headline {
+    font-size: 27px;
+    font-weight: 400;
+    width: 100vw;
+    padding-left: 0;
+    padding-bottom: 3px;
+}
+
   #contact-side-panel {
       margin-bottom: 10vh;
       min-width: 100%;
