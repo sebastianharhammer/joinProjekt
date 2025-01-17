@@ -29,6 +29,7 @@ function editContact(firebaseKey) {
   background.classList.remove("d-none");
   editContactTemplate.innerHTML = getEditContactHTML(contact);
   setupEditValidation();
+  toggleMenu();
 }
 
 function hideEditContact() {

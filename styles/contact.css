@@ -607,7 +607,7 @@ hr {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 650px) {
   #contact-big {
     align-items: center;
     padding-left: 50px;
@@ -666,7 +666,7 @@ hr {
   }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 500px) {
   #contact-big {
     align-items: center;
     padding-left: 50px;
@@ -705,19 +705,19 @@ hr {
   }
 }
 
-@media (max-width: 410px) {
+@media (max-width: 480px) {
   .menu-button {
     margin-left: -60px;
   }
 }
 
-@media (max-width: 368px) {
+@media (max-width: 420px) {
   .contact-detail-header-right-headline {
     font-size: 24px;
   }
 }
 
-@media (max-width: 354px) {
+@media (max-width: 420px) {
   .menu-button {
     margin-left: -500px;
   }
