@@ -2,6 +2,12 @@
   font-size: 20px;
 }
 
+.check-icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
 
 #add-contact-content {
   position: fixed;
@@ -490,6 +496,8 @@
 
 @media (max-width: 576px) {
   #add-contact-create {
+    display: flex;
+    align-items: center;
     padding: 10px;
   }
   #input-fields {
