@@ -68,16 +68,19 @@ a:hover {
 }
 
 @media (max-width: 1250px) {
-  #overlay-left {
-    display: none;
-  }
+
 
   .container {
-    margin: 20px;
     width: calc(100% - 40px);
+    margin-top: 100px;
+    margin-bottom: 10vh;
   }
 }
-
+@media (max-width: 900px) {
+  .arrow-icon {
+    left: 90%;
+  }
+}
 @media (max-width: 600px) {
   .container {
     padding: 15px;
