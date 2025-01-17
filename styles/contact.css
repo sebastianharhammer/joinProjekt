@@ -572,9 +572,6 @@ hr {
   }
 }
 @media (max-width: 992px) {
-  .back-button {
-    left: 320px;
-  }
 
   #contact-side-panel {
     width: 100%;
@@ -709,6 +706,53 @@ hr {
   .menu-button {
     margin-left: -60px;
   }
+}
+
+#back-button{
+  right: 6vw;
+}
+
+#contact-headline-container{
+  width: 100vw;
+  justify-content: flex-start;
+  top: 170px;
+}
+
+#contact-big{
+  width: 100vw;
+  padding: 0;
+}
+
+#contact-headline{
+  padding: 0;
+  width: 98vw;
+}
+
+#bwat-headline{
+  width: 98vw;
+}
+
+#bwat-headline::after {
+  margin-left: 8px;
+}
+
+.contact-detail-header {
+  gap: 14px;
+}
+
+.contact-detail {
+  position: absolute;
+  /* display: flex
+; */
+  /* flex-direction: column; */
+  width: 100vw;
+  height: auto;
+  top: 270px;
+  padding-left: 16px;
+}
+
+#contact-headline-container {
+  padding-left: 4px;
 }
 
 @media (max-width: 368px) {
