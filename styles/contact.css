@@ -18,7 +18,9 @@ body {
   background-color: white;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   align-items: center;
-  width: 50%;
+  width: 100%;
+  min-width: 250px;
+  max-width: 400px;
   overflow-y: scroll;
   scrollbar-width: 24px;
   overflow-x: hidden;
@@ -27,7 +29,6 @@ body {
 #add-new-contact-button-container {
   position: sticky;
   top: 0;
-  background-color: white;
   z-index: 999;
   display: flex;
   justify-content: center;
@@ -37,7 +38,7 @@ body {
   max-width: 350px;
   max-height: 101px;
   height: 10vh;
-  padding: 22px 0;
+  padding: 10px
 }
 
 #contact-side-panel::-webkit-scrollbar {

@@ -221,7 +221,7 @@ header {
 }
 @media (max-width: 720px) {
   #header-overlay-top {
-    z-index: 9999;
+    z-index: 9990;
   }
 }
 
