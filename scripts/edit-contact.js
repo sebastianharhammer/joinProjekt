@@ -69,6 +69,7 @@ async function saveEditedContact(firebaseKey) {
     }
     hideEditContact();
     renderSortedContacts(contactsData);
+    toggleContactDetail(firebaseKey);
     return;
   }
 
@@ -82,6 +83,7 @@ async function saveEditedContact(firebaseKey) {
     if (response.ok) {
       hideEditContact();
       fetchContactsFromFirebase();
+      toggleContactDetail(firebaseKey);
     }
   } catch (error) {
     console.error("Failed to update contact.");
@@ -94,7 +96,7 @@ async function deleteContact(firebaseKey) {
     if (index !== -1) {
       contactsData.splice(index, 1);
     }
-    showEditDeleteMessage()
+    showEditDeleteMessage();
     hideEditContact();
     renderSortedContacts(contactsData);
     return;
