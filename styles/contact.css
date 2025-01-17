@@ -64,7 +64,8 @@ body {
 }
 
 #add-contact-btn:hover {
-  background-color: #435266;
+  background-color: #0b8ce9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #add-contact-img {
@@ -682,6 +683,7 @@ hr {
 
 
   }
+  
 
   #add-contact-create {
     margin-left: -2vw;
