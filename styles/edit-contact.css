@@ -363,10 +363,10 @@
 }
 @media (min-width: 1050px) {
   #edit-contact-btn-close-mobile {
-    display: none;
+    display: none !important;
   }
   #edit-contact-icon-container-mobile {
-    display: none;
+    display: none !important;
   }
   #edit-contact-icon-container {
     display: flex;
@@ -407,7 +407,6 @@
     border-radius: 0 0 20px 20px;
   }
 }
-
 @media (max-width: 568px) {
   #edit-contact-btn-wrapper {
     margin-right: 66px;
@@ -420,10 +419,13 @@
   #edit-contact-interactions {
     flex-direction: column;
   }
-
-  .edit-contact-input {
-    width: 90%;
+  #edit-contact-create {
+    padding: 0 24px 0 24px;
   }
+  #edit-contact-delete {
+    padding: 0;
+  }
+
 }
 
 @media (max-width: 428px) {
@@ -435,15 +437,8 @@
 }
 
 @media (max-width: 385px) {
-  #edit-contact-interactions {
-    flex-direction: row;
   
-  }
 
-  #edit-contact-interactions-container {
-    width: 320px;
-    height: 667px;
-  }
 
   #back-button {
     margin-left: -30px;
@@ -455,19 +450,8 @@
     margin-left: -50px;
   }
 
-  .edit-contact-input-icon {
-    right: -20px;
-  }
 
-  .dropdown-menu:not(.hidden) {
-    margin-left: -115px;
-  }
 
-  #edit-contact-side-panel {
-    width: 320px;
-    height: 352px;
-    gap: 49px;
-  }
 
   #header-overlay-top {
     z-index: 0;
@@ -475,8 +459,8 @@
 
   #edit-contact-btn-close-container {
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 1%;
+    right: 2%;
   }
 
   #contact-panel {
