@@ -21,7 +21,7 @@
   width: 100vw;
   background-color: black;
   filter: opacity(50%);
-  z-index: 9999;
+  z-index: 1;
   transition: all 1000ms ease-in-out;
 }
 .hide-add-contact {

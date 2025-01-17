@@ -495,15 +495,15 @@ hr {
 
   .menu-button {
     position: absolute;
-    bottom: 100px;
-    right: 20px;
+    bottom: 11vh;
+    right: 2vw;
     font-size: 24px;
     color: white;
     background: #2a3647;
     cursor: pointer;
     width: 56px;
     height: 56px;
-    left: 756px;
+
     padding: 12px;
     border-radius: 56px;
     border: 1px solid #2a3647;

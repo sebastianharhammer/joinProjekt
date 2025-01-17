@@ -159,8 +159,6 @@
 }
 .edit-contact-input {
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
   padding: 15px;
   border: 1px solid rgb(215, 215, 215);
   border-radius: 15px;
@@ -411,7 +409,9 @@
   #edit-contact-btn-wrapper {
     margin-right: 66px;
   }
-
+  #input-fields {
+    width: 90% !important; 
+  }
   #edit-contact-headline {
     font-size: 30px;
   }
