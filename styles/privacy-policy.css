@@ -68,14 +68,16 @@ a:hover {
   text-decoration: underline;
 }
 
-@media (max-width: 1250px) {
-  #overlay-left {
-    display: none;
-  }
+@media (max-width: 1258px) {
 
   .container {
-    margin: 20px;
     width: calc(100% - 40px);
+  }
+
+}
+@media (max-width: 900px) {
+  .arrow-icon {
+    left: 90%;
   }
 }
 

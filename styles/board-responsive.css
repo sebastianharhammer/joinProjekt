@@ -1,0 +1,371 @@
+@media (max-width: 1500px) {
+    .todo {
+    width: 170px;
+    }
+    
+    .noTasks {
+    width: 170px;
+    }
+    
+    .dragarea-todo, .dragarea-inProgress, .dragarea-feedback, .dragarea-done {
+    align-items: center;
+    }
+    }
+    
+    @media (max-width: 1060px) {
+    
+    .todo {
+        width: 120px;
+    }
+    
+    .noTasks {
+        width: 120px;
+    }
+    
+    .columnTitleFont {
+        font-size: 19px;
+    }
+    
+    .boardFont {
+        font-weight: 600;
+        font-size: 26px;
+    }
+    
+    .addTaskButtonBoard {
+    height: 40px;
+    width: 96px;
+    }
+    
+    .buttonBoardFont {
+    font-size: 14px;
+    }
+    
+    .boardNavigator {
+        top: 116px;
+    }
+    
+    .searchAreaBoard {
+    gap: 2px;
+    height: 40px;
+    }
+    
+    .tasksContent {
+        top: 172px;
+    }
+    
+    .inputBoard {
+        height: 34px;
+        width: 180px;
+    }
+    }
+    
+    @media (max-width: 978px) {
+    .columnTitleFont {
+        font-size: 13px;
+    }
+    }
+    @media (max-width: 768px) {
+    .column-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .column-header-desktop {
+        display: none;
+    }
+    
+    .arrow-btn {
+        display: block;
+    }
+    
+    .plus-button {
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+}
+    
+.tasksContent {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    left: 0;
+}
+    
+.todo {
+    width: 240px;
+    }
+    
+    .noTasks {
+width: 240px;
+    }
+    
+.tasksContent img {
+        display: block;
+}
+    
+.dragarea-todo,
+.dragarea-inProgress,
+.dragarea-feedback,
+.dragarea-done {
+    width: 100%;
+    margin-bottom: 20px;
+    height: 100%;
+}
+    
+.dragarea-todo::before,
+.dragarea-inProgress::before,
+.dragarea-feedback::before,
+.dragarea-done::before {
+    content: attr(data-title);
+    display: block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    text-align: left;
+}
+    
+.titleOfBoardColumns {
+        display: none;
+}
+    
+.boardNavigator {
+    flex-direction: column;
+    gap: 16px;   
+    height: auto;
+}
+    
+.headline-to-do-responsive {
+        display: block;
+        font-family: "inter";
+        font-optical-sizing: auto;
+        font-weight: 1000;
+        font-style: normal;
+        font-size: 22px;
+}
+    
+.headline-in-progress-responsive {
+        display: block;
+        font-family: "inter";
+        font-optical-sizing: auto;
+        font-weight: 1000;
+        font-style: normal;
+        font-size: 22px;
+}
+    
+.headline-feedback-responsive {
+        display: block;
+        font-family: "inter";
+        font-optical-sizing: auto;
+        font-weight: 1000;
+        font-style: normal;
+        font-size: 22px;
+}
+    
+.headline-done-responsive {
+        display: block;
+        font-family: "inter";
+        font-optical-sizing: auto;
+        font-weight: 1000;
+        font-style: normal;
+        font-size: 22px;
+}
+    }
+    
+    @media (max-width: 560px) {
+.boardNavigator-mobile {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 116px;
+        width: 98vw;
+        gap: 32px;
+}
+    
+.noTasks {
+        width: 220px;
+}
+    
+.boardFont-mobile {
+        font-family: "Inter";
+        font-weight: 700;
+        font-size: 48px;
+        color: black;
+}
+    
+.btn-board-mobile {
+        height: 28px;
+}
+.verticalLine-mobile {
+        font-family: "Inter";
+        font-size: 16px;
+        color: rgb(168, 168, 168);
+        font-weight: 300;
+}
+    
+.icon-input-mobile {
+        display: flex;
+        align-items: center;
+        margin-left: 4px;
+}
+    
+.inputBoard-mobile:focus {
+        outline: none;
+}
+    
+.lens {
+        height: 24px;
+}
+    
+.lens:hover {
+        cursor: pointer;
+}
+    
+.todo{
+        width: 220px;
+}
+    
+.wholeDragArea{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+    
+    .todo{
+width: 220px;
+    }
+    
+.buttonBoardFont {
+        font-size: 0;
+        margin-left: 20px;
+}
+    
+.tasksContent {
+        top: 280px;
+}
+    
+.navig-mobile-first-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+}
+    
+.mobile-input-search {
+        width: 95vw;
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 4px;
+        background-color: white;
+        border-radius: 10px;
+        border: 1px solid rgb(168, 168, 168);
+        margin-left: 0.5vw;
+}
+    
+.inputBoard-mobile {
+    width: 260px;
+    height: 39px;
+    border: none;
+    border-radius: 10px;
+    padding-left: 4px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 14px;
+    color: gray;
+}
+    
+.btn-board-mobile:hover {
+        cursor: pointer;
+}
+    
+.searchAndAddTasks {
+    justify-content: center;
+}
+    
+.dragarea-done {
+    margin-bottom: 120px;
+}
+    
+.inputAndButtonBoard {
+    position: absolute;
+    bottom: -50px;
+    left: 70px;
+}
+    
+.addTaskButtonBoard {
+    width: 32px;
+    padding-right: 20px;
+}
+    
+.addTaskButtonBoard::after {
+    content: "+";
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+}
+    
+.boardNavigator {
+        display: none;
+}
+    
+.inputBoard {
+        width: 100%;
+        font-size: 16px;
+}
+    }
+    @media (max-width: 1258px) {
+    
+.dragarea-todo, .dragarea-inProgress, .dragarea-feedback, .dragarea-done {
+        padding: 4px;
+    
+    }
+.boardNavigator {
+        left: 1vw;
+    }
+    
+.tasksContent {
+        padding-bottom: 10vh;
+        left: 1vw;
+        width: 96vw;
+}
+    }
+    
+    @media (max-width: 440px) {
+.tasksContent {
+        flex-direction: column;
+        gap: 10px;
+}
+    
+.titleOfBoardColumns {
+        display: none;
+}
+    
+.dragarea-todo,
+.dragarea-inProgress,
+.dragarea-feedback {
+        width: 100%;
+        margin: 0 auto;
+}
+    
+.dragarea-done {
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 80px;
+}
+    
+.dragarea-todo::before,
+.dragarea-inProgress::before,
+.dragarea-feedback::before,
+.dragarea-done::before {
+        font-size: 18px;
+}
+    
+.inputBoard {
+    font-size: 14px;
+}
+    }

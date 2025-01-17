@@ -29,6 +29,7 @@ function editContact(firebaseKey) {
   background.classList.remove("d-none");
   editContactTemplate.innerHTML = getEditContactHTML(contact);
   setupEditValidation();
+  toggleMenu();
 }
 
 function hideEditContact() {
@@ -93,6 +94,7 @@ async function deleteContact(firebaseKey) {
     if (index !== -1) {
       contactsData.splice(index, 1);
     }
+    showEditDeleteMessage()
     hideEditContact();
     renderSortedContacts(contactsData);
     return;
@@ -122,6 +124,21 @@ function showEditErrorMessage(message) {
       errorContainer.classList.add("d-none");
     }, 2500);
   }
+}
+function showEditDeleteMessage() {
+  const message = document.createElement("div");
+  message.id = "success-message-container";
+  message.innerHTML = "Kontakt erfolgreich gelöscht!";
+  document.body.appendChild(message);
+
+  setTimeout(() => {
+    message.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    message.classList.remove("show");
+    setTimeout(() => message.remove(), 500);
+  }, 2500);
 }
 
 function setupEditValidation() {
