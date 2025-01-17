@@ -255,7 +255,8 @@
   height: 3vh;
   background-color: #2a3647;
   color: white;
-
+  display: flex;
+  align-items: center;
   height: 11vw;
   max-height: 56px;
   padding: 15px 24px 15px 24px;
