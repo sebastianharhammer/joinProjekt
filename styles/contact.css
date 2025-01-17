@@ -61,7 +61,7 @@ body {
   width: 100%;
   margin: auto;
   max-height: 101px;
-  padding: 10px
+  padding: 10px;
 }
 
 #contact-side-panel::-webkit-scrollbar {
@@ -111,7 +111,30 @@ body {
   align-items: flex-start;
 }
 
+#contact-headline-container {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 206px;
+  cursor: default;
+  width: 90vw;
+}
 
+#contact-headline {
+  padding-right: 25px;
+  font-size: 61px;
+  font-weight: 700;
+  border-right: 3px solid #29abe2;
+  width: 80vw;
+}
+
+
+#bwat-headline {
+  font-size: 27px;
+  padding-left: 25px;
+  font-weight: 400;
+}
 
 #contacts {
   background: white;
@@ -461,7 +484,6 @@ hr {
     width: 92vw;
   }
 
-
   #bwat-headline {
     font-size: 27px;
     font-weight: 400;
@@ -622,24 +644,9 @@ hr {
   #contact-side-panel {
       margin-bottom: 10vh;
       min-width: 100%;
-      margin-left: 0;
-  
-}
-
-#bwat-headline::after {
-  background-color: #29abe2;
-}
-
-#contact-big{
-  width: 100vw;
-  padding-left: 16px;
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-top: 0;
-}
+  }
 }
 @media (max-width: 992px) {
-
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
@@ -668,7 +675,6 @@ hr {
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
-
   }
 
   #add-contact-btn {
@@ -753,11 +759,11 @@ hr {
   #add-contact-btn {
     width: 50px;
     height: 50px;
-  }
 
-  #contact-big {
-    margin-left: 0;
-}
+
+
+
+  }
   
 
   #add-contact-create {
@@ -784,6 +790,54 @@ hr {
   .menu-button {
     margin-left: -60px;
   }
+}
+
+#back-button{
+  right: 6vw;
+}
+
+#contact-headline-container{
+  width: 100vw;
+  justify-content: flex-start;
+  top: 170px;
+}
+
+#contact-big{
+  width: 100vw;
+  padding: 0;
+}
+
+#contact-headline{
+  padding: 10px;
+  align-self: flex-start;
+}
+
+#bwat-headline{
+  width: 98vw;
+  padding-top: 4px;
+}
+
+#bwat-headline::after {
+  margin-left: 8px;
+}
+
+.contact-detail-header {
+  gap: 14px;
+}
+
+.contact-detail {
+  position: absolute;
+  /* display: flex
+; */
+  /* flex-direction: column; */
+  width: 100vw;
+  height: auto;
+  top: 270px;
+  padding-left: 16px;
+}
+
+#contact-headline-container {
+  padding-left: 4px;
 }
 
 @media (max-width: 420px) {
@@ -818,7 +872,7 @@ hr {
   }
 
   .back-button {
-  margin-left: -50px;  
+    margin-left: -50px;
   }
   #contact-detail-email {
     gap: 15px;
@@ -835,6 +889,4 @@ hr {
   .letter-header {
     width: 265px;
   }
-  
-  
 }
