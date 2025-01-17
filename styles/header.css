@@ -157,7 +157,7 @@ header {
 }
 
 
-@media (max-width: 1257px) {
+@media (max-width: 1258px) {
   #header-overlay-top {
     width: 100vw;
     margin-left: auto;
@@ -221,7 +221,7 @@ header {
 }
 @media (max-width: 720px) {
   #header-overlay-top {
-    z-index: 9999;
+    z-index: 9990;
   }
 }
 

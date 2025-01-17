@@ -5,7 +5,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: 10;
+  z-index: 9991;
 }
 #edit-contact-background {
   display: flex;
@@ -16,7 +16,7 @@
   width: 100vw;
   background-color: black;
   filter: opacity(50%);
-  z-index: 9;
+  z-index: 9990;
   transition: all 1000ms ease-in-out;
 }
 .hide-edit-contact {
@@ -131,7 +131,7 @@
   height: 75px;
   position: absolute;
   bottom: -37.5px;
-  z-index: 1;
+  z-index: 9995;
 }
 #edit-contact-icon {
   box-shadow: 0px 0px 4px 0px #0000001a;
@@ -159,8 +159,6 @@
 }
 .edit-contact-input {
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
   padding: 15px;
   border: 1px solid rgb(215, 215, 215);
   border-radius: 15px;
@@ -253,7 +251,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9995;
 }
 #edit-contact-error-message-container {
   height: 20%;
@@ -331,7 +329,7 @@
   height: 75px;
   position: absolute;
   bottom: -37.5px;
-  z-index: 1;
+  z-index: 9995;
 }
 @media (min-width: 1500px) {
   #add-contact-btn-placeholder {
@@ -363,10 +361,10 @@
 }
 @media (min-width: 1050px) {
   #edit-contact-btn-close-mobile {
-    display: none;
+    display: none !important;
   }
   #edit-contact-icon-container-mobile {
-    display: none;
+    display: none !important;
   }
   #edit-contact-icon-container {
     display: flex;
@@ -407,12 +405,13 @@
     border-radius: 0 0 20px 20px;
   }
 }
-
 @media (max-width: 568px) {
   #edit-contact-btn-wrapper {
     margin-right: 66px;
   }
-
+  #input-fields {
+    width: 90% !important; 
+  }
   #edit-contact-headline {
     font-size: 30px;
   }
@@ -420,10 +419,13 @@
   #edit-contact-interactions {
     flex-direction: column;
   }
-
-  .edit-contact-input {
-    width: 90%;
+  #edit-contact-create {
+    padding: 0 24px 0 24px;
   }
+  #edit-contact-delete {
+    padding: 0;
+  }
+
 }
 
 @media (max-width: 428px) {
@@ -435,15 +437,8 @@
 }
 
 @media (max-width: 385px) {
-  #edit-contact-interactions {
-    flex-direction: row;
   
-  }
 
-  #edit-contact-interactions-container {
-    width: 320px;
-    height: 667px;
-  }
 
   #back-button {
     margin-left: -30px;
@@ -455,28 +450,10 @@
     margin-left: -50px;
   }
 
-  .edit-contact-input-icon {
-    right: -20px;
-  }
-
-  .dropdown-menu:not(.hidden) {
-    margin-left: -115px;
-  }
-
-  #edit-contact-side-panel {
-    width: 320px;
-    height: 352px;
-    gap: 49px;
-  }
-
-  #header-overlay-top {
-    z-index: 0;
-  }
-
   #edit-contact-btn-close-container {
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 1%;
+    right: 2%;
   }
 
   #contact-panel {
