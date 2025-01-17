@@ -730,6 +730,7 @@ hr {
 
 #bwat-headline{
   width: 98vw;
+  padding-top: 4px;
 }
 
 #bwat-headline::after {
@@ -777,7 +778,7 @@ hr {
   }
 
   .contact-detail-header {
-    height: 80px;
+    height: 120px;
     gap: 10px;
   }
 
