@@ -20,7 +20,7 @@ body {
   align-items: center;
   width: 100%;
   min-width: 250px;
-  max-width: 400px;
+  max-width: 450px;
   overflow-y: scroll;
   scrollbar-width: 24px;
   overflow-x: hidden;
@@ -408,15 +408,10 @@ hr {
   text-align: left;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1258px) {
 
 
-  #contact-side-panel {
-    width: 100%;
-    padding-top: 20px;
-    display: flex;
-    flex-direction: column;
-  }
+  
 
   .hidden {
     transform: translateX(100%);
@@ -574,6 +569,7 @@ hr {
 @media (max-width: 1256px) {
   #contact-side-panel {
       margin-bottom: 10vh;
+      min-width: 100%;
   }
 }
 @media (max-width: 992px) {
@@ -731,8 +727,8 @@ hr {
 }
 
 #contact-headline{
-  padding: 0;
-  width: 98vw;
+  padding: 10px;
+  align-self: flex-start;
 }
 
 #bwat-headline{
