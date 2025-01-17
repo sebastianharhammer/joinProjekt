@@ -12,17 +12,34 @@ function getEditContactHTML(contact) {
                 <path d="M91.3187 118.593V104.76H94.0458L96.9775 110.461C97.7322 111.952 98.4036 113.483 98.9887 115.049C98.8353 113.337 98.7672 111.368 98.7672 109.177V104.76H101.017V118.593H98.4774L95.5117 112.772C94.7265 111.243 94.0266 109.671 93.4152 108.064C93.4152 109.776 93.5345 111.711 93.5345 114.09V118.576L91.3187 118.593Z" fill="white"/>
             </svg>
               </div>
+              <div id="headline-close-container" style="display: flex; width: 100%; justify-content: space-between; align-items: center;">
               <span id="edit-contact-headline">Edit contact</span>
+              <div src="./img/close.svg" id="edit-contact-btn-close-mobile" style="cursor: pointer; display:flex; justify-content:center; align-items:center;  border-radius: 50%; padding:px; justify-content: center; align-items: center; display: flex;" onclick="hideEditContact()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
+              </div>
+              <div id="second-vector-container">
               <img src="./img/vector5.png" id="vector-line">
+              </div>
+              <div id="edit-contact-icon-container-mobile">
+                      <div id="edit-contact-icon" style="background-color: ${
+                        contact.color
+                      };">
+                          ${getInitials(contact.firstName, contact.lastName)}
+                      </div>
+                  </div>
           </div>
           <div id="edit-contact-interactions-container">
               <div id="edit-contact-btn-close-container">
-                  <div id="edit-contact-btn-close" onclick="hideEditContact()">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                          <line x1="18" y1="6" x2="6" y2="18"></line>
-                          <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                  </div>
+              <div src="./img/close.svg" id="edit-contact-btn-close" onclick="hideEditContact()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </div>
               </div>
               <div id="edit-contact-interactions">
                   <div id="edit-contact-icon-container">
@@ -59,12 +76,8 @@ function getEditContactHTML(contact) {
               <div id="edit-contact-btn-wrapper">
                   <div id="edit-contact-btn-placeholder"></div>
                   <div id="edit-contact-btn-container">
-                    <button id="edit-contact-delete" onclick="deleteContact('${
-                      contact.firebaseKey
-                    }')">Delete</button>    
-                    <button id="edit-contact-create" onclick="saveEditedContact('${
-                      contact.firebaseKey
-                    }')">Save</button>  
+                    <button id="edit-contact-delete" onclick="deleteContact('${contact.firebaseKey}')">Delete</button>    
+                    <button id="edit-contact-create" onclick="saveEditedContact('${contact.firebaseKey}')">Save</button>  
                   </div>
               </div>
           </div>

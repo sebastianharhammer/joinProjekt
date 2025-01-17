@@ -1,3 +1,8 @@
+.add-contact-input {
+  font-size: 20px;
+}
+
+
 #add-contact-content {
   position: fixed;
   display: flex;
@@ -33,7 +38,7 @@
   display: flex;
   justify-content: center;
   width: 70vw;
-  min-width: 40%;
+  min-width: 50%;
   height: 100%;
   z-index: 15;
   isolation: isolate;
@@ -56,14 +61,14 @@
 }
 #add-contact-headline {
   color: white;
-  font-size: 40px;
+  font-size: 28px;
   font-weight: 600;
   margin-left: 20%;
   margin-bottom: 20px;
 }
 #add-contact-second {
   color: white;
-  font-size: 32px;
+  font-size: 22px;
   font-weight: 200;
   
   text-align: center;
@@ -71,6 +76,7 @@
 #second-vector-container {
   margin-left: 20%;
   margin-bottom: 15%;
+  margin-right: 5%;
 }
 #vector-line-container {
   display: flex;
@@ -199,7 +205,7 @@
   height: 20px;
   width: 20px;
   transform: translateY(-50%);
-  font-size: 16px;
+  font-size: 20px;
   color: #a8a8a8;
   pointer-events: none;
 }
@@ -259,9 +265,7 @@
   width: 30%;
   height: 10vh;
 }
-#test-btn {
-  height: 2vh;
-}
+
 #add-contact-message {
   position: absolute;
   width: 100%;
@@ -342,6 +346,21 @@
 .add-contact-input:invalid + .error-message {
   display: block;
 }
+@media (max-width: 1830px) {
+  #add-contact-headline {
+    font-size: 32px;
+    width: 100%;
+  }
+  #add-contact-second {
+    font-size: 24px;
+  }
+  #second-vector-container {
+    margin-right: 5%;
+  }
+  #contact-panel {
+    min-width: 75%;
+  }
+}
 @media (min-width: 1500px) {
   #add-contact-btn-placeholder {
     width: 30%;
@@ -356,15 +375,25 @@
   #add-contact-interactions { 
     height: 60% !important;
   }
+ 
 }
-
+@media (max-width: 1500px) {
+  #add-contact-icon {
+    height: 100px;
+  }
+}
+@media (max-width: 1400px) {
+  
+}
 @media (min-width: 1050px) {
   #add-contact-btn-close-mobile {
     display: none !important;
   }
   #headline-close-container {
-    display: block !important;
+    display: flex;
+    justify-content: space-between;
   }
+  
   #add-contact-icon-container-mobile {
     display: none;
   }
@@ -380,6 +409,13 @@
   } */
 }
 @media (max-width: 1050px) {
+  .add-contact-input {
+    font-size: 16px;
+  }
+  #add-contact-headline {
+    padding-top: 5%;
+    margin-bottom: 0;
+  }
   #vector-line {
     width: 15vw !important;
   }
@@ -436,6 +472,9 @@
   #add-contact-second {
     font-size: 22px;
   }
+  .add-contact-input {
+    font-size: 12px;
+  }
 }
 @media (max-width: 670px) {
   #add-contact-icon {
@@ -464,7 +503,7 @@
   padding: 5px;
   }
   #add-contact-headline {
-    font-size: 34px;
+    font-size: 30px;
   }
  
 
@@ -478,7 +517,7 @@
   }
 
   #add-contact-headline {
-    font-size: 34px;
+    font-size: 28px;
   }
 
   #add-contact-second {
