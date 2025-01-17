@@ -512,8 +512,8 @@ hr {
 
   .dropdown-menu {
     position: absolute;
-    bottom: 67px;
-    left: 296px;
+    bottom: 11vh;
+    right: calc(5vw + 56px);
     width: 116px;
     height: 100px;
     padding: 10px;
