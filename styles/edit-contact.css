@@ -5,7 +5,7 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  z-index: 10;
+  z-index: 9991;
 }
 #edit-contact-background {
   display: flex;
@@ -16,7 +16,7 @@
   width: 100vw;
   background-color: black;
   filter: opacity(50%);
-  z-index: 9;
+  z-index: 9990;
   transition: all 1000ms ease-in-out;
 }
 .hide-edit-contact {
@@ -131,7 +131,7 @@
   height: 75px;
   position: absolute;
   bottom: -37.5px;
-  z-index: 1;
+  z-index: 9995;
 }
 #edit-contact-icon {
   box-shadow: 0px 0px 4px 0px #0000001a;
@@ -251,7 +251,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9995;
 }
 #edit-contact-error-message-container {
   height: 20%;
@@ -329,7 +329,7 @@
   height: 75px;
   position: absolute;
   bottom: -37.5px;
-  z-index: 1;
+  z-index: 9995;
 }
 @media (min-width: 1500px) {
   #add-contact-btn-placeholder {
@@ -448,13 +448,6 @@
 @media (max-width: 385px) {
   #back-button {
     margin-left: -50px;
-  }
-
-
-
-
-  #header-overlay-top {
-    z-index: 0;
   }
 
   #edit-contact-btn-close-container {
