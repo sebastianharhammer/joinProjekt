@@ -28,6 +28,7 @@ function getMobileDetailHTML(contact, firebaseKey) {
     <div class="contact-headline-container-mobile">
             <h3 class="contact-headline-mobile">Contacts</h3>
             <h2 class="bwat-headline-mobile">Better with a team</h2>
+            <hr class="hr-mobile-contact">
     </div>
     <button id="back-button" class="back-button" onclick="renderContactList()">
       <img src="./img/arrow-left-line.svg" alt="arrow left">

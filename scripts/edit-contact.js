@@ -43,6 +43,19 @@ function hideEditContact() {
 }
 
 async function saveEditedContact(firebaseKey) {
+  const contactListContainer = document.getElementById("contact-side-panel");
+  const detailViewContainer = document.getElementById("contact-big");
+  const mobileDetailView = document.getElementById("mobile-contact-detail");
+  if (mobileDetailView) {
+    mobileDetailView.style.display = "none";
+  }
+  if (contactListContainer) {
+    contactListContainer.style.removeProperty("display");
+    contactListContainer.classList.remove("hidden");
+  }
+  if (detailViewContainer) {
+    detailViewContainer.style.display = "none";
+  }
   const nameInput = document.getElementById("edit-contact-name").value.trim();
   const emailInput = document.getElementById("edit-contact-email").value.trim();
   const phoneInput = document.getElementById("edit-contact-phone").value.trim();
@@ -61,7 +74,6 @@ async function saveEditedContact(firebaseKey) {
     showEditErrorMessage("Name and email are required");
     return;
   }
-
   if (isGuestUser()) {
     const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
     if (index !== -1) {
@@ -91,6 +103,19 @@ async function saveEditedContact(firebaseKey) {
 }
 
 async function deleteContact(firebaseKey) {
+  const contactListContainer = document.getElementById("contact-side-panel");
+  const detailViewContainer = document.getElementById("contact-big");
+  const mobileDetailView = document.getElementById("mobile-contact-detail");
+  if (mobileDetailView) {
+    mobileDetailView.style.display = "none";
+  }
+  if (contactListContainer) {
+    contactListContainer.style.removeProperty("display");
+    contactListContainer.classList.remove("hidden");
+  }
+  if (detailViewContainer) {
+    detailViewContainer.style.display = "none";
+  }
   if (isGuestUser()) {
     const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
     if (index !== -1) {

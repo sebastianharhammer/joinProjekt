@@ -556,6 +556,14 @@ hr {
     display: none;
   }
 
+  .hr-mobile-contact {
+    border: none;
+    height: 3px;
+    background-color: #29ABE2;
+    width: 120px;
+    border-radius: 4px;
+}
+
 @media (max-width: 1256px) {
   .contact-headline-container-mobile{
     position: fixed;
@@ -684,6 +692,11 @@ hr {
 
 
 @media (max-width: 768px) {
+
+  .bwat-headline-mobile {
+    font-size: 32px;
+}
+
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
