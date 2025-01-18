@@ -692,6 +692,23 @@ hr {
   #add-contact-btn {
     width: 80%;
   }
+
+  .contact-detail-header {
+    gap: 20px;
+    padding-left: 8px;
+  }
+
+  #contact-information{
+    padding-left: 8px;
+  }
+
+  #contact-detail-bottom{
+    padding-left: 8px;
+  }
+
+  .contact-headline-container-mobile {
+    padding-left: 8px;
+}
 }
 
 @media (max-width: 650px) {
