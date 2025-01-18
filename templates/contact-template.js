@@ -24,6 +24,11 @@ function contactsTemplate(contact) {
 
 function getMobileDetailHTML(contact, firebaseKey) {
   return /*html*/`
+  <section class="mobile-info-contact">
+    <div class="contact-headline-container-mobile">
+            <h3 class="contact-headline-mobile">Contacts</h3>
+            <h2 class="bwat-headline-mobile">Better with a team</h2>
+    </div>
     <button id="back-button" class="back-button" onclick="renderContactList()">
       <img src="./img/arrow-left-line.svg" alt="arrow left">
     </button>
@@ -60,6 +65,7 @@ function getMobileDetailHTML(contact, firebaseKey) {
         <img id="delete-contact-img" src="./img/delete.svg" alt="Delete"> Delete
       </button>
     </div>
+    </section>
     `;
 }
 

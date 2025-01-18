@@ -550,12 +550,40 @@ hr {
     display: none;
   }
 
+  .contact-headline-container-mobile{
+    position: fixed;
+    top: 120px;
+    display: none;
+  }
+
 @media (max-width: 1256px) {
+  .contact-headline-container-mobile{
+    position: fixed;
+    top: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-left: 32px;
+  }
+
+  .contact-headline-mobile{
+    font-family: "Inter";
+    font-weight: 700;
+    font-size: 53px;
+    color: black;
+  }
+
+  .bwat-headline-mobile{
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 40px;
+    color: black;
+  }
 
   .contact-detail {
     height: 100vh;
     position: fixed;
-    top: 200px;
+    top: 240px;
     left: 0;
     width: 100vw;
 }
@@ -606,6 +634,15 @@ hr {
 
   .contact-detail-header {
     gap: 20px;
+    padding-left: 32px;
+  }
+
+  #contact-information{
+    padding-left: 32px;
+  }
+
+  #contact-detail-bottom{
+    padding-left: 32px;
   }
 
   .contact-detail-header-right {
