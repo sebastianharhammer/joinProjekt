@@ -536,6 +536,11 @@
   #add-contact-headline {
     font-size: 26px;
   }
+
+  #contact-panel {
+    position: fixed;
+    top: 3vh;
+  }
 }
 
 @media (max-width: 345px) {
