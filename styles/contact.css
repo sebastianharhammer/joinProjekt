@@ -552,6 +552,32 @@ hr {
 
 @media (max-width: 1256px) {
 
+  .contact-detail {
+    height: 100vh;
+    position: fixed;
+    top: 200px;
+    left: 0;
+    width: 100vw;
+}
+
+.desktop-contact-detail{
+  display: none !important;
+}
+
+.desktop-template {
+  display: none !important;
+}
+
+.mobile-template {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: white;
+}
+
     .hidden {
     transform: translateX(100%);
     opacity: 0;
@@ -612,20 +638,6 @@ hr {
   #mobile-contact-detail.show-mobile-detail {
     display: block;
   }
-
-  .desktop-template {
-    display: none;
-  }
-
-  .mobile-template {
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: white;
-}
 
 #contact-side-panel {
   margin-left: 0;

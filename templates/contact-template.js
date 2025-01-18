@@ -23,7 +23,7 @@ function contactsTemplate(contact) {
 }
 
 function getMobileDetailHTML(contact, firebaseKey) {
-  return `
+  return /*html*/`
     <button id="back-button" class="back-button" onclick="renderContactList()">
       <img src="./img/arrow-left-line.svg" alt="arrow left">
     </button>
@@ -60,7 +60,7 @@ function getMobileDetailHTML(contact, firebaseKey) {
         <img id="delete-contact-img" src="./img/delete.svg" alt="Delete"> Delete
       </button>
     </div>
-  `;
+    `;
 }
 
 function getDesktopDetailHTML(contact, firebaseKey) {
