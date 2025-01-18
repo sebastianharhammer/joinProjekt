@@ -907,4 +907,21 @@ hr {
     position: fixed;
     bottom: 100px;
   }
+
+  .dropdown-menu {
+    position: fixed;
+    bottom: 13vh;
+    right: calc(5vw + 46px);
+  }
+
+  #add-contact-content {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9991;
+    margin-top: 16px;
+}
 }
