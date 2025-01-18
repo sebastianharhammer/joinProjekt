@@ -544,16 +544,68 @@ hr {
   display: none;
 }
 
+.contact-headline-container-mobile {
+  position: fixed;
+  top: 120px;
+  display: none;
+}
+
+.hr-mobile-contact {
+  border: none;
+  height: 3px;
+  background-color: #29abe2;
+  width: 120px;
+  border-radius: 4px;
+}
+
 @media (max-width: 1256px) {
-  .contact-detail {
+  .contact-headline-container-mobile {
+    position: fixed;
+    top: 120px;
     display: flex;
     flex-direction: column;
-    align-self: center;
+    gap: 2px;
+    padding-left: 32px;
+  }
+
+  .contact-headline-mobile {
+    font-family: "Inter";
+    font-weight: 700;
+    font-size: 53px;
+    color: black;
+  }
+
+  .bwat-headline-mobile {
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 40px;
+    color: black;
+  }
+
+  .contact-detail {
+    height: 100vh;
+    position: fixed;
+    top: 240px;
+    left: 0;
+    width: 100vw;
+  }
+
+  .desktop-contact-detail {
+    display: none !important;
+  }
+
+  .desktop-template {
+    display: none !important;
+  }
+
+  .mobile-template {
+    display: flex;
+    position: fixed;
     top: 0;
-    bottom: 0;
     right: 0;
+    left: 0;
+    bottom: 0;
     background-color: white;
-    z-index: 100;
   }
 
   .hidden {
@@ -584,6 +636,15 @@ hr {
 
   .contact-detail-header {
     gap: 20px;
+    padding-left: 32px;
+  }
+
+  #contact-information {
+    padding-left: 32px;
+  }
+
+  #contact-detail-bottom {
+    padding-left: 32px;
   }
 
   .contact-detail-header-right {
@@ -617,26 +678,16 @@ hr {
     display: block;
   }
 
-  .desktop-template {
-    display: none;
-  }
-
-  .mobile-template {
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: white;
-  }
-
   #contact-side-panel {
     margin-left: 0;
   }
 }
 
 @media (max-width: 768px) {
+  .bwat-headline-mobile {
+    font-size: 32px;
+  }
+
   #contact-side-panel {
     width: 100%;
     padding-top: 20px;
@@ -644,6 +695,23 @@ hr {
 
   #add-contact-btn {
     width: 80%;
+  }
+
+  .contact-detail-header {
+    gap: 20px;
+    padding-left: 8px;
+  }
+
+  #contact-information {
+    padding-left: 8px;
+  }
+
+  #contact-detail-bottom {
+    padding-left: 8px;
+  }
+
+  .contact-headline-container-mobile {
+    padding-left: 8px;
   }
 }
 
@@ -815,5 +883,28 @@ hr {
 
   .letter-header {
     width: 265px;
+  }
+
+  .menu-button {
+    z-index: 100000000;
+    position: fixed;
+    bottom: 100px;
+  }
+
+  .dropdown-menu {
+    position: fixed;
+    bottom: 13vh;
+    right: calc(5vw + 46px);
+  }
+
+  #add-contact-content {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9991;
+    margin-top: 16px;
   }
 }

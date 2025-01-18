@@ -202,7 +202,9 @@ function toggleContactDetail(firebaseKey) {
   const mobileDetailView = document.getElementById("mobile-contact-detail");
   const desktopDetailView = document.getElementById("desktop-contact-detail");
 
-  const selectedContact = contactsData.find((c) => c.firebaseKey === firebaseKey);
+  const selectedContact = contactsData.find(
+    (c) => c.firebaseKey === firebaseKey
+  );
   const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
 
   if (!selectedContact) return;
@@ -214,20 +216,48 @@ function toggleContactDetail(firebaseKey) {
 
   contactItems.forEach((item) => item.classList.remove("selected"));
   if (clickedItem) clickedItem.classList.add("selected");
-  mobileDetailView.innerHTML = getMobileDetailHTML(selectedContact, firebaseKey);
-  desktopDetailView.innerHTML = getDesktopDetailHTML(selectedContact, firebaseKey);
+  mobileDetailView.innerHTML = getMobileDetailHTML(
+    selectedContact,
+    firebaseKey
+  );
+  desktopDetailView.innerHTML = getDesktopDetailHTML(
+    selectedContact,
+    firebaseKey
+  );
+
+  // Überprüfen, ob wir uns in der mobilen Ansicht befinden
+  if (window.innerWidth <= 1256) {
+    // Sicherstellen, dass das mobile Template angezeigt wird
+    mobileDetailView.style.display = "flex"; // oder "block" je nach Layout
+  }
+
+  // Sicherstellen, dass die Desktop-Ansicht ausgeblendet bleibt, wenn auf einem mobilen Gerät
+  if (window.innerWidth > 1256) {
+    desktopDetailView.style.display = "block";
+    mobileDetailView.style.display = "none";
+  }
 }
-
-
 
 function renderContactList() {
   const contactListContainer = document.getElementById("contact-side-panel");
   const detailViewContainer = document.getElementById("contact-big");
+  const mobileDetailView = document.getElementById("mobile-contact-detail");
+
+  // Sicherstellen, dass der mobile Detailbereich ausgeblendet wird
+  if (mobileDetailView) {
+    mobileDetailView.style.display = "none"; // Hier wird der mobile Detailbereich versteckt
+  }
+
+  // Kontaktliste sichtbar machen
   if (contactListContainer) {
     contactListContainer.style.removeProperty("display");
     contactListContainer.classList.remove("hidden");
   }
-  if (detailViewContainer) detailViewContainer.style.display = "none";
+
+  // Sicherstellen, dass der Desktop-Detailbereich (falls sichtbar) ausgeblendet wird
+  if (detailViewContainer) {
+    detailViewContainer.style.display = "none";
+  }
 }
 
 function toggleMenu() {
