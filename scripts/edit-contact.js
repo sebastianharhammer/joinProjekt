@@ -1,41 +1,6 @@
-/**
- * Firebase-Konfigurationsobjekt.
- * @constant {Object}
- */
-const firebaseConfig = {
-  databaseURL:
-    "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
-};
 
-/**
- * Basis-URL für Firebase-Datenbankoperationen.
- * @constant {string}
- */
-const BASE_URL = firebaseConfig.databaseURL;
 
-/**
- * Initialisiert die Firebase-App.
- * @constant {firebase.app.App}
- */
-const app = firebase.initializeApp(firebaseConfig);
 
-/**
- * Referenz zur Firebase-Datenbank.
- * @constant {firebase.database.Database}
- */
-const database = firebase.database();
-
-/**
- * Der aktuell angemeldete Benutzer.
- * @type {Object|null}
- */
-let currentUser = null;
-
-/**
- * Array zur Speicherung von Kontaktdaten.
- * @type {Array<Object>}
- */
-let contactsData = [];
 
 /**
  * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
@@ -102,20 +67,6 @@ function hideEditContact() {
  * @param {string} firebaseKey - Der Firebase-Schlüssel des zu speichernden Kontakts.
  */
 async function saveEditedContact(firebaseKey) {
-  const contactListContainer = document.getElementById("contact-side-panel");
-  const detailViewContainer = document.getElementById("contact-big");
-  const mobileDetailView = document.getElementById("mobile-contact-detail");
-  if (mobileDetailView) {
-    mobileDetailView.style.display = "none";
-  }
-  if (contactListContainer) {
-    contactListContainer.style.removeProperty("display");
-    contactListContainer.classList.remove("hidden");
-  }
-  if (detailViewContainer) {
-    detailViewContainer.style.display = "none";
-  }
-
   const nameInput = document.getElementById("edit-contact-name").value.trim();
   const emailInput = document.getElementById("edit-contact-email").value.trim();
   const phoneInput = document.getElementById("edit-contact-phone").value.trim();
@@ -130,10 +81,13 @@ async function saveEditedContact(firebaseKey) {
     phone: phoneInput,
   };
 
+  // Validation
   if (!firstName || !emailInput) {
     showEditErrorMessage("Name and email are required");
     return;
   }
+
+  // Gastbenutzer: Lokale Daten aktualisieren
   if (isGuestUser()) {
     const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
     if (index !== -1) {
@@ -141,10 +95,11 @@ async function saveEditedContact(firebaseKey) {
     }
     hideEditContact();
     renderSortedContacts(contactsData);
-    toggleContactDetail(firebaseKey);
+    toggleContactDetail(firebaseKey); // Detailansicht bleibt geöffnet
     return;
   }
 
+  // Firebase: Kontakt speichern
   try {
     const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
       method: "PUT",
@@ -153,14 +108,27 @@ async function saveEditedContact(firebaseKey) {
     });
 
     if (response.ok) {
-      hideEditContact();
-      fetchContactsFromFirebase();
-      toggleContactDetail(firebaseKey);
+      // Lokale Daten aktualisieren
+      const contactIndex = contactsData.findIndex(
+        (c) => c.firebaseKey === firebaseKey
+      );
+      if (contactIndex !== -1) {
+        contactsData[contactIndex] = {
+          ...contactsData[contactIndex],
+          ...updatedContact,
+        };
+      }
+
+      hideEditContact(); // Editierfenster schließen
+      fetchContactsFromFirebase(); // Kontakte neu laden
+      setTimeout(() => toggleContactDetail(firebaseKey), 100); // Detailansicht öffnen
     }
   } catch (error) {
-    console.error("Failed to update contact.");
+    console.error("Failed to update contact.", error);
   }
 }
+
+
 
 /**
  * Löscht einen Kontakt aus der Kontaktliste.

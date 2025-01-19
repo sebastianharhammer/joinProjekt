@@ -262,8 +262,8 @@ function contactsTemplate(contact) {
 }
 
 /**
- * Schaltet die Detailansicht eines Kontakts um.
- * @param {string} firebaseKey - Der Firebase-Schlüssel des Kontakts.
+ * Toggles the display of contact details for the specified Firebase key.
+ * @param {string} firebaseKey - The unique Firebase key of the contact.
  */
 function toggleContactDetail(firebaseKey) {
   const contactItems = document.querySelectorAll(".contact-item");
@@ -271,39 +271,37 @@ function toggleContactDetail(firebaseKey) {
   const mobileDetailView = document.getElementById("mobile-contact-detail");
   const desktopDetailView = document.getElementById("desktop-contact-detail");
 
-  const selectedContact = contactsData.find(
-    (c) => c.firebaseKey === firebaseKey
-  );
+  // Find the selected contact and its corresponding DOM element
+  const selectedContact = contactsData.find((c) => c.firebaseKey === firebaseKey);
   const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
 
-  if (!selectedContact) return;
+  if (!selectedContact || !clickedItem) return;
 
-  if (clickedItem && clickedItem.classList.contains("selected")) {
+  // Deselect if the same contact is clicked
+  if (clickedItem.classList.contains("selected")) {
     clickedItem.classList.remove("selected");
+    if (mobileDetailView) mobileDetailView.innerHTML = "";
+    if (desktopDetailView) desktopDetailView.innerHTML = "";
     return;
   }
 
   contactItems.forEach((item) => item.classList.remove("selected"));
-  if (clickedItem) clickedItem.classList.add("selected");
-  mobileDetailView.innerHTML = getMobileDetailHTML(
-    selectedContact,
-    firebaseKey
-  );
-  desktopDetailView.innerHTML = getDesktopDetailHTML(
-    selectedContact,
-    firebaseKey
-  );
+  clickedItem.classList.add("selected");
 
-  // Überprüfen, ob wir uns in der mobilen Ansicht befinden
-  if (window.innerWidth <= 1256) {
-    // Sicherstellen, dass das mobile Template angezeigt wird
-    mobileDetailView.style.display = "flex"; // oder "block" je nach Layout
+  if (mobileDetailView) {
+    mobileDetailView.innerHTML = getMobileDetailHTML(selectedContact, firebaseKey);
+  }
+  if (desktopDetailView) {
+    desktopDetailView.innerHTML = getDesktopDetailHTML(selectedContact, firebaseKey);
   }
 
-  // Sicherstellen, dass die Desktop-Ansicht ausgeblendet bleibt, wenn auf einem mobilen Gerät
-  if (window.innerWidth > 1256) {
-    desktopDetailView.style.display = "block";
-    mobileDetailView.style.display = "none";
+  const isMobileView = window.innerWidth <= 1256;
+  if (isMobileView) {
+    if (mobileDetailView) mobileDetailView.style.display = "flex";
+    if (desktopDetailView) desktopDetailView.style.display = "none";
+  } else {
+    if (desktopDetailView) desktopDetailView.style.display = "block";
+    if (mobileDetailView) mobileDetailView.style.display = "none";
   }
 }
 
@@ -315,18 +313,15 @@ function renderContactList() {
   const detailViewContainer = document.getElementById("contact-big");
   const mobileDetailView = document.getElementById("mobile-contact-detail");
 
-  // Sicherstellen, dass der mobile Detailbereich ausgeblendet wird
   if (mobileDetailView) {
-    mobileDetailView.style.display = "none"; // Hier wird der mobile Detailbereich versteckt
+    mobileDetailView.style.display = "none";
   }
 
-  // Kontaktliste sichtbar machen
   if (contactListContainer) {
     contactListContainer.style.removeProperty("display");
     contactListContainer.classList.remove("hidden");
   }
 
-  // Sicherstellen, dass der Desktop-Detailbereich (falls sichtbar) ausgeblendet wird
   if (detailViewContainer) {
     detailViewContainer.style.display = "none";
   }
@@ -378,9 +373,9 @@ function getRandomColor() {
 
 /**
  * Holt die Initialen eines Benutzers.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @returns {string} Die Initialen des Benutzers in Großbuchstaben.
+ * @param {string} firstName
+ * @param {string} lastName
+ * @returns {string}
  */
 function getInitials(firstName, lastName) {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
