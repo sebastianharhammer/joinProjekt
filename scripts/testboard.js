@@ -52,15 +52,10 @@ let taskArray = [];
 async function init() {
   try {
     await includeHTML();
-    console.log("HTML-Inhalte geladen");
     loadCurrentUser();
-    console.log("Aktueller Benutzer geladen:", currentUser);
     await fetchContacts();
-    console.log("Kontakte geladen:", finalContacts);
     loadBoardNavigator(); // Spalten werden vor dem Laden der Aufgaben geladen
-    console.log("Board-Navigator geladen");
     await fetchTasks("/tasks"); // Aufgaben werden nach dem Laden der Spalten geladen
-    console.log("Aufgaben geladen und HTML aktualisiert");
   } catch (error) {
     console.error("Fehler bei der Initialisierung:", error);
   }
@@ -493,8 +488,6 @@ function updateTaskHTML() {
   if (done.length === 0) {
     createNoTasksDiv("done", "NO TASKS DONE");
   }
-
-  console.log("Task HTML aktualisiert");
 }
 
 /**
