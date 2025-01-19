@@ -1,6 +1,6 @@
 /**
- * Behandelt den Klick auf eine Dropdown-Option zur Benutzerzuweisung.
- * @param {Event} event - Das auslösende Ereignis.
+ * Handles the click on a dropdown option for user assignment.
+ * @param {Event} event - The triggering event.
  */
 function handleOptionsClick(event) {
   const userContainer = event.target.closest(".assigned-user-container");
@@ -12,9 +12,9 @@ function handleOptionsClick(event) {
 }
 
 /**
- * Extrahiert Benutzerdaten aus dem Benutzercontainer.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @returns {Object} Die extrahierten Benutzerdaten.
+ * Extracts user data from the user container.
+ * @param {HTMLElement} userContainer - The user's container.
+ * @returns {Object} The extracted user data.
  */
 function extractUserData(userContainer) {
   return {
@@ -25,9 +25,9 @@ function extractUserData(userContainer) {
 }
 
 /**
- * Wechselt die Auswahl eines Benutzers in der Liste der zugewiesenen Benutzer.
- * @param {Object} userData - Die Daten des Benutzers.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
+ * Toggles the selection of a user in the list of assigned users.
+ * @param {Object} userData - The user's data.
+ * @param {HTMLElement} userContainer - The user's container.
  */
 function toggleUserSelection(userData, userContainer) {
   const checkbox = userContainer.querySelector('input[type="checkbox"]');
@@ -42,9 +42,9 @@ function toggleUserSelection(userData, userContainer) {
 }
 
 /**
- * Findet den Index eines Benutzers in der Liste der zugewiesenen Benutzer.
- * @param {Object} userData - Die Daten des Benutzers.
- * @returns {number} Der Index des Benutzers oder -1, wenn nicht gefunden.
+ * Finds the index of a user in the list of assigned users.
+ * @param {Object} userData - The user's data.
+ * @returns {number} The index of the user or -1 if not found.
  */
 function findUserIndex(userData) {
   return assignedUserArr.findIndex(
@@ -55,16 +55,16 @@ function findUserIndex(userData) {
 }
 
 /**
- * Entfernt einen Benutzer aus der Liste der zugewiesenen Benutzer.
- * @param {number} userIndex - Der Index des zu entfernenden Benutzers.
+ * Removes a user from the list of assigned users.
+ * @param {number} userIndex - The index of the user to remove.
  */
 function removeUser(userIndex) {
   assignedUserArr.splice(userIndex, 1);
 }
 
 /**
- * Fügt einen Benutzer zur Liste der zugewiesenen Benutzer hinzu.
- * @param {Object} userData - Die Daten des hinzuzufügenden Benutzers.
+ * Adds a user to the list of assigned users.
+ * @param {Object} userData - The data of the user to add.
  */
 function addUser(userData) {
   assignedUserArr.push({
@@ -78,10 +78,10 @@ function addUser(userData) {
 }
 
 /**
- * Aktualisiert das Erscheinungsbild des Benutzercontainers basierend auf der Auswahl.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @param {HTMLInputElement} checkbox - Die Checkbox des Benutzers.
- * @param {boolean} isSelected - Gibt an, ob der Benutzer ausgewählt ist.
+ * Updates the appearance of the user container based on selection.
+ * @param {HTMLElement} userContainer - The user's container.
+ * @param {HTMLInputElement} checkbox - The user's checkbox.
+ * @param {boolean} isSelected - Indicates whether the user is selected.
  */
 function updateUserContainer(userContainer, checkbox, isSelected) {
   checkbox.checked = isSelected;
@@ -91,7 +91,7 @@ function updateUserContainer(userContainer, checkbox, isSelected) {
 }
 
 /**
- * Schließt das Dropdown-Menü.
+ * Closes the dropdown menu.
  */
 function closeDropdown() {
   const optionsContainer = document.getElementById("dropdown-options");
@@ -99,10 +99,10 @@ function closeDropdown() {
 }
 
 /**
- * Weist einen Benutzer basierend auf Vor- und Nachnamen sowie Farbe zu.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @param {string} color - Die Farbe des Benutzers.
+ * Assigns a user based on first name, last name, and color.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
+ * @param {string} color - The user's color.
  */
 function assignUser(firstName, lastName, color) {
   const userExists = assignedUserArr.some(
@@ -120,7 +120,7 @@ function assignUser(firstName, lastName, color) {
 }
 
 /**
- * Zeigt die zugewiesenen Benutzer im UI an.
+ * Displays the assigned users in the UI.
  */
 function showAssignedUsers() {
   let assignUsersContainer = document.getElementById("assigned-users-short");
@@ -131,16 +131,16 @@ function showAssignedUsers() {
 }
 
 /**
- * Holt den ersten Buchstaben eines Namens und gibt ihn groß zurück.
- * @param {string} name - Der Name, von dem der erste Buchstabe geholt werden soll.
- * @returns {string} Der erste Großbuchstabe des Namens.
+ * Gets the first letter of a name and returns it capitalized.
+ * @param {string} name - The name to get the first letter from.
+ * @returns {string} The first capital letter of the name.
  */
 function getFirstLetter(name) {
   return name.trim().charAt(0).toUpperCase();
 }
 
 /**
- * Öffnet das Dropdown-Menü für Aufgabenkategorien und rendert die Kategorien.
+ * Opens the dropdown menu for task categories and renders the categories.
  */
 function openAddTaskCategories() {
   let categoryList = document.getElementById("dropDownCategoryMenu");
@@ -160,7 +160,7 @@ function openAddTaskCategories() {
 }
 
 /**
- * Verbirgt das Dropdown-Menü für Aufgabenkategorien.
+ * Hides the dropdown menu for task categories.
  */
 function hideAddTaskCategories() {
   categoriesContainerClick = false;
@@ -171,7 +171,7 @@ function hideAddTaskCategories() {
 }
 
 /**
- * Verbirgt das Dropdown-Menü für eine bestimmte Kategorie.
+ * Hides the dropdown menu for a specific category.
  */
 function hideAddTaskCategoriesCategory() {
   categoriesContainerClick = true;
@@ -182,7 +182,7 @@ function hideAddTaskCategoriesCategory() {
 }
 
 /**
- * Rendert die Liste der Aufgabenkategorien im Dropdown-Menü.
+ * Renders the list of task categories in the dropdown menu.
  */
 function renderAddTaskCategories() {
   let categoryContainer = document.getElementById("dropDownCategoryMenu");
@@ -193,8 +193,8 @@ function renderAddTaskCategories() {
 }
 
 /**
- * Wählt eine Aufgabenkategorie aus und aktualisiert das Eingabefeld.
- * @param {string} categoryTask - Die ausgewählte Kategorie.
+ * Selects a task category and updates the input field.
+ * @param {string} categoryTask - The selected category.
  */
 function selectAddTaskCategory(categoryTask) {
   let categoryInput = document.getElementById("categoryInput");
@@ -206,7 +206,7 @@ function selectAddTaskCategory(categoryTask) {
 }
 
 /**
- * Setzt alle Prioritätsbuttons zurück auf ihren Ursprungszustand.
+ * Resets all priority buttons to their original state.
  */
 function resetPriorityButtons() {
   const priorities = ["urgent", "medium", "low"];
@@ -221,8 +221,8 @@ function resetPriorityButtons() {
 }
 
 /**
- * Setzt die Priorität einer Aufgabe und aktualisiert die UI entsprechend.
- * @param {string} priority - Die ausgewählte Priorität ("urgent", "medium", "low").
+ * Sets the priority of a task and updates the UI accordingly.
+ * @param {string} priority - The selected priority ("urgent", "medium", "low").
  */
 function setPriority(priority) {
   resetPriorityButtons();
@@ -236,7 +236,7 @@ function setPriority(priority) {
 }
 
 /**
- * Fügt eine neue Unteraufgabe hinzu, nachdem sie validiert wurde.
+ * Adds a new subtask after validation.
  */
 function addSubtask() {
   const subtaskInput = document.getElementById("subtaskInput");
@@ -251,16 +251,16 @@ function addSubtask() {
 }
 
 /**
- * Validiert die Eingabe einer Unteraufgabe.
- * @param {string} value - Der Eingabewert der Unteraufgabe.
- * @returns {boolean} Gibt true zurück, wenn die Eingabe gültig ist.
+ * Validates the input of a subtask.
+ * @param {string} value - The input value of the subtask.
+ * @returns {boolean} Returns true if the input is valid.
  */
 function validateSubtaskInput(value) {
   return value.trim() !== "";
 }
 
 /**
- * Zeigt eine Fehlermeldung an, wenn die Unteraufgabe leer ist.
+ * Shows an error message when the subtask is empty.
  */
 function showSubtaskError() {
   errorMessageSubtasks.innerHTML = "Subtask can't be empty!";
@@ -270,8 +270,8 @@ function showSubtaskError() {
 }
 
 /**
- * Erstellt eine neue Unteraufgabe und fügt sie den entsprechenden Arrays und dem DOM hinzu.
- * @param {string} subtaskValue - Der Text der Unteraufgabe.
+ * Creates a new subtask and adds it to the corresponding arrays and DOM.
+ * @param {string} subtaskValue - The text of the subtask.
  */
 function createAndAddSubtask(subtaskValue) {
   subtaskIdCounter++;
@@ -285,9 +285,9 @@ function createAndAddSubtask(subtaskValue) {
 }
 
 /**
- * Generiert eindeutige IDs für eine Unteraufgabe basierend auf einem Zähler.
- * @param {number} counter - Der aktuelle Zählerstand.
- * @returns {Object} Die generierten IDs.
+ * Generates unique IDs for a subtask based on a counter.
+ * @param {number} counter - The current counter value.
+ * @returns {Object} The generated IDs.
  */
 function generateSubtaskIds(counter) {
   return {
@@ -298,8 +298,8 @@ function generateSubtaskIds(counter) {
 }
 
 /**
- * Fügt die neue Unteraufgabe den entsprechenden Arrays hinzu.
- * @param {string} subtaskValue - Der Text der Unteraufgabe.
+ * Adds the new subtask to the corresponding arrays.
+ * @param {string} subtaskValue - The text of the subtask.
  */
 function addSubtaskToArrays(subtaskValue) {
   const newSubtask = {
@@ -311,15 +311,15 @@ function addSubtaskToArrays(subtaskValue) {
 }
 
 /**
- * Setzt das Eingabefeld für die Unteraufgabe zurück.
- * @param {HTMLInputElement} input - Das Eingabefeld der Unteraufgabe.
+ * Resets the input field for the subtask.
+ * @param {HTMLInputElement} input - The subtask input field.
  */
 function resetSubtaskInput(input) {
   input.value = "";
 }
 
 /**
- * Aktualisiert die Symbole für Unteraufgaben, indem bestimmte Icons ein- oder ausgeblendet werden.
+ * Updates the subtask icons by showing or hiding specific icons.
  */
 function updateSubtaskIcons() {
   document.getElementById("clear-add-icons").classList.add("d-none");
@@ -327,10 +327,10 @@ function updateSubtaskIcons() {
 }
 
 /**
- * Ermöglicht das Bearbeiten einer Unteraufgabe.
- * @param {string} liId - Die ID des Listen-Elements.
- * @param {string} spanId - Die ID des Span-Elements.
- * @param {string} inputId - Die ID des Input-Elements.
+ * Enables editing of a subtask.
+ * @param {string} liId - The ID of the list element.
+ * @param {string} spanId - The ID of the span element.
+ * @param {string} inputId - The ID of the input element.
  */
 function editSubtask(liId, spanId, inputId) {
   const spanElement = document.getElementById(spanId);
@@ -351,8 +351,8 @@ function editSubtask(liId, spanId, inputId) {
 }
 
 /**
- * Löscht eine Unteraufgabe aus dem DOM.
- * @param {string} liId - Die ID des Listen-Elements der Unteraufgabe.
+ * Deletes a subtask from the DOM.
+ * @param {string} liId - The ID of the subtask's list element.
  */
 function deleteSubtask(liId) {
   const li = document.getElementById(liId);
@@ -360,10 +360,10 @@ function deleteSubtask(liId) {
 }
 
 /**
- * Speichert eine bearbeitete Unteraufgabe, wenn der neue Text gültig ist.
- * @param {string} liId - Die ID des Listen-Elements.
- * @param {string} inputId - Die ID des Input-Elements.
- * @param {string} spanId - Die ID des Span-Elements.
+ * Saves an edited subtask if the new text is valid.
+ * @param {string} liId - The ID of the list element.
+ * @param {string} inputId - The ID of the input element.
+ * @param {string} spanId - The ID of the span element.
  */
 function saveSubtask(liId, inputId, spanId) {
   const li = document.getElementById(liId);
@@ -381,7 +381,7 @@ function saveSubtask(liId, inputId, spanId) {
 }
 
 /**
- * Löscht den Inhalt des Unteraufgaben-Eingabefeldes.
+ * Clears the content of the subtask input field.
  */
 function clearSubtaskInput() {
   const input = document.getElementById("subtaskInput");

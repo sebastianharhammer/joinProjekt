@@ -1,47 +1,47 @@
 /**
- * Gibt an, ob der Kategoriencontainer geklickt wurde.
+ * Indicates whether the categories container was clicked.
  * @type {boolean}
  */
 let categoriesContainerClick = false;
 
 /**
- * Array zur Speicherung von Kontakten.
+ * Array for storing contacts.
  * @type {Array}
  */
 let contacts = [];
 
 /**
- * Die aktuell ausgewählte Priorität.
+ * The currently selected priority.
  * @type {string}
  */
 let selectedPriority = "medium";
 
 /**
- * Array zur Speicherung von Unteraufgaben.
+ * Array for storing subtasks.
  * @type {Array}
  */
 let subtasksArr = [];
 
 /**
- * Array zur Speicherung von zugewiesenen Benutzern.
+ * Array for storing assigned users.
  * @type {Array}
  */
 let assignedUserArr = [];
 
 /**
- * Lokale Speicherung von Aufgaben.
+ * Local storage of tasks.
  * @type {Array}
  */
 let localTasks = [];
 
 /**
- * Zähler für Unteraufgaben-IDs.
+ * Counter for subtask IDs.
  * @type {number}
  */
 let subtaskIdCounter = 0;
 
 /**
- * Arrays zur Bearbeitung von Unteraufgaben.
+ * Arrays for editing subtasks.
  * @type {Array}
  */
 let subtasksEdit = [];
@@ -49,13 +49,13 @@ let subtasksEdit_done = [];
 let subtasksArr_done = [];
 
 /**
- * Aktuelles Kategorieobjekt.
+ * Current category object.
  * @type {string}
  */
 let categoryObject = "";
 
 /**
- * Liste der hinzufügbaren Aufgabenkategorien mit Hintergrundfarben.
+ * List of addable task categories with background colors.
  * @type {Array<Object>}
  */
 let addTaskcategories = [
@@ -67,7 +67,7 @@ let addTaskcategories = [
 ];
 
 /**
- * Array zur Speicherung der zugewiesenen Benutzer.
+ * Array for storing assigned users.
  * @type {Array}
  */
 let assignedUser = [];

@@ -1,5 +1,5 @@
 /**
- * Initialisiert die Anwendung, indem Aufgaben und Benutzer geladen und das HTML eingebunden werden.
+ * Initializes the application by loading tasks and users and including the HTML.
  */
 function init() {
   getTasks();
@@ -11,7 +11,7 @@ function init() {
 }
 
 /**
- * Holt die Aufgaben von Firebase und speichert sie lokal.
+ * Fetches tasks from Firebase and stores them locally.
  */
 async function getTasks() {
     try {
@@ -32,7 +32,7 @@ async function getTasks() {
   }
 
 /**
- * Holt die Benutzerkontakte von Firebase und speichert sie.
+ * Fetches user contacts from Firebase and stores them.
  */
 async function getUsers() {
     try {
@@ -54,7 +54,7 @@ async function getUsers() {
 }
 
 /**
- * Wandelt die Kontaktliste in ein Array um und rendert die Dropdown-Optionen.
+ * Converts the contact list to an array and renders the dropdown options.
  */
 function returnArrayContacts() {
     if (!validateContacts()) return;
@@ -63,8 +63,8 @@ function returnArrayContacts() {
 }
 
 /**
- * Überprüft, ob gültige Kontakte vorhanden sind.
- * @returns {boolean} True wenn Kontakte vorhanden sind, sonst False
+ * Checks if valid contacts exist.
+ * @returns {boolean} True if contacts exist, otherwise False
  */
 function validateContacts() {
     if (!finalContacts || Object.keys(finalContacts).length === 0) {
@@ -75,16 +75,16 @@ function validateContacts() {
 }
 
 /**
- * Konvertiert das Kontakt-Objekt in ein Array.
- * @returns {Array} Array der Kontakte
+ * Converts the contact object into an array.
+ * @returns {Array} Array of contacts
  */
 function convertContactsToArray() {
     return Object.values(finalContacts);
 }
 
 /**
- * Rendert die Kontakt-Optionen im Dropdown-Menü.
- * @param {Array} contactsArray - Array der zu rendernden Kontakte
+ * Renders the contact options in the dropdown menu.
+ * @param {Array} contactsArray - Array of contacts to render
  */
 function renderContactOptions(contactsArray) {
     const dropdown = document.getElementById("custom-dropdown");
@@ -103,8 +103,8 @@ function renderContactOptions(contactsArray) {
 }
 
 /**
- * Erstellt eine neue Aufgabe basierend auf den Formulardaten.
- * @param {Event} event - Das auslösende Ereignis.
+ * Creates a new task based on the form data.
+ * @param {Event} event - The triggering event.
  */
 async function createTask(event) {
   event.preventDefault();
@@ -122,8 +122,8 @@ async function createTask(event) {
 }
 
 /**
- * Holt die Daten aus dem Aufgabenformular.
- * @returns {Object} Die gesammelten Formulardaten.
+ * Gets the data from the task form.
+ * @returns {Object} The collected form data.
  */
 function getTaskFormData() {
   return {
@@ -138,9 +138,9 @@ function getTaskFormData() {
 }
 
 /**
- * Baut ein neues Aufgabenobjekt basierend auf den Formulardaten.
- * @param {Object} taskData - Die Daten der neuen Aufgabe.
- * @returns {Object} Das erstellte Aufgabenobjekt.
+ * Builds a new task object based on the form data.
+ * @param {Object} taskData - The data for the new task.
+ * @returns {Object} The created task object.
  */
 async function buildNewTask(taskData) {
   const nextId = await getNextTaskId();
@@ -158,8 +158,8 @@ async function buildNewTask(taskData) {
 }
 
 /**
- * Speichert die neue Aufgabe in der lokalen Liste und sendet sie an Firebase.
- * @param {Object} newTask - Die zu speichernde Aufgabe.
+ * Saves the new task in the local list and sends it to Firebase.
+ * @param {Object} newTask - The task to be saved.
  */
 async function saveTask(newTask) {
   taskArray.push(newTask);
@@ -167,7 +167,7 @@ async function saveTask(newTask) {
 }
 
 /**
- * Behandelt die erfolgreiche Erstellung einer Aufgabe, zeigt eine Bestätigung und leitet weiter.
+ * Handles successful task creation, shows confirmation and redirects.
  */
 function handleSuccessfulTaskCreation() {
   showAddTaskSuccesMessage();
@@ -177,8 +177,8 @@ function handleSuccessfulTaskCreation() {
 }
 
 /**
- * Behandelt das Abbrechen der Aufgabenerstellung, setzt das Formular und UI zurück.
- * @param {Event} event - Das auslösende Ereignis.
+ * Handles cancellation of task creation, resets form and UI.
+ * @param {Event} event - The triggering event.
  */
 function handleCancel(event) {
   event.preventDefault();
@@ -187,7 +187,7 @@ function handleCancel(event) {
 }
 
 /**
- * Setzt die Werte des Formulars zurück.
+ * Resets the form values.
  */
 function resetFormValues() {
   document.getElementById("title").value = "";
@@ -203,7 +203,7 @@ function resetFormValues() {
 }
 
 /**
- * Setzt die UI-Elemente zurück, wie z.B. Benutzercontainer und Prioritätsauswahl.
+ * Resets UI elements, such as user containers and priority selection.
  */
 function resetUIElements() {
   document.getElementById("assigned-users-short").innerHTML = "";
@@ -219,11 +219,11 @@ function resetUIElements() {
 }
 
 /**
- * Validiert die Aufgabe anhand von Titel, Datum und Kategorie.
- * @param {string} title - Der Titel der Aufgabe.
- * @param {string} date - Das Fälligkeitsdatum der Aufgabe.
- * @param {string} category - Die Kategorie der Aufgabe.
- * @returns {boolean} Gibt true zurück, wenn Fehler vorhanden sind.
+ * Validates the task based on title, date, and category.
+ * @param {string} title - The task title.
+ * @param {string} date - The due date of the task.
+ * @param {string} category - The task category.
+ * @returns {boolean} Returns true if errors exist.
  */
 function validateTask(title, date, category) {
   let hasErrors = false;
@@ -234,9 +234,9 @@ function validateTask(title, date, category) {
 }
 
 /**
- * Validiert den Titel der Aufgabe.
- * @param {string} title - Der zu validierende Titel.
- * @returns {boolean} Gibt true zurück, wenn der Titel gültig ist.
+ * Validates the task title.
+ * @param {string} title - The title to validate.
+ * @returns {boolean} Returns true if the title is valid.
  */
 function validateTitle(title) {
   if (!title) {
@@ -247,9 +247,9 @@ function validateTitle(title) {
 }
 
 /**
- * Validiert das Datum der Aufgabe.
- * @param {string} date - Das zu validierende Datum.
- * @returns {boolean} Gibt true zurück, wenn das Datum gültig ist.
+ * Validates the task date.
+ * @param {string} date - The date to validate.
+ * @returns {boolean} Returns true if the date is valid.
  */
 function validateDate(date) {
   if (!date) {
@@ -264,9 +264,9 @@ function validateDate(date) {
 }
 
 /**
- * Validiert die Kategorie der Aufgabe.
- * @param {string} category - Die zu validierende Kategorie.
- * @returns {boolean} Gibt true zurück, wenn die Kategorie gültig ist.
+ * Validates the task category.
+ * @param {string} category - The category to validate.
+ * @returns {boolean} Returns true if the category is valid.
  */
 function validateCategory(category) {
   if (!category) {
@@ -277,9 +277,9 @@ function validateCategory(category) {
 }
 
 /**
- * Zeigt eine Fehlermeldung für ein bestimmtes Feld an und deaktiviert den Erstellen-Button vorübergehend.
- * @param {string} elementId - Die ID des Elements, das die Fehlermeldung anzeigen soll.
- * @param {string} message - Die Fehlermeldung.
+ * Shows an error message for a specific field and temporarily disables the create button.
+ * @param {string} elementId - The ID of the element to display the error message.
+ * @param {string} message - The error message.
  */
 function showFieldError(elementId, message) {
   const button = document.getElementById("add-task-create");
@@ -296,7 +296,7 @@ function showFieldError(elementId, message) {
 }
 
 /**
- * Zeigt eine Erfolgsmeldung nach erfolgreichem Hinzufügen einer Aufgabe an.
+ * Shows a success message after successfully adding a task.
  */
 function showAddTaskSuccesMessage() {
   let succes = document.getElementById("task-succes");
@@ -310,8 +310,8 @@ function showAddTaskSuccesMessage() {
 }
 
 /**
- * Holt alle Aufgaben von Firebase.
- * @returns {Object|null} Die Aufgaben oder null im Fehlerfall
+ * Fetches all tasks from Firebase.
+ * @returns {Object|null} The tasks or null in case of error
  */
 async function fetchTasksFromFirebase() {
   try {
@@ -332,8 +332,8 @@ async function fetchTasksFromFirebase() {
 }
 
 /**
- * Holt die nächste verfügbare Aufgaben-ID.
- * @returns {number} Die nächste Aufgaben-ID.
+ * Gets the next available task ID.
+ * @returns {number} The next task ID.
  */
 async function getNextTaskId() {
   const tasks = await fetchTasksFromFirebase();
@@ -345,8 +345,8 @@ async function getNextTaskId() {
 }
 
 /**
- * Sendet die neue Aufgabe an Firebase zur Speicherung.
- * @param {Object} newTask - Die zu speichernde Aufgabe.
+ * Sends the new task to Firebase for storage.
+ * @param {Object} newTask - The task to be saved.
  */
 async function pushTaskToFirebase(newTask) {
   try {
@@ -364,7 +364,7 @@ async function pushTaskToFirebase(newTask) {
 }
 
 /**
- * Zeigt den Clear-Button an und versteckt das Plus-Icon bei der Unteraufgabenerstellung.
+ * Shows the clear button and hides the plus icon during subtask creation.
  */
 function showClearButton() {
     document.getElementById("clear-add-icons").classList.remove("d-none");
@@ -372,8 +372,8 @@ function showClearButton() {
   }
 
 /**
- * Wechselt die Sichtbarkeit des Dropdown-Menüs.
- * @param {HTMLElement} optionsContainer - Der Container für die Dropdown-Optionen.
+ * Toggles the visibility of the dropdown menu.
+ * @param {HTMLElement} optionsContainer - The container for dropdown options.
  */
 function toggleDropdown(optionsContainer) {
     const isOpen = optionsContainer.style.display === "block";
@@ -381,7 +381,7 @@ function toggleDropdown(optionsContainer) {
   }
 
 /**
- * Behandelt die Interaktion mit dem Dropdown-Menü für Benutzerzuweisungen.
+ * Handles interaction with the dropdown menu for user assignments.
  */
 function handleDropdownInteraction() {
     const dropdown = document.getElementById("custom-dropdown");
@@ -393,9 +393,9 @@ function handleDropdownInteraction() {
   }
   
   /** 
-   * Behandelt den Klick auf das Dropdown-Menü.
-   * @param {Event} event - Das auslösende Ereignis.
-   * @param {HTMLElement} optionsContainer - Der Container für die Dropdown-Optionen.
+   * Handles clicks on the dropdown menu.
+   * @param {Event} event - The triggering event.
+   * @param {HTMLElement} optionsContainer - The container for dropdown options.
    */
 function handleDropdownClick(event, optionsContainer) {
     const userContainer = event.target.closest(".assigned-user-container");
