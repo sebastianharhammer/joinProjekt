@@ -406,5 +406,3 @@ function handleDropdownClick(event, optionsContainer) {
     event.stopPropagation();
     toggleDropdown(optionsContainer);
   }
-
-  
