@@ -3,7 +3,7 @@
  * @constant {string}
  */
 const BASE_URL =
-  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+"https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
  * Array der angemeldeten Benutzer.
@@ -51,15 +51,15 @@ let taskArray = [];
  */
 async function init() {
     try {
-      await includeHTML();
-      loadCurrentUser();
-      await fetchContacts();
-      loadBoardNavigator(); // Spalten werden vor dem Laden der Aufgaben geladen
-      await fetchTasks("/tasks"); // Aufgaben werden nach dem Laden der Spalten geladen
+    await includeHTML();
+    loadCurrentUser();
+    await fetchContacts();
+    loadBoardNavigator(); // Spalten werden vor dem Laden der Aufgaben geladen
+    await fetchTasks("/tasks"); // Aufgaben werden nach dem Laden der Spalten geladen
     } catch (error) {
-      console.error("Fehler bei der Initialisierung:", error);
+    console.error("Fehler bei der Initialisierung:", error);
     }
-  }
+}
 
 /**
  * Lädt die Kontakte von der Firebase-Datenbank und speichert sie im `finalContacts` Array.
@@ -70,21 +70,21 @@ async function init() {
  */
 async function fetchContacts() {
     try {
-      const response = await fetch(`${BASE_URL}/contacts/.json`, {
+    const response = await fetch(`${BASE_URL}/contacts/.json`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
-      });
-      if (!response.ok) {
+    });
+    if (!response.ok) {
         throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-      }
-      const responseToJson = await response.json();
-      if (responseToJson) {
-        finalContacts = Object.values(responseToJson);
-      }
-    } catch (error) {
-      console.error("Fehler beim Laden der Kontakte:", error);
     }
-  }
+    const responseToJson = await response.json();
+    if (responseToJson) {
+        finalContacts = Object.values(responseToJson);
+    }
+    } catch (error) {
+    console.error("Fehler beim Laden der Kontakte:", error);
+    }
+}
 
 /**
  * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
@@ -95,13 +95,13 @@ async function fetchContacts() {
 function loadCurrentUser() {
     const storedUser = localStorage.getItem("currentUser");
     if (storedUser) {
-      try {
+    try {
         currentUser = JSON.parse(storedUser);
-      } catch (error) {
+    } catch (error) {
         console.error("Fehler beim Parsen des gespeicherten Benutzers:", error);
-      }
+        }
     }
-  }
+}
 
 /**
  * Lädt die Aufgaben von der Firebase-Datenbank, transformiert sie und aktualisiert die HTML-Anzeige.
@@ -113,15 +113,15 @@ function loadCurrentUser() {
  */
 async function fetchTasks(path = "/tasks") {
     try {
-      const responseToJson = await fetchTaskData(path);
-      if (responseToJson) {
+    const responseToJson = await fetchTaskData(path);
+    if (responseToJson) {
         taskArray = transformTaskArray(responseToJson);
-      }
-      updateTaskHTML();
-    } catch (error) {
-      console.error("Fehler beim Laden der Aufgaben:", error);
     }
-  }
+    updateTaskHTML();
+    } catch (error) {
+    console.error("Fehler beim Laden der Aufgaben:", error);
+    }
+}
 
 /**
  * Holt die Aufgaben-Daten von der Firebase-Datenbank basierend auf dem angegebenen Pfad.
@@ -133,16 +133,16 @@ async function fetchTasks(path = "/tasks") {
  */
 async function fetchTaskData(path) {
     try {
-      const response = await fetch(`${BASE_URL}${path}.json`);
-      if (!response.ok) {
+    const response = await fetch(`${BASE_URL}${path}.json`);
+    if (!response.ok) {
         throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error(`Fehler beim Abrufen der Aufgaben von ${path}:`, error);
-      return null;
     }
-  }
+    return await response.json();
+    } catch (error) {
+    console.error(`Fehler beim Abrufen der Aufgaben von ${path}:`, error);
+    return null;
+    }
+}
 
 /**
  * Transformiert das Aufgaben-Array aus dem Firebase-Response-JSON in ein verwendbares Format.
@@ -153,21 +153,21 @@ async function fetchTaskData(path) {
  */
 function transformTaskArray(responseToJson) {
     return Object.values(responseToJson).map((task) => transformTask(task));
-  }
-  
-  /**
+}
+
+/**
    * Transformiert eine einzelne Aufgabe, indem sie die Besitzerinformationen anpasst.
    *
    * @function transformTask
    * @param {Object} task - Das Aufgabenobjekt aus Firebase.
    * @returns {Object} Das transformierte Aufgabenobjekt.
    */
-  function transformTask(task) {
+function transformTask(task) {
     if (task.owner) {
-      task.owner = task.owner.map((owner) => transformOwner(owner));
+    task.owner = task.owner.map((owner) => transformOwner(owner));
     }
     return task;
-  }
+}
 
 /**
  * Transformiert einen Besitzer, indem er die Farbe aus den Kontaktdaten hinzufügt.
@@ -178,10 +178,10 @@ function transformTaskArray(responseToJson) {
  */
 function transformOwner(owner) {
     const contact = finalContacts.find(
-      (c) => c.firstName === owner.firstName && c.lastName === owner.lastName
+    (c) => c.firstName === owner.firstName && c.lastName === owner.lastName
     );
     return { ...owner, color: contact?.color || "gray" };
-  }
+}
 
 /**
  * Verschiebt eine Aufgabe in eine andere Kategorie und aktualisiert Firebase, falls nicht Gastbenutzer.
@@ -193,28 +193,28 @@ function transformOwner(owner) {
  */
 async function moveTo(category) {
     const taskIndex = taskArray.findIndex(
-      (task) => task.id === currentDraggedElement
+(task) => task.id === currentDraggedElement
     );
     if (taskIndex !== -1) {
-      taskArray[taskIndex].status = category;
-      if (
+    taskArray[taskIndex].status = category;
+    if (
         currentUser &&
         currentUser.firstName === "Guest" &&
         currentUser.lastName === "User"
-      ) {
+    ) {
         updateTaskHTML();
-      } else {
+    } else {
         try {
-          await updateTaskInFirebase(taskArray[taskIndex]);
-          updateTaskHTML();
+        await updateTaskInFirebase(taskArray[taskIndex]);
+        updateTaskHTML();
         } catch (error) {
-          console.error("Fehler beim Verschieben des Tasks:", error);
+        console.error("Fehler beim Verschieben des Tasks:", error);
         }
-      }
     }
-  }
-  
-  /**
+    }
+}
+
+/**
    * Aktualisiert eine Aufgabe in Firebase.
    *
    * @async
@@ -222,25 +222,25 @@ async function moveTo(category) {
    * @param {Object} task - Das zu aktualisierende Aufgabenobjekt.
    * @returns {Promise<void>}
    */
-  async function updateTaskInFirebase(task) {
+async function updateTaskInFirebase(task) {
     const taskId = task.id;
     try {
-      const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
+        "Content-Type": "application/json",
         },
         body: JSON.stringify(task),
-      });
-      if (!response.ok) {
+    });
+    if (!response.ok) {
         throw new Error(`HTTP-Fehler! Status: ${response.status}`);
-      }
-    } catch (error) {
-      console.error(`Fehler beim Aktualisieren des Tasks ${taskId}:`, error);
     }
-  }
+    } catch (error) {
+    console.error(`Fehler beim Aktualisieren des Tasks ${taskId}:`, error);
+    }
+}
 
-  /**
+/**
  * Erstellt ein HTML-Element für eine "Keine Aufgaben"-Meldung und fügt es zur angegebenen Spalte hinzu.
  *
  * @function createNoTasksDiv
@@ -251,66 +251,64 @@ async function moveTo(category) {
 function createNoTasksDiv(columnId, message) {
     const column = document.getElementById(columnId);
     if (column) {
-      column.innerHTML += /*html*/ `
+    column.innerHTML += /*html*/ `
         <div class="noTasks">
-          <p class="font-no-tasks">${message}</p>
+            <p class="font-no-tasks">${message}</p>
         </div>
-      `;
+    `;
     } else {
-      console.error(`Spalte mit ID '${columnId}' nicht gefunden.`);
+    console.error(`Spalte mit ID '${columnId}' nicht gefunden.`);
     }
-  }
-  
-  /**
+}
+
+/**
    * Erstellt ein "Keine To-Dos"-Div und fügt es zur To-Do-Spalte hinzu.
    *
    * @function createNoToDosdiv
    * @returns {void}
    */
-  function createNoToDosdiv() {
+function createNoToDosdiv() {
     const todoColumn = document.getElementById("todo");
     if (todoColumn) {
-      todoColumn.innerHTML += /*html*/ `
+    todoColumn.innerHTML += /*html*/ `
         <div class="noTasks">
-          <p class="font-no-tasks">NO TASKS TO DO</p>
+            <p class="font-no-tasks">NO TASKS TO DO</p>
         </div>
-      `;
+    `;
     } else {
-      console.error("Spalte mit ID 'todo' nicht gefunden.");
+    console.error("Spalte mit ID 'todo' nicht gefunden.");
     }
-  }
-  
-  /**
+}
+
+/**
    * Erstellt die Kreise für die Besitzer einer Aufgabe.
    *
    * @function createOwnerCircles
    * @param {Object} task - Die Aufgabenobjekt mit den Besitzerinformationen.
    * @returns {void}
    */
-  function createOwnerCircles(task) {
+function createOwnerCircles(task) {
     const userNameCircles = document.getElementById(`userNameCircles-${task.id}`);
     if (!userNameCircles) {
-      console.error("Owner-Kreis-Container nicht gefunden!");
-      return;
+    console.error("Owner-Kreis-Container nicht gefunden!");
+    return;
     }
     userNameCircles.innerHTML = "";
-  
+
     if (!task.owner || task.owner.length === 0) {
-      userNameCircles.innerHTML = generateNoOwnerCircle();
-      return;
+    userNameCircles.innerHTML = generateNoOwnerCircle();
+    return;
     }
-  
+
     const ownersToShow = task.owner.slice(0, 2);
     const extraOwnersCount = task.owner.length - 2;
-  
     ownersToShow.forEach((owner) => {
-      userNameCircles.innerHTML += generateOwnerCircle(owner);
+    userNameCircles.innerHTML += generateOwnerCircle(owner);
     });
-  
     if (extraOwnersCount > 0) {
-      userNameCircles.innerHTML += getExtraOwnersCountCircle(extraOwnersCount);
+    userNameCircles.innerHTML += getExtraOwnersCountCircle(extraOwnersCount);
     }
-  }
+}
 
 /**
  * Bestimmt und setzt die CSS-Klasse der Aufgaben-Kategorie.
@@ -322,47 +320,47 @@ function createNoTasksDiv(columnId, message) {
 function findClassOfTaskCat(task) {
     const taskButton = document.getElementById(`taskButton-${task.id}`);
     if (!taskButton) {
-      console.error(`Task-Button für Task ID '${task.id}' nicht gefunden.`);
-      return;
+    console.error(`Task-Button für Task ID '${task.id}' nicht gefunden.`);
+    return;
     }
-  
+
     const category = task.taskCategory || "Undefined Category";
-  
+
     taskButton.classList.remove(
-      "task-category-technicalTask",
-      "task-category-userExperience",
-      "task-category-undefined"
+    "task-category-technicalTask",
+    "task-category-userExperience",
+    "task-category-undefined"
     );
-  
+
     if (category === "Technical Task") {
-      taskButton.classList.add("task-category-technicalTask");
+    taskButton.classList.add("task-category-technicalTask");
     } else if (category === "User Story") {
-      taskButton.classList.add("task-category-userExperience");
+    taskButton.classList.add("task-category-userExperience");
     } else {
-      taskButton.classList.add("task-category-undefined");
+    taskButton.classList.add("task-category-undefined");
     }
     taskButton.textContent = category;
-  }
-  
-  /**
+}
+
+/**
    * Setzt das Prioritäts-Symbol für eine Aufgabe basierend auf deren Priorität.
    *
    * @function findPrioIcon
    * @param {Object} task - Die Aufgabenobjekt mit der Prioritätsinformation.
    * @returns {void}
    */
-  function findPrioIcon(task) {
+function findPrioIcon(task) {
     const prioIcon = document.getElementById(`priority-${task.id}`);
     if (!prioIcon) {
-      console.error(`Prioritäts-Icon für Task ID '${task.id}' nicht gefunden.`);
-      return;
+    console.error(`Prioritäts-Icon für Task ID '${task.id}' nicht gefunden.`);
+    return;
     }
-  
+
     switch (task.prio) {
-      case "urgent":
+    case "urgent":
         prioIcon.src = "./img/prio-high.png";
         break;
-      case "medium":
+    case "medium":
         prioIcon.src = "./img/prio-mid.png";
         break;
     case "low":
