@@ -5,20 +5,26 @@
  * @returns {void}
  */
 function addTaskSubtask() {
-    const subtaskInput = document.getElementById("subtaskInput");
-    const subtasksContent = document.getElementById("subtasksContent");
-    const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
+  const subtaskInput = document.getElementById("subtaskInput");
+  const subtasksContent = document.getElementById("subtasksContent");
+  const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
 
-    if (!subtaskInput || !subtasksContent) {
-      console.error("Element 'subtaskInput' oder 'subtasksContent' nicht gefunden.");
-      return;
-    }
+  if (!subtaskInput || !subtasksContent) {
+    console.error(
+      "Element 'subtaskInput' oder 'subtasksContent' nicht gefunden."
+    );
+    return;
+  }
 
-    handleSubtaskInput(subtaskInput, subtasksContent, errorMessageSubtasks);
-    updateSubtaskIcons();
+  handleSubtaskInput(subtaskInput, subtasksContent, errorMessageSubtasks);
+  updateSubtaskIcons();
 }
 
-function handleSubtaskInput(subtaskInput, subtasksContent, errorMessageSubtasks) {
+function handleSubtaskInput(
+  subtaskInput,
+  subtasksContent,
+  errorMessageSubtasks
+) {
   if (subtaskInput.value.trim() !== "") {
     const subtaskData = addTaskCreateSubtask(subtaskInput.value);
     subtasksContent.innerHTML += subtaskData.html;
@@ -40,7 +46,7 @@ function showSubtaskError(errorMessageSubtasks) {
 function updateSubtaskIcons() {
   const clearAddIcons = document.getElementById("clear-add-icons");
   const subtasksPlusIcon = document.getElementById("subtasks-plus-icon");
-  
+
   if (clearAddIcons && subtasksPlusIcon) {
     clearAddIcons.classList.add("d-none");
     subtasksPlusIcon.classList.remove("d-none");
@@ -165,4 +171,3 @@ function clearSubtaskInput() {
     console.error("Element mit ID 'subtaskInput' nicht gefunden.");
   }
 }
-  

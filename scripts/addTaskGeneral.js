@@ -14,52 +14,52 @@ function init() {
  * Fetches tasks from Firebase and stores them locally.
  */
 async function getTasks() {
-    try {
-      let response = await fetch(BASE_URL + "/testingTasks/.json", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      let responseToJson = await response.json();
-      localTasks = responseToJson;
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
+  try {
+    let response = await fetch(BASE_URL + "/testingTasks/.json", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    let responseToJson = await response.json();
+    localTasks = responseToJson;
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
   }
+}
 
 /**
  * Fetches user contacts from Firebase and stores them.
  */
 async function getUsers() {
-    try {
-      let response = await fetch(BASE_URL + "/contacts/.json", {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      let responseToJson = await response.json();
-      finalContacts = responseToJson || {};
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
+  try {
+    let response = await fetch(BASE_URL + "/contacts/.json", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    returnArrayContacts();
+    let responseToJson = await response.json();
+    finalContacts = responseToJson || {};
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+  }
+  returnArrayContacts();
 }
 
 /**
  * Converts the contact list to an array and renders the dropdown options.
  */
 function returnArrayContacts() {
-    if (!validateContacts()) return;
-    const contactsArray = convertContactsToArray();
-    renderContactOptions(contactsArray);
+  if (!validateContacts()) return;
+  const contactsArray = convertContactsToArray();
+  renderContactOptions(contactsArray);
 }
 
 /**
@@ -67,11 +67,11 @@ function returnArrayContacts() {
  * @returns {boolean} True if contacts exist, otherwise False
  */
 function validateContacts() {
-    if (!finalContacts || Object.keys(finalContacts).length === 0) {
-        console.error("No contacts found.");
-        return false;
-    }
-    return true;
+  if (!finalContacts || Object.keys(finalContacts).length === 0) {
+    console.error("No contacts found.");
+    return false;
+  }
+  return true;
 }
 
 /**
@@ -79,7 +79,7 @@ function validateContacts() {
  * @returns {Array} Array of contacts
  */
 function convertContactsToArray() {
-    return Object.values(finalContacts);
+  return Object.values(finalContacts);
 }
 
 /**
@@ -87,19 +87,19 @@ function convertContactsToArray() {
  * @param {Array} contactsArray - Array of contacts to render
  */
 function renderContactOptions(contactsArray) {
-    const dropdown = document.getElementById("custom-dropdown");
-    const optionsContainer = dropdown.querySelector(".dropdown-options");
-    optionsContainer.innerHTML = "";
-    
-    contactsArray.forEach((contactInDrop) => {
-        if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName)
-            return;
-        const optionHTML = assignUserHTML(contactInDrop);
-        const optionElement = document.createElement("div");
-        optionElement.classList.add("dropdown-contact");
-        optionElement.innerHTML = optionHTML;
-        optionsContainer.appendChild(optionElement);
-    });
+  const dropdown = document.getElementById("custom-dropdown");
+  const optionsContainer = dropdown.querySelector(".dropdown-options");
+  optionsContainer.innerHTML = "";
+
+  contactsArray.forEach((contactInDrop) => {
+    if (!contactInDrop || !contactInDrop.firstName || !contactInDrop.lastName)
+      return;
+    const optionHTML = assignUserHTML(contactInDrop);
+    const optionElement = document.createElement("div");
+    optionElement.classList.add("dropdown-contact");
+    optionElement.innerHTML = optionHTML;
+    optionsContainer.appendChild(optionElement);
+  });
 }
 
 /**
@@ -338,7 +338,7 @@ async function fetchTasksFromFirebase() {
 async function getNextTaskId() {
   const tasks = await fetchTasksFromFirebase();
   if (!tasks) return 20;
-  
+
   const taskIds = Object.values(tasks).map((task) => task.id);
   const maxId = taskIds.length > 0 ? Math.max(...taskIds) : 0;
   return maxId + 1;
@@ -367,42 +367,42 @@ async function pushTaskToFirebase(newTask) {
  * Shows the clear button and hides the plus icon during subtask creation.
  */
 function showClearButton() {
-    document.getElementById("clear-add-icons").classList.remove("d-none");
-    document.getElementById("subtasks-plus-icon").classList.add("d-none");
-  }
+  document.getElementById("clear-add-icons").classList.remove("d-none");
+  document.getElementById("subtasks-plus-icon").classList.add("d-none");
+}
 
 /**
  * Toggles the visibility of the dropdown menu.
  * @param {HTMLElement} optionsContainer - The container for dropdown options.
  */
 function toggleDropdown(optionsContainer) {
-    const isOpen = optionsContainer.style.display === "block";
-    optionsContainer.style.display = isOpen ? "none" : "block";
-  }
+  const isOpen = optionsContainer.style.display === "block";
+  optionsContainer.style.display = isOpen ? "none" : "block";
+}
 
 /**
  * Handles interaction with the dropdown menu for user assignments.
  */
 function handleDropdownInteraction() {
-    const dropdown = document.getElementById("custom-dropdown");
-    const optionsContainer = dropdown.querySelector(".dropdown-options");
-    dropdown.addEventListener("click", (e) =>
-      handleDropdownClick(e, optionsContainer)
-    );
-    optionsContainer.addEventListener("click", handleOptionsClick);
-  }
-  
-  /** 
-   * Handles clicks on the dropdown menu.
-   * @param {Event} event - The triggering event.
-   * @param {HTMLElement} optionsContainer - The container for dropdown options.
-   */
+  const dropdown = document.getElementById("custom-dropdown");
+  const optionsContainer = dropdown.querySelector(".dropdown-options");
+  dropdown.addEventListener("click", (e) =>
+    handleDropdownClick(e, optionsContainer)
+  );
+  optionsContainer.addEventListener("click", handleOptionsClick);
+}
+
+/**
+ * Handles clicks on the dropdown menu.
+ * @param {Event} event - The triggering event.
+ * @param {HTMLElement} optionsContainer - The container for dropdown options.
+ */
 function handleDropdownClick(event, optionsContainer) {
-    const userContainer = event.target.closest(".assigned-user-container");
-    if (userContainer) {
-      event.stopPropagation();
-      return;
-    }
+  const userContainer = event.target.closest(".assigned-user-container");
+  if (userContainer) {
     event.stopPropagation();
-    toggleDropdown(optionsContainer);
+    return;
   }
+  event.stopPropagation();
+  toggleDropdown(optionsContainer);
+}
