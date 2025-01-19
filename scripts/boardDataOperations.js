@@ -365,11 +365,11 @@ function findClassOfTaskCat(task) {
       case "medium":
         prioIcon.src = "./img/prio-mid.png";
         break;
-      case "low":
+    case "low":
         prioIcon.src = "./img/prio-low.png";
         break;
-      default:
+    default:
         // Fallback-Icon, falls ein unbekannter Prio-Wert reinkommt
         prioIcon.src = "./img/placeholder-icon.png";
     }
-  }
+}
