@@ -392,7 +392,7 @@ function handleDropdownInteraction() {
     optionsContainer.addEventListener("click", handleOptionsClick);
   }
   
-  /**
+  /** 
    * Behandelt den Klick auf das Dropdown-Menü.
    * @param {Event} event - Das auslösende Ereignis.
    * @param {HTMLElement} optionsContainer - Der Container für die Dropdown-Optionen.
@@ -406,3 +406,5 @@ function handleDropdownClick(event, optionsContainer) {
     event.stopPropagation();
     toggleDropdown(optionsContainer);
   }
+
+  
