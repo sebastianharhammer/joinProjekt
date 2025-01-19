@@ -1,16 +1,14 @@
 /**
- * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
+ * Loads the currently logged-in user from Local Storage.
  */
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
-  if (storedUser) {
-    currentUser = JSON.parse(storedUser);
-  }
+  if (storedUser) currentUser = JSON.parse(storedUser);
 }
 
 /**
- * Überprüft, ob der aktuelle Benutzer ein Gastbenutzer ist.
- * @returns {boolean} Gibt true zurück, wenn der Benutzer ein Gast ist, sonst false.
+ * Checks if the current user is a guest.
+ * @returns {boolean} True if the user is a guest, false otherwise.
  */
 function isGuestUser() {
   return (
@@ -20,15 +18,81 @@ function isGuestUser() {
   );
 }
 
-// Lädt den aktuellen Benutzer, sobald das DOM vollständig geladen ist
-document.addEventListener("DOMContentLoaded", () => {
-  loadCurrentUser();
-});
+function setupEditValidation() {
+  const nameInput = document.getElementById("edit-contact-name");
+  const emailInput = document.getElementById("edit-contact-email");
+  const phoneInput = document.getElementById("edit-contact-phone");
+  const saveButton = document.getElementById("edit-contact-create");
+
+  const nameError = document.getElementById("edit-name-error");
+  const emailError = document.getElementById("edit-email-error");
+  const phoneError = document.getElementById("edit-phone-error");
+
+  if (!nameInput || !emailInput || !phoneInput || !saveButton) {
+    console.error("Validation setup failed: One or more elements are missing.");
+    return;
+  }
+
+  function validateName() {
+    if (!nameInput.value.trim()) {
+      nameError.textContent = "Name ist erforderlich";
+      nameError.style.display = "block";
+      return false;
+    }
+    nameError.textContent = "";
+    nameError.style.display = "none";
+    return true;
+  }
+
+  function validateEmail() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailInput.value.trim()) {
+      emailError.textContent = "Email ist erforderlich";
+      emailError.style.display = "block";
+      return false;
+    }
+    if (!emailRegex.test(emailInput.value.trim())) {
+      emailError.textContent = "Ungültige Email-Adresse";
+      emailError.style.display = "block";
+      return false;
+    }
+    emailError.textContent = "";
+    emailError.style.display = "none";
+    return true;
+  }
+
+  function validatePhone() {
+    const phoneRegex = /^[0-9+ ]*$/;
+    if (!phoneInput.value.trim()) {
+      phoneError.textContent = "Telefonnummer ist erforderlich";
+      phoneError.style.display = "block";
+      return false;
+    }
+    if (!phoneRegex.test(phoneInput.value.trim())) {
+      phoneError.textContent = "Nur Zahlen und + sind erlaubt";
+      phoneError.style.display = "block";
+      return false;
+    }
+    phoneError.textContent = "";
+    phoneError.style.display = "none";
+    return true;
+  }
+
+  function validateEditInputs() {
+    const isValid = validateName() && validateEmail() && validatePhone();
+    saveButton.disabled = !isValid;
+  }
+
+  nameInput.addEventListener("input", validateEditInputs);
+  emailInput.addEventListener("input", validateEditInputs);
+  phoneInput.addEventListener("input", validateEditInputs);
+
+  validateEditInputs();
+}
 
 /**
- * Bearbeitet einen bestehenden Kontakt, indem das Bearbeitungsformular angezeigt wird.
- * Bei Gastbenutzern wird der Kontakt lokal bearbeitet, ansonsten in Firebase.
- * @param {string} firebaseKey - Der Firebase-Schlüssel des zu bearbeitenden Kontakts.
+ * Opens the contact editing overlay for a specific contact.
+ * @param {string} firebaseKey - The Firebase key of the contact.
  */
 function editContact(firebaseKey) {
   const contact = contactsData.find((c) => c.firebaseKey === firebaseKey);
@@ -36,17 +100,18 @@ function editContact(firebaseKey) {
 
   const editContactTemplate = document.getElementById("edit-contact-content");
   const background = document.getElementById("edit-contact-background");
-  if (!editContactTemplate || !background) return;
 
-  editContactTemplate.classList.add("show-edit-contact");
-  background.classList.remove("d-none");
-  editContactTemplate.innerHTML = getEditContactHTML(contact);
-  setupEditValidation();
-  toggleMenu();
+  if (editContactTemplate && background) {
+    editContactTemplate.classList.add("show-edit-contact");
+    background.classList.remove("d-none");
+    editContactTemplate.innerHTML = getEditContactHTML(contact);
+    setupEditValidation();
+    toggleMenu();
+  }
 }
 
 /**
- * Verbirgt das Bearbeitungsformular für einen Kontakt.
+ * Hides the contact editing overlay.
  */
 function hideEditContact() {
   const editContactTemplate = document.getElementById("edit-contact-content");
@@ -59,40 +124,60 @@ function hideEditContact() {
 }
 
 /**
- * Speichert die bearbeitete Kontaktinformation und aktualisiert die Ansicht.
- * @param {string} firebaseKey - Der Firebase-Schlüssel des zu speichernden Kontakts.
+ * Saves the edited contact information.
+ * @param {string} firebaseKey - The Firebase key of the contact.
  */
 async function saveEditedContact(firebaseKey) {
+  const updatedContact = getUpdatedContactData();
+  if (!updatedContact) return;
+
+  if (isGuestUser()) {
+    updateLocalContact(firebaseKey, updatedContact);
+  } else {
+    const success = await updateFirebaseContact(firebaseKey, updatedContact);
+    if (!success) return;
+  }
+
+  refreshContactView(firebaseKey);
+}
+
+/**
+ * Collects updated contact data from the editing form.
+ * @returns {Object|null} The updated contact data or null if invalid.
+ */
+function getUpdatedContactData() {
   const nameInput = document.getElementById("edit-contact-name").value.trim();
   const emailInput = document.getElementById("edit-contact-email").value.trim();
   const phoneInput = document.getElementById("edit-contact-phone").value.trim();
 
-  const nameParts = nameInput.split(" ");
-  const firstName = nameParts[0];
-  const lastName = nameParts.slice(1).join(" ");
-  const updatedContact = {
-    firstName,
-    lastName,
-    email: emailInput,
-    phone: phoneInput,
-  };
-
-  if (!firstName || !emailInput) {
-    showEditErrorMessage("Name and email are required");
-    return;
+  if (!nameInput || !emailInput) {
+    showEditErrorMessage("Name und E-Mail sind erforderlich.");
+    return null;
   }
 
-  if (isGuestUser()) {
-    const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
-    if (index !== -1) {
-      contactsData[index] = { ...contactsData[index], ...updatedContact };
-    }
-    hideEditContact();
-    renderSortedContacts(contactsData);
-    toggleContactDetail(firebaseKey);
-    return;
-  }
+  const [firstName, ...rest] = nameInput.split(" ");
+  const lastName = rest.join(" ");
+  return { firstName, lastName, email: emailInput, phone: phoneInput };
+}
 
+/**
+ * Updates a contact locally.
+ * @param {string} firebaseKey - The Firebase key of the contact.
+ * @param {Object} updatedContact - The updated contact data.
+ */
+function updateLocalContact(firebaseKey, updatedContact) {
+  const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
+  if (index !== -1)
+    contactsData[index] = { ...contactsData[index], ...updatedContact };
+}
+
+/**
+ * Updates a contact in Firebase.
+ * @param {string} firebaseKey - The Firebase key of the contact.
+ * @param {Object} updatedContact - The updated contact data.
+ * @returns {Promise<boolean>} Success or failure.
+ */
+async function updateFirebaseContact(firebaseKey, updatedContact) {
   try {
     const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
       method: "PUT",
@@ -101,166 +186,97 @@ async function saveEditedContact(firebaseKey) {
     });
 
     if (response.ok) {
-      const contactIndex = contactsData.findIndex(
+      const index = contactsData.findIndex(
         (c) => c.firebaseKey === firebaseKey
       );
-      if (contactIndex !== -1) {
-        contactsData[contactIndex] = {
-          ...contactsData[contactIndex],
-          ...updatedContact,
-        };
-      }
-
-      hideEditContact();
-      fetchContactsFromFirebase();
-      setTimeout(() => toggleContactDetail(firebaseKey), 100);
+      if (index !== -1)
+        contactsData[index] = { ...contactsData[index], ...updatedContact };
+      return true;
     }
+    return false;
   } catch (error) {
-    console.error("Failed to update contact.", error);
+    console.error("Fehler beim Aktualisieren in Firebase:", error);
+    return false;
   }
 }
 
 /**
- * Löscht einen Kontakt aus der Kontaktliste.
- * Bei Gastbenutzern wird der Kontakt lokal gelöscht, ansonsten in Firebase.
- * @param {string} firebaseKey - Der Firebase-Schlüssel des zu löschenden Kontakts.
+ * Refreshes the contact view after editing.
+ * @param {string} firebaseKey - The Firebase key of the contact.
+ */
+function refreshContactView(firebaseKey) {
+  hideEditContact();
+  renderSortedContacts(contactsData);
+  toggleContactDetail(firebaseKey);
+}
+
+/**
+ * Deletes a contact.
+ * @param {string} firebaseKey - The Firebase key of the contact.
  */
 async function deleteContact(firebaseKey) {
-  const contactListContainer = document.getElementById("contact-side-panel");
-  const detailViewContainer = document.getElementById("contact-big");
-  const mobileDetailView = document.getElementById("mobile-contact-detail");
-  if (mobileDetailView) {
-    mobileDetailView.style.display = "none";
-  }
-  if (contactListContainer) {
-    contactListContainer.style.removeProperty("display");
-    contactListContainer.classList.remove("hidden");
-  }
-  if (detailViewContainer) {
-    detailViewContainer.style.display = "none";
-  }
+  clearDesktopDetailView();
+  clearContactSelection();
+
   if (isGuestUser()) {
-    const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
-    if (index !== -1) {
-      contactsData.splice(index, 1);
-    }
-    showEditDeleteMessage();
-    hideEditContact();
+    deleteLocalContact(firebaseKey);
     renderSortedContacts(contactsData);
+    attachContactEventListeners();
     return;
   }
 
   try {
-    await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
+    const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
       method: "DELETE",
     });
-    hideEditContact();
-    fetchContactsFromFirebase();
+    if (response.ok) fetchContactsFromFirebase();
   } catch (error) {
-    console.error("Failed to delete contact.");
+    console.error("Error deleting contact:", error);
   }
 }
 
 /**
- * Zeigt eine Fehlermeldung beim Bearbeiten eines Kontakts an.
- * @param {string} message - Die Fehlermeldung, die angezeigt werden soll.
+ * Deletes a contact locally.
+ * @param {string} firebaseKey - The Firebase key of the contact.
  */
-function showEditErrorMessage(message) {
-  const errorContainer = document.getElementById("edit-contact-message");
-  if (errorContainer) {
-    errorContainer.classList.remove("d-none");
-    errorContainer.innerHTML = `
-      <div id="edit-contact-error-message-container">
-        <span id="edit-contact-error-message">${message}</span>
-      </div>
-    `;
-    setTimeout(() => {
-      errorContainer.classList.add("d-none");
-    }, 2500);
+function deleteLocalContact(firebaseKey) {
+  const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
+  if (index !== -1) contactsData.splice(index, 1);
+}
+
+// Utility Functions for UI Updates
+/**
+ * Clears the desktop detail view.
+ */
+function clearDesktopDetailView() {
+  const desktopDetailView = document.getElementById("desktop-contact-detail");
+  if (desktopDetailView) {
+    desktopDetailView.innerHTML = "";
+    desktopDetailView.style.display = "none";
   }
 }
 
 /**
- * Zeigt eine Erfolgsmeldung nach dem Löschen eines Kontakts an.
+ * Removes selection from all contacts.
  */
-function showEditDeleteMessage() {
-  const message = document.createElement("div");
-  message.id = "success-message-container";
-  message.innerHTML = "Kontakt erfolgreich gelöscht!";
-  document.body.appendChild(message);
-
-  setTimeout(() => {
-    message.classList.add("show");
-  }, 10);
-
-  setTimeout(() => {
-    message.classList.remove("show");
-    setTimeout(() => message.remove(), 500);
-  }, 2500);
+function clearContactSelection() {
+  const contactItems = document.querySelectorAll(".contact-item.selected");
+  contactItems.forEach((item) => item.classList.remove("selected"));
 }
 
 /**
- * Richtet die Validierung für das Bearbeitungsformular eines Kontakts ein.
+ * Attaches event listeners to contact items.
  */
-function setupEditValidation() {
-  const nameInput = document.getElementById("edit-contact-name");
-  const emailInput = document.getElementById("edit-contact-email");
-  const phoneInput = document.getElementById("edit-contact-phone");
-  const saveButton = document.getElementById("edit-contact-create");
-
-  const nameError = document.getElementById("edit-name-error");
-  const emailError = document.getElementById("edit-email-error");
-  const phoneError = document.getElementById("edit-phone-error");
-
-  /**
-   * Validiert die Eingaben im Bearbeitungsformular.
-   */
-  function validateEditInputs() {
-    let isValid = true;
-
-    if (!nameInput.value.trim()) {
-      nameError.textContent = "Name ist erforderlich";
-      nameError.style.display = "block";
-      isValid = false;
-    } else {
-      nameError.textContent = "";
-      nameError.style.display = "none";
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailInput.value.trim()) {
-      emailError.textContent = "Email ist erforderlich";
-      emailError.style.display = "block";
-      isValid = false;
-    } else if (!emailRegex.test(emailInput.value.trim())) {
-      emailError.textContent = "Ungültige Email-Adresse";
-      emailError.style.display = "block";
-      isValid = false;
-    } else {
-      emailError.textContent = "";
-      emailError.style.display = "none";
-    }
-
-    const phoneRegex = /^[0-9+ ]*$/;
-    if (!phoneInput.value.trim()) {
-      phoneError.textContent = "Telefonnummer ist erforderlich";
-      phoneError.style.display = "block";
-      isValid = false;
-    } else if (!phoneRegex.test(phoneInput.value.trim())) {
-      phoneError.textContent = "Nur Zahlen und + sind erlaubt";
-      phoneError.style.display = "block";
-      isValid = false;
-    } else {
-      phoneError.textContent = "";
-      phoneError.style.display = "none";
-    }
-
-    saveButton.disabled = !isValid;
-  }
-
-  nameInput.addEventListener("input", validateEditInputs);
-  emailInput.addEventListener("input", validateEditInputs);
-  phoneInput.addEventListener("input", validateEditInputs);
-
-  validateEditInputs();
+function attachContactEventListeners() {
+  const contactItems = document.querySelectorAll(".contact-item");
+  contactItems.forEach((item) => {
+    const firebaseKey = item.getAttribute("data-key");
+    item.addEventListener("click", () => toggleContactDetail(firebaseKey));
+  });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadCurrentUser();
+  renderSortedContacts(contactsData);
+  attachContactEventListeners();
+});
