@@ -39,8 +39,6 @@ d-none {
   display: none;
 }
 
-
-
 .todo {
   display: flex;
   flex-direction: column;
@@ -485,5 +483,3 @@ body.no-scroll {
 .boardNavigator-mobile {
   display: none;
 }
-
-

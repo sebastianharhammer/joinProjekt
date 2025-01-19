@@ -69,11 +69,9 @@ a:hover {
 }
 
 @media (max-width: 1258px) {
-
   .container {
     width: calc(100% - 40px);
   }
-
 }
 @media (max-width: 900px) {
   .arrow-icon {

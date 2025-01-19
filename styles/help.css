@@ -68,8 +68,6 @@ a:hover {
 }
 
 @media (max-width: 1250px) {
-
-
   .container {
     width: calc(100% - 40px);
     margin-top: 100px;
@@ -101,7 +99,7 @@ a:hover {
     font-size: 14px;
   }
 
-  .container{
+  .container {
     padding-bottom: 72px;
   }
 }

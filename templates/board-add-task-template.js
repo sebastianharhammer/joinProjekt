@@ -1,5 +1,5 @@
 function addTaskOverlayHTML() {
-return  /*html*/`
+  return /*html*/ `
 <div id="templateTaskDetailView" class="addtask-overlay-content" >
 <div class="addtask-main-content" onclick="closeDropdown()">
         <div id="addTaskHeaderContainer">
@@ -123,11 +123,17 @@ return  /*html*/`
 
 function assignUserHTML(contact) {
   return `
-        <div class="assigned-user-container" data-firstname="${contact.firstName}" data-lastname="${contact.lastName}" data-color="${contact.color}">
+        <div class="assigned-user-container" data-firstname="${
+          contact.firstName
+        }" data-lastname="${contact.lastName}" data-color="${contact.color}">
         <div id="assigned-user-svg">
           <svg class="addtask-customCircle" width="50" height="50">
-            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke=${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
-            <text stroke="white" stroke-width="1" font-weight="normal" class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke=${
+              contact.color
+            }" stroke-width="1" fill="${contact.color}"></circle>
+            <text stroke="white" stroke-width="1" font-weight="normal" class="addtask-textInCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(
+              contact.firstName
+            )}${getFirstLetter(contact.lastName)}</text>
           </svg>
         </div>
         <div id="assigned-user-name-container">
@@ -140,8 +146,12 @@ function assignUserHTML(contact) {
 
 function showAssignedUsersHTML(contact) {
   return `<svg class="addtask-customCircle" width="50" height="50" >
-            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${contact.color}" stroke-width="1" fill="${contact.color}"></circle>
-            <text class="addtask-textInCircle" stroke-width="1" font-weight="normal" stroke="white"     x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(contact.firstName)}${getFirstLetter(contact.lastName)}</text>
+            <circle id="addtask-user-circle" class="addtask-circleBorder" cx="50%" cy="50%" r="24" stroke="${
+              contact.color
+            }" stroke-width="1" fill="${contact.color}"></circle>
+            <text class="addtask-textInCircle" stroke-width="1" font-weight="normal" stroke="white"     x="50%" y="50%" text-anchor="middle" alignment-baseline="central">${getFirstLetter(
+              contact.firstName
+            )}${getFirstLetter(contact.lastName)}</text>
         </svg>`;
 }
 

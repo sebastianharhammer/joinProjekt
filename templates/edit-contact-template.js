@@ -76,8 +76,12 @@ function getEditContactHTML(contact) {
               <div id="edit-contact-btn-wrapper">
                   <div id="edit-contact-btn-placeholder"></div>
                   <div id="edit-contact-btn-container">
-                    <button id="edit-contact-delete" onclick="deleteContact('${contact.firebaseKey}')">Delete</button>    
-                    <button id="edit-contact-create" onclick="saveEditedContact('${contact.firebaseKey}')">Save</button>  
+                    <button id="edit-contact-delete" onclick="deleteContact('${
+                      contact.firebaseKey
+                    }')">Delete</button>    
+                    <button id="edit-contact-create" onclick="saveEditedContact('${
+                      contact.firebaseKey
+                    }')">Save</button>  
                   </div>
               </div>
           </div>

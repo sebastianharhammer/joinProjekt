@@ -215,7 +215,6 @@ button.button-signup:disabled {
   margin-top: 3px;
 }
 
-
 @media (max-width: 768px) {
   .signUpForm {
     width: 60vw;
@@ -336,7 +335,7 @@ button.button-signup:disabled {
     font-size: 15px;
   }
 
-  .signUpPasswordConfirmDiv{
+  .signUpPasswordConfirmDiv {
     margin-bottom: 12px;
   }
 }

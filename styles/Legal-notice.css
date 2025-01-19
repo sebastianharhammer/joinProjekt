@@ -77,14 +77,13 @@ a:hover {
   }
 }
 
-@media(max-width: 600px){
-.arrow-icon {
-  top: 4vh;
-  position: absolute;
-  margin-left: -10px;
-  width: 28px;
-  height: auto;
-  cursor: pointer;
+@media (max-width: 600px) {
+  .arrow-icon {
+    top: 4vh;
+    position: absolute;
+    margin-left: -10px;
+    width: 28px;
+    height: auto;
+    cursor: pointer;
+  }
 }
-}
-

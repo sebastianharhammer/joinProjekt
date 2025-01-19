@@ -6,7 +6,6 @@ const firebaseConfig = {
   databaseURL:
     "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
 };
-
 /**
  * Basis-URL für Firebase-Datenbankoperationen.
  * @constant {string}
@@ -58,8 +57,6 @@ function isGuestUser() {
     currentUser.lastName === "User"
   );
 }
-
-// Lädt den aktuellen Benutzer und kontaktiert Firebase, sobald das DOM vollständig geladen ist
 document.addEventListener("DOMContentLoaded", () => {
   includeHTML();
   loadCurrentUser();
@@ -271,13 +268,13 @@ function toggleContactDetail(firebaseKey) {
   const mobileDetailView = document.getElementById("mobile-contact-detail");
   const desktopDetailView = document.getElementById("desktop-contact-detail");
 
-  // Find the selected contact and its corresponding DOM element
-  const selectedContact = contactsData.find((c) => c.firebaseKey === firebaseKey);
+  const selectedContact = contactsData.find(
+    (c) => c.firebaseKey === firebaseKey
+  );
   const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
 
   if (!selectedContact || !clickedItem) return;
 
-  // Deselect if the same contact is clicked
   if (clickedItem.classList.contains("selected")) {
     clickedItem.classList.remove("selected");
     if (mobileDetailView) mobileDetailView.innerHTML = "";
@@ -289,10 +286,16 @@ function toggleContactDetail(firebaseKey) {
   clickedItem.classList.add("selected");
 
   if (mobileDetailView) {
-    mobileDetailView.innerHTML = getMobileDetailHTML(selectedContact, firebaseKey);
+    mobileDetailView.innerHTML = getMobileDetailHTML(
+      selectedContact,
+      firebaseKey
+    );
   }
   if (desktopDetailView) {
-    desktopDetailView.innerHTML = getDesktopDetailHTML(selectedContact, firebaseKey);
+    desktopDetailView.innerHTML = getDesktopDetailHTML(
+      selectedContact,
+      firebaseKey
+    );
   }
 
   const isMobileView = window.innerWidth <= 1256;
@@ -361,7 +364,6 @@ function toggleMenu() {
     }
   }
 }
-
 /**
  * Generiert eine zufällige Farbe aus einer vordefinierten Liste.
  * @returns {string} Eine zufällig ausgewählte Farbe im Hex-Format.
@@ -370,7 +372,6 @@ function getRandomColor() {
   const colors = ["orange", "purple", "blue", "red", "green", "teal"];
   return colors[Math.floor(Math.random() * colors.length)];
 }
-
 /**
  * Holt die Initialen eines Benutzers.
  * @param {string} firstName
@@ -380,7 +381,6 @@ function getRandomColor() {
 function getInitials(firstName, lastName) {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 }
-
 /**
  * Rendert den rechten Seitenbereich für Kontaktdetails, falls nicht bereits vorhanden.
  */

@@ -361,7 +361,6 @@ input[type="date"] {
   background-color: rgb(240, 240, 240);
 }
 
-
 .textarea-large {
   min-height: 100px !important;
   width: 95%;
@@ -414,7 +413,7 @@ input[type="date"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .checkbox-add-task-edit:hover {
@@ -457,8 +456,7 @@ input[type="date"] {
     overflow-y: auto;
     gap: 1vh;
     padding: 8px;
-}
-
+  }
 
   .editTaskTempl {
     z-index: 999;
@@ -474,72 +472,65 @@ input[type="date"] {
     width: 90%;
   }
 
-  .edit-input{
+  .edit-input {
     width: 97% !important;
   }
 
   #header-overlay-top {
     z-index: 999;
+  }
+
+  .assigned-user-name-edit {
+    font-size: 14px;
+  }
+
+  .btn-skip-and-confirm-edit {
+    width: 72px;
+    height: 34px;
+    font-family: "Inter";
+    font-weight: 500;
+    font-size: 10px;
+  }
+
+  .btn-skip-and-confirm-edit:hover {
+    width: 72px;
+    height: 34px;
+    border: unset;
+    font-weight: 500;
+    font-size: 10px;
+    color: rgb(42, 54, 71);
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid rgb(42, 54, 71);
+  }
+
+  .assigned-user-container-edit {
+    gap: 12px;
+    width: 95%;
+  }
+
+  .addtask-textInCircle {
+    font-size: 14px;
+    font-family: "Inter", sans-serif;
+  }
+
+  .customCircle {
+    width: 40px;
+    height: 40px;
+  }
+
+  .checkbox-add-task-edit {
+    height: 18px !important;
+    width: 18px !important;
+  }
+
+  .checkbox-add-task-edit:checked::after {
+    left: 4px !important;
+    top: -1px;
+    width: 5px;
+  }
+
+  .assigned-user-container-edit {
+    margin-top: 1px;
+  }
 }
-
-.assigned-user-name-edit{
-  font-size: 14px;
-}
-
-.btn-skip-and-confirm-edit {
-  width: 72px;
-  height: 34px;
-  font-family: "Inter";
-  font-weight: 500;
-  font-size: 10px;
-}
-
-.btn-skip-and-confirm-edit:hover {
-  width: 72px;
-  height: 34px;
-  border: unset;
-  font-weight: 500;
-  font-size: 10px;
-  color: rgb(42, 54, 71);
-  background-color: white;
-  cursor: pointer;
-  border: 1px solid rgb(42, 54, 71);
-}
-
-.assigned-user-container-edit {
-  gap: 12px;
-  width: 95%;
-}
-
-.addtask-textInCircle {
-  font-size: 14px;
-  font-family: "Inter", sans-serif;
-}
-
-.customCircle{
-  width: 40px;
-  height: 40px;
-}
-
-.checkbox-add-task-edit{
-  height: 18px !important;
-  width: 18px !important;
-}
-
-.checkbox-add-task-edit:checked::after {
-  left: 4px !important;
-  top: -1px;
-  width: 5px;
-}
-
-
-.assigned-user-container-edit{
-  margin-top: 1px;
-}
-
-
-}
-
-
-
-

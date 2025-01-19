@@ -53,7 +53,7 @@
   color: white;
   font-size: 32px;
   font-weight: 200;
-  
+
   text-align: center;
 }
 #vector-line {
@@ -283,8 +283,8 @@
 }
 
 #success-message-container.show {
-  transform: translateX(50%) translateY(0); 
-  opacity: 1; 
+  transform: translateX(50%) translateY(0);
+  opacity: 1;
 }
 
 #edit-contact-succes-message {
@@ -342,7 +342,7 @@
   #input-fields {
     height: 75% !important;
   }
-  #add-contact-interactions { 
+  #add-contact-interactions {
     height: 60% !important;
   }
   #edit-contact-btn-placeholder {
@@ -355,7 +355,7 @@
   #input-fields {
     height: 75% !important;
   }
-  #edit-contact-interactions { 
+  #edit-contact-interactions {
     height: 60% !important;
   }
 }
@@ -390,7 +390,7 @@
   #edit-contact-btn-close-mobile {
     display: block;
   }
-  
+
   #edit-contact-icon-mobile {
     display: none;
   }
@@ -410,7 +410,7 @@
     margin-right: 66px;
   }
   #input-fields {
-    width: 90% !important; 
+    width: 90% !important;
   }
   #edit-contact-headline {
     font-size: 30px;
@@ -425,7 +425,6 @@
   #edit-contact-delete {
     padding: 0;
   }
-
 }
 
 @media (max-width: 428px) {
@@ -437,9 +436,6 @@
 }
 
 @media (max-width: 385px) {
-  
-
-
   #back-button {
     margin-left: -30px;
   }
@@ -460,6 +456,3 @@
     align-items: center;
   }
 }
-
-
-

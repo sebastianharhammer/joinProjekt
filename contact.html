@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/x-icon" href="./img/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="./img/favicon.svg" />
     <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="./styles/nav.css" />
     <link rel="stylesheet" href="./styles/standard.css" />
@@ -27,29 +27,31 @@
   <body>
     <div w3-include-html="./header.html"></div>
     <div w3-include-html="./nav.html"></div>
-    
+
     <!-- Container für die Kontaktüberschrift, immer sichtbar -->
     <div id="contact-headline-container">
       <h3 id="contact-headline">Contacts</h3>
       <h2 id="bwat-headline">Better with a team</h2>
     </div>
-  
+
     <!-- Hintergrund- und Popup-Elemente für das Hinzufügen und Bearbeiten von Kontakten -->
     <div id="add-contact-background" class="d-none"></div>
     <div id="add-contact-content" class="hide-add-contact"></div>
     <div id="edit-contact-content" class="hide-edit-contact"></div>
     <div id="edit-contact-background" class="d-none"></div>
-    
+
     <!-- Container für die Kontaktliste -->
     <div id="contact-content"></div>
-  
+
     <!-- Container für Detailansicht des Kontakts -->
     <div id="contact-big">
-      <div id="desktop-contact-detail" class="contact-detail desktop-template"></div>
+      <div
+        id="desktop-contact-detail"
+        class="contact-detail desktop-template"></div>
     </div>
 
-    <div id="mobile-contact-detail" class="contact-detail mobile-template"></div>
+    <div
+      id="mobile-contact-detail"
+      class="contact-detail mobile-template"></div>
   </body>
-  
-  
 </html>

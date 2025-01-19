@@ -1,12 +1,18 @@
 function getTaskHTML(task, completedSubtasks, totalSubtasks) {
-    return /*html*/ `
-      <div onclick="showTaskCard(${task.id})" id="boardTask${task.id}" class="todo" draggable="true" ondragstart="startDragging(${task.id})">
+  return /*html*/ `
+      <div onclick="showTaskCard(${task.id})" id="boardTask${
+    task.id
+  }" class="todo" draggable="true" ondragstart="startDragging(${task.id})">
         <div id="taskButton-${task.id}">
           <p class="open-sans">${task.taskCategory}</p>
         </div>
         <p id="title${task.id}" class="open-sans-bold">${task.title}</p>
         <p id="description${task.id}" class="inter-font">${task.description}</p>
-        ${totalSubtasks > 0 ? getProgressBarHTML(task, completedSubtasks, totalSubtasks) : ""}
+        ${
+          totalSubtasks > 0
+            ? getProgressBarHTML(task, completedSubtasks, totalSubtasks)
+            : ""
+        }
         <section class="namesAndPrio">
           <div class="userNameCircles" id="userNameCircles-${task.id}"></div>
           <div>
@@ -14,29 +20,36 @@ function getTaskHTML(task, completedSubtasks, totalSubtasks) {
           </div>
         </section>
         <div class="mobile-arrows">
-          <button class="arrow-btn arrow-up" onclick="moveTaskUp(${task.id}, event)">
+          <button class="arrow-btn arrow-up" onclick="moveTaskUp(${
+            task.id
+          }, event)">
             <img src="./img/arrow-up.png" alt="Up">
           </button>
-          <button class="arrow-btn arrow-down" onclick="moveTaskDown(${task.id}, event)">
+          <button class="arrow-btn arrow-down" onclick="moveTaskDown(${
+            task.id
+          }, event)">
             <img src="./img/arrow-down.png" alt="Down">
           </button>
         </div>
       </div>
     `;
-  }
-  
-  function getProgressBarHTML(task, completedSubtasks, totalSubtasks) {
-    return /*html*/ `
+}
+
+function getProgressBarHTML(task, completedSubtasks, totalSubtasks) {
+  return /*html*/ `
       <div class="progressBarDiv">
-        <progress id="progress-${task.id}" class="progressBarBoard" value="${(completedSubtasks / totalSubtasks) * 100}" max="100"></progress>
-        <p id="amountOfSubtasks-${task.id}" class="inter-font">${completedSubtasks} / ${totalSubtasks} Subtasks</p>
+        <progress id="progress-${task.id}" class="progressBarBoard" value="${
+    (completedSubtasks / totalSubtasks) * 100
+  }" max="100"></progress>
+        <p id="amountOfSubtasks-${
+          task.id
+        }" class="inter-font">${completedSubtasks} / ${totalSubtasks} Subtasks</p>
       </div>
     `;
-  }
-  
+}
 
 function getBoardNavigatorHTML() {
-    return /*html*/ `
+  return /*html*/ `
 <section class="boardNavigator">
     <div class="searchAndAddTasks">
         <p class="boardFont">BOARD</p>
@@ -73,7 +86,7 @@ function getBoardNavigatorHTML() {
 }
 
 function generateNoOwnerCircle() {
-    return /*html*/`
+  return /*html*/ `
     <svg width="34" height="34">
         <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="gray" />
         <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">N/A</text>
@@ -82,8 +95,8 @@ function generateNoOwnerCircle() {
 }
 
 function generateOwnerCircle(owner) {
-    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
-    return /*html*/`
+  const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
+  return /*html*/ `
     <svg width="34" height="34">
         <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
         <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
@@ -94,7 +107,7 @@ function generateOwnerCircle(owner) {
 }
 
 function createSubTaskHTML(task, index) {
-    return /*html*/ `
+  return /*html*/ `
     <div class="eachSubtaskBox">
         <input type="checkbox" id="subtask-${task.id}-${index}" onchange="updateCompletedSubtasks(${task.id})">
         <label for="subtask-${task.id}-${index}">${task.subtasks[index]}</label>
@@ -103,11 +116,11 @@ function createSubTaskHTML(task, index) {
 }
 
 function getSubtasksHTML(task) {
-    if (!task.subtasks || task.subtasks.length === 0) {
+  if (!task.subtasks || task.subtasks.length === 0) {
     return `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
-    }
-    let subtasksHTML = "";
-    task.subtasks.forEach((subtask, index) => {
+  }
+  let subtasksHTML = "";
+  task.subtasks.forEach((subtask, index) => {
     subtasksHTML += /*html*/ `
             <div class="subtaskItem">
                 <input 
@@ -115,29 +128,31 @@ function getSubtasksHTML(task) {
                     id="subtask-${task.id}-${index}" 
                     class="styledCheckbox"
                     ${subtask.checkbox ? "checked" : ""} 
-                    onchange="toggleSubtaskCheckbox(${task.id}, ${index}); updateCompletedSubtasks(${task.id})"
+                    onchange="toggleSubtaskCheckbox(${
+                      task.id
+                    }, ${index}); updateCompletedSubtasks(${task.id})"
                 >
                 <label for="subtask-${
-                    task.id
+                  task.id
                 }-${index}" class="styledCheckboxLabel">
                     <span class="checkboxSquare"></span>
                     <p class="subtaskText">${
-                        subtask.subtask || "Unnamed Subtask"
+                      subtask.subtask || "Unnamed Subtask"
                     }</p>
             </label>
             </div>
             `;
-    });
-    return subtasksHTML;
+  });
+  return subtasksHTML;
 }
 
 function getNoOwnersHTML() {
-    return `<p class="noOwners">Keine Owner zugewiesen</p>`;
+  return `<p class="noOwners">Keine Owner zugewiesen</p>`;
 }
 
 function getOwnerItemHTML(owner) {
-    const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
-    return `
+  const color = getRandomColor(owner.firstName, owner.lastName); // Nutzt getRandomColor
+  return `
     <div class="ownerItem">
         ${getOwnerCircleHTML(owner, color)}
         <p>${owner.firstName} ${owner.lastName}</p>
@@ -146,7 +161,7 @@ function getOwnerItemHTML(owner) {
 }
 
 function getOwnerCircleHTML(owner, color) {
-    return /*html*/`
+  return /*html*/ `
     <svg width="34" height="34">
         <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="${color}" />
         <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central">
@@ -157,7 +172,7 @@ function getOwnerCircleHTML(owner, color) {
 }
 
 function getTaskDetailsHTML(task) {
-    return /*html*/ `
+  return /*html*/ `
           <p class="boardFontDetail">${task.title}</p>
           <p class="description-taskCard">${task.description}</p>
           <table class="dueDateAndPrio">
@@ -171,8 +186,8 @@ function getTaskDetailsHTML(task) {
                       <td>${
                         task.prio
                       } <img class="prioIconCard" src="${getPrioIcon(
-      task.prio
-    )}" alt=""></td>                   
+    task.prio
+  )}" alt=""></td>                   
                 </tr>
             </tbody>
         </table>
@@ -194,7 +209,7 @@ function getTaskDetailsHTML(task) {
             <p class="deleteHeaderFont">Bist du dir sicher?</p>
             <div class="confirmation-delete-buttons">
                 <button class="deleteTaskButtons" onclick="deleteTask(${
-                    task.id
+                  task.id
                 })">Ja, löschen</button>
                 <button class="deleteTaskButtons" onclick="closeQuestionDelete()">Nein, zurück</button>
             </div>
@@ -203,19 +218,17 @@ function getTaskDetailsHTML(task) {
 }
 
 function getPrioIcon(prio) {
-    if (prio === "medium") {
+  if (prio === "medium") {
     return "./img/prio-mid.png";
-    } else if (prio === "urgent") {
+  } else if (prio === "urgent") {
     return "./img/prio-high.png";
-    } else {
+  } else {
     return "./img/prio-low.png";
-    }
+  }
 }
 
-
-
 function getColumnsHTML() {
-    return /*html*/ `
+  return /*html*/ `
           <section class="tasksContent">
 
               <div class="column-header">
@@ -288,7 +301,7 @@ function getColumnsHTML() {
 }
 
 function getExtraOwnersCountCircle(extraOwnersCount) {
-    return `
+  return `
     <svg width="34" height="34">
         <circle cx="50%" cy="50%" r="16" stroke="white" stroke-width="1" fill="black" />
         <text class="fontInNameCircle" x="50%" y="50%" text-anchor="middle" alignment-baseline="central" fill="white">

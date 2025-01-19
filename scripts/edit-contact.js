@@ -1,7 +1,3 @@
-
-
-
-
 /**
  * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
  */
@@ -81,13 +77,11 @@ async function saveEditedContact(firebaseKey) {
     phone: phoneInput,
   };
 
-  // Validation
   if (!firstName || !emailInput) {
     showEditErrorMessage("Name and email are required");
     return;
   }
 
-  // Gastbenutzer: Lokale Daten aktualisieren
   if (isGuestUser()) {
     const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
     if (index !== -1) {
@@ -95,11 +89,10 @@ async function saveEditedContact(firebaseKey) {
     }
     hideEditContact();
     renderSortedContacts(contactsData);
-    toggleContactDetail(firebaseKey); // Detailansicht bleibt geöffnet
+    toggleContactDetail(firebaseKey);
     return;
   }
 
-  // Firebase: Kontakt speichern
   try {
     const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
       method: "PUT",
@@ -108,7 +101,6 @@ async function saveEditedContact(firebaseKey) {
     });
 
     if (response.ok) {
-      // Lokale Daten aktualisieren
       const contactIndex = contactsData.findIndex(
         (c) => c.firebaseKey === firebaseKey
       );
@@ -119,16 +111,14 @@ async function saveEditedContact(firebaseKey) {
         };
       }
 
-      hideEditContact(); // Editierfenster schließen
-      fetchContactsFromFirebase(); // Kontakte neu laden
-      setTimeout(() => toggleContactDetail(firebaseKey), 100); // Detailansicht öffnen
+      hideEditContact();
+      fetchContactsFromFirebase();
+      setTimeout(() => toggleContactDetail(firebaseKey), 100);
     }
   } catch (error) {
     console.error("Failed to update contact.", error);
   }
 }
-
-
 
 /**
  * Löscht einen Kontakt aus der Kontaktliste.

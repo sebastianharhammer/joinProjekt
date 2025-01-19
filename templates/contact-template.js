@@ -23,7 +23,7 @@ function contactsTemplate(contact) {
 }
 
 function getMobileDetailHTML(contact, firebaseKey) {
-  return /*html*/`
+  return /*html*/ `
   <section class="mobile-info-contact">
     <div class="contact-headline-container-mobile">
             <h3 class="contact-headline-mobile">Contacts</h3>
@@ -106,4 +106,3 @@ function getDesktopDetailHTML(contact, firebaseKey) {
     </div>
   `;
 }
-

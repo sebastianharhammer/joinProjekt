@@ -1,5 +1,5 @@
-function getRegisterContent(){
-    return /*html*/`
+function getRegisterContent() {
+  return /*html*/ `
         <div class="headAreaOfLogin">
         <img src="./img/logo-join-blue-big.png" alt="" />
       </div>
@@ -111,5 +111,5 @@ function getRegisterContent(){
         <p class="successSignUpFont">You Signed Up successfully</p>
       </div>
     </div>
-    `
+    `;
 }

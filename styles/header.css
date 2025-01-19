@@ -132,23 +132,21 @@ header {
   text-overflow: ellipsis;
 }
 
-
 .header-links {
   color: #a8a8a8;
   padding: 15px 5px;
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .header-links:hover {
-  background-color: #2A3D59;
+  background-color: #2a3d59;
   border-radius: 15px;
   color: #53b4fa;
   cursor: pointer;
 }
 .header-guest-user {
-  color: #364D6D;
+  color: #364d6d;
 }
-
 
 @media (min-width: 1250px) {
   #header-logo-container {
@@ -156,27 +154,21 @@ header {
   }
 }
 
-
 @media (max-width: 1258px) {
   #header-overlay-top {
     width: 100vw;
     margin-left: auto;
   }
-
- 
-  
 }
-@media (min-width: 770px) { 
+@media (min-width: 770px) {
   #header-logo-container img {
     display: none;
   }
   #helpLink {
     display: none;
   }
-
 }
 @media (max-width: 770px) {
-
   #header-content {
     display: block;
   }
@@ -199,12 +191,11 @@ header {
     width: 40px;
     order: -1;
     margin-left: 0;
-    }
+  }
 
-    #header-logo-container img {
-      width: 100%;
-    }
-
+  #header-logo-container img {
+    width: 100%;
+  }
 
   #header-current-user {
     margin-left: auto;
@@ -216,12 +207,10 @@ header {
   #header-user-overlay {
     right: 1vw;
     top: 0px;
-}
-
+  }
 }
 @media (max-width: 720px) {
   #header-overlay-top {
     z-index: 9990;
   }
 }
-
