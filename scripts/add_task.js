@@ -1,14 +1,63 @@
+/**
+ * Gibt an, ob der Kategoriencontainer geklickt wurde.
+ * @type {boolean}
+ */
 let categoriesContainerClick = false;
+
+/**
+ * Array zur Speicherung von Kontakten.
+ * @type {Array}
+ */
 let contacts = [];
+
+/**
+ * Die aktuell ausgewählte Priorität.
+ * @type {string}
+ */
 let selectedPriority = "medium";
+
+/**
+ * Array zur Speicherung von Unteraufgaben.
+ * @type {Array}
+ */
 let subtasksArr = [];
+
+/**
+ * Array zur Speicherung von zugewiesenen Benutzern.
+ * @type {Array}
+ */
 let assignedUserArr = [];
+
+/**
+ * Lokale Speicherung von Aufgaben.
+ * @type {Array}
+ */
 let localTasks = [];
+
+/**
+ * Zähler für Unteraufgaben-IDs.
+ * @type {number}
+ */
 let subtaskIdCounter = 0;
+
+/**
+ * Arrays zur Bearbeitung von Unteraufgaben.
+ * @type {Array}
+ */
 let subtasksEdit = [];
 let subtasksEdit_done = [];
 let subtasksArr_done = [];
+
+/**
+ * Aktuelles Kategorieobjekt.
+ * @type {string}
+ */
 let categoryObject = "";
+
+/**
+ * Liste der hinzufügbaren Aufgabenkategorien mit Hintergrundfarben.
+ * @type {Array<Object>}
+ */
 let addTaskcategories = [
   { category: "User Story", "bg-color": "#0038FF" },
   {
@@ -16,8 +65,16 @@ let addTaskcategories = [
     "bg-color": "#1FD7C1",
   },
 ];
+
+/**
+ * Array zur Speicherung der zugewiesenen Benutzer.
+ * @type {Array}
+ */
 let assignedUser = [];
 
+/**
+ * Initialisiert die Anwendung, indem Aufgaben und Benutzer geladen und das HTML eingebunden werden.
+ */
 function init() {
   getTasks();
   getUsers();
@@ -27,6 +84,10 @@ function init() {
   setPriority("medium");
 }
 
+/**
+ * Erstellt eine neue Aufgabe basierend auf den Formulardaten.
+ * @param {Event} event - Das auslösende Ereignis.
+ */
 async function createTask(event) {
   event.preventDefault();
   const taskData = getTaskFormData();
@@ -42,6 +103,10 @@ async function createTask(event) {
   }
 }
 
+/**
+ * Holt die Daten aus dem Aufgabenformular.
+ * @returns {Object} Die gesammelten Formulardaten.
+ */
 function getTaskFormData() {
   return {
     title: document.getElementById("title").value,
@@ -50,10 +115,15 @@ function getTaskFormData() {
     category: categoryObject,
     priority: selectedPriority,
     subtasks: [...subtasksArr],
-    assignedUsers: [...assignedUserArr]
+    assignedUsers: [...assignedUserArr],
   };
 }
 
+/**
+ * Baut ein neues Aufgabenobjekt basierend auf den Formulardaten.
+ * @param {Object} taskData - Die Daten der neuen Aufgabe.
+ * @returns {Object} Das erstellte Aufgabenobjekt.
+ */
 async function buildNewTask(taskData) {
   const nextId = await getNextTaskId();
   return {
@@ -69,11 +139,18 @@ async function buildNewTask(taskData) {
   };
 }
 
+/**
+ * Speichert die neue Aufgabe in der lokalen Liste und sendet sie an Firebase.
+ * @param {Object} newTask - Die zu speichernde Aufgabe.
+ */
 async function saveTask(newTask) {
   taskArray.push(newTask);
   await pushTaskToFirebase(newTask);
 }
 
+/**
+ * Behandelt die erfolgreiche Erstellung einer Aufgabe, zeigt eine Bestätigung und leitet weiter.
+ */
 function handleSuccessfulTaskCreation() {
   showAddTaskSuccesMessage();
   setTimeout(() => {
@@ -81,12 +158,19 @@ function handleSuccessfulTaskCreation() {
   }, 1500);
 }
 
+/**
+ * Behandelt das Abbrechen der Aufgabenerstellung, setzt das Formular und UI zurück.
+ * @param {Event} event - Das auslösende Ereignis.
+ */
 function handleCancel(event) {
   event.preventDefault();
   resetFormValues();
   resetUIElements();
 }
 
+/**
+ * Setzt die Werte des Formulars zurück.
+ */
 function resetFormValues() {
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
@@ -100,10 +184,13 @@ function resetFormValues() {
   selectedPriority = "";
 }
 
+/**
+ * Setzt die UI-Elemente zurück, wie z.B. Benutzercontainer und Prioritätsauswahl.
+ */
 function resetUIElements() {
   document.getElementById("assigned-users-short").innerHTML = "";
-  const userContainers = document.querySelectorAll('.assigned-user-container');
-  userContainers.forEach(container => {
+  const userContainers = document.querySelectorAll(".assigned-user-container");
+  userContainers.forEach((container) => {
     container.style.backgroundColor = "";
     container.style.color = "";
     container.style.borderRadius = "";
@@ -113,6 +200,13 @@ function resetUIElements() {
   setPriority("medium");
 }
 
+/**
+ * Validiert die Aufgabe anhand von Titel, Datum und Kategorie.
+ * @param {string} title - Der Titel der Aufgabe.
+ * @param {string} date - Das Fälligkeitsdatum der Aufgabe.
+ * @param {string} category - Die Kategorie der Aufgabe.
+ * @returns {boolean} Gibt true zurück, wenn Fehler vorhanden sind.
+ */
 function validateTask(title, date, category) {
   let hasErrors = false;
   if (!validateTitle(title)) hasErrors = true;
@@ -121,6 +215,11 @@ function validateTask(title, date, category) {
   return hasErrors;
 }
 
+/**
+ * Validiert den Titel der Aufgabe.
+ * @param {string} title - Der zu validierende Titel.
+ * @returns {boolean} Gibt true zurück, wenn der Titel gültig ist.
+ */
 function validateTitle(title) {
   if (!title) {
     showFieldError("addTitleError", "Title is required!");
@@ -129,18 +228,28 @@ function validateTitle(title) {
   return true;
 }
 
+/**
+ * Validiert das Datum der Aufgabe.
+ * @param {string} date - Das zu validierende Datum.
+ * @returns {boolean} Gibt true zurück, wenn das Datum gültig ist.
+ */
 function validateDate(date) {
   if (!date) {
     showFieldError("addDateError", "Date is required!");
     return false;
   }
   if (date < new Date().toISOString().split("T")[0]) {
-    showFieldError("addDateError", "Date can´t be in the past!");
+    showFieldError("addDateError", "Date can’t be in the past!");
     return false;
   }
   return true;
 }
 
+/**
+ * Validiert die Kategorie der Aufgabe.
+ * @param {string} category - Die zu validierende Kategorie.
+ * @returns {boolean} Gibt true zurück, wenn die Kategorie gültig ist.
+ */
 function validateCategory(category) {
   if (!category) {
     showFieldError("addCategoryError", "Category is required!");
@@ -149,6 +258,11 @@ function validateCategory(category) {
   return true;
 }
 
+/**
+ * Zeigt eine Fehlermeldung für ein bestimmtes Feld an und deaktiviert den Erstellen-Button vorübergehend.
+ * @param {string} elementId - Die ID des Elements, das die Fehlermeldung anzeigen soll.
+ * @param {string} message - Die Fehlermeldung.
+ */
 function showFieldError(elementId, message) {
   const button = document.getElementById("add-task-create");
   document.getElementById(elementId).innerHTML = message;
@@ -163,6 +277,9 @@ function showFieldError(elementId, message) {
   }, 3000);
 }
 
+/**
+ * Zeigt eine Erfolgsmeldung nach erfolgreichem Hinzufügen einer Aufgabe an.
+ */
 function showAddTaskSuccesMessage() {
   let succes = document.getElementById("task-succes");
   let messageContainer = document.getElementById("task-message-container");
@@ -174,6 +291,10 @@ function showAddTaskSuccesMessage() {
   }, 750);
 }
 
+/**
+ * Holt die nächste verfügbare Aufgaben-ID von Firebase.
+ * @returns {number} Die nächste Aufgaben-ID.
+ */
 async function getNextTaskId() {
   try {
     const response = await fetch(BASE_URL + "/tasks.json", {
@@ -195,6 +316,10 @@ async function getNextTaskId() {
   }
 }
 
+/**
+ * Sendet die neue Aufgabe an Firebase zur Speicherung.
+ * @param {Object} newTask - Die zu speichernde Aufgabe.
+ */
 async function pushTaskToFirebase(newTask) {
   try {
     let key = newTask.id;
@@ -210,13 +335,23 @@ async function pushTaskToFirebase(newTask) {
   }
 }
 
+/**
+ * Behandelt die Interaktion mit dem Dropdown-Menü für Benutzerzuweisungen.
+ */
 function handleDropdownInteraction() {
   const dropdown = document.getElementById("custom-dropdown");
   const optionsContainer = dropdown.querySelector(".dropdown-options");
-  dropdown.addEventListener("click", (e) => handleDropdownClick(e, optionsContainer));
+  dropdown.addEventListener("click", (e) =>
+    handleDropdownClick(e, optionsContainer)
+  );
   optionsContainer.addEventListener("click", handleOptionsClick);
 }
 
+/**
+ * Behandelt den Klick auf das Dropdown-Menü.
+ * @param {Event} event - Das auslösende Ereignis.
+ * @param {HTMLElement} optionsContainer - Der Container für die Dropdown-Optionen.
+ */
 function handleDropdownClick(event, optionsContainer) {
   const userContainer = event.target.closest(".assigned-user-container");
   if (userContainer) {
@@ -227,11 +362,19 @@ function handleDropdownClick(event, optionsContainer) {
   toggleDropdown(optionsContainer);
 }
 
+/**
+ * Wechselt die Sichtbarkeit des Dropdown-Menüs.
+ * @param {HTMLElement} optionsContainer - Der Container für die Dropdown-Optionen.
+ */
 function toggleDropdown(optionsContainer) {
   const isOpen = optionsContainer.style.display === "block";
   optionsContainer.style.display = isOpen ? "none" : "block";
 }
 
+/**
+ * Behandelt den Klick auf eine Dropdown-Option zur Benutzerzuweisung.
+ * @param {Event} event - Das auslösende Ereignis.
+ */
 function handleOptionsClick(event) {
   const userContainer = event.target.closest(".assigned-user-container");
   if (!userContainer) return;
@@ -241,14 +384,24 @@ function handleOptionsClick(event) {
   showAssignedUsers();
 }
 
+/**
+ * Extrahiert Benutzerdaten aus dem Benutzercontainer.
+ * @param {HTMLElement} userContainer - Der Container des Benutzers.
+ * @returns {Object} Die extrahierten Benutzerdaten.
+ */
 function extractUserData(userContainer) {
   return {
     firstName: userContainer.dataset.firstname,
     lastName: userContainer.dataset.lastname,
-    color: userContainer.dataset.color
+    color: userContainer.dataset.color,
   };
 }
 
+/**
+ * Wechselt die Auswahl eines Benutzers in der Liste der zugewiesenen Benutzer.
+ * @param {Object} userData - Die Daten des Benutzers.
+ * @param {HTMLElement} userContainer - Der Container des Benutzers.
+ */
 function toggleUserSelection(userData, userContainer) {
   const checkbox = userContainer.querySelector('input[type="checkbox"]');
   const userIndex = findUserIndex(userData);
@@ -261,25 +414,48 @@ function toggleUserSelection(userData, userContainer) {
   }
 }
 
+/**
+ * Findet den Index eines Benutzers in der Liste der zugewiesenen Benutzer.
+ * @param {Object} userData - Die Daten des Benutzers.
+ * @returns {number} Der Index des Benutzers oder -1, wenn nicht gefunden.
+ */
 function findUserIndex(userData) {
   return assignedUserArr.findIndex(
-    user => user.firstName === userData.firstName && user.lastName === userData.lastName
+    (user) =>
+      user.firstName === userData.firstName &&
+      user.lastName === userData.lastName
   );
 }
 
+/**
+ * Entfernt einen Benutzer aus der Liste der zugewiesenen Benutzer.
+ * @param {number} userIndex - Der Index des zu entfernenden Benutzers.
+ */
 function removeUser(userIndex) {
   assignedUserArr.splice(userIndex, 1);
 }
 
+/**
+ * Fügt einen Benutzer zur Liste der zugewiesenen Benutzer hinzu.
+ * @param {Object} userData - Die Daten des hinzuzufügenden Benutzers.
+ */
 function addUser(userData) {
   assignedUserArr.push({
     firstName: userData.firstName,
     lastName: userData.lastName,
-    initials: `${getFirstLetter(userData.firstName)}${getFirstLetter(userData.lastName)}`,
-    color: userData.color
+    initials: `${getFirstLetter(userData.firstName)}${getFirstLetter(
+      userData.lastName
+    )}`,
+    color: userData.color,
   });
 }
 
+/**
+ * Aktualisiert das Erscheinungsbild des Benutzercontainers basierend auf der Auswahl.
+ * @param {HTMLElement} userContainer - Der Container des Benutzers.
+ * @param {HTMLInputElement} checkbox - Die Checkbox des Benutzers.
+ * @param {boolean} isSelected - Gibt an, ob der Benutzer ausgewählt ist.
+ */
 function updateUserContainer(userContainer, checkbox, isSelected) {
   checkbox.checked = isSelected;
   userContainer.style.backgroundColor = isSelected ? "#2b3647" : "";
@@ -287,11 +463,17 @@ function updateUserContainer(userContainer, checkbox, isSelected) {
   userContainer.style.borderRadius = isSelected ? "10px" : "";
 }
 
+/**
+ * Schließt das Dropdown-Menü.
+ */
 function closeDropdown() {
-    const optionsContainer = document.getElementById('dropdown-options');
-    optionsContainer.style.display = 'none';
+  const optionsContainer = document.getElementById("dropdown-options");
+  optionsContainer.style.display = "none";
 }
 
+/**
+ * Holt die Aufgaben von Firebase und speichert sie lokal.
+ */
 async function getTasks() {
   try {
     let response = await fetch(BASE_URL + "/testingTasks/.json", {
@@ -310,6 +492,9 @@ async function getTasks() {
   }
 }
 
+/**
+ * Holt die Benutzerkontakte von Firebase und speichert sie.
+ */
 async function getUsers() {
   try {
     let response = await fetch(BASE_URL + "/contacts/.json", {
@@ -329,6 +514,9 @@ async function getUsers() {
   returnArrayContacts();
 }
 
+/**
+ * Wandelt die Kontaktliste in ein Array um und rendert die Dropdown-Optionen.
+ */
 function returnArrayContacts() {
   if (!finalContacts || Object.keys(finalContacts).length === 0) {
     console.error("No contacts found.");
@@ -349,6 +537,12 @@ function returnArrayContacts() {
   });
 }
 
+/**
+ * Weist einen Benutzer basierend auf Vor- und Nachnamen sowie Farbe zu.
+ * @param {string} firstName - Der Vorname des Benutzers.
+ * @param {string} lastName - Der Nachname des Benutzers.
+ * @param {string} color - Die Farbe des Benutzers.
+ */
 function assignUser(firstName, lastName, color) {
   const userExists = assignedUserArr.some(
     (user) => user.firstName === firstName && user.lastName === lastName
@@ -364,6 +558,9 @@ function assignUser(firstName, lastName, color) {
   }
 }
 
+/**
+ * Zeigt die zugewiesenen Benutzer im UI an.
+ */
 function showAssignedUsers() {
   let assignUsersContainer = document.getElementById("assigned-users-short");
   assignUsersContainer.innerHTML = "";
@@ -372,10 +569,18 @@ function showAssignedUsers() {
   });
 }
 
+/**
+ * Holt den ersten Buchstaben eines Namens und gibt ihn groß zurück.
+ * @param {string} name - Der Name, von dem der erste Buchstabe geholt werden soll.
+ * @returns {string} Der erste Großbuchstabe des Namens.
+ */
 function getFirstLetter(name) {
   return name.trim().charAt(0).toUpperCase();
 }
 
+/**
+ * Öffnet das Dropdown-Menü für Aufgabenkategorien und rendert die Kategorien.
+ */
 function openAddTaskCategories() {
   let categoryList = document.getElementById("dropDownCategoryMenu");
   let icon = document.getElementById("arrowDropMenuCategory");
@@ -393,6 +598,9 @@ function openAddTaskCategories() {
   document.getElementById("categoryInput").classList.toggle("outline");
 }
 
+/**
+ * Verbirgt das Dropdown-Menü für Aufgabenkategorien.
+ */
 function hideAddTaskCategories() {
   categoriesContainerClick = false;
   let categoryList = document.getElementById("dropDownCategoryMenu");
@@ -401,14 +609,20 @@ function hideAddTaskCategories() {
   categoryList.innerHTML = "";
 }
 
+/**
+ * Verbirgt das Dropdown-Menü für eine bestimmte Kategorie.
+ */
 function hideAddTaskCategoriesCategory() {
-    categoriesContainerClick = true;
-    let categoryList = document.getElementById("dropDownCategoryMenu");
-    let icon = document.getElementById("arrowDropMenuCategory");
-    icon.style.transform = "rotate(0deg)";
-    categoryList.innerHTML = "";
+  categoriesContainerClick = true;
+  let categoryList = document.getElementById("dropDownCategoryMenu");
+  let icon = document.getElementById("arrowDropMenuCategory");
+  icon.style.transform = "rotate(0deg)";
+  categoryList.innerHTML = "";
 }
 
+/**
+ * Rendert die Liste der Aufgabenkategorien im Dropdown-Menü.
+ */
 function renderAddTaskCategories() {
   let categoryContainer = document.getElementById("dropDownCategoryMenu");
   for (let i = 0; i < addTaskcategories.length; i++) {
@@ -417,6 +631,10 @@ function renderAddTaskCategories() {
   }
 }
 
+/**
+ * Wählt eine Aufgabenkategorie aus und aktualisiert das Eingabefeld.
+ * @param {string} categoryTask - Die ausgewählte Kategorie.
+ */
 function selectAddTaskCategory(categoryTask) {
   let categoryInput = document.getElementById("categoryInput");
   let categoryList = document.getElementById("dropDownCategoryMenu");
@@ -426,6 +644,10 @@ function selectAddTaskCategory(categoryTask) {
   categoryObject = categoryTask;
 }
 
+/**
+ * Setzt die Priorität einer Aufgabe und aktualisiert die UI entsprechend.
+ * @param {string} priority - Die ausgewählte Priorität ("urgent", "medium", "low").
+ */
 function setPriority(priority) {
   const priorities = ["urgent", "medium", "low"];
   priorities.forEach((prio) => {
@@ -445,9 +667,12 @@ function setPriority(priority) {
   selectedPriority = priority;
 }
 
+/**
+ * Fügt eine neue Unteraufgabe hinzu, nachdem sie validiert wurde.
+ */
 function addSubtask() {
   const subtaskInput = document.getElementById("subtaskInput");
-  
+
   if (!validateSubtaskInput(subtaskInput.value)) {
     showSubtaskError();
     return;
@@ -457,52 +682,88 @@ function addSubtask() {
   updateSubtaskIcons();
 }
 
+/**
+ * Validiert die Eingabe einer Unteraufgabe.
+ * @param {string} value - Der Eingabewert der Unteraufgabe.
+ * @returns {boolean} Gibt true zurück, wenn die Eingabe gültig ist.
+ */
 function validateSubtaskInput(value) {
   return value.trim() !== "";
 }
 
+/**
+ * Zeigt eine Fehlermeldung an, wenn die Unteraufgabe leer ist.
+ */
 function showSubtaskError() {
-  errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+  errorMessageSubtasks.innerHTML = "Subtask can’t be empty!";
   setTimeout(() => {
     errorMessageSubtasks.innerHTML = "";
   }, 1500);
 }
 
+/**
+ * Erstellt eine neue Unteraufgabe und fügt sie den entsprechenden Arrays und dem DOM hinzu.
+ * @param {string} subtaskValue - Der Text der Unteraufgabe.
+ */
 function createAndAddSubtask(subtaskValue) {
   subtaskIdCounter++;
   const ids = generateSubtaskIds(subtaskIdCounter);
   addSubtaskToArrays(subtaskValue);
   const subtasksContent = document.getElementById("subtasksContent");
-  const newSubtaskHTML = addSubtaskHTML(ids.liId, ids.spanId, ids.inputId, { value: subtaskValue });
+  const newSubtaskHTML = addSubtaskHTML(ids.liId, ids.spanId, ids.inputId, {
+    value: subtaskValue,
+  });
   subtasksContent.innerHTML += newSubtaskHTML;
 }
 
+/**
+ * Generiert eindeutige IDs für eine Unteraufgabe basierend auf einem Zähler.
+ * @param {number} counter - Der aktuelle Zählerstand.
+ * @returns {Object} Die generierten IDs.
+ */
 function generateSubtaskIds(counter) {
   return {
     liId: `subtask-${counter}`,
     spanId: `span-${counter}`,
-    inputId: `input-${counter}`
+    inputId: `input-${counter}`,
   };
 }
 
+/**
+ * Fügt die neue Unteraufgabe den entsprechenden Arrays hinzu.
+ * @param {string} subtaskValue - Der Text der Unteraufgabe.
+ */
 function addSubtaskToArrays(subtaskValue) {
   const newSubtask = {
     checkbox_img: "../img/checkbox-empty.svg",
-    subtask: subtaskValue
+    subtask: subtaskValue,
   };
   subtasksArr.push({ ...newSubtask });
   subtasksEdit.push({ ...newSubtask });
 }
 
+/**
+ * Setzt das Eingabefeld für die Unteraufgabe zurück.
+ * @param {HTMLInputElement} input - Das Eingabefeld der Unteraufgabe.
+ */
 function resetSubtaskInput(input) {
   input.value = "";
 }
 
+/**
+ * Aktualisiert die Symbole für Unteraufgaben, indem bestimmte Icons ein- oder ausgeblendet werden.
+ */
 function updateSubtaskIcons() {
   document.getElementById("clear-add-icons").classList.add("d-none");
   document.getElementById("subtasks-plus-icon").classList.remove("d-none");
 }
 
+/**
+ * Ermöglicht das Bearbeiten einer Unteraufgabe.
+ * @param {string} liId - Die ID des Listen-Elements.
+ * @param {string} spanId - Die ID des Span-Elements.
+ * @param {string} inputId - Die ID des Input-Elements.
+ */
 function editSubtask(liId, spanId, inputId) {
   const spanElement = document.getElementById(spanId);
   const li = document.getElementById(liId);
@@ -514,18 +775,28 @@ function editSubtask(liId, spanId, inputId) {
     li.classList.remove("subtask-item");
   } else {
     errorMessage;
-    errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+    errorMessageSubtasks.innerHTML = "Subtask can’t be empty!";
     setTimeout(() => {
       errorMessageSubtasks.innerHTML = "";
     }, 3000);
   }
 }
 
+/**
+ * Löscht eine Unteraufgabe aus dem DOM.
+ * @param {string} liId - Die ID des Listen-Elements der Unteraufgabe.
+ */
 function deleteSubtask(liId) {
   const li = document.getElementById(liId);
   li.remove();
 }
 
+/**
+ * Speichert eine bearbeitete Unteraufgabe, wenn der neue Text gültig ist.
+ * @param {string} liId - Die ID des Listen-Elements.
+ * @param {string} inputId - Die ID des Input-Elements.
+ * @param {string} spanId - Die ID des Span-Elements.
+ */
 function saveSubtask(liId, inputId, spanId) {
   const li = document.getElementById(liId);
   const input = document.getElementById(inputId);
@@ -534,18 +805,24 @@ function saveSubtask(liId, inputId, spanId) {
     li.classList.remove("subtask-item-on-focus");
     li.classList.add("subtask-item");
   } else {
-    errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+    errorMessageSubtasks.innerHTML = "Subtask can’t be empty!";
     setTimeout(() => {
       errorMessageSubtasks.innerHTML = "";
     }, 1500);
   }
 }
 
+/**
+ * Löscht den Inhalt des Unteraufgaben-Eingabefeldes.
+ */
 function clearSubtaskInput() {
   const input = document.getElementById("subtaskInput");
   input.value = "";
 }
 
+/**
+ * Zeigt den Clear-Button an und versteckt das Plus-Icon bei der Unteraufgabenerstellung.
+ */
 function showClearButton() {
   document.getElementById("clear-add-icons").classList.remove("d-none");
   document.getElementById("subtasks-plus-icon").classList.add("d-none");

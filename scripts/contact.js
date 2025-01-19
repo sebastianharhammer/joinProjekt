@@ -1,14 +1,45 @@
+/**
+ * Firebase-Konfigurationsobjekt.
+ * @constant {Object}
+ */
 const firebaseConfig = {
   databaseURL:
     "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
 };
+
+/**
+ * Basis-URL für Firebase-Datenbankoperationen.
+ * @constant {string}
+ */
 const BASE_URL = firebaseConfig.databaseURL;
+
+/**
+ * Initialisiert die Firebase-App.
+ * @constant {firebase.app.App}
+ */
 const app = firebase.initializeApp(firebaseConfig);
+
+/**
+ * Referenz zur Firebase-Datenbank.
+ * @constant {firebase.database.Database}
+ */
 const database = firebase.database();
 
+/**
+ * Der aktuell angemeldete Benutzer.
+ * @type {Object|null}
+ */
 let currentUser = null;
+
+/**
+ * Array zur Speicherung von Kontaktdaten.
+ * @type {Array<Object>}
+ */
 let contactsData = [];
 
+/**
+ * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
+ */
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
   if (storedUser) {
@@ -16,6 +47,10 @@ function loadCurrentUser() {
   }
 }
 
+/**
+ * Überprüft, ob der aktuelle Benutzer ein Gastbenutzer ist.
+ * @returns {boolean} Gibt true zurück, wenn der Benutzer ein Gast ist, sonst false.
+ */
 function isGuestUser() {
   return (
     currentUser &&
@@ -24,12 +59,16 @@ function isGuestUser() {
   );
 }
 
+// Lädt den aktuellen Benutzer und kontaktiert Firebase, sobald das DOM vollständig geladen ist
 document.addEventListener("DOMContentLoaded", () => {
   includeHTML();
   loadCurrentUser();
   fetchContactsFromFirebase();
 });
 
+/**
+ * Holt die Kontakte von Firebase und aktualisiert die lokale Kontaktliste.
+ */
 function fetchContactsFromFirebase() {
   const contactsRef = database.ref("contacts");
   contactsRef.on("value", async (snapshot) => {
@@ -53,6 +92,12 @@ function fetchContactsFromFirebase() {
   });
 }
 
+/**
+ * Stellt sicher, dass ein Kontakt eine Farbe hat. Fügt eine zufällige Farbe hinzu, falls nicht vorhanden.
+ * @param {string} firebaseKey - Der Firebase-Schlüssel des Kontakts.
+ * @param {Object} contact - Das Kontaktobjekt.
+ * @returns {Promise<Object>} Das aktualisierte Kontaktobjekt.
+ */
 async function ensureContactHasColor(firebaseKey, contact) {
   if (isGuestUser()) {
     if (!contact.color) contact.color = getRandomColor();
@@ -70,6 +115,9 @@ async function ensureContactHasColor(firebaseKey, contact) {
   return contact;
 }
 
+/**
+ * Fügt einen neuen Kontakt hinzu. Bei Gastbenutzern wird der Kontakt lokal hinzugefügt, ansonsten in Firebase.
+ */
 async function addContact() {
   const firstName = prompt("Vorname des neuen Kontakts?");
   const lastName = prompt("Nachname des neuen Kontakts?");
@@ -96,6 +144,10 @@ async function addContact() {
   }
 }
 
+/**
+ * Bearbeitet einen bestehenden Kontakt. Bei Gastbenutzern wird der Kontakt lokal aktualisiert, ansonsten in Firebase.
+ * @param {string} firebaseKey - Der Firebase-Schlüssel des zu bearbeitenden Kontakts.
+ */
 async function editContact(firebaseKey) {
   const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
   if (index === -1) return;
@@ -126,6 +178,10 @@ async function editContact(firebaseKey) {
   if (item) item.classList.remove("selected");
 }
 
+/**
+ * Löscht einen Kontakt. Bei Gastbenutzern wird der Kontakt lokal gelöscht, ansonsten in Firebase.
+ * @param {string} firebaseKey - Der Firebase-Schlüssel des zu löschenden Kontakts.
+ */
 async function deleteContact(firebaseKey) {
   const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
   if (index === -1) return;
@@ -141,6 +197,10 @@ async function deleteContact(firebaseKey) {
   }
 }
 
+/**
+ * Rendert die Kontaktliste sortiert nach Vornamen und gruppiert nach Anfangsbuchstaben.
+ * @param {Array<Object>} contacts - Das Array der Kontakte.
+ */
 function renderSortedContacts(contacts) {
   const content = document.getElementById("contact-content");
   content.innerHTML = "";
@@ -176,6 +236,11 @@ function renderSortedContacts(contacts) {
   renderRightSideContainer();
 }
 
+/**
+ * Erstellt das HTML für einen einzelnen Kontakt.
+ * @param {Object} contact - Der Kontakt.
+ * @returns {string} Das generierte HTML für den Kontakt.
+ */
 function contactsTemplate(contact) {
   return `
     <li 
@@ -196,6 +261,10 @@ function contactsTemplate(contact) {
   `;
 }
 
+/**
+ * Schaltet die Detailansicht eines Kontakts um.
+ * @param {string} firebaseKey - Der Firebase-Schlüssel des Kontakts.
+ */
 function toggleContactDetail(firebaseKey) {
   const contactItems = document.querySelectorAll(".contact-item");
   const detailViewContainer = document.getElementById("contact-big");
@@ -238,6 +307,9 @@ function toggleContactDetail(firebaseKey) {
   }
 }
 
+/**
+ * Rendert die Kontaktliste erneut und versteckt die Detailansicht.
+ */
 function renderContactList() {
   const contactListContainer = document.getElementById("contact-side-panel");
   const detailViewContainer = document.getElementById("contact-big");
@@ -260,6 +332,9 @@ function renderContactList() {
   }
 }
 
+/**
+ * Schaltet das Dropdown-Menü um und schließt es bei Klick außerhalb.
+ */
 function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
   const button = document.getElementById("menu-button");
@@ -277,6 +352,10 @@ function toggleMenu() {
     }, 300);
     document.removeEventListener("click", closeMenuOnOutsideClick);
   }
+  /**
+   * Schließt das Dropdown-Menü, wenn außerhalb geklickt wird.
+   * @param {Event} event - Das auslösende Klick-Ereignis.
+   */
   function closeMenuOnOutsideClick(event) {
     if (!menu.contains(event.target) && !button.contains(event.target)) {
       menu.classList.add("hidden");
@@ -288,15 +367,28 @@ function toggleMenu() {
   }
 }
 
+/**
+ * Generiert eine zufällige Farbe aus einer vordefinierten Liste.
+ * @returns {string} Eine zufällig ausgewählte Farbe im Hex-Format.
+ */
 function getRandomColor() {
   const colors = ["orange", "purple", "blue", "red", "green", "teal"];
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
+/**
+ * Holt die Initialen eines Benutzers.
+ * @param {string} firstName - Der Vorname des Benutzers.
+ * @param {string} lastName - Der Nachname des Benutzers.
+ * @returns {string} Die Initialen des Benutzers in Großbuchstaben.
+ */
 function getInitials(firstName, lastName) {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 }
 
+/**
+ * Rendert den rechten Seitenbereich für Kontaktdetails, falls nicht bereits vorhanden.
+ */
 function renderRightSideContainer() {
   const content = document.getElementById("contact-content");
   if (!document.getElementById("contact-big")) {

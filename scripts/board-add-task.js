@@ -35,7 +35,7 @@ function showAddTask(status) {
   handleDropdownInteraction();
   setPriority("medium");
   window.scrollTo(0, 0);
-  document.documentElement.style.overflow = 'hidden';
+  document.documentElement.style.overflow = "hidden";
   document.body.scroll = "no";
 }
 
@@ -44,7 +44,7 @@ function hideAddTask() {
   let background = document.getElementById("add-task-background");
   addContactTemplate.classList.remove("show-add-task");
   document.body.classList.remove("overflow-hidden");
-  document.documentElement.style.overflow = 'scroll';
+  document.documentElement.style.overflow = "scroll";
   document.body.scroll = "yes";
   setTimeout(() => {
     background.classList.add("d-none");
@@ -78,8 +78,8 @@ function resetArrays() {
 }
 
 function resetUserSelections() {
-  const userContainers = document.querySelectorAll('.assigned-user-container');
-  userContainers.forEach(container => {
+  const userContainers = document.querySelectorAll(".assigned-user-container");
+  userContainers.forEach((container) => {
     container.style.backgroundColor = "";
     container.style.color = "";
     container.style.borderRadius = "";
@@ -113,7 +113,7 @@ function getTaskFormData() {
     category: categoryObject,
     priority: selectedPriority,
     subtasks: [...subtasksArr],
-    assignedUsers: [...assignedUserArr]
+    assignedUsers: [...assignedUserArr],
   };
 }
 
@@ -223,20 +223,22 @@ function showAddTaskSuccesMessage() {
   let messageContainer = document.getElementById("task-message-container");
   if (succes && messageContainer) {
     messageContainer.classList.remove("d-none");
-    
+
     setTimeout(() => {
       messageContainer.classList.add("d-none");
       succes.classList.remove("show-add-task");
     }, 750);
   } else {
-    console.error('Required elements not found for success message');
+    console.error("Required elements not found for success message");
   }
 }
 
 function handleDropdownInteraction() {
   const dropdown = document.getElementById("custom-dropdown");
   const optionsContainer = dropdown.querySelector(".dropdown-options");
-  dropdown.addEventListener("click", (e) => addTaskHandleDropdownClick(e, optionsContainer));
+  dropdown.addEventListener("click", (e) =>
+    addTaskHandleDropdownClick(e, optionsContainer)
+  );
   optionsContainer.addEventListener("click", addTaskHandleOptionsClick);
 }
 
@@ -268,7 +270,7 @@ function addTaskGetUserData(userContainer) {
   return {
     firstName: userContainer.dataset.firstname,
     lastName: userContainer.dataset.lastname,
-    color: userContainer.dataset.color
+    color: userContainer.dataset.color,
   };
 }
 
@@ -284,7 +286,9 @@ function addTaskToggleUserSelection(userContainer, userData) {
 
 function addTaskFindUserIndex(userData) {
   return assignedUserArr.findIndex(
-    user => user.firstName === userData.firstName && user.lastName === userData.lastName
+    (user) =>
+      user.firstName === userData.firstName &&
+      user.lastName === userData.lastName
   );
 }
 
@@ -298,8 +302,10 @@ function addTaskAddUser(userData, userContainer, checkbox) {
   assignedUserArr.push({
     firstName: userData.firstName,
     lastName: userData.lastName,
-    initials: `${getFirstLetter(userData.firstName)}${getFirstLetter(userData.lastName)}`,
-    color: userData.color
+    initials: `${getFirstLetter(userData.firstName)}${getFirstLetter(
+      userData.lastName
+    )}`,
+    color: userData.color,
   });
   checkbox.checked = true;
   addTaskSetSelectedUserContainerStyle(userContainer);
@@ -509,7 +515,7 @@ function addTaskCreateSubtask(subtaskValue) {
     subtask: subtaskValue,
   });
   return {
-    html: addSubtaskHTML(liId, spanId, inputId, { value: subtaskValue })
+    html: addSubtaskHTML(liId, spanId, inputId, { value: subtaskValue }),
   };
 }
 

@@ -1,3 +1,45 @@
+/**
+ * Firebase-Konfigurationsobjekt.
+ * @constant {Object}
+ */
+const firebaseConfig = {
+  databaseURL:
+    "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
+};
+
+/**
+ * Basis-URL für Firebase-Datenbankoperationen.
+ * @constant {string}
+ */
+const BASE_URL = firebaseConfig.databaseURL;
+
+/**
+ * Initialisiert die Firebase-App.
+ * @constant {firebase.app.App}
+ */
+const app = firebase.initializeApp(firebaseConfig);
+
+/**
+ * Referenz zur Firebase-Datenbank.
+ * @constant {firebase.database.Database}
+ */
+const database = firebase.database();
+
+/**
+ * Der aktuell angemeldete Benutzer.
+ * @type {Object|null}
+ */
+let currentUser = null;
+
+/**
+ * Array zur Speicherung von Kontaktdaten.
+ * @type {Array<Object>}
+ */
+let contactsData = [];
+
+/**
+ * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
+ */
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
   if (storedUser) {
@@ -5,6 +47,10 @@ function loadCurrentUser() {
   }
 }
 
+/**
+ * Überprüft, ob der aktuelle Benutzer ein Gastbenutzer ist.
+ * @returns {boolean} Gibt true zurück, wenn der Benutzer ein Gast ist, sonst false.
+ */
 function isGuestUser() {
   return (
     currentUser &&
@@ -13,10 +59,16 @@ function isGuestUser() {
   );
 }
 
+// Lädt den aktuellen Benutzer, sobald das DOM vollständig geladen ist
 document.addEventListener("DOMContentLoaded", () => {
   loadCurrentUser();
 });
 
+/**
+ * Bearbeitet einen bestehenden Kontakt, indem das Bearbeitungsformular angezeigt wird.
+ * Bei Gastbenutzern wird der Kontakt lokal bearbeitet, ansonsten in Firebase.
+ * @param {string} firebaseKey - Der Firebase-Schlüssel des zu bearbeitenden Kontakts.
+ */
 function editContact(firebaseKey) {
   const contact = contactsData.find((c) => c.firebaseKey === firebaseKey);
   if (!contact) return;
@@ -32,6 +84,9 @@ function editContact(firebaseKey) {
   toggleMenu();
 }
 
+/**
+ * Verbirgt das Bearbeitungsformular für einen Kontakt.
+ */
 function hideEditContact() {
   const editContactTemplate = document.getElementById("edit-contact-content");
   const background = document.getElementById("edit-contact-background");
@@ -42,6 +97,10 @@ function hideEditContact() {
   }
 }
 
+/**
+ * Speichert die bearbeitete Kontaktinformation und aktualisiert die Ansicht.
+ * @param {string} firebaseKey - Der Firebase-Schlüssel des zu speichernden Kontakts.
+ */
 async function saveEditedContact(firebaseKey) {
   const contactListContainer = document.getElementById("contact-side-panel");
   const detailViewContainer = document.getElementById("contact-big");
@@ -56,6 +115,7 @@ async function saveEditedContact(firebaseKey) {
   if (detailViewContainer) {
     detailViewContainer.style.display = "none";
   }
+
   const nameInput = document.getElementById("edit-contact-name").value.trim();
   const emailInput = document.getElementById("edit-contact-email").value.trim();
   const phoneInput = document.getElementById("edit-contact-phone").value.trim();
@@ -102,6 +162,11 @@ async function saveEditedContact(firebaseKey) {
   }
 }
 
+/**
+ * Löscht einen Kontakt aus der Kontaktliste.
+ * Bei Gastbenutzern wird der Kontakt lokal gelöscht, ansonsten in Firebase.
+ * @param {string} firebaseKey - Der Firebase-Schlüssel des zu löschenden Kontakts.
+ */
 async function deleteContact(firebaseKey) {
   const contactListContainer = document.getElementById("contact-side-panel");
   const detailViewContainer = document.getElementById("contact-big");
@@ -138,6 +203,10 @@ async function deleteContact(firebaseKey) {
   }
 }
 
+/**
+ * Zeigt eine Fehlermeldung beim Bearbeiten eines Kontakts an.
+ * @param {string} message - Die Fehlermeldung, die angezeigt werden soll.
+ */
 function showEditErrorMessage(message) {
   const errorContainer = document.getElementById("edit-contact-message");
   if (errorContainer) {
@@ -152,6 +221,10 @@ function showEditErrorMessage(message) {
     }, 2500);
   }
 }
+
+/**
+ * Zeigt eine Erfolgsmeldung nach dem Löschen eines Kontakts an.
+ */
 function showEditDeleteMessage() {
   const message = document.createElement("div");
   message.id = "success-message-container";
@@ -168,6 +241,9 @@ function showEditDeleteMessage() {
   }, 2500);
 }
 
+/**
+ * Richtet die Validierung für das Bearbeitungsformular eines Kontakts ein.
+ */
 function setupEditValidation() {
   const nameInput = document.getElementById("edit-contact-name");
   const emailInput = document.getElementById("edit-contact-email");
@@ -178,6 +254,9 @@ function setupEditValidation() {
   const emailError = document.getElementById("edit-email-error");
   const phoneError = document.getElementById("edit-phone-error");
 
+  /**
+   * Validiert die Eingaben im Bearbeitungsformular.
+   */
   function validateEditInputs() {
     let isValid = true;
 

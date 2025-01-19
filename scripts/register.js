@@ -1,165 +1,169 @@
-function onloadFunc(){
-    loadUsers("signed_users");
-    loadRegisterForm();
+function onloadFunc() {
+  loadUsers("signed_users");
+  loadRegisterForm();
 }
 
+const BASE_URL =
+  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+let signedUsersArray = "[]";
 
-const BASE_URL = "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/"
-let signedUsersArray="[]";
-
-function loadRegisterForm(){
-    let registerContent = document.getElementById('registerContent');
-    registerContent.innerHTML='';
-    registerContent.innerHTML += getRegisterContent()
+function loadRegisterForm() {
+  let registerContent = document.getElementById("registerContent");
+  registerContent.innerHTML = "";
+  registerContent.innerHTML += getRegisterContent();
 }
 
-async function loadUsers(path){
-    let response = await fetch(BASE_URL + path + ".json");
-    let responseToJson = await response.json();
-    if (responseToJson) {
-        signedUsersArray = Object.values(responseToJson); 
-    }
+async function loadUsers(path) {
+  let response = await fetch(BASE_URL + path + ".json");
+  let responseToJson = await response.json();
+  if (responseToJson) {
+    signedUsersArray = Object.values(responseToJson);
+  }
 }
 
-async function postSignUpData(path){
-    let userFirstName = document.getElementById('loginFirstName').value;
-    let userLastName = document.getElementById('loginLastName').value;
-    let userMail = document.getElementById('loginMail').value;
-    let userPassword = document.getElementById('loginPassword').value;
-    let userPasswordConfirmed = document.getElementById('loginPasswordConfirm').value
-    let userId = await getNextUserId(path);
-    let checkBox = document.getElementById('registerCheckbox')
-    if(userPasswordConfirmed === userPassword && checkBox.checked){
+async function postSignUpData(path) {
+  let userFirstName = document.getElementById("loginFirstName").value;
+  let userLastName = document.getElementById("loginLastName").value;
+  let userMail = document.getElementById("loginMail").value;
+  let userPassword = document.getElementById("loginPassword").value;
+  let userPasswordConfirmed = document.getElementById(
+    "loginPasswordConfirm"
+  ).value;
+  let userId = await getNextUserId(path);
+  let checkBox = document.getElementById("registerCheckbox");
+  if (userPasswordConfirmed === userPassword && checkBox.checked) {
     let userData = {
-        firstName: userFirstName,
-        lastName: userLastName,
-        email: userMail,
-        password: userPassword,
-        id: userId,
-        isLoggedin: false
-    }
-    let response = await fetch(BASE_URL + path + '/user' + userId + ".json",{
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData)
-    })
+      firstName: userFirstName,
+      lastName: userLastName,
+      email: userMail,
+      password: userPassword,
+      id: userId,
+      isLoggedin: false,
+    };
+    let response = await fetch(BASE_URL + path + "/user" + userId + ".json", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
     const responseToJson = await response.json();
     signedUsersArray.push(responseToJson);
     showSuccessOverlay();
-    setTimeout(function() {
-        window.location.href = 'login.html';
+    setTimeout(function () {
+      window.location.href = "login.html";
     }, 900);
-}
-else{
-    console.log('')
-}
-    }
-
-function showSuccessOverlay(){
-    let overlay = document.getElementById('overlaySignUpSuccess');
-    overlay.classList.remove('d-none');
-    overlay.classList.add('overlaySignUpSuccess-show');
-    setTimeout(function(){
-        overlay.classList.remove('overlaySignUpSuccess-show');
-        overlay.classList.add('d-none');
-    },900)
-
+  } else {
+    console.log("");
+  }
 }
 
-    function addUser(){
-        let email = document.getElementById('loginMail');
-        let password = document.getElementById('loginPassword');
-        users.push({email: email.value, password: password.value});
-        window.location.href = 'login.html?msg=Du hast dich erfolgreich registriert'
-    }
-    
+function showSuccessOverlay() {
+  let overlay = document.getElementById("overlaySignUpSuccess");
+  overlay.classList.remove("d-none");
+  overlay.classList.add("overlaySignUpSuccess-show");
+  setTimeout(function () {
+    overlay.classList.remove("overlaySignUpSuccess-show");
+    overlay.classList.add("d-none");
+  }, 900);
+}
 
-function comparePasswords(){
-    let paramToCompare = document.getElementById('loginPassword').value;
-    let passwordConfirmValue = document.getElementById('loginPasswordConfirm').value;
-    let passWordBorder = document.getElementById('passWordBorder');
-    passWordBorder.classList.remove('defaultBorderInputSignUp', 'greenBorder');
-    let foundPassword = false;
-    if(paramToCompare === passwordConfirmValue){
+function addUser() {
+  let email = document.getElementById("loginMail");
+  let password = document.getElementById("loginPassword");
+  users.push({ email: email.value, password: password.value });
+  window.location.href = "login.html?msg=Du hast dich erfolgreich registriert";
+}
+
+function comparePasswords() {
+  let paramToCompare = document.getElementById("loginPassword").value;
+  let passwordConfirmValue = document.getElementById(
+    "loginPasswordConfirm"
+  ).value;
+  let passWordBorder = document.getElementById("passWordBorder");
+  passWordBorder.classList.remove("defaultBorderInputSignUp", "greenBorder");
+  let foundPassword = false;
+  if (paramToCompare === passwordConfirmValue) {
     foundPassword = true;
-    passWordBorder.classList.add('greenBorder');
-    }else{
+    passWordBorder.classList.add("greenBorder");
+  } else {
     foundPassword = false;
-    passWordBorder.classList.add('redBorder');
-    }
-showResultsMessage(foundPassword)
-validate();
+    passWordBorder.classList.add("redBorder");
+  }
+  showResultsMessage(foundPassword);
+  validate();
 }
 
-function validate(){ 
-    let userFirstName = document.getElementById('loginFirstName').value;
-    let userLastName = document.getElementById('loginLastName').value;
-    let userMail = document.getElementById('loginMail').value;
-    let userPassword = document.getElementById('loginPassword').value;
-    let userPasswordConfirmed = document.getElementById('loginPasswordConfirm').value;
-    let checkBox = document.getElementById('registerCheckbox').checked;
-    let signUpButton = document.getElementById('signUpButton');
-    if (userFirstName && userLastName && userMail && userPassword && userPasswordConfirmed &&
-        userPassword === userPasswordConfirmed && checkBox){
-            signUpButton.disabled = false;
-        }else{
-            signUpButton.disabled = true;
-        }
+function validate() {
+  let userFirstName = document.getElementById("loginFirstName").value;
+  let userLastName = document.getElementById("loginLastName").value;
+  let userMail = document.getElementById("loginMail").value;
+  let userPassword = document.getElementById("loginPassword").value;
+  let userPasswordConfirmed = document.getElementById(
+    "loginPasswordConfirm"
+  ).value;
+  let checkBox = document.getElementById("registerCheckbox").checked;
+  let signUpButton = document.getElementById("signUpButton");
+  if (
+    userFirstName &&
+    userLastName &&
+    userMail &&
+    userPassword &&
+    userPasswordConfirmed &&
+    userPassword === userPasswordConfirmed &&
+    checkBox
+  ) {
+    signUpButton.disabled = false;
+  } else {
+    signUpButton.disabled = true;
+  }
 }
 
-function showResultsMessage(foundPassword){
-    let alertDiv = document.getElementById('alert-password');
-    alertDiv.innerHTML = '';
-    if(foundPassword){
-        alertDiv.innerHTML += /*html*/`
+function showResultsMessage(foundPassword) {
+  let alertDiv = document.getElementById("alert-password");
+  alertDiv.innerHTML = "";
+  if (foundPassword) {
+    alertDiv.innerHTML += /*html*/ `
             <p class="correctPasswordFont">Your password matches and is correct.</p>
             <p class="correctPasswordFontNotice">Accept the privacy policy to sign up.</p>
-        `
-    }
-    else{
-        alertDiv.innerHTML += /*html*/`
+        `;
+  } else {
+    alertDiv.innerHTML += /*html*/ `
             <p class="alertPasswordFont">Your passwords don't match, please try again</p>
-        `
-    }
+        `;
+  }
 }
 
 async function getNextUserId(path) {
-    let response = await fetch(BASE_URL + path + ".json");
-    let data = await response.json();
-    let nextId = 1;
+  let response = await fetch(BASE_URL + path + ".json");
+  let data = await response.json();
+  let nextId = 1;
 
-    if (data) {
-        for (let key in data) {
-            let userData = data[key];
-            if (userData.id && !isNaN(userData.id)) {
-                let idNumber = parseInt(userData.id, 10);
-                if (idNumber >= nextId) {
-                    nextId = idNumber+1;
-                }
-            }
+  if (data) {
+    for (let key in data) {
+      let userData = data[key];
+      if (userData.id && !isNaN(userData.id)) {
+        let idNumber = parseInt(userData.id, 10);
+        if (idNumber >= nextId) {
+          nextId = idNumber + 1;
         }
+      }
     }
-    return nextId;
+  }
+  return nextId;
 }
 
 function validateEmail() {
-    const emailField = document.getElementById('loginMail');
-    const emailAlert = document.getElementById('emailAlert');
-    const emailValue = emailField.value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailField = document.getElementById("loginMail");
+  const emailAlert = document.getElementById("emailAlert");
+  const emailValue = emailField.value;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    emailAlert.innerHTML = '';
+  emailAlert.innerHTML = "";
 
-    if (emailValue === '') {
-        emailAlert.innerHTML = `<p class="alertEmailFont">Email field cannot be empty.</p>`;
-    } else if (!emailRegex.test(emailValue)) {
-        emailAlert.innerHTML = `<p class="alertEmailFont">Please enter a valid email address.</p>`;
-    }
+  if (emailValue === "") {
+    emailAlert.innerHTML = `<p class="alertEmailFont">Email field cannot be empty.</p>`;
+  } else if (!emailRegex.test(emailValue)) {
+    emailAlert.innerHTML = `<p class="alertEmailFont">Please enter a valid email address.</p>`;
+  }
 }
-
-
-
-
-

@@ -274,7 +274,6 @@ function createOwnerCircles(task) {
   }
 }
 
-
 function findClassOfTaskCat(task) {
   const taskButton = document.getElementById(`taskButton-${task.id}`);
   const category = task.taskCategory || "Undefined Category";
@@ -325,7 +324,9 @@ function updateCompletedSubtasks(taskId) {
   const task = taskArray.find((t) => t.id === taskId);
   if (!task || !task.subtasks) return;
 
-  const completedCount = task.subtasks.filter((subtask) => subtask.checkbox).length;
+  const completedCount = task.subtasks.filter(
+    (subtask) => subtask.checkbox
+  ).length;
   const totalSubtasks = task.subtasks.length;
 
   const renderCompleted = document.getElementById(`amountOfSubtasks-${taskId}`);
@@ -344,7 +345,6 @@ function updateCompletedSubtasks(taskId) {
   }
 }
 
-
 function findAmountOfSubtasks(task) {
   if (!task.subtasks || task.subtasks.length === 0) {
     return "0";
@@ -360,7 +360,6 @@ function createTaskHTML(task) {
 
   return getTaskHTML(task, completedSubtasks, totalSubtasks);
 }
-
 
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);

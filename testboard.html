@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Board</title>
-    <link rel="icon" type="image/x-icon" href="./img/favicon.svg">
-    <link rel="stylesheet" href="./styles/nav.css">
-    <link rel="stylesheet" href="./styles/standard.css">
-    <link rel="stylesheet" href="./styles/header.css">
-    <link rel="stylesheet" href="./styles/board.css">
-    <link rel="stylesheet" href="./styles/board-add-task.css">
-    <link rel="stylesheet" href="./styles/taskdetailview.css">
-    <link rel="stylesheet" href="./styles/board-responsive.css">
-    <link rel="stylesheet" href="./styles/edittask.css">
+    <link rel="icon" type="image/x-icon" href="./img/favicon.svg" />
+    <link rel="stylesheet" href="./styles/nav.css" />
+    <link rel="stylesheet" href="./styles/standard.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/board.css" />
+    <link rel="stylesheet" href="./styles/board-add-task.css" />
+    <link rel="stylesheet" href="./styles/taskdetailview.css" />
+    <link rel="stylesheet" href="./styles/board-responsive.css" />
+    <link rel="stylesheet" href="./styles/edittask.css" />
+    <!-- Stelle sicher, dass die Reihenfolge der Skripte korrekt ist -->
     <script src="scripts/script.js"></script>
     <script src="./scripts/testboard.js"></script>
     <script src="./templates/board-add-task-template.js"></script>
@@ -22,26 +23,26 @@
     <script src="./scripts/edit-task.js"></script>
     <script src="./templates/board-main-template.js"></script>
     <script src="./templates/edit-task-template.js"></script>
-</head>
-<body onload="init()">
+  </head>
+  <body onload="init()">
     <div w3-include-html="./header.html"></div>
     <div w3-include-html="./nav.html"></div>
     <section id="add-task-overlay-wrapper">
-        <div id="add-task-background" class="d-none" onclick="hideAddTask()"></div>
-        <div id="add-task-content" class="hide-add-task"></div>
+      <div
+        id="add-task-background"
+        class="d-none"
+        onclick="hideAddTask()"
+      ></div>
+      <div id="add-task-content" class="hide-add-task"></div>
     </section>
-    <section id="wholeBoard">
-    </section>
+    <section id="wholeBoard"></section>
 
     <div class="taskDetailView d-none" id="taskDetailView">
-        <div class="taskCard">
-            <p class="boardFont"></p>
-        </div>
-    </div>
-    
-    <div id="editTaskTempl"class="editTaskTempl d-none">
+      <div class="taskCard">
+        <p class="boardFont"></p>
+      </div>
     </div>
 
-    
-</body>
+    <div id="editTaskTempl" class="editTaskTempl d-none"></div>
+  </body>
 </html>

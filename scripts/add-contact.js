@@ -1,3 +1,6 @@
+/**
+ * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
+ */
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
   if (storedUser) {
@@ -5,6 +8,10 @@ function loadCurrentUser() {
   }
 }
 
+/**
+ * Überprüft, ob der aktuelle Benutzer ein Gastbenutzer ist.
+ * @returns {boolean} Gibt true zurück, wenn der Benutzer ein Gast ist, sonst false.
+ */
 function isGuestUser() {
   return (
     currentUser &&
@@ -13,8 +20,12 @@ function isGuestUser() {
   );
 }
 
+// Lädt den aktuellen Benutzer, sobald das DOM vollständig geladen ist
 document.addEventListener("DOMContentLoaded", loadCurrentUser);
 
+/**
+ * Zeigt das Formular zum Hinzufügen eines neuen Kontakts an.
+ */
 function addContact() {
   const addContactTemplate = document.getElementById("add-contact-content");
   const background = document.getElementById("add-contact-background");
@@ -26,6 +37,9 @@ function addContact() {
   }
 }
 
+/**
+ * Verbirgt das Formular zum Hinzufügen eines neuen Kontakts und lädt die Kontaktinformationen.
+ */
 function hideAddContact() {
   const addContactTemplate = document.getElementById("add-contact-content");
   const background = document.getElementById("add-contact-background");
@@ -37,6 +51,9 @@ function hideAddContact() {
   }
 }
 
+/**
+ * Verarbeitet die Informationen eines neuen Kontakts und speichert ihn.
+ */
 async function processContactInfo() {
   const { firstName, lastName } = extractNameParts();
   const email = document.getElementById("add-contact-email").value.trim();
@@ -47,6 +64,9 @@ async function processContactInfo() {
   setTimeout(() => showSuccessMessage(), 300);
 }
 
+/**
+ * Zeigt eine Erfolgsmeldung an, nachdem ein Kontakt erfolgreich erstellt wurde.
+ */
 function showSuccessMessage() {
   const message = document.createElement("div");
   message.id = "success-message-container";
@@ -63,6 +83,9 @@ function showSuccessMessage() {
   }, 2500);
 }
 
+/**
+ * Leert die Eingabefelder im Kontaktformular.
+ */
 function clearAddContactInput() {
   const nameInput = document.getElementById("add-contact-name");
   const emailInput = document.getElementById("add-contact-email");
@@ -75,6 +98,10 @@ function clearAddContactInput() {
   }
 }
 
+/**
+ * Extrahiert den Vor- und Nachnamen aus dem Eingabefeld.
+ * @returns {Object} Ein Objekt mit den Feldern firstName und lastName.
+ */
 function extractNameParts() {
   const input = document.getElementById("add-contact-name").value.trim();
   const nameParts = input.split(" ");
@@ -84,6 +111,9 @@ function extractNameParts() {
   };
 }
 
+/**
+ * Holt die Kontaktinformationen von der Server-API und speichert sie lokal.
+ */
 async function getContactInfo() {
   try {
     const response = await fetch(`${BASE_URL}/contacts/.json`);
@@ -93,6 +123,13 @@ async function getContactInfo() {
   }
 }
 
+/**
+ * Fügt einen neuen Kontakt zur Datenbank hinzu.
+ * @param {string} firstName - Der Vorname des Kontakts.
+ * @param {string} lastName - Der Nachname des Kontakts.
+ * @param {string} email - Die E-Mail-Adresse des Kontakts.
+ * @param {string} phone - Die Telefonnummer des Kontakts.
+ */
 async function pushContactInfo(firstName, lastName, email, phone) {
   const newContact = {
     firstName,
@@ -127,6 +164,10 @@ async function pushContactInfo(firstName, lastName, email, phone) {
   }
 }
 
+/**
+ * Generiert eine zufällige Farbe aus einer vordefinierten Liste.
+ * @returns {string} Eine zufällig ausgewählte Farbe im Hex-Format.
+ */
 function getRandomColor() {
   const colors = [
     "#FF5733",
@@ -138,12 +179,14 @@ function getRandomColor() {
     "#FF6F61",
     "#33FFC6",
     "#FF9F1C",
-    "#5CDB95", 
+    "#5CDB95",
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
-
+/**
+ * Handhabt die Erstellung eines neuen Kontakts, indem die Eingaben validiert und verarbeitet werden.
+ */
 function handleContactCreation() {
   const isValid = validateInputs();
   if (isValid) {
@@ -151,6 +194,10 @@ function handleContactCreation() {
   }
 }
 
+/**
+ * Validiert die Eingabefelder des Kontaktformulars.
+ * @returns {boolean} Gibt true zurück, wenn alle Eingaben gültig sind, sonst false.
+ */
 function validateInputs() {
   const nameInput = document.getElementById("add-contact-name");
   const emailInput = document.getElementById("add-contact-email");

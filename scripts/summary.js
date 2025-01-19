@@ -1,11 +1,56 @@
+/**
+ * Firebase-Konfigurationsobjekt.
+ * Enthält die URL zur Firebase-Datenbank.
+ * @constant {Object}
+ */
 const firebaseConfig = {
   databaseURL:
     "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app",
 };
 
+/**
+ * Initialisiert die Firebase-App mit der bereitgestellten Konfiguration.
+ */
 firebase.initializeApp(firebaseConfig);
+
+/**
+ * Referenz zur Firebase-Datenbank.
+ * @constant {firebase.database.Database}
+ */
 const db = firebase.database();
 
+/**
+ * Array zur Speicherung von Aufgaben.
+ * @type {Array<Object>}
+ */
+let taskArray = [];
+
+/**
+ * Array zur Speicherung von Kontaktdaten.
+ * @type {Array<Object>}
+ */
+let finalContacts = [];
+
+/**
+ * Array zur Speicherung von Kontaktdaten für die Bearbeitung.
+ * @type {Array<Object>}
+ */
+let finalContactsForEdit = [];
+
+/**
+ * Der aktuell angemeldete Benutzer.
+ * @type {Object|null}
+ */
+let currentUser = null;
+
+/**
+ * Initialisiert die Zusammenfassungsseite.
+ * Lädt HTML-Inhalte, aktualisiert die Begrüßung, lädt Benutzerdaten und Aufgaben von Firebase.
+ *
+ * @async
+ * @function initSummary
+ * @returns {Promise<void>}
+ */
 async function initSummary() {
   await includeHTML();
 
@@ -15,6 +60,13 @@ async function initSummary() {
   loadTasksFromFirebase();
 }
 
+/**
+ * Aktualisiert die Begrüßung basierend auf der aktuellen Tageszeit.
+ * Setzt den Begrüßungstext auf "Good morning,", "Good afternoon," oder "Good evening,".
+ *
+ * @function updateGreeting
+ * @returns {void}
+ */
 function updateGreeting() {
   const greetingElement = document.querySelector(".greeting-text h1");
   if (!greetingElement) return;
@@ -31,6 +83,13 @@ function updateGreeting() {
   }
 }
 
+/**
+ * Lädt die Benutzerdaten aus dem Local Storage und zeigt die Benutzerbegrüßung an.
+ * Wenn keine Benutzerdaten gefunden werden, leitet der Benutzer zur Login-Seite weiter.
+ *
+ * @function loadUserData
+ * @returns {void}
+ */
 function loadUserData() {
   const storedUser = localStorage.getItem("currentUser");
   if (storedUser) {
@@ -44,6 +103,14 @@ function loadUserData() {
   }
 }
 
+/**
+ * Zeigt die Benutzerbegrüßung mit dem Vornamen und Nachnamen an.
+ *
+ * @function showUserGreeting
+ * @param {string} firstName - Der Vorname des Benutzers.
+ * @param {string} lastName - Der Nachname des Benutzers.
+ * @returns {void}
+ */
 function showUserGreeting(firstName, lastName) {
   const greetingName = document.getElementById("nameOfUser");
   if (greetingName) {
@@ -51,6 +118,12 @@ function showUserGreeting(firstName, lastName) {
   }
 }
 
+/**
+ * Lädt Aufgaben von Firebase und rendert die Zusammenfassungspanels.
+ *
+ * @function loadTasksFromFirebase
+ * @returns {void}
+ */
 function loadTasksFromFirebase() {
   const tasksRef = db.ref("tasks");
 
@@ -65,6 +138,14 @@ function loadTasksFromFirebase() {
   });
 }
 
+/**
+ * Berechnet die Zusammenfassung der Aufgaben basierend auf ihrem Status und den kommenden Fristen.
+ *
+ * @function calculateTaskSummary
+ * @param {Array<Object>} tasks - Das Array der Aufgabenobjekte.
+ * @returns {Object} Ein Objekt, das die Anzahl der Aufgaben in verschiedenen Statuskategorien,
+ *                   die Gesamtanzahl der Aufgaben und die Informationen zur kommenden Frist enthält.
+ */
 function calculateTaskSummary(tasks) {
   return {
     toDo: tasks.filter((t) => t.status === "todo").length,
@@ -76,6 +157,21 @@ function calculateTaskSummary(tasks) {
   };
 }
 
+/**
+ * Rendert die Zusammenfassungspanels basierend auf den berechneten Statistiken.
+ *
+ * @function renderPanels
+ * @param {Object} stats - Das Objekt, das die zusammengefassten Aufgabenstatistiken enthält.
+ * @param {number} stats.toDo - Anzahl der Aufgaben im Status "To-do".
+ * @param {number} stats.inProgress - Anzahl der Aufgaben im Status "In Progress".
+ * @param {number} stats.feedback - Anzahl der Aufgaben im Status "Feedback".
+ * @param {number} stats.done - Anzahl der Aufgaben im Status "Done".
+ * @param {number} stats.totalTasks - Gesamtanzahl der Aufgaben.
+ * @param {Object|null} stats.upcomingTask - Informationen zur kommenden Frist.
+ * @param {Object|null} stats.upcomingTask.task - Die Aufgabe mit der nächsten Frist.
+ * @param {number} stats.upcomingTask.count - Anzahl der Aufgaben bis zur nächsten Frist.
+ * @returns {void}
+ */
 function renderPanels(stats) {
   const panelContainer = document.getElementById("panelContainer");
   panelContainer.innerHTML = "";
@@ -102,6 +198,16 @@ function renderPanels(stats) {
   panelContainer.innerHTML = panelsHTML;
 }
 
+/**
+ * Erstellt das HTML für ein einzelnes Panel.
+ *
+ * @function createPanel
+ * @param {string} title - Der Titel des Panels.
+ * @param {number} value - Der Wert oder die Anzahl, die im Panel angezeigt werden soll.
+ * @param {string} [imgSrc=""] - Die Quelle des Bildes, das im Panel angezeigt werden soll. Optional.
+ * @param {string} [extraClass=""] - Zusätzliche CSS-Klassen für das Panel. Optional.
+ * @returns {string} Das generierte HTML für das Panel.
+ */
 function createPanel(title, value, imgSrc = "", extraClass = "") {
   return `
     <a href="testboard.html" class="panel-link">
@@ -116,6 +222,15 @@ function createPanel(title, value, imgSrc = "", extraClass = "") {
   `;
 }
 
+/**
+ * Erstellt das HTML für ein großes Panel, das Informationen zur kommenden Aufgabe anzeigt.
+ *
+ * @function createLargePanel
+ * @param {Object|null} upcomingData - Daten zur kommenden Aufgabe.
+ * @param {Object|null} upcomingData.task - Die kommende Aufgabe.
+ * @param {number} upcomingData.count - Anzahl der Aufgaben bis zur kommenden Frist.
+ * @returns {string} Das generierte HTML für das große Panel.
+ */
 function createLargePanel(upcomingData) {
   const upcomingTask = upcomingData.task;
   const count = upcomingData.count;
@@ -150,7 +265,13 @@ function createLargePanel(upcomingData) {
   `;
 }
 
-
+/**
+ * Gibt das entsprechende Symbol für eine gegebene Priorität zurück.
+ *
+ * @function getPriorityIcon
+ * @param {string} priority - Die Priorität ("urgent", "medium", "low").
+ * @returns {string} Der Pfad zum entsprechenden Symbolbild.
+ */
 function getPriorityIcon(priority) {
   switch (priority) {
     case "urgent":
@@ -165,6 +286,15 @@ function getPriorityIcon(priority) {
   }
 }
 
+/**
+ * Findet die nächste anstehende Frist unter den Aufgaben.
+ * Sortiert die Aufgaben nach Datum und gibt die Aufgabe mit dem nächsten Datum zurück.
+ *
+ * @function findUpcomingDeadline
+ * @param {Array<Object>} tasks - Das Array der Aufgabenobjekte.
+ * @returns {Object} Ein Objekt, das die kommende Aufgabe und die Anzahl der Aufgaben bis zur Frist enthält.
+ *                   Wenn keine Aufgaben mit Datum vorhanden sind, enthält es `null` für die Aufgabe und `0` für die Anzahl.
+ */
 function findUpcomingDeadline(tasks) {
   const tasksWithDates = tasks
     .filter((t) => t.date)
@@ -181,7 +311,13 @@ function findUpcomingDeadline(tasks) {
   return { task: null, count: 0 };
 }
 
-
+/**
+ * Formatiert ein Datum in ein lesbares Format (z.B. "1. Februar 2025").
+ *
+ * @function formatDate
+ * @param {Date} date - Das Datum, das formatiert werden soll.
+ * @returns {string} Das formatierte Datum.
+ */
 function formatDate(date) {
   return date.toLocaleDateString("de-DE", {
     year: "numeric",
