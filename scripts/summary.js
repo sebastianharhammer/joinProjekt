@@ -20,12 +20,6 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 /**
- * Array for storing tasks.
- * @type {Array<Object>}
- */
-let taskArray = [];
-
-/**
  * Array for storing contact data.
  * @type {Array<Object>}
  */
@@ -36,12 +30,6 @@ let finalContacts = [];
  * @type {Array<Object>}
  */
 let finalContactsForEdit = [];
-
-/**
- * The currently logged-in user.
- * @type {Object|null}
- */
-let currentUser = null;
 
 /**
  * Initializes the summary page.

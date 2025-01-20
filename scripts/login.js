@@ -8,12 +8,6 @@
 let signedUsersArrayLogin = "[]";
 
 /**
- * The currently logged-in user.
- * @type {Object|null}
- */
-let currentUser = null;
-
-/**
  * Initializes the application.
  * Loads the login content, displays the start animation, loads signed-in users, and loads the remembered user.
  *
