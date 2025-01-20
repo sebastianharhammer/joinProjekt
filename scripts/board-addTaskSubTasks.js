@@ -20,6 +20,15 @@ function addTaskSubtask() {
   updateSubtaskIcons();
 }
 
+/**
+ * Handles the input of a new subtask.
+ *
+ * @function handleSubtaskInput
+ * @param {HTMLInputElement} subtaskInput - The input element for subtasks
+ * @param {HTMLElement} subtasksContent - The container element for subtasks
+ * @param {HTMLElement} errorMessageSubtasks - The element for displaying error messages
+ * @returns {void}
+ */
 function handleSubtaskInput(
   subtaskInput,
   subtasksContent,
@@ -34,6 +43,13 @@ function handleSubtaskInput(
   }
 }
 
+/**
+ * Shows an error message for invalid subtask input.
+ *
+ * @function showSubtaskError
+ * @param {HTMLElement} errorMessageSubtasks - The element for displaying error messages
+ * @returns {void}
+ */
 function showSubtaskError(errorMessageSubtasks) {
   if (errorMessageSubtasks) {
     errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
@@ -43,6 +59,12 @@ function showSubtaskError(errorMessageSubtasks) {
   }
 }
 
+/**
+ * Updates the visibility of subtask icons.
+ *
+ * @function updateSubtaskIcons
+ * @returns {void}
+ */
 function updateSubtaskIcons() {
   const clearAddIcons = document.getElementById("clear-add-icons");
   const subtasksPlusIcon = document.getElementById("subtasks-plus-icon");
@@ -79,6 +101,28 @@ function addTaskCreateSubtask(subtaskValue) {
 }
 
 /**
+ * Validates if a subtask can be edited.
+ * 
+ * @function validateSubtaskEdit
+ * @param {HTMLElement} spanElement - The span element containing the subtask text
+ * @param {HTMLElement} errorMessageSubtasks - The error message element
+ * @returns {boolean} Whether the subtask is valid for editing
+ */
+function validateSubtaskEdit(spanElement, errorMessageSubtasks) {
+    const currentText = spanElement.textContent;
+    if (currentText.trim() === "") {
+        if (errorMessageSubtasks) {
+            errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+            setTimeout(() => {
+                errorMessageSubtasks.innerHTML = "";
+            }, 3000);
+        }
+        return false;
+    }
+    return true;
+}
+
+/**
  * Edits a subtask and enables text editing.
  *
  * @function editSubtask
@@ -88,26 +132,20 @@ function addTaskCreateSubtask(subtaskValue) {
  * @returns {void}
  */
 function editSubtask(liId, spanId, inputId) {
-  const spanElement = document.getElementById(spanId);
-  const li = document.getElementById(liId);
-  const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
-  if (spanElement && li) {
-    const currentText = spanElement.textContent;
-    if (currentText.trim() !== "") {
-      li.innerHTML = editSubtaskHTML(liId, spanId, inputId, currentText);
-      li.classList.add("subtask-item-on-focus");
-      li.classList.remove("subtask-item");
-    } else {
-      if (errorMessageSubtasks) {
-        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
-        setTimeout(() => {
-          errorMessageSubtasks.innerHTML = "";
-        }, 3000);
-      }
+    const spanElement = document.getElementById(spanId);
+    const li = document.getElementById(liId);
+    const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
+
+    if (!spanElement || !li) {
+        console.error("Span-Element oder Listenelement nicht gefunden.");
+        return;
     }
-  } else {
-    console.error("Span-Element oder Listenelement nicht gefunden.");
-  }
+
+    if (validateSubtaskEdit(spanElement, errorMessageSubtasks)) {
+        li.innerHTML = editSubtaskHTML(liId, spanId, inputId, spanElement.textContent);
+        li.classList.add("subtask-item-on-focus");
+        li.classList.remove("subtask-item");
+    }
 }
 
 /**
@@ -127,6 +165,27 @@ function deleteSubtask(listId) {
 }
 
 /**
+ * Validates the subtask input value.
+ *
+ * @function validateSubtaskSave
+ * @param {HTMLInputElement} input - The input element to validate
+ * @param {HTMLElement} errorMessageSubtasks - The error message element
+ * @returns {boolean} Whether the input is valid
+ */
+function validateSubtaskSave(input, errorMessageSubtasks) {
+    if (input.value.trim() === "") {
+        if (errorMessageSubtasks) {
+            errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+            setTimeout(() => {
+                errorMessageSubtasks.innerHTML = "";
+            }, 1500);
+        }
+        return false;
+    }
+    return true;
+}
+
+/**
  * Saves the edited subtask.
  *
  * @function saveSubtask
@@ -136,25 +195,20 @@ function deleteSubtask(listId) {
  * @returns {void}
  */
 function saveSubtask(liId, inputId, spanId) {
-  const li = document.getElementById(liId);
-  const input = document.getElementById(inputId);
-  const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
-  if (li && input) {
-    if (input.value.trim() !== "") {
-      li.innerHTML = saveSubtaskHTML(liId, inputId, spanId, input);
-      li.classList.remove("subtask-item-on-focus");
-      li.classList.add("subtask-item");
-    } else {
-      if (errorMessageSubtasks) {
-        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
-        setTimeout(() => {
-          errorMessageSubtasks.innerHTML = "";
-        }, 1500);
-      }
+    const li = document.getElementById(liId);
+    const input = document.getElementById(inputId);
+    const errorMessageSubtasks = document.getElementById("errorMessageSubtasks");
+    
+    if (!li || !input) {
+        console.error("Listenelement oder Input-Element nicht gefunden.");
+        return;
     }
-  } else {
-    console.error("Listenelement oder Input-Element nicht gefunden.");
-  }
+
+    if (validateSubtaskSave(input, errorMessageSubtasks)) {
+        li.innerHTML = saveSubtaskHTML(liId, inputId, spanId, input);
+        li.classList.remove("subtask-item-on-focus");
+        li.classList.add("subtask-item");
+    }
 }
 
 /**
