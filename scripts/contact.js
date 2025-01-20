@@ -200,65 +200,44 @@ async function deleteContact(firebaseKey) {
  * Renders the contact list sorted by first names and grouped by initial letters.
  * @param {Array<Object>} contacts - The array of contacts.
  */
-function renderSortedContacts(contacts) {
-  const content = document.getElementById("contact-content");
-  content.innerHTML = "";
-  const sortedContacts = contacts.sort((a, b) =>
-    a.firstName.localeCompare(b.firstName)
-  );
-  const groupedContacts = sortedContacts.reduce((groups, contact) => {
+
+function sortContacts(contacts) {
+  return contacts.sort((a, b) => a.firstName.localeCompare(b.firstName));
+}
+
+function groupContactsByLetter(contacts) {
+  return contacts.reduce((groups, contact) => {
     const firstLetter = contact.firstName[0].toUpperCase();
     if (!groups[firstLetter]) groups[firstLetter] = [];
     groups[firstLetter].push(contact);
     return groups;
   }, {});
-  let contactsHTML = `<div id="contact-side-panel">
-    <div id="add-new-contact-button-container">
-        <button onclick="addContact()" id="add-contact-btn">
-            Add new contact<img id="add-contact-img" src="./img/person_add.png">
-        </button>
-    </div>`;
+}
+
+function renderSortedContacts(contacts) {
+  const content = document.getElementById("contact-content");
+  content.innerHTML = "";
+
+  const sortedContacts = sortContacts(contacts);
+  const groupedContacts = groupContactsByLetter(sortedContacts);
+
+  let contactsHTML = `<div id="contact-side-panel">`;
+  contactsHTML += addContactButtonTemplate(); // Button aus contact-template.js
+
   for (const letter in groupedContacts) {
-    contactsHTML += `
-      <div class="letter-section">
-        <h2 class="letter-header">${letter}</h2>
-        <hr />
-        <ul class="contact-list">
-    `;
-    groupedContacts[letter].forEach((contact) => {
-      contactsHTML += contactsTemplate(contact);
-    });
-    contactsHTML += `</ul></div>`;
+    const contactsForLetter = groupedContacts[letter]
+      .map((contact) => contactsTemplate(contact)) // Template für jeden Kontakt
+      .join("");
+    contactsHTML += letterSectionTemplate(letter, contactsForLetter); // Template für Buchstabensektion
   }
+
   contactsHTML += `</div>`;
   content.innerHTML = contactsHTML;
+
   renderRightSideContainer();
 }
 
-/**
- * Creates the HTML for a single contact.
- * @param {Object} contact - The contact.
- * @returns {string} The generated HTML for the contact.
- */
-function contactsTemplate(contact) {
-  return `
-    <li 
-      class="contact-item" 
-      id="contact-item-${contact.firebaseKey}"
-      onclick="toggleContactDetail('${contact.firebaseKey}')"
-    >
-      <div class="contact-avatar" style="background-color: ${
-        contact.color || getRandomColor()
-      }">
-        ${getInitials(contact.firstName, contact.lastName)}
-      </div>
-      <div class="contact-info">
-        <div class="contact-name">${contact.firstName} ${contact.lastName}</div>
-        <div class="contact-email">${contact.email}</div>
-      </div>
-    </li>
-  `;
-}
+
 
 /**
  * Toggles the display of contact details for the specified Firebase key.

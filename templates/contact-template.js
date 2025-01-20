@@ -22,6 +22,28 @@ function contactsTemplate(contact) {
   `;
 }
 
+function letterSectionTemplate(letter, contactsHTML) {
+  return `
+    <div class="letter-section">
+      <h2 class="letter-header">${letter}</h2>
+      <hr />
+      <ul class="contact-list">
+        ${contactsHTML}
+      </ul>
+    </div>
+  `;
+}
+
+function addContactButtonTemplate() {
+  return `
+    <div id="add-new-contact-button-container">
+        <button onclick="addContact()" id="add-contact-btn">
+            Add new contact<img id="add-contact-img" src="./img/person_add.png">
+        </button>
+    </div>
+  `;
+}
+
 function getMobileDetailHTML(contact, firebaseKey) {
   return /*html*/ `
   <section class="mobile-info-contact">
