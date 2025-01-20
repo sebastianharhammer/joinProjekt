@@ -72,24 +72,17 @@ function loadLoginContent() {
  * @returns {void}
  */
 function showStartSlide() {
-  const logo = document.getElementById("logo");
-  const headerLogo = document.querySelector(".v-hidden");
-  if (!logo || !headerLogo) {
-    console.error("Logo or header logo element not found.");
-    return;
-  }
-
+  const l = document.getElementById("logo"),
+    h = document.querySelector(".v-hidden");
+  if (!l || !h) return console.error("Logo or header logo element not found.");
+  setTimeout(() => l.classList.add("animate"), 700);
+  l.classList.remove("d-none");
   setTimeout(() => {
-    logo.classList.add("animate");
-  }, 700);
-  logo.classList.remove("d-none");
-
-  setTimeout(() => {
-    headerLogo.style.transition = "none";
-    headerLogo.offsetHeight; // Trigger reflow
-    headerLogo.style.transition = "opacity 2.5s ease-in-out";
-    headerLogo.classList.remove("v-hidden");
-    headerLogo.classList.add("fade-in");
+    h.style.transition = "none";
+    void h.offsetHeight; // Reflow erzwingen
+    h.style.transition = "opacity 2.5s ease-in-out";
+    h.classList.remove("v-hidden");
+    h.classList.add("fade-in");
   }, 1200);
 }
 
@@ -100,24 +93,20 @@ function showStartSlide() {
  * @returns {void}
  */
 function loadRememberedUser() {
-  const rememberedUser = localStorage.getItem("rememberedUser");
-  if (rememberedUser) {
-    try {
-      const userData = JSON.parse(rememberedUser);
-      const emailInput = document.getElementById("loginMailUser");
-      const passwordInput = document.getElementById("loginPasswordUser");
-      const checkbox = document.getElementById("checkboxLogin");
-
-      if (emailInput && passwordInput && checkbox) {
-        emailInput.value = userData.email;
-        passwordInput.value = userData.password;
-        checkbox.checked = true;
-      } else {
-        console.error("One of the login form elements was not found.");
-      }
-    } catch (error) {
-      console.error("Error parsing the remembered user:", error);
-    }
+  const data = localStorage.getItem("rememberedUser");
+  if (!data) return;
+  try {
+    const { email, password } = JSON.parse(data);
+    const e = document.getElementById("loginMailUser"),
+      p = document.getElementById("loginPasswordUser"),
+      c = document.getElementById("checkboxLogin");
+    if (!e || !p || !c)
+      return console.error("One of the login form elements was not found.");
+    e.value = email;
+    p.value = password;
+    c.checked = true;
+  } catch (err) {
+    console.error("Error parsing the remembered user:", err);
   }
 }
 
@@ -170,41 +159,24 @@ function loginGuest(event) {
  * @param {Event} event - The triggering event.
  * @returns {Promise<void>}
  */
-async function loginUser(event) {
-  event.preventDefault();
-  const userMail = document.getElementById("loginMailUser")?.value;
-  const userPassword = document.getElementById("loginPasswordUser")?.value;
-  const rememberMe = document.getElementById("checkboxLogin")?.checked;
-
-  if (!userMail || !userPassword) {
-    showDomOfFailedLogin();
-    return;
-  }
-
-  let signedUser;
+async function loginUser(e) {
+  e.preventDefault();
+  const m = document.getElementById("loginMailUser")?.value,
+    p = document.getElementById("loginPasswordUser")?.value,
+    r = document.getElementById("checkboxLogin")?.checked;
+  if (!m || !p) return showDomOfFailedLogin();
   try {
-    signedUser = JSON.parse(signedUsersArrayLogin).find(
-      (u) => u.email === userMail && u.password === userPassword
+    const u = JSON.parse(signedUsersArrayLogin).find(
+      (x) => x.email === m && x.password === p
     );
-  } catch (error) {
-    console.error("Error parsing signedUsersArrayLogin:", error);
-    showDomOfFailedLogin();
-    return;
-  }
-
-  if (signedUser) {
-    try {
-      await changeLoginStatus(signedUser);
-      localStorage.setItem("currentUser", JSON.stringify(signedUser));
-      currentUser = signedUser;
-      if (rememberMe) {
-        saveData(signedUser);
-      }
-      forwardToSummary(signedUser);
-    } catch (error) {
-      console.error("Error changing login status:", error);
-    }
-  } else {
+    if (!u) return showDomOfFailedLogin();
+    await changeLoginStatus(u);
+    localStorage.setItem("currentUser", JSON.stringify(u));
+    currentUser = u;
+    if (r) saveData(u);
+    forwardToSummary(u);
+  } catch (err) {
+    console.error("Error:", err);
     showDomOfFailedLogin();
   }
 }
@@ -278,26 +250,15 @@ function saveData(user) {
  * @returns {void}
  */
 function showDomOfFailedLogin() {
-  const failedLoginDiv = document.getElementById("failedLoginDiv");
-  const changeBorders = document.getElementsByClassName("loginNameInput");
-
-  if (failedLoginDiv) {
-    failedLoginDiv.classList.remove("d-none");
-  } else {
-    console.error("Element with ID 'failedLoginDiv' not found.");
-  }
-
-  for (let i = 0; i < changeBorders.length; i++) {
-    changeBorders[i].style.border = "1px solid red";
-  }
-
-  setTimeout(function () {
-    if (failedLoginDiv) {
-      failedLoginDiv.classList.add("d-none");
-    }
-    for (let i = 0; i < changeBorders.length; i++) {
-      changeBorders[i].style.border = "1px solid rgb(168, 168, 168)";
-    }
+  const d = document.getElementById("failedLoginDiv"),
+    c = document.getElementsByClassName("loginNameInput");
+  d
+    ? d.classList.remove("d-none")
+    : console.error("Element with ID 'failedLoginDiv' not found.");
+  for (let el of c) el.style.border = "1px solid red";
+  setTimeout(() => {
+    if (d) d.classList.add("d-none");
+    for (let el of c) el.style.border = "1px solid rgb(168, 168, 168)";
   }, 2000);
 }
 
