@@ -1,43 +1,44 @@
 /**
- * Firebase-Konfigurationsobjekt.
+ * Firebase configuration object.
  * @constant {Object}
  */
 const firebaseConfig = {
   databaseURL:
     "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
 };
+
 /**
- * Basis-URL für Firebase-Datenbankoperationen.
+ * Base URL for Firebase database operations.
  * @constant {string}
  */
 const BASE_URL = firebaseConfig.databaseURL;
 
 /**
- * Initialisiert die Firebase-App.
+ * Initializes the Firebase app.
  * @constant {firebase.app.App}
  */
 const app = firebase.initializeApp(firebaseConfig);
 
 /**
- * Referenz zur Firebase-Datenbank.
+ * Reference to the Firebase database.
  * @constant {firebase.database.Database}
  */
 const database = firebase.database();
 
 /**
- * Der aktuell angemeldete Benutzer.
+ * The currently logged-in user.
  * @type {Object|null}
  */
 let currentUser = null;
 
 /**
- * Array zur Speicherung von Kontaktdaten.
+ * Array for storing contact data.
  * @type {Array<Object>}
  */
 let contactsData = [];
 
 /**
- * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
+ * Loads the currently logged-in user from Local Storage.
  */
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
@@ -47,8 +48,8 @@ function loadCurrentUser() {
 }
 
 /**
- * Überprüft, ob der aktuelle Benutzer ein Gastbenutzer ist.
- * @returns {boolean} Gibt true zurück, wenn der Benutzer ein Gast ist, sonst false.
+ * Checks if the current user is a guest user.
+ * @returns {boolean} Returns true if the user is a guest, otherwise false.
  */
 function isGuestUser() {
   return (
@@ -57,6 +58,7 @@ function isGuestUser() {
     currentUser.lastName === "User"
   );
 }
+
 document.addEventListener("DOMContentLoaded", () => {
   includeHTML();
   loadCurrentUser();
@@ -64,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Holt die Kontakte von Firebase und aktualisiert die lokale Kontaktliste.
+ * Retrieves contacts from Firebase and updates the local contact list.
  */
 function fetchContactsFromFirebase() {
   const contactsRef = database.ref("contacts");
@@ -90,10 +92,10 @@ function fetchContactsFromFirebase() {
 }
 
 /**
- * Stellt sicher, dass ein Kontakt eine Farbe hat. Fügt eine zufällige Farbe hinzu, falls nicht vorhanden.
- * @param {string} firebaseKey - Der Firebase-Schlüssel des Kontakts.
- * @param {Object} contact - Das Kontaktobjekt.
- * @returns {Promise<Object>} Das aktualisierte Kontaktobjekt.
+ * Ensures that a contact has a color. Adds a random color if not present.
+ * @param {string} firebaseKey - The Firebase key of the contact.
+ * @param {Object} contact - The contact object.
+ * @returns {Promise<Object>} The updated contact object.
  */
 async function ensureContactHasColor(firebaseKey, contact) {
   if (isGuestUser()) {
@@ -113,13 +115,13 @@ async function ensureContactHasColor(firebaseKey, contact) {
 }
 
 /**
- * Fügt einen neuen Kontakt hinzu. Bei Gastbenutzern wird der Kontakt lokal hinzugefügt, ansonsten in Firebase.
+ * Adds a new contact. For guest users, the contact is added locally; otherwise, it's added to Firebase.
  */
 async function addContact() {
-  const firstName = prompt("Vorname des neuen Kontakts?");
-  const lastName = prompt("Nachname des neuen Kontakts?");
-  const email = prompt("E-Mail des neuen Kontakts?");
-  const phone = prompt("Telefonnummer des neuen Kontakts?");
+  const firstName = prompt("First name of the new contact?");
+  const lastName = prompt("Last name of the new contact?");
+  const email = prompt("Email of the new contact?");
+  const phone = prompt("Phone number of the new contact?");
   if (!firstName || !lastName) return;
   const newContact = {
     firstName,
@@ -142,17 +144,17 @@ async function addContact() {
 }
 
 /**
- * Bearbeitet einen bestehenden Kontakt. Bei Gastbenutzern wird der Kontakt lokal aktualisiert, ansonsten in Firebase.
- * @param {string} firebaseKey - Der Firebase-Schlüssel des zu bearbeitenden Kontakts.
+ * Edits an existing contact. For guest users, the contact is updated locally; otherwise, it's updated in Firebase.
+ * @param {string} firebaseKey - The Firebase key of the contact to edit.
  */
 async function editContact(firebaseKey) {
   const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
   if (index === -1) return;
   const contact = contactsData[index];
-  const newFirstName = prompt("Neuer Vorname:", contact.firstName);
-  const newLastName = prompt("Neuer Nachname:", contact.lastName);
-  const newEmail = prompt("Neue E-Mail:", contact.email);
-  const newPhone = prompt("Neue Telefonnummer:", contact.phone);
+  const newFirstName = prompt("New first name:", contact.firstName);
+  const newLastName = prompt("New last name:", contact.lastName);
+  const newEmail = prompt("New email:", contact.email);
+  const newPhone = prompt("New phone number:", contact.phone);
   if (!newFirstName || !newLastName) return;
   const updatedLocalContact = {
     ...contact,
@@ -176,13 +178,13 @@ async function editContact(firebaseKey) {
 }
 
 /**
- * Löscht einen Kontakt. Bei Gastbenutzern wird der Kontakt lokal gelöscht, ansonsten in Firebase.
- * @param {string} firebaseKey - Der Firebase-Schlüssel des zu löschenden Kontakts.
+ * Deletes a contact. For guest users, the contact is deleted locally; otherwise, it's deleted from Firebase.
+ * @param {string} firebaseKey - The Firebase key of the contact to delete.
  */
 async function deleteContact(firebaseKey) {
   const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
   if (index === -1) return;
-  const sure = confirm("Kontakt wirklich löschen?");
+  const sure = confirm("Are you sure you want to delete this contact?");
   if (!sure) return;
   if (isGuestUser()) {
     contactsData.splice(index, 1);
@@ -195,8 +197,8 @@ async function deleteContact(firebaseKey) {
 }
 
 /**
- * Rendert die Kontaktliste sortiert nach Vornamen und gruppiert nach Anfangsbuchstaben.
- * @param {Array<Object>} contacts - Das Array der Kontakte.
+ * Renders the contact list sorted by first names and grouped by initial letters.
+ * @param {Array<Object>} contacts - The array of contacts.
  */
 function renderSortedContacts(contacts) {
   const content = document.getElementById("contact-content");
@@ -234,9 +236,9 @@ function renderSortedContacts(contacts) {
 }
 
 /**
- * Erstellt das HTML für einen einzelnen Kontakt.
- * @param {Object} contact - Der Kontakt.
- * @returns {string} Das generierte HTML für den Kontakt.
+ * Creates the HTML for a single contact.
+ * @param {Object} contact - The contact.
+ * @returns {string} The generated HTML for the contact.
  */
 function contactsTemplate(contact) {
   return `
@@ -309,7 +311,7 @@ function toggleContactDetail(firebaseKey) {
 }
 
 /**
- * Rendert die Kontaktliste erneut und versteckt die Detailansicht.
+ * Renders the contact list again and hides the detail view.
  */
 function renderContactList() {
   const contactListContainer = document.getElementById("contact-side-panel");
@@ -331,7 +333,7 @@ function renderContactList() {
 }
 
 /**
- * Schaltet das Dropdown-Menü um und schließt es bei Klick außerhalb.
+ * Toggles the dropdown menu and closes it when clicking outside.
  */
 function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
@@ -351,8 +353,8 @@ function toggleMenu() {
     document.removeEventListener("click", closeMenuOnOutsideClick);
   }
   /**
-   * Schließt das Dropdown-Menü, wenn außerhalb geklickt wird.
-   * @param {Event} event - Das auslösende Klick-Ereignis.
+   * Closes the dropdown menu if clicked outside.
+   * @param {Event} event - The triggering click event.
    */
   function closeMenuOnOutsideClick(event) {
     if (!menu.contains(event.target) && !button.contains(event.target)) {
@@ -364,16 +366,18 @@ function toggleMenu() {
     }
   }
 }
+
 /**
- * Generiert eine zufällige Farbe aus einer vordefinierten Liste.
- * @returns {string} Eine zufällig ausgewählte Farbe im Hex-Format.
+ * Generates a random color from a predefined list.
+ * @returns {string} A randomly selected color in HEX format.
  */
 function getRandomColor() {
   const colors = ["orange", "purple", "blue", "red", "green", "teal"];
   return colors[Math.floor(Math.random() * colors.length)];
 }
+
 /**
- * Holt die Initialen eines Benutzers.
+ * Retrieves the initials of a user.
  * @param {string} firstName
  * @param {string} lastName
  * @returns {string}
@@ -381,8 +385,9 @@ function getRandomColor() {
 function getInitials(firstName, lastName) {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 }
+
 /**
- * Rendert den rechten Seitenbereich für Kontaktdetails, falls nicht bereits vorhanden.
+ * Renders the right side container for contact details if not already present.
  */
 function renderRightSideContainer() {
   const content = document.getElementById("contact-content");

@@ -1,6 +1,6 @@
 /**
- * Initialisiert die Anwendung beim Laden der Seite.
- * Lädt die angemeldeten Benutzer und das Registrierungsformular.
+ * Initializes the application when the page loads.
+ * Loads signed-in users and the registration form.
  *
  * @function onloadFunc
  * @returns {void}
@@ -11,23 +11,23 @@ function onloadFunc() {
 }
 
 /**
- * Die Basis-URL deiner Firebase-Datenbank.
+ * The base URL of your Firebase database.
  * @constant {string}
  */
 const BASE_URL =
   "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
- * Array der angemeldeten Benutzer für das Login.
+ * Array for storing signed-in users for login.
  * @type {string}
  *
- * **Hinweis:** Ursprünglich als String deklariert, sollte dies ein Array sein.
- * Empfohlen: `let signedUsersArray = [];`
+ * **Note:** Originally declared as a string, this should be an array.
+ * Recommended: `let signedUsersArray = [];`
  */
 let signedUsersArray = "[]";
 
 /**
- * Lädt das Registrierungsformular und fügt es in den entsprechenden Container ein.
+ * Loads the registration form and inserts it into the corresponding container.
  *
  * @function loadRegisterForm
  * @returns {void}
@@ -35,7 +35,7 @@ let signedUsersArray = "[]";
 function loadRegisterForm() {
   const registerContent = document.getElementById("registerContent");
   if (!registerContent) {
-    console.error("Element mit ID 'registerContent' nicht gefunden.");
+    console.error("Element with ID 'registerContent' not found.");
     return;
   }
   registerContent.innerHTML = "";
@@ -43,36 +43,36 @@ function loadRegisterForm() {
 }
 
 /**
- * Lädt die angemeldeten Benutzer von der Firebase-Datenbank.
+ * Loads the signed-in users from the Firebase database.
  *
  * @async
  * @function loadUsers
- * @param {string} path - Der Pfad zur Firebase-Datenbank für angemeldete Benutzer.
+ * @param {string} path - The path to the Firebase database for signed-in users.
  * @returns {Promise<void>}
  */
 async function loadUsers(path) {
   try {
     const response = await fetch(BASE_URL + path + ".json");
     if (!response.ok) {
-      throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+      throw new Error(`HTTP Error! Status: ${response.status}`);
     }
     const responseToJson = await response.json();
     if (responseToJson) {
       signedUsersArray = Object.values(responseToJson);
-      // **Hinweis:** Da signedUsersArray ursprünglich ein String ist, kann das Pushen fehlschlagen.
-      // Empfohlen: Initialisiere signedUsersArray als leeres Array (`let signedUsersArray = [];`)
+      // **Note:** Since signedUsersArray is originally a string, pushing to it may fail.
+      // Recommended: Initialize signedUsersArray as an empty array (`let signedUsersArray = [];`)
     }
   } catch (error) {
-    console.error("Fehler beim Laden der angemeldeten Benutzer:", error);
+    console.error("Error loading signed-in users:", error);
   }
 }
 
 /**
- * Sendet die Registrierungsdaten an die Firebase-Datenbank.
+ * Sends the registration data to the Firebase database.
  *
  * @async
  * @function postSignUpData
- * @param {string} path - Der Pfad zur Firebase-Datenbank für Benutzer.
+ * @param {string} path - The path to the Firebase database for users.
  * @returns {Promise<void>}
  */
 async function postSignUpData(path) {
@@ -106,27 +106,25 @@ async function postSignUpData(path) {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+        throw new Error(`HTTP Error! Status: ${response.status}`);
       }
 
       const responseToJson = await response.json();
-      signedUsersArray.push(responseToJson); // **Hinweis:** Falls signedUsersArray ein String ist, funktioniert das nicht.
+      signedUsersArray.push(responseToJson); // **Note:** If signedUsersArray is a string, this will not work.
       showSuccessOverlay();
       setTimeout(function () {
         window.location.href = "login.html";
       }, 900);
     } catch (error) {
-      console.error("Fehler beim Senden der Registrierungsdaten:", error);
+      console.error("Error sending registration data:", error);
     }
   } else {
-    console.log(
-      "Passwörter stimmen nicht überein oder Checkbox nicht aktiviert."
-    );
+    console.log("Passwords do not match or checkbox is not checked.");
   }
 }
 
 /**
- * Zeigt eine Erfolgsmeldung nach erfolgreicher Registrierung an.
+ * Displays a success message after successful registration.
  *
  * @function showSuccessOverlay
  * @returns {void}
@@ -134,7 +132,7 @@ async function postSignUpData(path) {
 function showSuccessOverlay() {
   const overlay = document.getElementById("overlaySignUpSuccess");
   if (!overlay) {
-    console.error("Element mit ID 'overlaySignUpSuccess' nicht gefunden.");
+    console.error("Element with ID 'overlaySignUpSuccess' not found.");
     return;
   }
   overlay.classList.remove("d-none");
@@ -146,7 +144,7 @@ function showSuccessOverlay() {
 }
 
 /**
- * Fügt einen Benutzer hinzu und leitet zur Login-Seite weiter.
+ * Adds a user and redirects to the login page.
  *
  * @function addUser
  * @returns {void}
@@ -155,13 +153,13 @@ function addUser() {
   const email = document.getElementById("loginMail");
   const password = document.getElementById("loginPassword");
 
-  // **Hinweis:** Die Variable `users` ist hier nicht definiert. Stelle sicher, dass sie global oder vorher deklariert ist.
+  // **Note:** The variable `users` is not defined here. Ensure it is defined globally or declared earlier.
   users.push({ email: email.value, password: password.value });
-  window.location.href = "login.html?msg=Du hast dich erfolgreich registriert";
+  window.location.href = "login.html?msg=You have successfully registered";
 }
 
 /**
- * Vergleicht die eingegebenen Passwörter und aktualisiert die UI entsprechend.
+ * Compares the entered passwords and updates the UI accordingly.
  *
  * @function comparePasswords
  * @returns {void}
@@ -174,7 +172,7 @@ function comparePasswords() {
   const passWordBorder = document.getElementById("passWordBorder");
 
   if (!passWordBorder) {
-    console.error("Element mit ID 'passWordBorder' nicht gefunden.");
+    console.error("Element with ID 'passWordBorder' not found.");
     return;
   }
 
@@ -194,7 +192,7 @@ function comparePasswords() {
 }
 
 /**
- * Validiert das Registrierungsformular und aktiviert/deaktiviert den Registrierungsbutton.
+ * Validates the registration form and enables/disables the sign-up button.
  *
  * @function validate
  * @returns {void}
@@ -226,16 +224,16 @@ function validate() {
 }
 
 /**
- * Zeigt eine Nachricht an, ob die Passwörter übereinstimmen.
+ * Displays a message indicating whether the passwords match.
  *
  * @function showResultsMessage
- * @param {boolean} foundPassword - Gibt an, ob die Passwörter übereinstimmen.
+ * @param {boolean} foundPassword - Indicates whether the passwords match.
  * @returns {void}
  */
 function showResultsMessage(foundPassword) {
   const alertDiv = document.getElementById("alert-password");
   if (!alertDiv) {
-    console.error("Element mit ID 'alert-password' nicht gefunden.");
+    console.error("Element with ID 'alert-password' not found.");
     return;
   }
 
@@ -248,24 +246,24 @@ function showResultsMessage(foundPassword) {
     `;
   } else {
     alertDiv.innerHTML += /*html*/ `
-      <p class="alertPasswordFont">Your passwords don't match, please try again</p>
+      <p class="alertPasswordFont">Your passwords don't match, please try again.</p>
     `;
   }
 }
 
 /**
- * Holt die nächste verfügbare Benutzer-ID aus der Firebase-Datenbank.
+ * Retrieves the next available user ID from the Firebase database.
  *
  * @async
  * @function getNextUserId
- * @param {string} path - Der Pfad zur Firebase-Datenbank für Benutzer.
- * @returns {Promise<number>} Die nächste verfügbare Benutzer-ID.
+ * @param {string} path - The path to the Firebase database for users.
+ * @returns {Promise<number>} The next available user ID.
  */
 async function getNextUserId(path) {
   try {
     const response = await fetch(`${BASE_URL}${path}.json`);
     if (!response.ok) {
-      throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+      throw new Error(`HTTP Error! Status: ${response.status}`);
     }
     const data = await response.json();
     let nextId = 1;
@@ -283,13 +281,13 @@ async function getNextUserId(path) {
     }
     return nextId;
   } catch (error) {
-    console.error("Fehler beim Abrufen der nächsten Benutzer-ID:", error);
-    return 1; // Fallback-ID
+    console.error("Error fetching the next user ID:", error);
+    return 1; // Fallback ID
   }
 }
 
 /**
- * Validiert die eingegebene E-Mail-Adresse und zeigt entsprechende Nachrichten an.
+ * Validates the entered email address and displays appropriate messages.
  *
  * @function validateEmail
  * @returns {void}
@@ -299,7 +297,7 @@ function validateEmail() {
   const emailAlert = document.getElementById("emailAlert");
 
   if (!emailField || !emailAlert) {
-    console.error("E-Mail-Feld oder E-Mail-Alert-Element nicht gefunden.");
+    console.error("Email field or email alert element not found.");
     return;
   }
 

@@ -1,17 +1,17 @@
 /**
- * Vorname des aktuellen Benutzers im Header.
+ * First name of the current user in the header.
  * @type {string}
  */
 let headerFirstName = "";
 
 /**
- * Nachname des aktuellen Benutzers im Header.
+ * Last name of the current user in the header.
  * @type {string}
  */
 let headerLastName = "";
 
 /**
- * Statusindikatoren für die Navigation.
+ * Status indicators for navigation.
  * @type {number}
  */
 let navSummary = 0;
@@ -22,15 +22,15 @@ let navPolicy = 0;
 let navLegalNotice = 0;
 
 /**
- * Zeigt oder versteckt die Benutzeroptionen im Header.
+ * Shows or hides the user options in the header.
  */
 function showUserOptions() {
   let userOption = document.getElementById("header-user-overlay");
   userOption.classList.toggle("d-none");
 
   /**
-   * Behandelt Klicks außerhalb des Benutzeroverlays, um es zu schließen.
-   * @param {Event} event - Das auslösende Klick-Ereignis.
+   * Handles clicks outside the user overlay to close it.
+   * @param {Event} event - The triggering click event.
    */
   const handleOutsideClick = (event) => {
     const overlay = document.getElementById("header-user-overlay");
@@ -51,10 +51,10 @@ function showUserOptions() {
 }
 
 /**
- * Wartet auf das Vorhandensein eines Elements im DOM und führt eine Callback-Funktion aus.
- * @param {string} selector - Der CSS-Selektor des Elements.
- * @param {Function} callback - Die Funktion, die ausgeführt werden soll, wenn das Element gefunden wird.
- * @param {number} [interval=100] - Das Intervall in Millisekunden, in dem nach dem Element gesucht wird.
+ * Waits for an element to exist in the DOM and executes a callback function.
+ * @param {string} selector - The CSS selector of the element.
+ * @param {Function} callback - The function to execute once the element is found.
+ * @param {number} [interval=100] - The interval in milliseconds to check for the element.
  */
 function waitForElement(selector, callback, interval = 100) {
   const checkExist = setInterval(() => {
@@ -66,13 +66,13 @@ function waitForElement(selector, callback, interval = 100) {
   }, interval);
 }
 
-// Wartet darauf, dass das Element mit der ID 'header-user-name' geladen ist, und führt dann die Funktion headerGetUser aus
+// Waits for the element with ID 'header-user-name' to load and then executes the headerGetUser function
 waitForElement("#header-user-name", () => {
   headerGetUser();
 });
 
 /**
- * Lädt den aktuellen Benutzer aus dem Local Storage und aktualisiert die Header-Anzeige.
+ * Loads the current user from Local Storage and updates the header display.
  */
 function headerGetUser() {
   let object = localStorage.getItem("currentUser");
@@ -85,9 +85,9 @@ function headerGetUser() {
 }
 
 /**
- * Aktualisiert die Anzeige des Benutzernamens im Header mit den Initialen.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
+ * Updates the display of the user's name in the header with initials.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
  */
 function headerDisplayName(firstName, lastName) {
   let headerFirstNameShort = firstName.trim().charAt(0).toUpperCase();
@@ -98,7 +98,7 @@ function headerDisplayName(firstName, lastName) {
 }
 
 /**
- * Meldet den aktuellen Benutzer ab, indem die entsprechenden Einträge im Local Storage entfernt werden.
+ * Logs out the current user by removing the corresponding entries from Local Storage.
  */
 function headerUserLogout() {
   localStorage.removeItem("currentUser");
@@ -106,17 +106,17 @@ function headerUserLogout() {
 }
 
 /**
- * Entfernt den aktiven Navigationspunkt aus dem Local Storage.
+ * Removes the active navigation point from Local Storage.
  */
 function removeActiveNav() {
   localStorage.removeItem("activeNav");
 }
 
-// NAV SCRIPT -- IST AUS EINFACHHEIT IN HEADER.JS DA DIE FUNKTIION SEHR SPÄT HINZUGEFÜGT WURDE UND ES NOCH KEINE NAV.JS GAB
+// NAV SCRIPT -- IS IN HEADER.JS FOR SIMPLICITY AS THE FUNCTION WAS ADDED LATE AND THERE WAS NO NAV.JS YET
 
 /**
- * Setzt den aktiven Navigationslink basierend auf dem aktuellen Status.
- * @param {string} site - Der Name der aktuellen Seite (z.B. 'summary', 'addTask').
+ * Sets the active navigation link based on the current status.
+ * @param {string} site - The name of the current page (e.g., 'summary', 'addTask').
  */
 function navLinksOnFocus(site) {
   let summary = document.getElementById("nav-summary");
@@ -151,7 +151,7 @@ function navLinksOnFocus(site) {
 }
 
 /**
- * Setzt den aktiven Navigationslink beim Laden der Seite basierend auf dem Local Storage.
+ * Sets the active navigation link on page load based on Local Storage.
  */
 function setLinkActive() {
   let localStorageGetItem = localStorage.getItem("activeNav");

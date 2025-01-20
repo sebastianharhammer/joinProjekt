@@ -1,6 +1,6 @@
 /**
- * Firebase-Konfigurationsobjekt.
- * Enthält die URL zur Firebase-Datenbank.
+ * Firebase configuration object.
+ * Contains the URL to the Firebase database.
  * @constant {Object}
  */
 const firebaseConfig = {
@@ -9,43 +9,43 @@ const firebaseConfig = {
 };
 
 /**
- * Initialisiert die Firebase-App mit der bereitgestellten Konfiguration.
+ * Initializes the Firebase app with the provided configuration.
  */
 firebase.initializeApp(firebaseConfig);
 
 /**
- * Referenz zur Firebase-Datenbank.
+ * Reference to the Firebase database.
  * @constant {firebase.database.Database}
  */
 const db = firebase.database();
 
 /**
- * Array zur Speicherung von Aufgaben.
+ * Array for storing tasks.
  * @type {Array<Object>}
  */
 let taskArray = [];
 
 /**
- * Array zur Speicherung von Kontaktdaten.
+ * Array for storing contact data.
  * @type {Array<Object>}
  */
 let finalContacts = [];
 
 /**
- * Array zur Speicherung von Kontaktdaten für die Bearbeitung.
+ * Array for storing contact data for editing.
  * @type {Array<Object>}
  */
 let finalContactsForEdit = [];
 
 /**
- * Der aktuell angemeldete Benutzer.
+ * The currently logged-in user.
  * @type {Object|null}
  */
 let currentUser = null;
 
 /**
- * Initialisiert die Zusammenfassungsseite.
- * Lädt HTML-Inhalte, aktualisiert die Begrüßung, lädt Benutzerdaten und Aufgaben von Firebase.
+ * Initializes the summary page.
+ * Loads HTML content, updates the greeting, loads user data, and tasks from Firebase.
  *
  * @async
  * @function initSummary
@@ -61,8 +61,8 @@ async function initSummary() {
 }
 
 /**
- * Aktualisiert die Begrüßung basierend auf der aktuellen Tageszeit.
- * Setzt den Begrüßungstext auf "Good morning,", "Good afternoon," oder "Good evening,".
+ * Updates the greeting based on the current time of day.
+ * Sets the greeting text to "Good morning,", "Good afternoon,", or "Good evening,".
  *
  * @function updateGreeting
  * @returns {void}
@@ -84,8 +84,8 @@ function updateGreeting() {
 }
 
 /**
- * Lädt die Benutzerdaten aus dem Local Storage und zeigt die Benutzerbegrüßung an.
- * Wenn keine Benutzerdaten gefunden werden, leitet der Benutzer zur Login-Seite weiter.
+ * Loads user data from Local Storage and displays the user greeting.
+ * If no user data is found, redirects the user to the login page.
  *
  * @function loadUserData
  * @returns {void}
@@ -96,19 +96,18 @@ function loadUserData() {
     const currentUser = JSON.parse(storedUser);
     showUserGreeting(currentUser.firstName, currentUser.lastName);
   } else {
-    console.error("Kein Benutzer im Local Storage gefunden.");
+    console.error("No user found in Local Storage.");
     window.location.href =
-      "login.html?msg=" +
-      encodeURIComponent("Bitte melden Sie sich erneut an.");
+      "login.html?msg=" + encodeURIComponent("Please log in again.");
   }
 }
 
 /**
- * Zeigt die Benutzerbegrüßung mit dem Vornamen und Nachnamen an.
+ * Displays the user greeting with the first and last name.
  *
  * @function showUserGreeting
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
  * @returns {void}
  */
 function showUserGreeting(firstName, lastName) {
@@ -119,7 +118,7 @@ function showUserGreeting(firstName, lastName) {
 }
 
 /**
- * Lädt Aufgaben von Firebase und rendert die Zusammenfassungspanels.
+ * Loads tasks from Firebase and renders the summary panels.
  *
  * @function loadTasksFromFirebase
  * @returns {void}
@@ -133,18 +132,18 @@ function loadTasksFromFirebase() {
       const taskSummary = calculateTaskSummary(Object.values(tasks));
       renderPanels(taskSummary);
     } else {
-      console.error("Keine Aufgaben in der Firebase-Datenbank gefunden.");
+      console.error("No tasks found in the Firebase database.");
     }
   });
 }
 
 /**
- * Berechnet die Zusammenfassung der Aufgaben basierend auf ihrem Status und den kommenden Fristen.
+ * Calculates the summary of tasks based on their status and upcoming deadlines.
  *
  * @function calculateTaskSummary
- * @param {Array<Object>} tasks - Das Array der Aufgabenobjekte.
- * @returns {Object} Ein Objekt, das die Anzahl der Aufgaben in verschiedenen Statuskategorien,
- *                   die Gesamtanzahl der Aufgaben und die Informationen zur kommenden Frist enthält.
+ * @param {Array<Object>} tasks - The array of task objects.
+ * @returns {Object} An object containing the number of tasks in various status categories,
+ *                   the total number of tasks, and information about the upcoming deadline.
  */
 function calculateTaskSummary(tasks) {
   return {
@@ -158,18 +157,18 @@ function calculateTaskSummary(tasks) {
 }
 
 /**
- * Rendert die Zusammenfassungspanels basierend auf den berechneten Statistiken.
+ * Renders the summary panels based on the calculated statistics.
  *
  * @function renderPanels
- * @param {Object} stats - Das Objekt, das die zusammengefassten Aufgabenstatistiken enthält.
- * @param {number} stats.toDo - Anzahl der Aufgaben im Status "To-do".
- * @param {number} stats.inProgress - Anzahl der Aufgaben im Status "In Progress".
- * @param {number} stats.feedback - Anzahl der Aufgaben im Status "Feedback".
- * @param {number} stats.done - Anzahl der Aufgaben im Status "Done".
- * @param {number} stats.totalTasks - Gesamtanzahl der Aufgaben.
- * @param {Object|null} stats.upcomingTask - Informationen zur kommenden Frist.
- * @param {Object|null} stats.upcomingTask.task - Die Aufgabe mit der nächsten Frist.
- * @param {number} stats.upcomingTask.count - Anzahl der Aufgaben bis zur nächsten Frist.
+ * @param {Object} stats - The object containing the summarized task statistics.
+ * @param {number} stats.toDo - Number of tasks in "To-do" status.
+ * @param {number} stats.inProgress - Number of tasks in "In Progress" status.
+ * @param {number} stats.feedback - Number of tasks in "Feedback" status.
+ * @param {number} stats.done - Number of tasks in "Done" status.
+ * @param {number} stats.totalTasks - Total number of tasks.
+ * @param {Object|null} stats.upcomingTask - Information about the upcoming deadline.
+ * @param {Object|null} stats.upcomingTask.task - The task with the next deadline.
+ * @param {number} stats.upcomingTask.count - Number of tasks until the next deadline.
  * @returns {void}
  */
 function renderPanels(stats) {
@@ -199,14 +198,14 @@ function renderPanels(stats) {
 }
 
 /**
- * Erstellt das HTML für ein einzelnes Panel.
+ * Creates the HTML for a single panel.
  *
  * @function createPanel
- * @param {string} title - Der Titel des Panels.
- * @param {number} value - Der Wert oder die Anzahl, die im Panel angezeigt werden soll.
- * @param {string} [imgSrc=""] - Die Quelle des Bildes, das im Panel angezeigt werden soll. Optional.
- * @param {string} [extraClass=""] - Zusätzliche CSS-Klassen für das Panel. Optional.
- * @returns {string} Das generierte HTML für das Panel.
+ * @param {string} title - The title of the panel.
+ * @param {number} value - The value or count to display in the panel.
+ * @param {string} [imgSrc=""] - The source of the image to display in the panel. Optional.
+ * @param {string} [extraClass=""] - Additional CSS classes for the panel. Optional.
+ * @returns {string} The generated HTML for the panel.
  */
 function createPanel(title, value, imgSrc = "", extraClass = "") {
   return `
@@ -223,13 +222,13 @@ function createPanel(title, value, imgSrc = "", extraClass = "") {
 }
 
 /**
- * Erstellt das HTML für ein großes Panel, das Informationen zur kommenden Aufgabe anzeigt.
+ * Creates the HTML for a large panel displaying information about the upcoming task.
  *
  * @function createLargePanel
- * @param {Object|null} upcomingData - Daten zur kommenden Aufgabe.
- * @param {Object|null} upcomingData.task - Die kommende Aufgabe.
- * @param {number} upcomingData.count - Anzahl der Aufgaben bis zur kommenden Frist.
- * @returns {string} Das generierte HTML für das große Panel.
+ * @param {Object|null} upcomingData - Data about the upcoming task.
+ * @param {Object|null} upcomingData.task - The upcoming task.
+ * @param {number} upcomingData.count - Number of tasks until the upcoming deadline.
+ * @returns {string} The generated HTML for the large panel.
  */
 function createLargePanel(upcomingData) {
   const upcomingTask = upcomingData.task;
@@ -237,7 +236,7 @@ function createLargePanel(upcomingData) {
 
   const date = upcomingTask
     ? formatDate(new Date(upcomingTask.date))
-    : "Keine Fristen verfügbar";
+    : "No deadlines available";
   const priority = upcomingTask ? upcomingTask.prio : "No priority";
   const priorityIcon = getPriorityIcon(priority);
 
@@ -266,11 +265,11 @@ function createLargePanel(upcomingData) {
 }
 
 /**
- * Gibt das entsprechende Symbol für eine gegebene Priorität zurück.
+ * Returns the corresponding symbol for a given priority.
  *
  * @function getPriorityIcon
- * @param {string} priority - Die Priorität ("urgent", "medium", "low").
- * @returns {string} Der Pfad zum entsprechenden Symbolbild.
+ * @param {string} priority - The priority level ("urgent", "medium", "low").
+ * @returns {string} The path to the corresponding icon image.
  */
 function getPriorityIcon(priority) {
   switch (priority) {
@@ -281,19 +280,19 @@ function getPriorityIcon(priority) {
     case "low":
       return "./img/Prio_low_color.svg";
     default:
-      // Fallback-Icon, falls ein unbekannter Prio-Wert reinkommt
+      // Fallback icon in case of an unknown priority value
       return "./img/placeholder-icon.png";
   }
 }
 
 /**
- * Findet die nächste anstehende Frist unter den Aufgaben.
- * Sortiert die Aufgaben nach Datum und gibt die Aufgabe mit dem nächsten Datum zurück.
+ * Finds the next upcoming deadline among the tasks.
+ * Sorts the tasks by date and returns the task with the nearest date.
  *
  * @function findUpcomingDeadline
- * @param {Array<Object>} tasks - Das Array der Aufgabenobjekte.
- * @returns {Object} Ein Objekt, das die kommende Aufgabe und die Anzahl der Aufgaben bis zur Frist enthält.
- *                   Wenn keine Aufgaben mit Datum vorhanden sind, enthält es `null` für die Aufgabe und `0` für die Anzahl.
+ * @param {Array<Object>} tasks - The array of task objects.
+ * @returns {Object} An object containing the upcoming task and the number of tasks until the deadline.
+ *                   If no tasks with dates are present, it contains `null` for the task and `0` for the count.
  */
 function findUpcomingDeadline(tasks) {
   const tasksWithDates = tasks
@@ -312,14 +311,14 @@ function findUpcomingDeadline(tasks) {
 }
 
 /**
- * Formatiert ein Datum in ein lesbares Format (z.B. "1. Februar 2025").
+ * Formats a date into a readable format (e.g., "1. February 2025").
  *
  * @function formatDate
- * @param {Date} date - Das Datum, das formatiert werden soll.
- * @returns {string} Das formatierte Datum.
+ * @param {Date} date - The date to format.
+ * @returns {string} The formatted date.
  */
 function formatDate(date) {
-  return date.toLocaleDateString("de-DE", {
+  return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",

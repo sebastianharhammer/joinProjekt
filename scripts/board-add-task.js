@@ -1,78 +1,78 @@
 /**
- * Die Basis-URL für das Hinzufügen von Aufgaben in Firebase.
+ * The base URL for adding tasks to Firebase.
  * @constant {string}
  */
 const ADD_TASK_BASE_URL =
   "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
- * Gibt an, ob der Kategorien-Container gerade geklickt wurde.
+ * Indicates whether the categories container has been clicked.
  * @type {boolean}
  */
 let categoriesContainerClick = false;
 
 /**
- * Array der Kontakte.
+ * Array of contacts.
  * @type {Array<Object>}
  */
 let contacts = [];
 
 /**
- * Die aktuell ausgewählte Priorität für eine Aufgabe.
+ * The currently selected priority for a task.
  * @type {string}
  */
 let selectedPriority = "medium";
 
 /**
- * Array der Unteraufgaben.
+ * Array of subtasks.
  * @type {Array<Object>}
  */
 let subtasksArr = [];
 
 /**
- * Array der zugewiesenen Benutzer.
+ * Array of assigned users.
  * @type {Array<Object>}
  */
 let assignedUserArr = [];
 
 /**
- * Lokales Array der Aufgaben.
+ * Local array of tasks.
  * @type {Array<Object>}
  */
 let localTasks = [];
 
 /**
- * Zähler für die Unteraufgaben-IDs.
+ * Counter for subtask IDs.
  * @type {number}
  */
 let subtaskIdCounter = 0;
 
 /**
- * Array der bearbeiteten Unteraufgaben.
+ * Array of edited subtasks.
  * @type {Array<Object>}
  */
 let subtasksEdit = [];
 
 /**
- * Array der abgeschlossenen bearbeiteten Unteraufgaben.
+ * Array of completed edited subtasks.
  * @type {Array<Object>}
  */
 let subtasksEdit_done = [];
 
 /**
- * Array der abgeschlossenen Unteraufgaben.
+ * Array of completed subtasks.
  * @type {Array<Object>}
  */
 let subtasksArr_done = [];
 
 /**
- * Objekt der Kategorie.
+ * The category object.
  * @type {string}
  */
 let categoryObject = "";
 
 /**
- * Array der verfügbaren Kategorien für das Hinzufügen von Aufgaben.
+ * Array of available categories for adding tasks.
  * @type {Array<Object>}
  */
 let addTaskcategories = [
@@ -81,22 +81,22 @@ let addTaskcategories = [
 ];
 
 /**
- * Array der zugewiesenen Benutzer.
+ * Array of assigned users.
  * @type {Array<Object>}
  */
 let assignedUser = [];
 
 /**
- * Der aktuelle Status der Aufgabe.
+ * The current status of the task.
  * @type {string}
  */
 let localStatus = "";
 
 /**
- * Zeigt das Hinzufügen einer Aufgabe an und initialisiert das Formular.
+ * Displays the add task interface and initializes the form.
  *
  * @function showAddTask
- * @param {string} status - Der Status der zu hinzufügenden Aufgabe.
+ * @param {string} status - The status of the task to be added.
  * @returns {void}
  */
 function showAddTask(status) {
@@ -118,7 +118,7 @@ function showAddTask(status) {
 }
 
 /**
- * Versteckt das Hinzufügen einer Aufgabe und setzt den Zustand zurück.
+ * Hides the add task interface and resets the state.
  *
  * @function hideAddTask
  * @returns {void}
@@ -137,10 +137,10 @@ function hideAddTask() {
 }
 
 /**
- * Behandelt den Abbruch des Formulars zum Hinzufügen einer Aufgabe.
+ * Handles the cancellation of the add task form.
  *
  * @function handleCancel
- * @param {Event} event - Das auslösende Ereignis.
+ * @param {Event} event - The triggering event.
  * @returns {void}
  */
 function handleCancel(event) {
@@ -152,7 +152,7 @@ function handleCancel(event) {
 }
 
 /**
- * Setzt die Eingabefelder des Formulars zurück.
+ * Resets the input fields of the form.
  *
  * @function resetFormInputs
  * @returns {void}
@@ -167,7 +167,7 @@ function resetFormInputs() {
 }
 
 /**
- * Setzt die relevanten Arrays zurück.
+ * Resets the relevant arrays.
  *
  * @function resetArrays
  * @returns {void}
@@ -181,7 +181,7 @@ function resetArrays() {
 }
 
 /**
- * Setzt die Benutzer-Auswahlen zurück.
+ * Resets the user selections.
  *
  * @function resetUserSelections
  * @returns {void}
@@ -198,12 +198,12 @@ function resetUserSelections() {
 }
 
 /**
- * Erstellt eine neue Aufgabe und fügt sie Firebase hinzu.
+ * Creates a new task and adds it to Firebase.
  *
  * @async
  * @function createTask
- * @param {string} status - Der Status der neuen Aufgabe.
- * @param {Event} event - Das auslösende Ereignis.
+ * @param {string} status - The status of the new task.
+ * @param {Event} event - The triggering event.
  * @returns {Promise<void>}
  */
 async function createTask(status, event) {
@@ -224,10 +224,10 @@ async function createTask(status, event) {
 }
 
 /**
- * Holt die Formulardaten für die neue Aufgabe.
+ * Retrieves the form data for the new task.
  *
  * @function getTaskFormData
- * @returns {Object} Die gesammelten Formulardaten.
+ * @returns {Object} The collected form data.
  */
 function getTaskFormData() {
   return {
@@ -242,12 +242,12 @@ function getTaskFormData() {
 }
 
 /**
- * Erstellt ein Aufgabenobjekt basierend auf den Formulardaten.
+ * Creates a task object based on the form data.
  *
  * @function createTaskObject
- * @param {number} id - Die eindeutige ID der Aufgabe.
- * @param {Object} taskData - Die Daten der Aufgabe aus dem Formular.
- * @returns {Object} Das erstellte Aufgabenobjekt.
+ * @param {number} id - The unique ID of the task.
+ * @param {Object} taskData - The task data from the form.
+ * @returns {Object} The created task object.
  */
 function createTaskObject(id, taskData) {
   return {
@@ -264,7 +264,7 @@ function createTaskObject(id, taskData) {
 }
 
 /**
- * Behandelt den Erfolg bei der Erstellung einer Aufgabe.
+ * Handles the success after creating a task.
  *
  * @function handleTaskCreationSuccess
  * @returns {void}
@@ -275,13 +275,13 @@ function handleTaskCreationSuccess() {
 }
 
 /**
- * Validiert die eingegebenen Daten für eine Aufgabe.
+ * Validates the entered data for a task.
  *
  * @function validateTask
- * @param {string} title - Der Titel der Aufgabe.
- * @param {string} date - Das Fälligkeitsdatum der Aufgabe.
- * @param {string} category - Die Kategorie der Aufgabe.
- * @returns {boolean} Gibt `true` zurück, wenn Validierungsfehler vorhanden sind, sonst `false`.
+ * @param {string} title - The title of the task.
+ * @param {string} date - The due date of the task.
+ * @param {string} category - The category of the task.
+ * @returns {boolean} Returns `true` if there are validation errors, otherwise `false`.
  */
 function validateTask(title, date, category) {
   let exits = false;
@@ -290,7 +290,7 @@ function validateTask(title, date, category) {
     exits = true;
   }
   if (date < new Date().toISOString().split("T")[0]) {
-    showValidationError("addDateError", "Date can´t be in the past!");
+    showValidationError("addDateError", "Date can't be in the past!");
     exits = true;
   }
   if (!date) {
@@ -305,11 +305,11 @@ function validateTask(title, date, category) {
 }
 
 /**
- * Zeigt eine Validierungsfehlermeldung an und deaktiviert den Button vorübergehend.
+ * Displays a validation error message and temporarily disables the button.
  *
  * @function showValidationError
- * @param {string} elementId - Die ID des Elements, das die Fehlermeldung anzeigen soll.
- * @param {string} message - Die Fehlermeldung.
+ * @param {string} elementId - The ID of the element that should display the error message.
+ * @param {string} message - The error message.
  * @returns {void}
  */
 function showValidationError(elementId, message) {
@@ -318,7 +318,7 @@ function showValidationError(elementId, message) {
   if (errorElement) {
     errorElement.innerHTML = message;
   } else {
-    console.error(`Element mit ID '${elementId}' nicht gefunden.`);
+    console.error(`Element with ID '${elementId}' not found.`);
   }
   disableButton(button);
   setTimeout(() => {
@@ -330,10 +330,10 @@ function showValidationError(elementId, message) {
 }
 
 /**
- * Deaktiviert einen Button und ändert sein Aussehen.
+ * Disables a button and changes its appearance.
  *
  * @function disableButton
- * @param {HTMLElement} button - Der Button, der deaktiviert werden soll.
+ * @param {HTMLElement} button - The button to be disabled.
  * @returns {void}
  */
 function disableButton(button) {
@@ -342,15 +342,15 @@ function disableButton(button) {
     button.style.backgroundColor = "#000000";
     button.style.color = "#2B3647";
   } else {
-    console.error("Button-Element nicht gefunden.");
+    console.error("Button element not found.");
   }
 }
 
 /**
- * Aktiviert einen Button und setzt sein Aussehen zurück.
+ * Enables a button and resets its appearance.
  *
  * @function enableButton
- * @param {HTMLElement} button - Der Button, der aktiviert werden soll.
+ * @param {HTMLElement} button - The button to be enabled.
  * @returns {void}
  */
 function enableButton(button) {
@@ -359,16 +359,16 @@ function enableButton(button) {
     button.style.backgroundColor = "#2B3647";
     button.style.color = "#FFFFFF";
   } else {
-    console.error("Button-Element nicht gefunden.");
+    console.error("Button element not found.");
   }
 }
 
 /**
- * Holt die nächste verfügbare Task-ID aus Firebase.
+ * Retrieves the next available task ID from Firebase.
  *
  * @async
  * @function getNextTaskId
- * @returns {Promise<number>} Die nächste verfügbare Task-ID.
+ * @returns {Promise<number>} The next available task ID.
  */
 async function getNextTaskId() {
   try {
@@ -392,11 +392,11 @@ async function getNextTaskId() {
 }
 
 /**
- * Fügt eine neue Aufgabe zu Firebase hinzu.
+ * Adds a new task to Firebase.
  *
  * @async
  * @function pushTaskToFirebase
- * @param {Object} newTask - Das zu hinzufügende Aufgabenobjekt.
+ * @param {Object} newTask - The task object to be added.
  * @returns {Promise<void>}
  */
 async function pushTaskToFirebase(newTask) {
@@ -419,7 +419,7 @@ async function pushTaskToFirebase(newTask) {
 }
 
 /**
- * Zeigt eine Erfolgsmeldung nach dem Hinzufügen einer Aufgabe an.
+ * Displays a success message after adding a task.
  *
  * @function showAddTaskSuccesMessage
  * @returns {void}
@@ -443,12 +443,12 @@ function showAddTaskSuccesMessage() {
       console.error("Required elements not found for success message");
     }
   } else {
-    console.error("Element mit ID 'add-task-overlay-wrapper' nicht gefunden.");
+    console.error("Element with ID 'add-task-overlay-wrapper' not found.");
   }
 }
 
 /**
- * Initialisiert die Dropdown-Interaktionen für das Hinzufügen von Aufgaben.
+ * Initializes the dropdown interactions for adding tasks.
  *
  * @function handleDropdownInteraction
  * @returns {void}
@@ -462,16 +462,16 @@ function handleDropdownInteraction() {
     );
     optionsContainer.addEventListener("click", addTaskHandleOptionsClick);
   } else {
-    console.error("Dropdown-Element oder Options-Container nicht gefunden.");
+    console.error("Dropdown element or options container not found.");
   }
 }
 
 /**
- * Behandelt den Klick auf das Dropdown-Menü.
+ * Handles the click on the dropdown menu.
  *
  * @function addTaskHandleDropdownClick
- * @param {Event} e - Das auslösende Ereignis.
- * @param {HTMLElement} optionsContainer - Der Container für die Dropdown-Optionen.
+ * @param {Event} e - The triggering event.
+ * @param {HTMLElement} optionsContainer - The container for the dropdown options.
  * @returns {void}
  */
 function addTaskHandleDropdownClick(e, optionsContainer) {
@@ -485,10 +485,10 @@ function addTaskHandleDropdownClick(e, optionsContainer) {
 }
 
 /**
- * Schaltet die Anzeige des Dropdown-Menüs um.
+ * Toggles the display of the dropdown menu.
  *
  * @function addTaskToggleOptionsDisplay
- * @param {HTMLElement} optionsContainer - Der Container für die Dropdown-Optionen.
+ * @param {HTMLElement} optionsContainer - The container for the dropdown options.
  * @returns {void}
  */
 function addTaskToggleOptionsDisplay(optionsContainer) {
@@ -497,10 +497,10 @@ function addTaskToggleOptionsDisplay(optionsContainer) {
 }
 
 /**
- * Behandelt den Klick auf eine Dropdown-Option.
+ * Handles the click on a dropdown option.
  *
  * @function addTaskHandleOptionsClick
- * @param {Event} event - Das auslösende Ereignis.
+ * @param {Event} event - The triggering event.
  * @returns {void}
  */
 function addTaskHandleOptionsClick(event) {
@@ -513,11 +513,11 @@ function addTaskHandleOptionsClick(event) {
 }
 
 /**
- * Holt die Benutzerdaten aus einem Benutzer-Container.
+ * Retrieves user data from a user container.
  *
  * @function addTaskGetUserData
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @returns {Object} Die Benutzerdaten.
+ * @param {HTMLElement} userContainer - The container of the user.
+ * @returns {Object} The user data.
  */
 function addTaskGetUserData(userContainer) {
   return {
@@ -528,11 +528,11 @@ function addTaskGetUserData(userContainer) {
 }
 
 /**
- * Schaltet die Benutzer-Auswahl um, basierend auf den Benutzerdaten.
+ * Toggles the user selection based on user data.
  *
  * @function addTaskToggleUserSelection
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @param {Object} userData - Die Daten des Benutzers.
+ * @param {HTMLElement} userContainer - The container of the user.
+ * @param {Object} userData - The data of the user.
  * @returns {void}
  */
 function addTaskToggleUserSelection(userContainer, userData) {
@@ -546,11 +546,11 @@ function addTaskToggleUserSelection(userContainer, userData) {
 }
 
 /**
- * Findet den Index eines Benutzers im `assignedUserArr`-Array.
+ * Finds the index of a user in the `assignedUserArr` array.
  *
  * @function addTaskFindUserIndex
- * @param {Object} userData - Die Daten des Benutzers.
- * @returns {number} Der Index des Benutzers oder `-1`, wenn nicht gefunden.
+ * @param {Object} userData - The data of the user.
+ * @returns {number} The index of the user or `-1` if not found.
  */
 function addTaskFindUserIndex(userData) {
   return assignedUserArr.findIndex(
@@ -561,12 +561,12 @@ function addTaskFindUserIndex(userData) {
 }
 
 /**
- * Entfernt einen Benutzer aus der Auswahl.
+ * Removes a user from the selection.
  *
  * @function addTaskRemoveUser
- * @param {number} userIndex - Der Index des Benutzers im Array.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @param {HTMLInputElement} checkbox - Die Checkbox des Benutzers.
+ * @param {number} userIndex - The index of the user in the array.
+ * @param {HTMLElement} userContainer - The container of the user.
+ * @param {HTMLInputElement} checkbox - The checkbox of the user.
  * @returns {void}
  */
 function addTaskRemoveUser(userIndex, userContainer, checkbox) {
@@ -576,12 +576,12 @@ function addTaskRemoveUser(userIndex, userContainer, checkbox) {
 }
 
 /**
- * Fügt einen Benutzer zur Auswahl hinzu.
+ * Adds a user to the selection.
  *
  * @function addTaskAddUser
- * @param {Object} userData - Die Daten des Benutzers.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @param {HTMLInputElement} checkbox - Die Checkbox des Benutzers.
+ * @param {Object} userData - The data of the user.
+ * @param {HTMLElement} userContainer - The container of the user.
+ * @param {HTMLInputElement} checkbox - The checkbox of the user.
  * @returns {void}
  */
 function addTaskAddUser(userData, userContainer, checkbox) {
@@ -598,10 +598,10 @@ function addTaskAddUser(userData, userContainer, checkbox) {
 }
 
 /**
- * Setzt das Aussehen des Benutzer-Containers zurück.
+ * Resets the appearance of the user container.
  *
  * @function addTaskResetUserContainerStyle
- * @param {HTMLElement} container - Der Container des Benutzers.
+ * @param {HTMLElement} container - The container of the user.
  * @returns {void}
  */
 function addTaskResetUserContainerStyle(container) {
@@ -611,10 +611,10 @@ function addTaskResetUserContainerStyle(container) {
 }
 
 /**
- * Setzt das Aussehen des ausgewählten Benutzer-Containers.
+ * Sets the appearance of the selected user container.
  *
  * @function addTaskSetSelectedUserContainerStyle
- * @param {HTMLElement} container - Der Container des Benutzers.
+ * @param {HTMLElement} container - The container of the user.
  * @returns {void}
  */
 function addTaskSetSelectedUserContainerStyle(container) {
@@ -624,7 +624,7 @@ function addTaskSetSelectedUserContainerStyle(container) {
 }
 
 /**
- * Versteckt das Dropdown-Menü.
+ * Hides the dropdown menu.
  *
  * @function closeDropdown
  * @returns {void}
@@ -634,12 +634,12 @@ function closeDropdown() {
   if (optionsContainer) {
     optionsContainer.style.display = "none";
   } else {
-    console.error("Element mit ID 'dropdown-options' nicht gefunden.");
+    console.error("Element with ID 'dropdown-options' not found.");
   }
 }
 
 /**
- * Holt die Aufgaben aus Firebase.
+ * Retrieves tasks from Firebase.
  *
  * @async
  * @function getTasks
@@ -664,7 +664,7 @@ async function getTasks() {
 }
 
 /**
- * Holt die Benutzerkontakte aus Firebase.
+ * Retrieves user contacts from Firebase.
  *
  * @async
  * @function getUsers
@@ -691,7 +691,7 @@ async function getUsers() {
 }
 
 /**
- * Wandelt die Kontakt-Daten in ein Array um und rendert die Dropdown-Optionen.
+ * Converts the contact data into an array and renders the dropdown options.
  *
  * @function returnArrayContacts
  * @returns {void}
@@ -717,12 +717,12 @@ function returnArrayContacts() {
 }
 
 /**
- * Fügt einen Benutzer zur Auswahl hinzu, wenn er noch nicht ausgewählt ist.
+ * Adds a user to the selection if they are not already selected.
  *
  * @function assignUser
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @param {string} color - Die Farbe des Benutzers.
+ * @param {string} firstName - The first name of the user.
+ * @param {string} lastName - The last name of the user.
+ * @param {string} color - The color of the user.
  * @returns {void}
  */
 function assignUser(firstName, lastName, color) {
@@ -741,7 +741,7 @@ function assignUser(firstName, lastName, color) {
 }
 
 /**
- * Zeigt die zugewiesenen Benutzer an.
+ * Displays the assigned users.
  *
  * @function showAssignedUsers
  * @returns {void}
@@ -754,33 +754,33 @@ function showAssignedUsers() {
       assignUsers.innerHTML += showAssignedUsersHTML(assignedUserArr[i]);
     }
   } else {
-    console.error("Element mit ID 'assigned-users-short' nicht gefunden.");
+    console.error("Element with ID 'assigned-users-short' not found.");
   }
 }
 
 /**
- * Holt den ersten Buchstaben eines Namens.
+ * Retrieves the first letter of a name.
  *
  * @function getFirstLetter
- * @param {string} name - Der Name, aus dem der erste Buchstabe geholt werden soll.
- * @returns {string} Der erste Buchstabe des Namens in Großbuchstaben.
+ * @param {string} name - The name from which to retrieve the first letter.
+ * @returns {string} The first letter of the name in uppercase.
  */
 function getFirstLetter(name) {
   return name.trim().charAt(0).toUpperCase();
 }
 
 /**
- * Holt die aktuelle Kategorie (Placeholder-Funktion).
+ * Retrieves the current category (Placeholder function).
  *
  * @function getCategory
- * @returns {string} Die aktuelle Kategorie.
+ * @returns {string} The current category.
  */
 function getCategory() {
   return categoryArr[0];
 }
 
 /**
- * Öffnet das Kategorien-Dropdown-Menü für das Hinzufügen einer Aufgabe.
+ * Opens the categories dropdown menu for adding a task.
  *
  * @function openAddTaskCategories
  * @returns {void}
@@ -805,12 +805,12 @@ function openAddTaskCategories() {
       categoryInput.classList.toggle("outline");
     }
   } else {
-    console.error("Dropdown-Element oder Icon nicht gefunden.");
+    console.error("Dropdown element or icon not found.");
   }
 }
 
 /**
- * Versteckt das Kategorien-Dropdown-Menü.
+ * Hides the categories dropdown menu.
  *
  * @function hideAddTaskCategories
  * @returns {void}
@@ -823,12 +823,12 @@ function hideAddTaskCategories() {
     icon.style.transform = "rotate(0deg)";
     categoryList.innerHTML = "";
   } else {
-    console.error("Dropdown-Element oder Icon nicht gefunden.");
+    console.error("Dropdown element or icon not found.");
   }
 }
 
 /**
- * Rendert die verfügbaren Kategorien im Dropdown-Menü.
+ * Renders the available categories in the dropdown menu.
  *
  * @function renderAddTaskCategories
  * @returns {void}
@@ -841,15 +841,15 @@ function renderAddTaskCategories() {
       categoryContainer.innerHTML += renderAddTaskCategoriesHTML(category);
     }
   } else {
-    console.error("Element mit ID 'dropDownCategoryMenu' nicht gefunden.");
+    console.error("Element with ID 'dropDownCategoryMenu' not found.");
   }
 }
 
 /**
- * Wählt eine Kategorie aus und setzt sie als aktuelle Kategorie.
+ * Selects a category and sets it as the current category.
  *
  * @function selectAddTaskCategory
- * @param {string} categoryTask - Die ausgewählte Kategorie.
+ * @param {string} categoryTask - The selected category.
  * @returns {void}
  */
 function selectAddTaskCategory(categoryTask) {
@@ -866,10 +866,10 @@ function selectAddTaskCategory(categoryTask) {
 }
 
 /**
- * Setzt die Priorität einer Aufgabe.
+ * Sets the priority of a task.
  *
  * @function setPriority
- * @param {string} priority - Die ausgewählte Priorität ("urgent", "medium", "low").
+ * @param {string} priority - The selected priority ("urgent", "medium", "low").
  * @returns {void}
  */
 function setPriority(priority) {
@@ -901,12 +901,12 @@ function setPriority(priority) {
       task.prio = priority;
     }
   } else {
-    console.error("Prioritäts-Button oder -Bild nicht gefunden.");
+    console.error("Priority button or image not found.");
   }
 }
 
 /**
- * Fügt eine neue Unteraufgabe hinzu.
+ * Adds a new subtask.
  *
  * @function addTaskSubtask
  * @returns {void}
@@ -922,7 +922,7 @@ function addTaskSubtask() {
       subtaskInput.value = "";
     } else {
       if (errorMessageSubtasks) {
-        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        errorMessageSubtasks.innerHTML = "Subtask can't be empty!";
         setTimeout(() => {
           errorMessageSubtasks.innerHTML = "";
         }, 1500);
@@ -935,18 +935,16 @@ function addTaskSubtask() {
       subtasksPlusIcon.classList.remove("d-none");
     }
   } else {
-    console.error(
-      "Element 'subtaskInput' oder 'subtasksContent' nicht gefunden."
-    );
+    console.error("Element 'subtaskInput' or 'subtasksContent' not found.");
   }
 }
 
 /**
- * Erstellt eine neue Unteraufgabe und gibt das HTML zurück.
+ * Creates a new subtask and returns the HTML.
  *
  * @function addTaskCreateSubtask
- * @param {string} subtaskValue - Der Wert der Unteraufgabe.
- * @returns {Object} Ein Objekt mit dem generierten HTML.
+ * @param {string} subtaskValue - The value of the subtask.
+ * @returns {Object} An object containing the generated HTML.
  */
 function addTaskCreateSubtask(subtaskValue) {
   subtaskIdCounter++;
@@ -967,12 +965,12 @@ function addTaskCreateSubtask(subtaskValue) {
 }
 
 /**
- * Bearbeitet eine Unteraufgabe und ermöglicht das Editieren des Textes.
+ * Edits a subtask and allows editing of the text.
  *
  * @function editSubtask
- * @param {string} liId - Die ID des Listenelements.
- * @param {string} spanId - Die ID des Span-Elements.
- * @param {string} inputId - Die ID des Input-Elements.
+ * @param {string} liId - The ID of the list element.
+ * @param {string} spanId - The ID of the span element.
+ * @param {string} inputId - The ID of the input element.
  * @returns {void}
  */
 function editSubtask(liId, spanId, inputId) {
@@ -987,22 +985,22 @@ function editSubtask(liId, spanId, inputId) {
       li.classList.remove("subtask-item");
     } else {
       if (errorMessageSubtasks) {
-        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        errorMessageSubtasks.innerHTML = "Subtask can't be empty!";
         setTimeout(() => {
           errorMessageSubtasks.innerHTML = "";
         }, 3000);
       }
     }
   } else {
-    console.error("Span-Element oder Listenelement nicht gefunden.");
+    console.error("Span element or list element not found.");
   }
 }
 
 /**
- * Löscht eine Unteraufgabe aus der Liste.
+ * Deletes a subtask from the list.
  *
  * @function deleteSubtask
- * @param {string} listId - Die ID des Listenelements.
+ * @param {string} listId - The ID of the list element.
  * @returns {void}
  */
 function deleteSubtask(listId) {
@@ -1010,17 +1008,17 @@ function deleteSubtask(listId) {
   if (list) {
     list.remove();
   } else {
-    console.error(`Listenelement mit ID '${listId}' nicht gefunden.`);
+    console.error(`List element with ID '${listId}' not found.`);
   }
 }
 
 /**
- * Speichert die bearbeitete Unteraufgabe.
+ * Saves the edited subtask.
  *
  * @function saveSubtask
- * @param {string} liId - Die ID des Listenelements.
- * @param {string} inputId - Die ID des Input-Elements.
- * @param {string} spanId - Die ID des Span-Elements.
+ * @param {string} liId - The ID of the list element.
+ * @param {string} inputId - The ID of the input element.
+ * @param {string} spanId - The ID of the span element.
  * @returns {void}
  */
 function saveSubtask(liId, inputId, spanId) {
@@ -1034,19 +1032,19 @@ function saveSubtask(liId, inputId, spanId) {
       li.classList.add("subtask-item");
     } else {
       if (errorMessageSubtasks) {
-        errorMessageSubtasks.innerHTML = "Subtask can´t be empty!";
+        errorMessageSubtasks.innerHTML = "Subtask can't be empty!";
         setTimeout(() => {
           errorMessageSubtasks.innerHTML = "";
         }, 1500);
       }
     }
   } else {
-    console.error("Listenelement oder Input-Element nicht gefunden.");
+    console.error("List element or input element not found.");
   }
 }
 
 /**
- * Löscht den Inhalt des Unteraufgaben-Eingabefeldes.
+ * Clears the content of the subtask input field.
  *
  * @function clearSubtaskInput
  * @returns {void}
@@ -1056,12 +1054,12 @@ function clearSubtaskInput() {
   if (input) {
     input.value = "";
   } else {
-    console.error("Element mit ID 'subtaskInput' nicht gefunden.");
+    console.error("Element with ID 'subtaskInput' not found.");
   }
 }
 
 /**
- * Zeigt den "Clear"-Button für die Unteraufgaben-Eingabe an.
+ * Displays the "Clear" button for the subtask input.
  *
  * @function showClearButton
  * @returns {void}
@@ -1073,6 +1071,6 @@ function showClearButton() {
     clearAddIcons.classList.remove("d-none");
     subtasksPlusIcon.classList.add("d-none");
   } else {
-    console.error("Elemente für Clear-Button oder Plus-Icon nicht gefunden.");
+    console.error("Elements for Clear button or Plus icon not found.");
   }
 }

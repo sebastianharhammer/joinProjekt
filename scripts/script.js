@@ -1,35 +1,35 @@
 /**
- * Basis-URL für Firebase-Datenbankoperationen.
+ * Base URL for Firebase database operations.
  * @constant {string}
  */
 const BASE_URL =
   "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
- * Array zur Speicherung von Aufgaben.
+ * Array for storing tasks.
  * @type {Array<Object>}
  */
 let taskArray = [];
 
 /**
- * Array zur Speicherung von Kontaktdaten.
+ * Array for storing contact data.
  * @type {Array<Object>}
  */
 let finalContacts = [];
 
 /**
- * Array zur Speicherung von Kontaktdaten für die Bearbeitung.
+ * Array for storing contact data for editing.
  * @type {Array<Object>}
  */
 let finalContactsForEdit = [];
 
 /**
- * Holt die Namen der Besitzer einer Aufgabe.
- * Falls keine Besitzer angegeben sind, wird "Max Mustermann" zurückgegeben.
+ * Retrieves the names of the owners of a task.
+ * If no owners are specified, "Max Mustermann" is returned.
  *
- * @param {Object} task - Das Aufgabenobjekt.
- * @param {Array<Object>} [task.owner] - Array der Besitzer des Aufgabenobjekts. Jeder Besitzer sollte die Eigenschaften `firstName` und `lastName` haben.
- * @returns {string} Ein zusammengefügter String der Besitzer-Namen oder "Max Mustermann" wenn keine Besitzer vorhanden sind.
+ * @param {Object} task - The task object.
+ * @param {Array<Object>} [task.owner] - Array of owners of the task object. Each owner should have the properties `firstName` and `lastName`.
+ * @returns {string} A concatenated string of owner names or "Max Mustermann" if no owners are present.
  *
  * @example
  * const task = {
@@ -38,10 +38,10 @@ let finalContactsForEdit = [];
  *     { firstName: "Jane", lastName: "Smith" }
  *   ]
  * };
- * console.log(getOwners(task)); // Ausgabe: "John Doe Jane Smith"
+ * console.log(getOwners(task)); // Output: "John Doe Jane Smith"
  *
  * const taskWithoutOwners = {};
- * console.log(getOwners(taskWithoutOwners)); // Ausgabe: "Max Mustermann"
+ * console.log(getOwners(taskWithoutOwners)); // Output: "Max Mustermann"
  */
 function getOwners(task) {
   let owners = [];

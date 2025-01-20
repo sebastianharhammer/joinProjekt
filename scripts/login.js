@@ -1,18 +1,21 @@
 /**
- * Array der angemeldeten Benutzer für den Login.
+ * Array for storing signed-in users for login.
  * @type {string}
+ *
+ * **Note:** Originally declared as a string, this should be an array.
+ * Recommended: `let signedUsersArray = [];`
  */
 let signedUsersArrayLogin = "[]";
 
 /**
- * Der aktuell angemeldete Benutzer.
+ * The currently logged-in user.
  * @type {Object|null}
  */
 let currentUser = null;
 
 /**
- * Initialisiert die Anwendung.
- * Lädt die Login-Inhalte, zeigt die Startanimation, lädt die angemeldeten Benutzer und lädt den erinnerten Benutzer.
+ * Initializes the application.
+ * Loads the login content, displays the start animation, loads signed-in users, and loads the remembered user.
  *
  * @function init
  * @returns {void}
@@ -25,19 +28,19 @@ function init() {
 }
 
 /**
- * URLSearchParams-Objekt zum Abrufen von URL-Parametern.
+ * URLSearchParams object for retrieving URL parameters.
  * @type {URLSearchParams}
  */
 let urlParams = new URLSearchParams(window.location.search);
 
 /**
- * Nachricht aus den URL-Parametern.
+ * Message from the URL parameters.
  * @type {string|null}
  */
 const msg = urlParams.get("msg");
 
 /**
- * Element zur Anzeige von Nachrichten.
+ * Element for displaying messages.
  * @type {HTMLElement|null}
  */
 const msgBox = document.getElementById("msgBox");
@@ -47,7 +50,7 @@ if (msg && msgBox) {
 }
 
 /**
- * Lädt den Login-Inhalt in den entsprechenden Container.
+ * Loads the login content into the corresponding container.
  *
  * @function loadLoginContent
  * @returns {void}
@@ -55,7 +58,7 @@ if (msg && msgBox) {
 function loadLoginContent() {
   const loginContent = document.getElementById("wholeLoginContent");
   if (!loginContent) {
-    console.error("Element mit ID 'wholeLoginContent' nicht gefunden.");
+    console.error("Element with ID 'wholeLoginContent' not found.");
     return;
   }
   loginContent.innerHTML = "";
@@ -63,7 +66,7 @@ function loadLoginContent() {
 }
 
 /**
- * Zeigt die Startanimation des Logos und des Header-Logos.
+ * Displays the start animation of the logo and the header logo.
  *
  * @function showStartSlide
  * @returns {void}
@@ -72,7 +75,7 @@ function showStartSlide() {
   const logo = document.getElementById("logo");
   const headerLogo = document.querySelector(".v-hidden");
   if (!logo || !headerLogo) {
-    console.error("Logo oder Header-Logo-Element nicht gefunden.");
+    console.error("Logo or header logo element not found.");
     return;
   }
 
@@ -83,7 +86,7 @@ function showStartSlide() {
 
   setTimeout(() => {
     headerLogo.style.transition = "none";
-    headerLogo.offsetHeight; // Reflow auslösen
+    headerLogo.offsetHeight; // Trigger reflow
     headerLogo.style.transition = "opacity 2.5s ease-in-out";
     headerLogo.classList.remove("v-hidden");
     headerLogo.classList.add("fade-in");
@@ -91,7 +94,7 @@ function showStartSlide() {
 }
 
 /**
- * Lädt den erinnerten Benutzer aus dem Local Storage und füllt die Login-Felder aus.
+ * Loads the remembered user from Local Storage and fills in the login fields.
  *
  * @function loadRememberedUser
  * @returns {void}
@@ -110,44 +113,42 @@ function loadRememberedUser() {
         passwordInput.value = userData.password;
         checkbox.checked = true;
       } else {
-        console.error(
-          "Eines der Login-Formular-Elemente wurde nicht gefunden."
-        );
+        console.error("One of the login form elements was not found.");
       }
     } catch (error) {
-      console.error("Fehler beim Parsen des erinnerten Benutzers:", error);
+      console.error("Error parsing the remembered user:", error);
     }
   }
 }
 
 /**
- * Lädt die angemeldeten Benutzer von der Firebase-Datenbank.
+ * Loads the signed-in users from the Firebase database.
  *
  * @async
  * @function loadSignedUsers
- * @param {string} path - Der Pfad zur Firebase-Datenbank für angemeldete Benutzer.
+ * @param {string} path - The path to the Firebase database for signed-in users.
  * @returns {Promise<void>}
  */
 async function loadSignedUsers(path) {
   try {
     const response = await fetch(BASE_URL + path + ".json");
     if (!response.ok) {
-      throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+      throw new Error(`HTTP Error! Status: ${response.status}`);
     }
     const responseToJson = await response.json();
     if (responseToJson) {
       signedUsersArrayLogin = JSON.stringify(Object.values(responseToJson));
     }
   } catch (error) {
-    console.error("Fehler beim Laden der angemeldeten Benutzer:", error);
+    console.error("Error loading signed-in users:", error);
   }
 }
 
 /**
- * Meldet einen Gastbenutzer an.
+ * Logs in a guest user.
  *
  * @function loginGuest
- * @param {Event} event - Das auslösende Ereignis.
+ * @param {Event} event - The triggering event.
  * @returns {void}
  */
 function loginGuest(event) {
@@ -162,11 +163,11 @@ function loginGuest(event) {
 }
 
 /**
- * Meldet einen Benutzer an, basierend auf den eingegebenen E-Mail und Passwort.
+ * Logs in a user based on the entered email and password.
  *
  * @async
  * @function loginUser
- * @param {Event} event - Das auslösende Ereignis.
+ * @param {Event} event - The triggering event.
  * @returns {Promise<void>}
  */
 async function loginUser(event) {
@@ -186,7 +187,7 @@ async function loginUser(event) {
       (u) => u.email === userMail && u.password === userPassword
     );
   } catch (error) {
-    console.error("Fehler beim Parsen von signedUsersArrayLogin:", error);
+    console.error("Error parsing signedUsersArrayLogin:", error);
     showDomOfFailedLogin();
     return;
   }
@@ -201,7 +202,7 @@ async function loginUser(event) {
       }
       forwardToSummary(signedUser);
     } catch (error) {
-      console.error("Fehler beim Ändern des Login-Status:", error);
+      console.error("Error changing login status:", error);
     }
   } else {
     showDomOfFailedLogin();
@@ -209,10 +210,10 @@ async function loginUser(event) {
 }
 
 /**
- * Leitet den Benutzer zur Zusammenfassungsseite weiter.
+ * Redirects the user to the summary page.
  *
  * @function forwardToSummary
- * @param {Object} user - Das Benutzerobjekt.
+ * @param {Object} user - The user object.
  * @returns {void}
  */
 function forwardToSummary(user) {
@@ -223,11 +224,11 @@ function forwardToSummary(user) {
 }
 
 /**
- * Ändert den Login-Status eines Benutzers in der Firebase-Datenbank.
+ * Changes the login status of a user in the Firebase database.
  *
  * @async
  * @function changeLoginStatus
- * @param {Object} signedUser - Das angemeldete Benutzerobjekt.
+ * @param {Object} signedUser - The signed-in user object.
  * @returns {Promise<void>}
  */
 async function changeLoginStatus(signedUser) {
@@ -241,23 +242,23 @@ async function changeLoginStatus(signedUser) {
       body: JSON.stringify({ isLoggedin: true }),
     });
     if (!response.ok) {
-      throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+      throw new Error(`HTTP Error! Status: ${response.status}`);
     }
   } catch (error) {
-    console.error("Fehler beim Ändern des Login-Status:", error);
+    console.error("Error changing login status:", error);
   }
 }
 
 /**
- * Speichert die E-Mail und das Passwort des Benutzers im Local Storage.
+ * Saves the user's email and password to Local Storage.
  *
  * @function saveData
- * @param {Object} user - Das Benutzerobjekt.
+ * @param {Object} user - The user object.
  * @returns {void}
  */
 function saveData(user) {
   if (!user.email || !user.password) {
-    console.error("Benutzerobjekt enthält keine E-Mail oder kein Passwort.");
+    console.error("User object does not contain email or password.");
     return;
   }
 
@@ -271,7 +272,7 @@ function saveData(user) {
 }
 
 /**
- * Zeigt die DOM-Elemente für einen fehlgeschlagenen Login an und setzt die Eingabefelder zurück.
+ * Displays DOM elements for a failed login and resets the input fields.
  *
  * @function showDomOfFailedLogin
  * @returns {void}
@@ -283,7 +284,7 @@ function showDomOfFailedLogin() {
   if (failedLoginDiv) {
     failedLoginDiv.classList.remove("d-none");
   } else {
-    console.error("Element mit ID 'failedLoginDiv' nicht gefunden.");
+    console.error("Element with ID 'failedLoginDiv' not found.");
   }
 
   for (let i = 0; i < changeBorders.length; i++) {
@@ -301,12 +302,12 @@ function showDomOfFailedLogin() {
 }
 
 /**
- * Validiert das Registrierungsformular.
- * (Diese Funktion ist momentan leer und sollte entsprechend implementiert werden.)
+ * Validates the registration form.
+ * (This function is currently empty and should be implemented accordingly.)
  *
  * @function validateSignUpForm
  * @returns {void}
  */
 function validateSignUpForm() {
-  // Implementiere die Validierung des Registrierungsformulars hier.
+  // Implement the registration form validation here.
 }

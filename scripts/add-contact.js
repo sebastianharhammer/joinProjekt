@@ -1,5 +1,5 @@
 /**
- * Lädt den aktuell angemeldeten Benutzer aus dem Local Storage.
+ * Loads the currently logged-in user from Local Storage.
  */
 function loadCurrentUser() {
   const storedUser = localStorage.getItem("currentUser");
@@ -9,8 +9,8 @@ function loadCurrentUser() {
 }
 
 /**
- * Überprüft, ob der aktuelle Benutzer ein Gastbenutzer ist.
- * @returns {boolean} Gibt true zurück, wenn der Benutzer ein Gast ist, sonst false.
+ * Checks if the current user is a guest user.
+ * @returns {boolean} Returns true if the user is a guest, otherwise false.
  */
 function isGuestUser() {
   return (
@@ -20,11 +20,11 @@ function isGuestUser() {
   );
 }
 
-// Lädt den aktuellen Benutzer, sobald das DOM vollständig geladen ist
+// Loads the current user as soon as the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", loadCurrentUser);
 
 /**
- * Zeigt das Formular zum Hinzufügen eines neuen Kontakts an.
+ * Displays the form to add a new contact.
  */
 function addContact() {
   const addContactTemplate = document.getElementById("add-contact-content");
@@ -38,7 +38,7 @@ function addContact() {
 }
 
 /**
- * Verbirgt das Formular zum Hinzufügen eines neuen Kontakts und lädt die Kontaktinformationen.
+ * Hides the form to add a new contact and loads the contact information.
  */
 function hideAddContact() {
   const addContactTemplate = document.getElementById("add-contact-content");
@@ -52,7 +52,7 @@ function hideAddContact() {
 }
 
 /**
- * Verarbeitet die Informationen eines neuen Kontakts und speichert ihn.
+ * Processes the information of a new contact and saves it.
  */
 async function processContactInfo() {
   const { firstName, lastName } = extractNameParts();
@@ -65,12 +65,12 @@ async function processContactInfo() {
 }
 
 /**
- * Zeigt eine Erfolgsmeldung an, nachdem ein Kontakt erfolgreich erstellt wurde.
+ * Displays a success message after a contact has been successfully created.
  */
 function showSuccessMessage() {
   const message = document.createElement("div");
   message.id = "success-message-container";
-  message.innerHTML = "Kontakt erfolgreich erstellt!";
+  message.innerHTML = "Contact successfully created!";
   document.body.appendChild(message);
 
   setTimeout(() => {
@@ -84,7 +84,7 @@ function showSuccessMessage() {
 }
 
 /**
- * Leert die Eingabefelder im Kontaktformular.
+ * Clears the input fields in the contact form.
  */
 function clearAddContactInput() {
   const nameInput = document.getElementById("add-contact-name");
@@ -99,8 +99,8 @@ function clearAddContactInput() {
 }
 
 /**
- * Extrahiert den Vor- und Nachnamen aus dem Eingabefeld.
- * @returns {Object} Ein Objekt mit den Feldern firstName und lastName.
+ * Extracts the first and last names from the input field.
+ * @returns {Object} An object containing firstName and lastName fields.
  */
 function extractNameParts() {
   const input = document.getElementById("add-contact-name").value.trim();
@@ -112,7 +112,7 @@ function extractNameParts() {
 }
 
 /**
- * Holt die Kontaktinformationen von der Server-API und speichert sie lokal.
+ * Fetches contact information from the server API and stores it locally.
  */
 async function getContactInfo() {
   try {
@@ -124,11 +124,11 @@ async function getContactInfo() {
 }
 
 /**
- * Fügt einen neuen Kontakt zur Datenbank hinzu.
- * @param {string} firstName - Der Vorname des Kontakts.
- * @param {string} lastName - Der Nachname des Kontakts.
- * @param {string} email - Die E-Mail-Adresse des Kontakts.
- * @param {string} phone - Die Telefonnummer des Kontakts.
+ * Adds a new contact to the database.
+ * @param {string} firstName - The first name of the contact.
+ * @param {string} lastName - The last name of the contact.
+ * @param {string} email - The email address of the contact.
+ * @param {string} phone - The phone number of the contact.
  */
 async function pushContactInfo(firstName, lastName, email, phone) {
   const newContact = {
@@ -165,8 +165,8 @@ async function pushContactInfo(firstName, lastName, email, phone) {
 }
 
 /**
- * Generiert eine zufällige Farbe aus einer vordefinierten Liste.
- * @returns {string} Eine zufällig ausgewählte Farbe im Hex-Format.
+ * Generates a random color from a predefined list.
+ * @returns {string} A randomly selected color in HEX format.
  */
 function getRandomColor() {
   const colors = [
@@ -185,7 +185,7 @@ function getRandomColor() {
 }
 
 /**
- * Handhabt die Erstellung eines neuen Kontakts, indem die Eingaben validiert und verarbeitet werden.
+ * Handles the creation of a new contact by validating and processing the inputs.
  */
 function handleContactCreation() {
   const isValid = validateInputs();
@@ -195,8 +195,8 @@ function handleContactCreation() {
 }
 
 /**
- * Validiert die Eingabefelder des Kontaktformulars.
- * @returns {boolean} Gibt true zurück, wenn alle Eingaben gültig sind, sonst false.
+ * Validates the input fields of the contact form.
+ * @returns {boolean} Returns true if all inputs are valid, otherwise false.
  */
 function validateInputs() {
   const nameInput = document.getElementById("add-contact-name");

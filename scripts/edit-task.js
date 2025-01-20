@@ -1,12 +1,12 @@
 /**
- * Zeigt das Bearbeitungstemplate für eine bestimmte Aufgabe an.
- * @param {number} taskId - Die ID der zu bearbeitenden Aufgabe.
+ * Shows the edit template for a specific task.
+ * @param {number} taskId - The ID of the task to be edited.
  */
 function showEditTaskTempl(taskId) {
   currentTaskBeingEdited = taskId;
   const task = taskArray.find((t) => t.id === taskId);
   if (!task) {
-    console.error("Task nicht gefunden!");
+    console.error("Task not found!");
     return;
   }
   assignedUserArr = task.owner ? [...task.owner] : [];
@@ -17,7 +17,7 @@ function showEditTaskTempl(taskId) {
 }
 
 /**
- * Wechselt zwischen Detail- und Bearbeitungsansicht.
+ * Toggles between detail and edit view.
  */
 function toggleEditAndDetailView() {
   const detailView = document.getElementById("taskDetailView");
@@ -28,9 +28,9 @@ function toggleEditAndDetailView() {
 }
 
 /**
- * Initialisiert die Bearbeitung einer Aufgabe.
- * @param {number} taskId - Die ID der zu bearbeitenden Aufgabe.
- * @param {Object} task - Das Aufgabenobjekt.
+ * Initializes the editing of a task.
+ * @param {number} taskId - The ID of the task to be edited.
+ * @param {Object} task - The task object.
  */
 function initializeEditTask(taskId, task) {
   setupEditTaskEventListeners(taskId);
@@ -41,9 +41,9 @@ function initializeEditTask(taskId, task) {
 }
 
 /**
- * Bearbeitet eine bestehende Unteraufgabe in der Bearbeitungsansicht.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
+ * Edits an existing subtask in the edit view.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
  */
 function editExistingSubtaskEditView(taskId, subtaskIndex) {
   const subtaskTextElement = editFindSubtaskElement(taskId, subtaskIndex);
@@ -54,27 +54,25 @@ function editExistingSubtaskEditView(taskId, subtaskIndex) {
 }
 
 /**
- * Findet das DOM-Element der Unteraufgabe zum Bearbeiten.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
- * @returns {HTMLElement|null} Das gefundene Element oder null.
+ * Finds the DOM element of the subtask to edit.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @returns {HTMLElement|null} The found element or null.
  */
 function editFindSubtaskElement(taskId, subtaskIndex) {
   const subtaskTextId = `subtask-text-${taskId}-${subtaskIndex}`;
   const subtaskTextElement = document.getElementById(subtaskTextId);
   if (!subtaskTextElement) {
-    console.error(
-      `Subtask-Text-Element mit ID ${subtaskTextId} nicht gefunden.`
-    );
+    console.error(`Subtask text element with ID ${subtaskTextId} not found.`);
     return null;
   }
   return subtaskTextElement;
 }
 
 /**
- * Erstellt ein Input-Element für die Unteraufgabe.
- * @param {HTMLElement} subtaskTextElement - Das Text-Element der Unteraufgabe.
- * @returns {HTMLInputElement} Das erstellte Input-Element.
+ * Creates an input element for the subtask.
+ * @param {HTMLElement} subtaskTextElement - The text element of the subtask.
+ * @returns {HTMLInputElement} The created input element.
  */
 function editCreateInputElement(subtaskTextElement) {
   const inputElement = document.createElement("input");
@@ -86,9 +84,9 @@ function editCreateInputElement(subtaskTextElement) {
 }
 
 /**
- * Aktualisiert das Bearbeitungssymbol der Unteraufgabe.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
+ * Updates the edit icon of the subtask.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
  */
 function editUpdateEditIcon(taskId, subtaskIndex) {
   const editIcon = document.querySelector(
@@ -102,10 +100,10 @@ function editUpdateEditIcon(taskId, subtaskIndex) {
 }
 
 /**
- * Richtet das Verhalten des Input-Elements für die Unteraufgabe ein.
- * @param {HTMLInputElement} inputElement - Das Input-Element.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
+ * Sets up the behavior of the input element for the subtask.
+ * @param {HTMLInputElement} inputElement - The input element.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
  */
 function editSetupInputBehavior(inputElement, taskId, subtaskIndex) {
   inputElement.addEventListener("blur", () =>
@@ -115,10 +113,10 @@ function editSetupInputBehavior(inputElement, taskId, subtaskIndex) {
 }
 
 /**
- * Speichert die bearbeitete Unteraufgabe.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
- * @param {string} newValue - Der neue Wert der Unteraufgabe.
+ * Saves the edited subtask.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} newValue - The new value of the subtask.
  */
 function saveEditedSubtask(taskId, subtaskIndex, newValue) {
   const task = findTaskById(taskId);
@@ -131,42 +129,42 @@ function saveEditedSubtask(taskId, subtaskIndex, newValue) {
 }
 
 /**
- * Findet eine Aufgabe anhand ihrer ID.
- * @param {number} taskId - Die ID der Aufgabe.
- * @returns {Object|undefined} Die gefundene Aufgabe oder undefined.
+ * Finds a task by its ID.
+ * @param {number} taskId - The ID of the task.
+ * @returns {Object|undefined} The found task or undefined.
  */
 function findTaskById(taskId) {
   return taskArray.find((t) => t.id === taskId);
 }
 
 /**
- * Überprüft, ob eine Unteraufgabe gültig ist.
- * @param {Object} task - Die Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
- * @returns {boolean} Gibt true zurück, wenn die Unteraufgabe gültig ist.
+ * Checks if a subtask is valid.
+ * @param {Object} task - The task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @returns {boolean} Returns true if the subtask is valid.
  */
 function isValidSubtask(task, subtaskIndex) {
   if (!task || !task.subtasks || !task.subtasks[subtaskIndex]) {
-    console.error("Task oder Subtask nicht gefunden.");
+    console.error("Task or subtask not found.");
     return false;
   }
   return true;
 }
 
 /**
- * Aktualisiert den Wert einer Unteraufgabe.
- * @param {Object} task - Die Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
- * @param {string} newValue - Der neue Wert der Unteraufgabe.
+ * Updates the value of a subtask.
+ * @param {Object} task - The task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} newValue - The new value of the subtask.
  */
 function updateSubtaskValue(task, subtaskIndex, newValue) {
   task.subtasks[subtaskIndex].subtask = newValue;
 }
 
 /**
- * Speichert eine Aufgabe auf dem Server.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {Object} task - Die Aufgabe.
+ * Saves a task to the server.
+ * @param {number} taskId - The ID of the task.
+ * @param {Object} task - The task.
  */
 function saveTaskToServer(taskId, task) {
   fetch(`${BASE_URL}/tasks/${taskId}.json`, {
@@ -174,17 +172,15 @@ function saveTaskToServer(taskId, task) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
   })
-    .then(() => console.log(`Task ${taskId} erfolgreich gespeichert.`))
-    .catch((error) =>
-      console.error("Fehler beim Speichern des Subtasks:", error)
-    );
+    .then(() => console.log(`Task ${taskId} successfully saved.`))
+    .catch((error) => console.error("Error saving the subtask:", error));
 }
 
 /**
- * Aktualisiert die Unteraufgabe im DOM.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
- * @param {string} newValue - Der neue Wert der Unteraufgabe.
+ * Updates the subtask in the DOM.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
+ * @param {string} newValue - The new value of the subtask.
  */
 function updateSubtaskDOM(taskId, subtaskIndex, newValue) {
   const subtaskContainer = document.getElementById(
@@ -200,9 +196,9 @@ function updateSubtaskDOM(taskId, subtaskIndex, newValue) {
 }
 
 /**
- * Stellt das Verhalten des Bearbeitungssymbols der Unteraufgabe wieder her.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
+ * Restores the behavior of the edit icon of the subtask.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
  */
 function restoreEditIconBehavior(taskId, subtaskIndex) {
   const editIcon = document.querySelector(
@@ -215,7 +211,7 @@ function restoreEditIconBehavior(taskId, subtaskIndex) {
 }
 
 /**
- * Holt die Benutzer für das Bearbeitungs-Dropdown von Firebase.
+ * Retrieves users for the edit dropdown from Firebase.
  */
 async function getUsersForEditDropDown() {
   try {
@@ -238,7 +234,7 @@ async function getUsersForEditDropDown() {
 }
 
 /**
- * Richtet die Interaktionen für das Bearbeitungs-Dropdown ein.
+ * Sets up interactions for the edit dropdown.
  */
 function setupEditDropdownInteraction() {
   const dropdown = document.getElementById("custom-dropdown-edit");
@@ -249,9 +245,9 @@ function setupEditDropdownInteraction() {
 }
 
 /**
- * Richtet den Klick-Listener für das Bearbeitungs-Dropdown ein.
- * @param {HTMLElement} dropdown - Das Dropdown-Element.
- * @param {HTMLElement} optionsContainer - Der Container für die Optionen.
+ * Sets up the click listener for the edit dropdown.
+ * @param {HTMLElement} dropdown - The dropdown element.
+ * @param {HTMLElement} optionsContainer - The container for the options.
  */
 function editSetupDropdownClick(dropdown, optionsContainer) {
   dropdown.addEventListener("click", (e) => {
@@ -265,8 +261,8 @@ function editSetupDropdownClick(dropdown, optionsContainer) {
 }
 
 /**
- * Wechselt die Anzeige des Bearbeitungs-Dropdowns.
- * @param {HTMLElement} optionsContainer - Der Container für die Optionen.
+ * Toggles the display of the edit options dropdown.
+ * @param {HTMLElement} optionsContainer - The container for the options.
  */
 function editToggleOptionsDisplay(optionsContainer) {
   const isOpen = optionsContainer.style.display === "block";
@@ -274,8 +270,8 @@ function editToggleOptionsDisplay(optionsContainer) {
 }
 
 /**
- * Richtet den Klick-Listener für den Bearbeitungs-Optionscontainer ein.
- * @param {HTMLElement} optionsContainer - Der Container für die Optionen.
+ * Sets up the click listener for the edit options container.
+ * @param {HTMLElement} optionsContainer - The container for the options.
  */
 function editSetupOptionsContainerClick(optionsContainer) {
   optionsContainer.addEventListener("click", (event) => {
@@ -287,8 +283,8 @@ function editSetupOptionsContainerClick(optionsContainer) {
 }
 
 /**
- * Behandelt die Benutzerwahl im Bearbeitungs-Dropdown.
- * @param {HTMLElement} userContainer - Der Container des ausgewählten Benutzers.
+ * Handles user selection in the edit dropdown.
+ * @param {HTMLElement} userContainer - The container of the selected user.
  */
 function editHandleUserSelection(userContainer) {
   const checkbox = userContainer.querySelector('input[type="checkbox"]');
@@ -300,11 +296,11 @@ function editHandleUserSelection(userContainer) {
 }
 
 /**
- * Aktualisiert die Benutzerzuweisung basierend auf der Auswahl.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @param {string} color - Die Farbe des Benutzers.
+ * Updates user assignment based on selection.
+ * @param {HTMLElement} userContainer - The container of the user.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
+ * @param {string} color - The user's color.
  */
 function editUpdateUserAssignment(userContainer, firstName, lastName, color) {
   const userIndex = assignedUserArr.findIndex(
@@ -320,9 +316,9 @@ function editUpdateUserAssignment(userContainer, firstName, lastName, color) {
 }
 
 /**
- * Entfernt einen Benutzer aus der Zuordnung und setzt das Styling zurück.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @param {number} userIndex - Der Index des Benutzers im Array.
+ * Removes a user from the assignment and resets the styling.
+ * @param {HTMLElement} userContainer - The container of the user.
+ * @param {number} userIndex - The index of the user in the array.
  */
 function editRemoveUser(userContainer, userIndex) {
   assignedUserArr.splice(userIndex, 1);
@@ -330,8 +326,8 @@ function editRemoveUser(userContainer, userIndex) {
 }
 
 /**
- * Setzt das Styling des Benutzercontainers zurück.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
+ * Resets the styling of the user container.
+ * @param {HTMLElement} userContainer - The container of the user.
  */
 function editResetUserContainerStyle(userContainer) {
   userContainer.style.backgroundColor = "";
@@ -340,11 +336,11 @@ function editResetUserContainerStyle(userContainer) {
 }
 
 /**
- * Fügt einen Benutzer zur Zuordnung hinzu und setzt das Styling.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @param {string} color - Die Farbe des Benutzers.
+ * Adds a user to the assignment and sets the styling.
+ * @param {HTMLElement} userContainer - The container of the user.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
+ * @param {string} color - The user's color.
  */
 function editAddUser(userContainer, firstName, lastName, color) {
   assignedUserArr.push({
@@ -357,8 +353,8 @@ function editAddUser(userContainer, firstName, lastName, color) {
 }
 
 /**
- * Setzt das Styling eines ausgewählten Benutzercontainers.
- * @param {HTMLElement} userContainer - Der Container des Benutzers.
+ * Sets the styling of a selected user container.
+ * @param {HTMLElement} userContainer - The container of the user.
  */
 function editSetSelectedUserContainerStyle(userContainer) {
   userContainer.style.backgroundColor = "#2b3647";
@@ -367,9 +363,9 @@ function editSetSelectedUserContainerStyle(userContainer) {
 }
 
 /**
- * Richtet den globalen Klick-Listener ein, um das Dropdown zu schließen, wenn außerhalb geklickt wird.
- * @param {HTMLElement} dropdown - Das Dropdown-Element.
- * @param {HTMLElement} optionsContainer - Der Container für die Optionen.
+ * Sets up the global click listener to close the dropdown when clicking outside.
+ * @param {HTMLElement} dropdown - The dropdown element.
+ * @param {HTMLElement} optionsContainer - The container for the options.
  */
 function editSetupDocumentClick(dropdown, optionsContainer) {
   document.addEventListener("click", (e) => {
@@ -380,10 +376,10 @@ function editSetupDocumentClick(dropdown, optionsContainer) {
 }
 
 /**
- * Weist einen Benutzer im Bearbeitungs-Dropdown zu.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @param {string} color - Die Farbe des Benutzers.
+ * Assigns a user in the edit dropdown.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
+ * @param {string} color - The user's color.
  */
 function assignUserEdit(firstName, lastName, color) {
   const userExists = assignedUserArr.some(
@@ -401,7 +397,7 @@ function assignUserEdit(firstName, lastName, color) {
 }
 
 /**
- * Wandelt die Kontaktliste in ein Array um und rendert die Dropdown-Optionen für die Bearbeitung.
+ * Converts the contact list into an array and renders the dropdown options for editing.
  */
 function editReturnArrayContacts() {
   if (!editValidateContacts()) return;
@@ -419,8 +415,8 @@ function editReturnArrayContacts() {
 }
 
 /**
- * Validiert, ob Kontakte vorhanden sind.
- * @returns {boolean} Gibt true zurück, wenn Kontakte vorhanden sind.
+ * Validates whether contacts exist.
+ * @returns {boolean} Returns true if contacts exist.
  */
 function editValidateContacts() {
   if (!finalContacts || Object.keys(finalContacts).length === 0) {
@@ -431,18 +427,18 @@ function editValidateContacts() {
 }
 
 /**
- * Validiert einen einzelnen Kontakt.
- * @param {Object} contact - Der Kontakt.
- * @returns {boolean} Gibt true zurück, wenn der Kontakt gültig ist.
+ * Validates a single contact.
+ * @param {Object} contact - The contact.
+ * @returns {boolean} Returns true if the contact is valid.
  */
 function editValidateContact(contact) {
   return contact && contact.firstName && contact.lastName;
 }
 
 /**
- * Erstellt einen Benutzercontainer für das Bearbeitungs-Dropdown.
- * @param {Object} contact - Der Kontakt.
- * @returns {HTMLElement} Der erstellte Benutzercontainer.
+ * Creates a user container for the edit dropdown.
+ * @param {Object} contact - The contact.
+ * @returns {HTMLElement} The created user container.
  */
 function editCreateUserContainer(contact) {
   const userContainerEdit = document.createElement("div");
@@ -458,9 +454,9 @@ function editCreateUserContainer(contact) {
 }
 
 /**
- * Setzt die Datenattribute für den Benutzercontainer.
- * @param {HTMLElement} container - Der Benutzercontainer.
- * @param {Object} contact - Der Kontakt.
+ * Sets the data attributes for the user container.
+ * @param {HTMLElement} container - The user container.
+ * @param {Object} contact - The contact.
  */
 function editSetUserContainerData(container, contact) {
   container.dataset.firstname = contact.firstName;
@@ -469,9 +465,9 @@ function editSetUserContainerData(container, contact) {
 }
 
 /**
- * Überprüft, ob ein Benutzer bereits zugewiesen ist.
- * @param {Object} contact - Der Kontakt.
- * @returns {boolean} Gibt true zurück, wenn der Benutzer bereits zugewiesen ist.
+ * Checks if a user is already assigned.
+ * @param {Object} contact - The contact.
+ * @returns {boolean} Returns true if the user is already assigned.
  */
 function editCheckIfUserAssigned(contact) {
   return assignedUserArr.some(
@@ -481,8 +477,8 @@ function editCheckIfUserAssigned(contact) {
 }
 
 /**
- * Stellt das Styling eines zugewiesenen Benutzers wieder her.
- * @param {HTMLElement} container - Der Benutzercontainer.
+ * Restores the styling of an assigned user.
+ * @param {HTMLElement} container - The user container.
  */
 function editStyleAssignedUser(container) {
   container.style.backgroundColor = "#2b3647";
@@ -491,7 +487,7 @@ function editStyleAssignedUser(container) {
 }
 
 /**
- * Zeigt die zugewiesenen Benutzer in der Bearbeitungsansicht an.
+ * Displays the assigned users in the edit view.
  */
 function showAssignedUsersEdit() {
   let assignUsersEdit = document.getElementById("assigned-users-short-edit");
@@ -502,7 +498,7 @@ function showAssignedUsersEdit() {
 }
 
 /**
- * Schließt das Bearbeitungs-Dropdown.
+ * Closes the edit dropdown.
  */
 function closeDropdownEdit() {
   const optionsContainer = document.getElementById("dropdown-options-edit");
@@ -510,8 +506,8 @@ function closeDropdownEdit() {
 }
 
 /**
- * Wechselt die Anzeige eines Bearbeitungs-Dropdowns.
- * @param {HTMLElement} editOptionsContainer - Der Container der Bearbeitungs-Optionen.
+ * Toggles the display of an edit dropdown.
+ * @param {HTMLElement} editOptionsContainer - The container of the edit options.
  */
 function toggleDropdown(editOptionsContainer) {
   const isDropdownOpen = editOptionsContainer.style.display === "block";
@@ -519,10 +515,10 @@ function toggleDropdown(editOptionsContainer) {
 }
 
 /**
- * Schließt das Bearbeitungs-Dropdown, wenn außerhalb geklickt wird.
- * @param {HTMLElement} editDropdown - Das Dropdown-Element.
- * @param {HTMLElement} editOptionsContainer - Der Container der Bearbeitungs-Optionen.
- * @param {EventTarget} target - Das Ziel des Klick-Events.
+ * Closes the edit dropdown if clicked outside.
+ * @param {HTMLElement} editDropdown - The dropdown element.
+ * @param {HTMLElement} editOptionsContainer - The container of the edit options.
+ * @param {EventTarget} target - The target of the click event.
  */
 function closeDropdownIfClickedOutside(
   editDropdown,
@@ -535,10 +531,10 @@ function closeDropdownIfClickedOutside(
 }
 
 /**
- * Erstellt eine Dropdown-Option für einen Kontakt.
- * @param {Object} contact - Der Kontakt.
- * @param {boolean} isChecked - Gibt an, ob die Option bereits ausgewählt ist.
- * @returns {HTMLElement} Das erstellte Options-Element.
+ * Creates a dropdown option for a contact.
+ * @param {Object} contact - The contact.
+ * @param {boolean} isChecked - Indicates if the option is already selected.
+ * @returns {HTMLElement} The created option element.
  */
 function createDropdownOption(contact, isChecked) {
   const optionElement = document.createElement("div");
@@ -556,9 +552,9 @@ function createDropdownOption(contact, isChecked) {
 }
 
 /**
- * Erstellt ein Span-Element mit dem Namen eines Kontakts.
- * @param {Object} contact - Der Kontakt.
- * @returns {HTMLElement} Das erstellte Span-Element.
+ * Creates a span element with a contact's name.
+ * @param {Object} contact - The contact.
+ * @returns {HTMLElement} The created span element.
  */
 function createContactNameSpan(contact) {
   const nameSpan = document.createElement("span");
@@ -567,10 +563,10 @@ function createContactNameSpan(contact) {
 }
 
 /**
- * Erstellt ein Label mit einer Checkbox für einen Kontakt.
- * @param {Object} contact - Der Kontakt.
- * @param {boolean} isChecked - Gibt an, ob die Checkbox ausgewählt ist.
- * @returns {HTMLElement} Das erstellte Label-Element.
+ * Creates a label with a checkbox for a contact.
+ * @param {Object} contact - The contact.
+ * @param {boolean} isChecked - Indicates if the checkbox is selected.
+ * @returns {HTMLElement} The created label element.
  */
 function createCheckboxLabel(contact, isChecked) {
   const checkboxLabel = createEditLabel();
@@ -581,8 +577,8 @@ function createCheckboxLabel(contact, isChecked) {
 }
 
 /**
- * Erstellt ein Label-Element für eine Checkbox.
- * @returns {HTMLElement} Das erstellte Label-Element.
+ * Creates a label element for a checkbox.
+ * @returns {HTMLElement} The created label element.
  */
 function createEditLabel() {
   const label = document.createElement("label");
@@ -591,10 +587,10 @@ function createEditLabel() {
 }
 
 /**
- * Erstellt eine Checkbox für die Bearbeitungsansicht.
- * @param {boolean} isChecked - Gibt an, ob die Checkbox ausgewählt ist.
- * @param {Object} contact - Der Kontakt.
- * @returns {HTMLInputElement} Die erstellte Checkbox.
+ * Creates a checkbox for the edit view.
+ * @param {boolean} isChecked - Indicates if the checkbox is selected.
+ * @param {Object} contact - The contact.
+ * @returns {HTMLInputElement} The created checkbox.
  */
 function createEditCheckbox(isChecked, contact) {
   const checkbox = document.createElement("input");
@@ -613,8 +609,8 @@ function createEditCheckbox(isChecked, contact) {
 }
 
 /**
- * Erstellt ein Span-Element für die Checkbox.
- * @returns {HTMLElement} Das erstellte Span-Element.
+ * Creates a span element for the checkbox.
+ * @returns {HTMLElement} The created span element.
  */
 function createEditCheckboxSquare() {
   const span = document.createElement("span");
@@ -623,10 +619,10 @@ function createEditCheckboxSquare() {
 }
 
 /**
- * Fügt die Checkbox und das Checkbox-Span-Element zum Label hinzu.
- * @param {HTMLElement} label - Das Label-Element.
- * @param {HTMLInputElement} checkbox - Die Checkbox.
- * @param {HTMLElement} checkboxSquare - Das Span-Element für die Checkbox.
+ * Appends the checkbox and checkbox span element to the label.
+ * @param {HTMLElement} label - The label element.
+ * @param {HTMLInputElement} checkbox - The checkbox.
+ * @param {HTMLElement} checkboxSquare - The span element for the checkbox.
  */
 function assembleEditLabel(label, checkbox, checkboxSquare) {
   label.appendChild(checkbox);
@@ -634,9 +630,9 @@ function assembleEditLabel(label, checkbox, checkboxSquare) {
 }
 
 /**
- * Erstellt einen Kreis mit den Initialen eines Kontakts.
- * @param {Object} contact - Der Kontakt.
- * @returns {HTMLElement} Das erstellte Kreis-Div.
+ * Creates a circle with a contact's initials.
+ * @param {Object} contact - The contact.
+ * @returns {HTMLElement} The created circle div.
  */
 function createContactCircle(contact) {
   const circleDiv = document.createElement("div");
@@ -652,10 +648,10 @@ function createContactCircle(contact) {
 }
 
 /**
- * Behandelt die Auswahl eines Kontakts im Bearbeitungs-Dropdown.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @param {boolean} isChecked - Gibt an, ob der Kontakt ausgewählt ist.
+ * Handles the selection of a contact in the edit dropdown.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
+ * @param {boolean} isChecked - Indicates if the contact is selected.
  */
 function handleEditContactSelection(firstName, lastName, isChecked) {
   if (isChecked) {
@@ -675,7 +671,7 @@ function handleEditContactSelection(firstName, lastName, isChecked) {
 }
 
 /**
- * Aktualisiert die Anzeige der zugewiesenen Benutzer.
+ * Updates the display of assigned users.
  */
 function updateAssignedUsersDisplay() {
   const assignedUsersContainer = document.getElementById(
@@ -692,10 +688,10 @@ function updateAssignedUsersDisplay() {
 }
 
 /**
- * Generiert eine zufällige Farbe basierend auf dem Namen eines Benutzers.
- * @param {string} firstName - Der Vorname des Benutzers.
- * @param {string} lastName - Der Nachname des Benutzers.
- * @returns {string} Die generierte Farbe.
+ * Generates a random color based on a user's name.
+ * @param {string} firstName - The user's first name.
+ * @param {string} lastName - The user's last name.
+ * @returns {string} The generated color.
  */
 function getRandomColor(firstName, lastName) {
   const contact = finalContacts.find(
@@ -705,7 +701,7 @@ function getRandomColor(firstName, lastName) {
 }
 
 /**
- * Leert das Eingabefeld für Unteraufgaben.
+ * Clears the subtask input field.
  */
 function emptyInput() {
   let inputField = document.getElementById("input-subtask-in-edit");
@@ -713,7 +709,7 @@ function emptyInput() {
 }
 
 /**
- * Fügt eine neue Unteraufgabe im Bearbeitungs-Template hinzu.
+ * Adds a new subtask in the edit template.
  */
 function addSubTaskInEditTempl() {
   const inputField = document.querySelector(".input-subtask-in-edit");
@@ -739,8 +735,8 @@ function addSubTaskInEditTempl() {
 }
 
 /**
- * Richtet Event-Listener für die Bearbeitung einer Aufgabe ein.
- * @param {number} taskId - Die ID der Aufgabe.
+ * Sets up event listeners for editing a task.
+ * @param {number} taskId - The ID of the task.
  */
 function setupEditTaskEventListeners(taskId) {
   const dueDateInput = document.getElementById("edit-due-date");
@@ -755,9 +751,9 @@ function setupEditTaskEventListeners(taskId) {
 }
 
 /**
- * Löscht eine Unteraufgabe in der Bearbeitungsansicht.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
+ * Deletes a subtask in the edit view.
+ * @param {number} taskId - The ID of the task.
+ * @param {number} subtaskIndex - The index of the subtask.
  */
 function deleteSubtaskEditview(taskId, subtaskIndex) {
   const task = findTaskById(taskId);
@@ -770,32 +766,32 @@ function deleteSubtaskEditview(taskId, subtaskIndex) {
 }
 
 /**
- * Überprüft, ob eine Aufgabe gültig ist.
- * @param {Object} task - Die Aufgabe.
- * @returns {boolean} Gibt true zurück, wenn die Aufgabe gültig ist.
+ * Checks if a task is valid.
+ * @param {Object} task - The task.
+ * @returns {boolean} Returns true if the task is valid.
  */
 function isValidTask(task) {
   if (!task || !task.subtasks) {
-    console.error("Task oder Subtasks nicht gefunden!");
+    console.error("Task or subtasks not found!");
     return false;
   }
   return true;
 }
 
 /**
- * Löscht eine Unteraufgabe aus der Aufgabe.
- * @param {Object} task - Die Aufgabe.
- * @param {number} subtaskIndex - Der Index der Unteraufgabe.
+ * Deletes a subtask from the task.
+ * @param {Object} task - The task.
+ * @param {number} subtaskIndex - The index of the subtask.
  */
 function deleteSubtaskFromTask(task, subtaskIndex) {
   task.subtasks.splice(subtaskIndex, 1);
 }
 
 /**
- * Aktualisiert die Aufgabe auf dem Server.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {Object} task - Die aktualisierte Aufgabe.
- * @returns {Promise<Response>} Die Fetch-Antwort.
+ * Updates the task on the server.
+ * @param {number} taskId - The ID of the task.
+ * @param {Object} task - The updated task.
+ * @returns {Promise<Response>} The fetch response.
  */
 function updateTaskInFirebaseEdit(taskId, task) {
   return fetch(`${BASE_URL}/tasks/${taskId}.json`, {
@@ -806,18 +802,18 @@ function updateTaskInFirebaseEdit(taskId, task) {
 }
 
 /**
- * Aktualisiert den Unteraufgaben-Container im DOM.
+ * Updates the subtask container in the DOM.
  */
 function updateSubtaskContainer() {
   const subtaskContainer = document.getElementById("rendered-subtasks-edit");
   if (subtaskContainer.children.length === 0) {
-    subtaskContainer.innerHTML = `<p class="noSubtasks">Keine Subtasks vorhanden</p>`;
+    subtaskContainer.innerHTML = `<p class="noSubtasks">No subtasks available</p>`;
   }
 }
 
 /**
- * Überspringt die Bearbeitung einer Aufgabe und zeigt die Detailansicht an.
- * @param {number} taskId - Die ID der Aufgabe.
+ * Skips editing a task and shows the detail view.
+ * @param {number} taskId - The ID of the task.
  */
 function skipEdit(taskId) {
   const editView = document.getElementById("editTaskTempl");
@@ -826,7 +822,7 @@ function skipEdit(taskId) {
   }
   const task = taskArray.find((t) => t.id === taskId);
   if (!task) {
-    console.error(`Task mit ID ${taskId} nicht gefunden.`);
+    console.error(`Task with ID ${taskId} not found.`);
     return;
   }
   let detailView = document.getElementById("taskDetailView");
@@ -838,7 +834,7 @@ function skipEdit(taskId) {
 }
 
 /**
- * Schließt die Bearbeitungsansicht einer Aufgabe.
+ * Closes the edit view of a task.
  */
 function closeEditTask() {
   const overlayEdit = document.getElementById("editTaskTempl");
@@ -850,7 +846,7 @@ function closeEditTask() {
 }
 
 /**
- * Speichert die bearbeitete Aufgabe auf dem Server.
+ * Saves the edited task to the server.
  */
 async function saveEditedTask() {
   const taskId = currentTaskBeingEdited;
@@ -862,14 +858,14 @@ async function saveEditedTask() {
     updateTaskHTML();
     closeEditTask();
   } catch (error) {
-    console.error(`Fehler beim Aktualisieren der Task ${taskId}:`, error);
+    console.error(`Error updating task ${taskId}:`, error);
   }
 }
 
 /**
- * Bereitet die aktualisierte Aufgabe vor.
- * @param {number} taskId - Die ID der Aufgabe.
- * @returns {Object|null} Die aktualisierte Aufgabe oder null.
+ * Prepares the updated task.
+ * @param {number} taskId - The ID of the task.
+ * @returns {Object|null} The updated task or null.
  */
 function prepareUpdatedTask(taskId) {
   const newTitle = document.querySelector("#editTaskCard input").value;
@@ -877,7 +873,7 @@ function prepareUpdatedTask(taskId) {
   const newDate = document.getElementById("edit-due-date").value;
   const taskIndex = taskArray.findIndex((task) => task.id === taskId);
   if (taskIndex === -1) {
-    console.error(`Task mit ID ${taskId} nicht im taskArray gefunden.`);
+    console.error(`Task with ID ${taskId} not found in taskArray.`);
     return null;
   }
   const updatedTask = { ...taskArray[taskIndex] };
@@ -891,8 +887,8 @@ function prepareUpdatedTask(taskId) {
 }
 
 /**
- * Bereitet die zugewiesenen Benutzer für die Speicherung vor.
- * @returns {Array<Object>} Das Array der zugewiesenen Benutzer.
+ * Prepares the assigned users for storage.
+ * @returns {Array<Object>} The array of assigned users.
  */
 function prepareAssignedUsers() {
   return assignedUserArr.map((user) => ({
@@ -904,8 +900,8 @@ function prepareAssignedUsers() {
 }
 
 /**
- * Extrahiert die Unteraufgaben aus dem DOM.
- * @returns {Array<Object>} Das Array der extrahierten Unteraufgaben.
+ * Extracts the subtasks from the DOM.
+ * @returns {Array<Object>} The array of extracted subtasks.
  */
 function extractSubtasksFromDOM() {
   const subtaskElements = document.querySelectorAll(
@@ -918,10 +914,10 @@ function extractSubtasksFromDOM() {
 }
 
 /**
- * Aktualisiert die Aufgabe auf dem Server.
- * @param {number} taskId - Die ID der Aufgabe.
- * @param {Object} updatedTask - Die aktualisierte Aufgabe.
- * @returns {Promise<Response>} Die Fetch-Antwort.
+ * Updates the task on the server.
+ * @param {number} taskId - The ID of the task.
+ * @param {Object} updatedTask - The updated task.
+ * @returns {Promise<Response>} The fetch response.
  */
 async function updateTaskOnServer(taskId, updatedTask) {
   await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
