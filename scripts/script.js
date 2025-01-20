@@ -1,11 +1,4 @@
 /**
- * Base URL for Firebase database operations.
- * @constant {string}
- */
-const BASE_URL =
-  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
-
-/**
  * Array for storing tasks.
  * @type {Array<Object>}
  */

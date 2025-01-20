@@ -211,29 +211,51 @@ function refreshContactView(firebaseKey) {
 }
 
 /**
- * Deletes a contact.
- * @param {string} firebaseKey - The Firebase key of the contact.
- */
+* Deletes a contact.
+* @param {string} firebaseKey - The Firebase key of the contact.
+*/
 async function deleteContact(firebaseKey) {
-  clearDesktopDetailView();
-  clearContactSelection();
+ console.log("Deleting contact with Firebase Key:", firebaseKey);
 
-  if (isGuestUser()) {
-    deleteLocalContact(firebaseKey);
-    renderSortedContacts(contactsData);
-    attachContactEventListeners();
-    return;
-  }
+ // Clear the detail view (desktop and mobile)
+ clearDesktopDetailView();
+ clearMobileDetailView();
+ clearContactSelection();
 
-  try {
-    const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
-      method: "DELETE",
-    });
-    if (response.ok) fetchContactsFromFirebase();
-  } catch (error) {
-    console.error("Error deleting contact:", error);
-  }
+ if (isGuestUser()) {
+   deleteLocalContact(firebaseKey);
+   renderSortedContacts(contactsData);
+   attachContactEventListeners();
+   return;
+ }
+
+ try {
+   const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
+     method: "DELETE",
+   });
+   if (response.ok) {
+     console.log("Contact deleted from Firebase.");
+     fetchContactsFromFirebase();
+   } else {
+     console.error("Failed to delete contact from Firebase.");
+   }
+ } catch (error) {
+   console.error("Error deleting contact:", error);
+ }
 }
+
+/**
+* Clears the mobile detail view.
+*/
+function clearMobileDetailView() {
+ const mobileDetailView = document.getElementById("mobile-contact-detail");
+ if (mobileDetailView) {
+   mobileDetailView.innerHTML = ""; // Clear content
+   mobileDetailView.style.display = "none"; // Hide view
+   console.log("Cleared Mobile Detail View.");
+ }
+}
+
 
 /**
  * Deletes a contact locally.

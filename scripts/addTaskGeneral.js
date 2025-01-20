@@ -1,4 +1,12 @@
 /**
+ * The base URL of your Firebase database.
+ * @constant {string}
+ */
+const BASE_URL =
+  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+
+
+/**
  * Initializes the application by loading tasks and users and including the HTML.
  */
 function init() {
