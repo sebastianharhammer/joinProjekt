@@ -35,7 +35,7 @@ function setupEditValidation() {
 
   function validateName() {
     if (!nameInput.value.trim()) {
-      nameError.textContent = "Name ist erforderlich";
+      nameError.textContent = "Name is required.";
       nameError.style.display = "block";
       return false;
     }
@@ -47,12 +47,12 @@ function setupEditValidation() {
   function validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailInput.value.trim()) {
-      emailError.textContent = "Email ist erforderlich";
+      emailError.textContent = "Email is required";
       emailError.style.display = "block";
       return false;
     }
     if (!emailRegex.test(emailInput.value.trim())) {
-      emailError.textContent = "Ungültige Email-Adresse";
+      emailError.textContent = "Invalid Email Address";
       emailError.style.display = "block";
       return false;
     }
@@ -64,12 +64,12 @@ function setupEditValidation() {
   function validatePhone() {
     const phoneRegex = /^[0-9+ ]*$/;
     if (!phoneInput.value.trim()) {
-      phoneError.textContent = "Telefonnummer ist erforderlich";
+      phoneError.textContent = "Phone number is required.";
       phoneError.style.display = "block";
       return false;
     }
     if (!phoneRegex.test(phoneInput.value.trim())) {
-      phoneError.textContent = "Nur Zahlen und + sind erlaubt";
+      phoneError.textContent = "Only numbers and + are allowed.";
       phoneError.style.display = "block";
       return false;
     }
@@ -151,7 +151,7 @@ function getUpdatedContactData() {
   const phoneInput = document.getElementById("edit-contact-phone").value.trim();
 
   if (!nameInput || !emailInput) {
-    showEditErrorMessage("Name und E-Mail sind erforderlich.");
+    showEditErrorMessage("Name and email are required.");
     return null;
   }
 
