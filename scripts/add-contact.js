@@ -124,45 +124,70 @@ async function getContactInfo() {
 }
 
 /**
- * Adds a new contact to the database.
+ * Adds a new contact to the database or local data.
  * @param {string} firstName - The first name of the contact.
  * @param {string} lastName - The last name of the contact.
  * @param {string} email - The email address of the contact.
  * @param {string} phone - The phone number of the contact.
  */
 async function pushContactInfo(firstName, lastName, email, phone) {
-  const newContact = {
+  const newContact = createNewContact(firstName, lastName, email, phone);
+
+  if (isGuestUser()) {
+    addContactLocally(newContact);
+  } else {
+    await addContactToFirebase(newContact);
+  }
+}
+
+/**
+ * Creates a new contact object.
+ * @param {string} firstName
+ * @param {string} lastName
+ * @param {string} email
+ * @param {string} phone
+ * @returns {Object} New contact object.
+ */
+function createNewContact(firstName, lastName, email, phone) {
+  return {
     firstName,
     lastName,
     email,
     phone,
     color: getRandomColor(),
   };
+}
 
-  if (isGuestUser()) {
-    const pseudoKey = `guest-${Date.now()}`;
-    if (contactsData) {
-      contactsData.push({ firebaseKey: pseudoKey, ...newContact });
-      if (typeof renderSortedContacts === "function")
-        renderSortedContacts(contactsData);
-      if (typeof renderRightSideContainer === "function")
-        renderRightSideContainer();
-    }
-    return;
+/**
+ * Adds a contact to local data for guest users.
+ * @param {Object} contact - Contact object to add.
+ */
+function addContactLocally(contact) {
+  const pseudoKey = `guest-${Date.now()}`;
+  if (contactsData) {
+    contactsData.push({ firebaseKey: pseudoKey, ...contact });
+    renderSortedContacts?.(contactsData);
+    renderRightSideContainer?.();
   }
+}
 
+/**
+ * Adds a contact to Firebase.
+ * @param {Object} contact - Contact object to add.
+ */
+async function addContactToFirebase(contact) {
   try {
     await fetch(`${BASE_URL}/contacts.json`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newContact),
+      body: JSON.stringify(contact),
     });
-    if (typeof fetchContactsFromFirebase === "function")
-      fetchContactsFromFirebase();
+    fetchContactsFromFirebase?.();
   } catch {
-    console.error("Failed to add contact.");
+    console.error("Failed to add contact to Firebase.");
   }
 }
+
 
 /**
  * Generates a random color from a predefined list.
@@ -206,30 +231,77 @@ function validateInputs() {
   const emailError = document.getElementById("email-error");
   const phoneError = document.getElementById("phone-error");
 
-  let isValid = true;
+  const isNameValid = validateField(nameInput, nameError, "Name ist erforderlich");
+  const isEmailValid = validateEmailField(emailInput, emailError);
+  const isPhoneValid = validatePhoneField(phoneInput, phoneError);
 
-  if (!nameInput.value.trim()) {
-    nameError.style.display = "block";
-    isValid = false;
-  } else {
-    nameError.style.display = "none";
+  return isNameValid && isEmailValid && isPhoneValid;
+}
+
+/**
+ * Validates a generic input field.
+ * @param {HTMLElement} input - Input field to validate.
+ * @param {HTMLElement} errorElement - Error message container.
+ * @param {string} errorMessage - Error message to display.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+function validateField(input, errorElement, errorMessage) {
+  if (!input.value.trim()) {
+    showError(errorElement, errorMessage);
+    return false;
   }
+  hideError(errorElement);
+  return true;
+}
 
+/**
+ * Validates the email input field.
+ * @param {HTMLElement} emailInput - Email input field.
+ * @param {HTMLElement} emailError - Email error message container.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+function validateEmailField(emailInput, emailError) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailInput.value.trim() || !emailRegex.test(emailInput.value)) {
-    emailError.style.display = "block";
-    isValid = false;
-  } else {
-    emailError.style.display = "none";
+    showError(emailError, "Ungültige Email-Adresse");
+    return false;
   }
+  hideError(emailError);
+  return true;
+}
 
+/**
+ * Validates the phone input field.
+ * @param {HTMLElement} phoneInput - Phone input field.
+ * @param {HTMLElement} phoneError - Phone error message container.
+ * @returns {boolean} True if valid, false otherwise.
+ */
+function validatePhoneField(phoneInput, phoneError) {
   const phoneRegex = /^[0-9+ ]*$/;
   if (!phoneInput.value.trim() || !phoneRegex.test(phoneInput.value)) {
-    phoneError.style.display = "block";
-    isValid = false;
-  } else {
-    phoneError.style.display = "none";
+    showError(phoneError, "Nur Zahlen und + sind erlaubt");
+    return false;
   }
-
-  return isValid;
+  hideError(phoneError);
+  return true;
 }
+
+/**
+ * Displays an error message.
+ * @param {HTMLElement} element - Error message container.
+ * @param {string} message - Error message.
+ */
+function showError(element, message) {
+  element.textContent = message;
+  element.style.display = "block";
+}
+
+/**
+ * Hides an error message.
+ * @param {HTMLElement} element - Error message container.
+ */
+function hideError(element) {
+  element.textContent = "";
+  element.style.display = "none";
+}
+
