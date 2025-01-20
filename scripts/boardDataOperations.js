@@ -30,16 +30,6 @@ let currentDraggedElement = null;
 let currentTaskBeingEdited = null;
 
 /**
- * The array of contacts.
- * @type {Array<Object>}
- */
-
-/**
- * The array of tasks.
- * @type {Array<Object>}
- */
-
-/**
  * Initializes the application.
  * Loads HTML content, the current user, contacts, the board navigator, and tasks.
  *
