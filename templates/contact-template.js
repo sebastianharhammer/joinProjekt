@@ -128,3 +128,18 @@ function getDesktopDetailHTML(contact, firebaseKey) {
     </div>
   `;
 }
+
+/**
+ * Generates the HTML template for the right side container.
+ * @returns {string} The HTML string for the contact detail container.
+ */
+function getRightSideContainerHTML() {
+  return `
+    <div id="contact-big">
+      <div id="contact-headline-container">
+        <h3 id="contact-headline">Contacts</h3>
+        <h2 id="bwat-headline">Better with a team</h2>
+      </div>
+    </div>
+  `;
+}

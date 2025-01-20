@@ -8,7 +8,7 @@ function loadCurrentUser() {
 
 /**
  * Checks if the current user is a guest.
- * @returns {boolean} True if the user is a guest, false otherwise.
+ * @returns {boolean} True if the user is a guest, otherwise false.
  */
 function isGuestUser() {
   return (
@@ -28,10 +28,7 @@ function setupEditValidation() {
   const emailError = document.getElementById("edit-email-error");
   const phoneError = document.getElementById("edit-phone-error");
 
-  if (!nameInput || !emailInput || !phoneInput || !saveButton) {
-    console.error("Validation setup failed: One or more elements are missing.");
-    return;
-  }
+  if (!nameInput || !emailInput || !phoneInput || !saveButton) return;
 
   function validateName() {
     if (!nameInput.value.trim()) {
@@ -47,12 +44,12 @@ function setupEditValidation() {
   function validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailInput.value.trim()) {
-      emailError.textContent = "Email is required";
+      emailError.textContent = "Email is required.";
       emailError.style.display = "block";
       return false;
     }
     if (!emailRegex.test(emailInput.value.trim())) {
-      emailError.textContent = "Invalid Email Address";
+      emailError.textContent = "Invalid Email Address.";
       emailError.style.display = "block";
       return false;
     }
@@ -194,8 +191,7 @@ async function updateFirebaseContact(firebaseKey, updatedContact) {
       return true;
     }
     return false;
-  } catch (error) {
-    console.error("Fehler beim Aktualisieren in Firebase:", error);
+  } catch {
     return false;
   }
 }
@@ -211,51 +207,39 @@ function refreshContactView(firebaseKey) {
 }
 
 /**
-* Deletes a contact.
-* @param {string} firebaseKey - The Firebase key of the contact.
-*/
+ * Deletes a contact.
+ * @param {string} firebaseKey - The Firebase key of the contact.
+ */
 async function deleteContact(firebaseKey) {
- console.log("Deleting contact with Firebase Key:", firebaseKey);
+  clearDesktopDetailView();
+  clearMobileDetailView();
+  clearContactSelection();
 
- // Clear the detail view (desktop and mobile)
- clearDesktopDetailView();
- clearMobileDetailView();
- clearContactSelection();
+  if (isGuestUser()) {
+    deleteLocalContact(firebaseKey);
+    renderSortedContacts(contactsData);
+    attachContactEventListeners();
+    return;
+  }
 
- if (isGuestUser()) {
-   deleteLocalContact(firebaseKey);
-   renderSortedContacts(contactsData);
-   attachContactEventListeners();
-   return;
- }
-
- try {
-   const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
-     method: "DELETE",
-   });
-   if (response.ok) {
-     console.log("Contact deleted from Firebase.");
-     fetchContactsFromFirebase();
-   } else {
-     console.error("Failed to delete contact from Firebase.");
-   }
- } catch (error) {
-   console.error("Error deleting contact:", error);
- }
+  try {
+    const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
+      method: "DELETE",
+    });
+    if (response.ok) fetchContactsFromFirebase();
+  } catch {}
 }
 
 /**
-* Clears the mobile detail view.
-*/
+ * Clears the mobile detail view.
+ */
 function clearMobileDetailView() {
- const mobileDetailView = document.getElementById("mobile-contact-detail");
- if (mobileDetailView) {
-   mobileDetailView.innerHTML = ""; // Clear content
-   mobileDetailView.style.display = "none"; // Hide view
-   console.log("Cleared Mobile Detail View.");
- }
+  const mobileDetailView = document.getElementById("mobile-contact-detail");
+  if (mobileDetailView) {
+    mobileDetailView.innerHTML = "";
+    mobileDetailView.style.display = "none";
+  }
 }
-
 
 /**
  * Deletes a contact locally.
@@ -266,7 +250,6 @@ function deleteLocalContact(firebaseKey) {
   if (index !== -1) contactsData.splice(index, 1);
 }
 
-// Utility Functions for UI Updates
 /**
  * Clears the desktop detail view.
  */

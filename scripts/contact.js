@@ -237,56 +237,123 @@ function renderSortedContacts(contacts) {
   renderRightSideContainer();
 }
 
-
-
 /**
  * Toggles the display of contact details for the specified Firebase key.
  * @param {string} firebaseKey - The unique Firebase key of the contact.
  */
 function toggleContactDetail(firebaseKey) {
   const contactItems = document.querySelectorAll(".contact-item");
-  const detailViewContainer = document.getElementById("contact-big");
-  const mobileDetailView = document.getElementById("mobile-contact-detail");
-  const desktopDetailView = document.getElementById("desktop-contact-detail");
+  const detailViews = getDetailViews();
 
-  const selectedContact = contactsData.find(
-    (c) => c.firebaseKey === firebaseKey
-  );
+  const selectedContact = findContactByFirebaseKey(firebaseKey);
   const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
 
   if (!selectedContact || !clickedItem) return;
 
-  if (clickedItem.classList.contains("selected")) {
-    clickedItem.classList.remove("selected");
-    if (mobileDetailView) mobileDetailView.innerHTML = "";
-    if (desktopDetailView) desktopDetailView.innerHTML = "";
-    return;
+  if (isSelected(clickedItem)) {
+    deselectContact(clickedItem, detailViews);
+  } else {
+    selectContact(clickedItem, contactItems);
+    updateDetailViews(selectedContact, firebaseKey, detailViews);
+    toggleViewMode(detailViews);
   }
+}
 
+/**
+ * Gets the detail views for mobile and desktop.
+ * @returns {Object} An object containing mobile and desktop detail view elements.
+ */
+function getDetailViews() {
+  return {
+    mobile: document.getElementById("mobile-contact-detail"),
+    desktop: document.getElementById("desktop-contact-detail"),
+  };
+}
+
+/**
+ * Finds a contact by its Firebase key.
+ * @param {string} firebaseKey - The unique Firebase key of the contact.
+ * @returns {Object|null} The contact object or null if not found.
+ */
+function findContactByFirebaseKey(firebaseKey) {
+  return contactsData.find((c) => c.firebaseKey === firebaseKey) || null;
+}
+
+/**
+ * Checks if a contact item is already selected.
+ * @param {HTMLElement} clickedItem - The contact item to check.
+ * @returns {boolean} True if the contact is selected, otherwise false.
+ */
+function isSelected(clickedItem) {
+  return clickedItem.classList.contains("selected");
+}
+
+/**
+ * Deselects the currently selected contact and clears the detail views.
+ * @param {HTMLElement} clickedItem - The currently selected contact item.
+ * @param {Object} detailViews - The mobile and desktop detail views.
+ */
+function deselectContact(clickedItem, detailViews) {
+  clickedItem.classList.remove("selected");
+  clearDetailViews(detailViews);
+}
+
+/**
+ * Selects the given contact item and removes the selection from all others.
+ * @param {HTMLElement} clickedItem - The contact item to select.
+ * @param {NodeList} contactItems - A list of all contact items.
+ */
+function selectContact(clickedItem, contactItems) {
   contactItems.forEach((item) => item.classList.remove("selected"));
   clickedItem.classList.add("selected");
+}
 
-  if (mobileDetailView) {
-    mobileDetailView.innerHTML = getMobileDetailHTML(
+/**
+ * Updates the mobile and desktop detail views with the selected contact's details.
+ * @param {Object} selectedContact - The selected contact data.
+ * @param {string} firebaseKey - The Firebase key of the selected contact.
+ * @param {Object} detailViews - The mobile and desktop detail views.
+ */
+function updateDetailViews(selectedContact, firebaseKey, detailViews) {
+  if (detailViews.mobile) {
+    detailViews.mobile.innerHTML = getMobileDetailHTML(
       selectedContact,
       firebaseKey
     );
   }
-  if (desktopDetailView) {
-    desktopDetailView.innerHTML = getDesktopDetailHTML(
+  if (detailViews.desktop) {
+    detailViews.desktop.innerHTML = getDesktopDetailHTML(
       selectedContact,
       firebaseKey
     );
   }
+}
 
+/**
+ * Toggles the visibility of mobile and desktop views based on the screen size.
+ * @param {Object} detailViews - The mobile and desktop detail views.
+ */
+function toggleViewMode(detailViews) {
   const isMobileView = window.innerWidth <= 1256;
-  if (isMobileView) {
-    if (mobileDetailView) mobileDetailView.style.display = "flex";
-    if (desktopDetailView) desktopDetailView.style.display = "none";
-  } else {
-    if (desktopDetailView) desktopDetailView.style.display = "block";
-    if (mobileDetailView) mobileDetailView.style.display = "none";
+  if (detailViews.mobile) {
+    detailViews.mobile.style.display = isMobileView ? "flex" : "none";
   }
+  if (detailViews.desktop) {
+    detailViews.desktop.style.display = isMobileView ? "none" : "block";
+  }
+}
+
+/**
+ * Clears the content and hides both mobile and desktop detail views.
+ * @param {Object} detailViews - The mobile and desktop detail views.
+ */
+function clearDetailViews(detailViews) {
+  Object.values(detailViews).forEach((view) => {
+    if (view) {
+      view.innerHTML = "";
+      view.style.display = "none";
+    }
+  });
 }
 
 /**
@@ -296,16 +363,13 @@ function renderContactList() {
   const contactListContainer = document.getElementById("contact-side-panel");
   const detailViewContainer = document.getElementById("contact-big");
   const mobileDetailView = document.getElementById("mobile-contact-detail");
-
   if (mobileDetailView) {
     mobileDetailView.style.display = "none";
   }
-
   if (contactListContainer) {
     contactListContainer.style.removeProperty("display");
     contactListContainer.classList.remove("hidden");
   }
-
   if (detailViewContainer) {
     detailViewContainer.style.display = "none";
   }
@@ -331,6 +395,7 @@ function toggleMenu() {
     }, 300);
     document.removeEventListener("click", closeMenuOnOutsideClick);
   }
+
   /**
    * Closes the dropdown menu if clicked outside.
    * @param {Event} event - The triggering click event.
@@ -371,13 +436,7 @@ function getInitials(firstName, lastName) {
 function renderRightSideContainer() {
   const content = document.getElementById("contact-content");
   if (!document.getElementById("contact-big")) {
-    content.innerHTML += `
-      <div id="contact-big">
-        <div id="contact-headline-container">
-            <h3 id="contact-headline">Contacts</h3>
-            <h2 id="bwat-headline">Better with a team</h2>
-        </div>
-      </div>
-    `;
+    content.innerHTML += getRightSideContainerHTML();
   }
 }
+
