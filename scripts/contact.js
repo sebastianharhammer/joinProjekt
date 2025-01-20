@@ -439,4 +439,3 @@ function renderRightSideContainer() {
     content.innerHTML += getRightSideContainerHTML();
   }
 }
-

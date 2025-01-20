@@ -188,7 +188,6 @@ async function addContactToFirebase(contact) {
   }
 }
 
-
 /**
  * Generates a random color from a predefined list.
  * @returns {string} A randomly selected color in HEX format.
@@ -231,7 +230,11 @@ function validateInputs() {
   const emailError = document.getElementById("email-error");
   const phoneError = document.getElementById("phone-error");
 
-  const isNameValid = validateField(nameInput, nameError, "Name ist erforderlich");
+  const isNameValid = validateField(
+    nameInput,
+    nameError,
+    "Name ist erforderlich"
+  );
   const isEmailValid = validateEmailField(emailInput, emailError);
   const isPhoneValid = validatePhoneField(phoneInput, phoneError);
 
@@ -304,4 +307,3 @@ function hideError(element) {
   element.textContent = "";
   element.style.display = "none";
 }
-
