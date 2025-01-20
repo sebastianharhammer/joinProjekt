@@ -33,13 +33,11 @@ let currentTaskBeingEdited = null;
  * The array of contacts.
  * @type {Array<Object>}
  */
-let finalContacts = [];
 
 /**
  * The array of tasks.
  * @type {Array<Object>}
  */
-let taskArray = [];
 
 /**
  * Initializes the application.
