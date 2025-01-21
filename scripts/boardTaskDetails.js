@@ -28,11 +28,9 @@ function generateSubTasksHTML(task) {
 }
 
 /**
- * Updates the display of completed subtasks and the progress bar.
- *
- * @function updateCompletedSubtasks
- * @param {string} taskId - The ID of the task whose subtasks should be updated.
- * @returns {void}
+ * Aktualisiert den Fortschritt und die Anzeige der erledigten Teilaufgaben eines Tasks.
+ * 
+ * @param {string} taskId - Die ID des Tasks, dessen Teilaufgaben aktualisiert werden sollen.
  */
 function updateCompletedSubtasks(taskId) {
   const task = taskArray.find((t) => t.id === taskId);
@@ -48,16 +46,40 @@ function updateCompletedSubtasks(taskId) {
 
   if (renderCompleted && progressBar) {
     if (totalSubtasks > 0) {
-      renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
-      progressBar.value = (completedCount / totalSubtasks) * 100;
-      renderCompleted.style.display = "";
-      progressBar.style.display = "";
+      updateProgressDisplay(renderCompleted, progressBar, completedCount, totalSubtasks);
     } else {
-      renderCompleted.style.display = "none";
-      progressBar.style.display = "none";
+      hideProgressDisplay(renderCompleted, progressBar);
     }
   }
 }
+
+/**
+ * Hilfsfunktion zum Aktualisieren der Anzeige des Fortschrittsbalkens und der erledigten Teilaufgaben.
+ * 
+ * @param {HTMLElement} renderCompleted - Das HTML-Element, das die Anzahl der erledigten Teilaufgaben anzeigt.
+ * @param {HTMLElement} progressBar - Der Fortschrittsbalken (HTML-Element), dessen Wert aktualisiert wird.
+ * @param {number} completedCount - Die Anzahl der erledigten Teilaufgaben.
+ * @param {number} totalSubtasks - Die Gesamtzahl der Teilaufgaben.
+ */
+function updateProgressDisplay(renderCompleted, progressBar, completedCount, totalSubtasks) {
+  renderCompleted.innerHTML = `${completedCount} / ${totalSubtasks} Subtasks`;
+  progressBar.value = (completedCount / totalSubtasks) * 100;
+  renderCompleted.style.display = "";
+  progressBar.style.display = "";
+}
+
+/**
+ * Hilfsfunktion zum Verbergen der Anzeige des Fortschrittsbalkens und der erledigten Teilaufgaben.
+ * 
+ * @param {HTMLElement} renderCompleted - Das HTML-Element, das die Anzahl der erledigten Teilaufgaben anzeigt.
+ * @param {HTMLElement} progressBar - Der Fortschrittsbalken (HTML-Element), dessen Wert aktualisiert wird.
+ */
+function hideProgressDisplay(renderCompleted, progressBar) {
+  renderCompleted.style.display = "none";
+  progressBar.style.display = "none";
+}
+
+
 
 /**
  * Determines the number of subtasks a task has.
@@ -190,19 +212,32 @@ function askFordeleteTask() {
 }
 
 /**
- * Deletes a task from Firebase and updates the display.
+ * Überprüft, ob eine Aufgabe im Array vorhanden ist.
  *
- * @async
- * @function deleteTask
- * @param {string} taskId - The ID of the task to be deleted.
- * @returns {Promise<void>}
+ * @function checkTaskExistence
+ * @param {string} taskId - Die ID der Aufgabe.
+ * @param {Array} taskArray - Das Array mit Aufgaben.
+ * @returns {boolean} - Gibt `true` zurück, wenn die Aufgabe gefunden wird, andernfalls `false`.
  */
-async function deleteTask(taskId) {
+function checkTaskExistence(taskId, taskArray) {
   const taskIndex = taskArray.findIndex((task) => task.id === taskId);
   if (taskIndex === -1) {
     console.error(`Task with ID ${taskId} not found.`);
-    return;
+    return false;
   }
+  return true;
+}
+
+/**
+ * Löscht eine Aufgabe aus Firebase und aktualisiert die Anzeige.
+ *
+ * @async
+ * @function deleteTask
+ * @param {string} taskId - Die ID der zu löschenden Aufgabe.
+ * @returns {Promise<void>}
+ */
+async function deleteTask(taskId) {
+  if (!checkTaskExistence(taskId, taskArray)) return;
   try {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
       method: "DELETE",
@@ -210,13 +245,14 @@ async function deleteTask(taskId) {
     if (!response.ok) {
       throw new Error(`HTTP Error! Status: ${response.status}`);
     }
-    taskArray.splice(taskIndex, 1);
+    taskArray.splice(taskArray.findIndex((task) => task.id === taskId), 1);
     closeDetailView();
     updateTaskHTML();
   } catch (error) {
     console.error(`Error deleting task ${taskId}:`, error);
   }
 }
+
 
 /**
  * Closes the delete confirmation prompt.
