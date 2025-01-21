@@ -433,4 +433,7 @@ body.no-scroll {
         bottom: 16px;
     }
 
+    .deleteConfirmation {
+        width: 270px;
+    }
 }
