@@ -71,7 +71,14 @@ function getEditContactHTML(contact) {
                           <img src="./img/call.png" class="edit-contact-input-icon">
                           <small class="error-message" id="edit-phone-error"></small>
                       </div>
+                      <section class="userInfoSection">
+                    <div class="userInfoSaveData">
+                        <div class="font-user-info-save-data">i</div>
+                    </div>
+                    <div class="infoTextForUsers">Data is saved only when signed in; guests lose it on reload.</div>
+                  </section>
                   </form>
+
               </div>
               <div id="edit-contact-btn-wrapper">
                   <div id="edit-contact-btn-placeholder"></div>
