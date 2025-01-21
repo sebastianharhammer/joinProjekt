@@ -41,9 +41,7 @@ async function addFirebaseContact(newContact) {
 async function addContact() {
   const contactInfo = collectContactInfo();
   if (!contactInfo) return;
-
   const newContact = createContactObject(contactInfo);
-
   if (isGuestUser()) {
     addGuestContact(newContact);
   } else {
@@ -60,7 +58,6 @@ function getUpdatedContactInfo(currentContact) {
   const newFirstName = prompt("New first name:", currentContact.firstName);
   const newLastName = prompt("New last name:", currentContact.lastName);
   if (!newFirstName || !newLastName) return null;
-
   return {
     firstName: newFirstName,
     lastName: newLastName,
@@ -178,12 +175,12 @@ function renderSortedContacts(contacts) {
   const sortedContacts = sortContacts(contacts);
   const groupedContacts = groupContactsByLetter(sortedContacts);
   let contactsHTML = `<div id="contact-side-panel">`;
-  contactsHTML += addContactButtonTemplate(); 
+  contactsHTML += addContactButtonTemplate();
   for (const letter in groupedContacts) {
     const contactsForLetter = groupedContacts[letter]
-      .map((contact) => contactsTemplate(contact)) 
+      .map((contact) => contactsTemplate(contact))
       .join("");
-    contactsHTML += letterSectionTemplate(letter, contactsForLetter); 
+    contactsHTML += letterSectionTemplate(letter, contactsForLetter);
   }
   contactsHTML += `</div>`;
   content.innerHTML = contactsHTML;
@@ -345,19 +342,19 @@ function toggleMenu() {
     }, 300);
     document.removeEventListener("click", closeMenuOnOutsideClick);
   }
+}
 
-  /**
-   * Closes the dropdown menu if clicked outside.
-   * @param {Event} event - The triggering click event.
-   */
-  function closeMenuOnOutsideClick(event) {
-    if (!menu.contains(event.target) && !button.contains(event.target)) {
-      menu.classList.add("hidden");
-      setTimeout(() => {
-        menu.style.display = "none";
-      }, 300);
-      document.removeEventListener("click", closeMenuOnOutsideClick);
-    }
+/**
+ * Closes the dropdown menu if clicked outside.
+ * @param {Event} event - The triggering click event.
+ */
+function closeMenuOnOutsideClick(event) {
+  if (!menu.contains(event.target) && !button.contains(event.target)) {
+    menu.classList.add("hidden");
+    setTimeout(() => {
+      menu.style.display = "none";
+    }, 300);
+    document.removeEventListener("click", closeMenuOnOutsideClick);
   }
 }
 
