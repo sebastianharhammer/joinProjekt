@@ -36,20 +36,6 @@ async function addFirebaseContact(newContact) {
 }
 
 /**
- * Adds a new contact. For guest users, the contact is added locally; otherwise, it's added to Firebase.
- */
-async function addContact() {
-  const contactInfo = collectContactInfo();
-  if (!contactInfo) return;
-  const newContact = createContactObject(contactInfo);
-  if (isGuestUser()) {
-    addGuestContact(newContact);
-  } else {
-    await addFirebaseContact(newContact);
-  }
-}
-
-/**
  * Gets updated contact information via prompts.
  * @param {Object} currentContact - The current contact data
  * @returns {Object|null} Updated contact info or null if cancelled
