@@ -180,24 +180,17 @@ function transformOwner(owner) {
  * @returns {Promise<void>}
  */
 async function moveTo(category) {
-  const taskIndex = taskArray.findIndex(
-    (task) => task.id === currentDraggedElement
-  );
-  if (taskIndex !== -1) {
-    taskArray[taskIndex].status = category;
-    if (
-      currentUser &&
-      currentUser.firstName === "Guest" &&
-      currentUser.lastName === "User"
-    ) {
+  const i = taskArray.findIndex((t) => t.id === currentDraggedElement);
+  if (i === -1) return;
+  taskArray[i].status = category;
+  if (currentUser?.firstName === "Guest" && currentUser?.lastName === "User") {
+    updateTaskHTML();
+  } else {
+    try {
+      await updateTaskInFirebase(taskArray[i]);
       updateTaskHTML();
-    } else {
-      try {
-        await updateTaskInFirebase(taskArray[taskIndex]);
-        updateTaskHTML();
-      } catch (error) {
-        console.error("Error moving task:", error);
-      }
+    } catch (e) {
+      console.error("Error moving task:", e);
     }
   }
 }

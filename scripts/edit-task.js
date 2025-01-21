@@ -45,21 +45,14 @@ function initializeEditTask(taskId, task) {
  * @param {number} taskId - The ID of the task.
  */
 function skipEdit(taskId) {
-  const editView = document.getElementById("editTaskTempl");
-  if (editView) {
-    editView.classList.add("d-none");
-  }
+  document.getElementById("editTaskTempl")?.classList.add("d-none");
   const task = taskArray.find((t) => t.id === taskId);
-  if (!task) {
-    console.error(`Task with ID ${taskId} not found.`);
-    return;
-  }
-  let detailView = document.getElementById("taskDetailView");
-  if (detailView) {
-    detailView.innerHTML = "";
-    detailView.classList.remove("d-none");
-    detailView.innerHTML += showTaskCardHTML(task);
-  }
+  if (!task) return console.error(`Task with ID ${taskId} not found.`);
+  const detailView = document.getElementById("taskDetailView");
+  if (!detailView) return;
+  detailView.innerHTML = "";
+  detailView.classList.remove("d-none");
+  detailView.innerHTML += showTaskCardHTML(task);
 }
 
 /**
@@ -103,42 +96,37 @@ async function updateTaskOnServer(taskId, updatedTask) {
     const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedTask) // Send the updated task as JSON
+      body: JSON.stringify(updatedTask), // Send the updated task as JSON
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to update task with ID ${taskId}: ${response.status}`);
+      throw new Error(
+        `Failed to update task with ID ${taskId}: ${response.status}`
+      );
     }
   } catch (error) {
     console.error("Error updating task:", error);
   }
 }
 
-
 /**
  * Prepares the updated task.
  * @param {number} taskId - The ID of the task.
  * @returns {Object|null} The updated task or null.
  */
-function prepareUpdatedTask(taskId) {
-  const newTitle = document.querySelector("#editTaskCard input").value;
-  const newDescription = document.getElementById("editDescription").value;
-  const newDate = document.getElementById("edit-due-date").value;
-  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
-  if (taskIndex === -1) {
-    console.error(`Task with ID ${taskId} not found in taskArray.`);
-    return null;
-  }
-  const updatedTask = { ...taskArray[taskIndex] };
-  updatedTask.title = newTitle;
-  updatedTask.description = newDescription;
-  updatedTask.date = newDate;
-  updatedTask.owner = prepareAssignedUsers();
-  updatedTask.subtasks = extractSubtasksFromDOM();
-  taskArray[taskIndex] = updatedTask;
-  return updatedTask;
+function prepareUpdatedTask(id) {
+  const i = taskArray.findIndex((t) => t.id === id);
+  if (i < 0) return console.error(`Task with ID ${id} not found.`) || null;
+  return (taskArray[i] = {
+    ...taskArray[i],
+    title: document.querySelector("#editTaskCard input").value,
+    description: document.getElementById("editDescription").value,
+    date: document.getElementById("edit-due-date").value,
+    owner: prepareAssignedUsers(),
+    subtasks: extractSubtasksFromDOM(),
+  });
 }
 
 /**
