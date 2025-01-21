@@ -877,9 +877,7 @@ hr {
   }
 
   @media (max-width: 480px) {
-    .menu-button {
-      margin-left: -60px;
-    }
+
   }
 
   #back-button {
@@ -946,12 +944,6 @@ hr {
 
     .letter-header {
       width: 265px;
-    }
-
-    .menu-button {
-      z-index: 100000000;
-      position: fixed;
-      bottom: 100px;
     }
 
     .dropdown-menu {
