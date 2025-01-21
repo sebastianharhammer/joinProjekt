@@ -154,8 +154,7 @@
   align-items: center;
   justify-content: space-evenly;
   width: 70%;
-  height: 100%;
-  max-width: 1920px;
+  height:60%;
 }
 .edit-contact-input {
   width: 100%;
@@ -339,9 +338,7 @@
   #add-contact-btn-container {
     height: 0;
   }
-  #input-fields {
-    height: 75% !important;
-  }
+
   #add-contact-interactions {
     height: 60% !important;
   }
@@ -351,9 +348,6 @@
   }
   #edit-contact-btn-container {
     height: 0;
-  }
-  #input-fields {
-    height: 75% !important;
   }
   #edit-contact-interactions {
     height: 60% !important;

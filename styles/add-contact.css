@@ -179,8 +179,7 @@
   align-items: center;
   justify-content: space-evenly;
   width: 70%;
-  height: 100%;
-  margin-top: 0 !important;
+  height: 60%;
 }
 .add-contact-input {
   width: 100%;
@@ -373,9 +372,6 @@
   #add-contact-btn-container {
     height: 0;
   }
-  #input-fields {
-    height: 75% !important;
-  }
   #add-contact-interactions {
     height: 60% !important;
   }
@@ -413,6 +409,10 @@
 @media (max-width: 1050px) {
   .add-contact-input {
     font-size: 16px;
+  }
+  #input-fields {
+    height: 100% !important;
+    padding-top: 15%;
   }
   #add-contact-headline {
     padding-top: 5%;
@@ -497,9 +497,7 @@
     align-items: center;
     padding: 10px;
   }
-  #input-fields {
-    height: 65% !important;
-  }
+
   .add-contact-input {
     width: 100%;
     margin-top: 1px;
