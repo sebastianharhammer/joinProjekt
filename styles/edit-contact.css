@@ -365,6 +365,11 @@
   }
 }
 @media (max-width: 1050px) {
+  #input-fields {
+    height: 70% !important;
+    padding-top: 5% !important;
+}
+
   #edit-contact-btn-close {
     display: none !important;
   }
@@ -405,6 +410,7 @@
   }
   #input-fields {
     width: 90% !important;
+    height: 60% !important;
   }
   #edit-contact-headline {
     font-size: 30px;
