@@ -131,25 +131,43 @@ function groupContactsByLetter(contacts) {
 }
 
 /**
+ * Builds the HTML string for the contacts side panel.
+ * @param {Object} groupedContacts - Contacts grouped by first letter
+ * @returns {string} HTML string for the side panel
+ */
+function buildContactsSidePanelHTML(groupedContacts) {
+  let contactsHTML = `<div id="contact-side-panel">`;
+  contactsHTML += addContactButtonTemplate();
+  for (const letter in groupedContacts) {
+    contactsHTML += buildLetterSectionHTML(letter, groupedContacts[letter]);
+  }
+  contactsHTML += `</div>`;
+  return contactsHTML;
+}
+
+/**
+ * Builds the HTML string for a letter section.
+ * @param {string} letter - The letter heading
+ * @param {Array<Object>} contacts - Contacts for this letter
+ * @returns {string} HTML string for the letter section
+ */
+function buildLetterSectionHTML(letter, contacts) {
+  const contactsForLetter = contacts
+    .map((contact) => contactsTemplate(contact))
+    .join("");
+  return letterSectionTemplate(letter, contactsForLetter);
+}
+
+/**
  * Renders the sorted and grouped contacts to the DOM.
  * @param {Array<Object>} contacts - Array of contact objects to render
  * @returns {void}
  */
 function renderSortedContacts(contacts) {
   const content = document.getElementById("contact-content");
-  content.innerHTML = "";
   const sortedContacts = sortContacts(contacts);
   const groupedContacts = groupContactsByLetter(sortedContacts);
-  let contactsHTML = `<div id="contact-side-panel">`;
-  contactsHTML += addContactButtonTemplate();
-  for (const letter in groupedContacts) {
-    const contactsForLetter = groupedContacts[letter]
-      .map((contact) => contactsTemplate(contact))
-      .join("");
-    contactsHTML += letterSectionTemplate(letter, contactsForLetter);
-  }
-  contactsHTML += `</div>`;
-  content.innerHTML = contactsHTML;
+  content.innerHTML = buildContactsSidePanelHTML(groupedContacts);
   renderRightSideContainer();
 }
 
