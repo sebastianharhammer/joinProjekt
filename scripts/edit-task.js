@@ -92,6 +92,32 @@ async function saveEditedTask() {
 }
 
 /**
+ * Updates the task on the server (Firebase).
+ *
+ * @param {number} taskId - The ID of the task to update.
+ * @param {Object} updatedTask - The updated task object.
+ * @returns {Promise<void>} A promise that resolves when the task is successfully updated.
+ */
+async function updateTaskOnServer(taskId, updatedTask) {
+  try {
+    const response = await fetch(`${BASE_URL}/tasks/${taskId}.json`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(updatedTask) // Send the updated task as JSON
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update task with ID ${taskId}: ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error updating task:", error);
+  }
+}
+
+
+/**
  * Prepares the updated task.
  * @param {number} taskId - The ID of the task.
  * @returns {Object|null} The updated task or null.
