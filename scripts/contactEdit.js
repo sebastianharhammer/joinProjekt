@@ -186,7 +186,6 @@ function updateLocalContact(firebaseKey, updatedContact) {
   if (index !== -1)
     contactsData[index] = { ...contactsData[index], ...updatedContact };
 }
-
 /**
  * Updates a contact in Firebase.
  * @param {string} firebaseKey - The Firebase key of the contact.
@@ -194,22 +193,32 @@ function updateLocalContact(firebaseKey, updatedContact) {
  * @returns {Promise<boolean>} Success or failure.
  */
 async function updateFirebaseContact(firebaseKey, updatedContact) {
+  const success = await tryUpdateFirebaseContact(firebaseKey, updatedContact);
+  if (success) {
+    const index = contactsData.findIndex(
+      (c) => c.firebaseKey === firebaseKey
+    );
+    if (index !== -1)
+      contactsData[index] = { ...contactsData[index], ...updatedContact };
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Attempts to update a contact in Firebase.
+ * @param {string} firebaseKey - The Firebase key of the contact.
+ * @param {Object} updatedContact - The updated contact data.
+ * @returns {Promise<boolean>} Success or failure.
+ */
+async function tryUpdateFirebaseContact(firebaseKey, updatedContact) {
   try {
     const response = await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedContact),
     });
-
-    if (response.ok) {
-      const index = contactsData.findIndex(
-        (c) => c.firebaseKey === firebaseKey
-      );
-      if (index !== -1)
-        contactsData[index] = { ...contactsData[index], ...updatedContact };
-      return true;
-    }
-    return false;
+    return response.ok;
   } catch {
     return false;
   }
