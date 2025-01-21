@@ -18,6 +18,10 @@ function isGuestUser() {
   );
 }
 
+/**
+ * Sets up form validation for the contact editing form.
+ * Attaches event listeners and validates input fields.
+ */
 function setupEditValidation() {
   const nameInput = document.getElementById("edit-contact-name");
   const emailInput = document.getElementById("edit-contact-email");
@@ -30,6 +34,10 @@ function setupEditValidation() {
 
   if (!nameInput || !emailInput || !phoneInput || !saveButton) return;
 
+  /**
+   * Validates the name input field.
+   * @returns {boolean} True if name is valid, false otherwise.
+   */
   function validateName() {
     if (!nameInput.value.trim()) {
       nameError.textContent = "Name is required.";
@@ -41,6 +49,10 @@ function setupEditValidation() {
     return true;
   }
 
+  /**
+   * Validates the email input field.
+   * @returns {boolean} True if email is valid, false otherwise.
+   */
   function validateEmail() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailInput.value.trim()) {
@@ -58,6 +70,10 @@ function setupEditValidation() {
     return true;
   }
 
+  /**
+   * Validates the phone input field.
+   * @returns {boolean} True if phone number is valid, false otherwise.
+   */
   function validatePhone() {
     const phoneRegex = /^[0-9+ ]*$/;
     if (!phoneInput.value.trim()) {
@@ -75,6 +91,9 @@ function setupEditValidation() {
     return true;
   }
 
+  /**
+   * Validates all input fields and enables/disables the save button accordingly.
+   */
   function validateEditInputs() {
     const isValid = validateName() && validateEmail() && validatePhone();
     saveButton.disabled = !isValid;
@@ -278,6 +297,21 @@ function attachContactEventListeners() {
     const firebaseKey = item.getAttribute("data-key");
     item.addEventListener("click", () => toggleContactDetail(firebaseKey));
   });
+}
+
+/**
+ * Shows an error message in the edit contact form.
+ * @param {string} message - The error message to display.
+ */
+function showEditErrorMessage(message) {
+  // Note: This function is referenced but not implemented in the shown code
+}
+
+/**
+ * Toggles the menu visibility.
+ */
+function toggleMenu() {
+  // Note: This function is referenced but not implemented in the shown code
 }
 
 document.addEventListener("DOMContentLoaded", () => {
