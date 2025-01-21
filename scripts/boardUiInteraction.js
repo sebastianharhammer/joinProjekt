@@ -179,66 +179,62 @@ function getColumns(content) {
  * @returns {void}
  */
 function updateTaskHTML() {
-  const todoColumn = document.getElementById("todo");
-  const inProgressColumn = document.getElementById("inProgress");
-  const feedbackColumn = document.getElementById("feedback");
-  const doneColumn = document.getElementById("done");
-  if (!todoColumn || !inProgressColumn || !feedbackColumn || !doneColumn) {
+  const columns = {
+    todo: document.getElementById("todo"),
+    inProgress: document.getElementById("inProgress"),
+    feedback: document.getElementById("feedback"),
+    done: document.getElementById("done")
+  };
+
+  if (Object.values(columns).includes(null)) {
     console.error("One or more column elements not found.");
     return;
   }
-  todoColumn.innerHTML = "";
-  inProgressColumn.innerHTML = "";
-  feedbackColumn.innerHTML = "";
-  doneColumn.innerHTML = "";
+  resetColumns(columns);
+  
+  const tasksByStatus = groupTasksByStatus();
+  
+  Object.keys(columns).forEach((status) => {
+    const tasks = tasksByStatus[status];
+    addTasksToColumn(tasks, columns[status], status);
+    checkAndCreateNoTasksDiv(tasks, status);
+  });
+}
 
-  const todos = taskArray.filter((task) => task.status === "todo");
-  const inProgress = taskArray.filter((task) => task.status === "inProgress");
-  const feedback = taskArray.filter((task) => task.status === "feedback");
-  const done = taskArray.filter((task) => task.status === "done");
+function resetColumns(columns) {
+  Object.values(columns).forEach(column => {
+    column.innerHTML = "";
+  });
+}
 
-  todos.forEach((task) => {
-    todoColumn.innerHTML += createTaskHTML(task);
+function groupTasksByStatus() {
+  return {
+    todo: taskArray.filter(task => task.status === "todo"),
+    inProgress: taskArray.filter(task => task.status === "inProgress"),
+    feedback: taskArray.filter(task => task.status === "feedback"),
+    done: taskArray.filter(task => task.status === "done")
+  };
+}
+
+function addTasksToColumn(tasks, column, status) {
+  tasks.forEach((task) => {
+    column.innerHTML += createTaskHTML(task);
     createOwnerCircles(task);
     findClassOfTaskCat(task);
     findPrioIcon(task);
     findAmountOfSubtasks(task);
   });
+}
 
-  inProgress.forEach((task) => {
-    inProgressColumn.innerHTML += createTaskHTML(task);
-    createOwnerCircles(task);
-    findClassOfTaskCat(task);
-    findPrioIcon(task);
-    findAmountOfSubtasks(task);
-  });
-
-  feedback.forEach((task) => {
-    feedbackColumn.innerHTML += createTaskHTML(task);
-    createOwnerCircles(task);
-    findClassOfTaskCat(task);
-    findPrioIcon(task);
-    findAmountOfSubtasks(task);
-  });
-
-  done.forEach((task) => {
-    doneColumn.innerHTML += createTaskHTML(task);
-    createOwnerCircles(task);
-    findClassOfTaskCat(task);
-    findPrioIcon(task);
-    findAmountOfSubtasks(task);
-  });
-
-  if (todos.length === 0) {
-    createNoTasksDiv("todo", "NO TASKS TO DO");
-  }
-  if (inProgress.length === 0) {
-    createNoTasksDiv("inProgress", "NO TASKS IN PROGRESS");
-  }
-  if (feedback.length === 0) {
-    createNoTasksDiv("feedback", "NO TASKS IN FEEDBACK");
-  }
-  if (done.length === 0) {
-    createNoTasksDiv("done", "NO TASKS DONE");
+function checkAndCreateNoTasksDiv(tasks, status) {
+  if (tasks.length === 0) {
+    const statusMessages = {
+      todo: "NO TASKS TO DO",
+      inProgress: "NO TASKS IN PROGRESS",
+      feedback: "NO TASKS IN FEEDBACK",
+      done: "NO TASKS DONE"
+    };
+    createNoTasksDiv(status, statusMessages[status]);
   }
 }
+
