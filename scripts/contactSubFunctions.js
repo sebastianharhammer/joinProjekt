@@ -145,14 +145,19 @@ async function deleteContact(firebaseKey) {
 }
 
 /**
- * Renders the contact list sorted by first names and grouped by initial letters.
- * @param {Array<Object>} contacts - The array of contacts.
+ * Sorts contacts alphabetically by first name.
+ * @param {Array<Object>} contacts - Array of contact objects
+ * @returns {Array<Object>} Sorted array of contacts
  */
-
 function sortContacts(contacts) {
   return contacts.sort((a, b) => a.firstName.localeCompare(b.firstName));
 }
 
+/**
+ * Groups contacts by the first letter of their first name.
+ * @param {Array<Object>} contacts - Array of contact objects
+ * @returns {Object} An object with letters as keys and arrays of contacts as values
+ */
 function groupContactsByLetter(contacts) {
   return contacts.reduce((groups, contact) => {
     const firstLetter = contact.firstName[0].toUpperCase();
@@ -162,6 +167,11 @@ function groupContactsByLetter(contacts) {
   }, {});
 }
 
+/**
+ * Renders the sorted and grouped contacts to the DOM.
+ * @param {Array<Object>} contacts - Array of contact objects to render
+ * @returns {void}
+ */
 function renderSortedContacts(contacts) {
   const content = document.getElementById("contact-content");
   content.innerHTML = "";
