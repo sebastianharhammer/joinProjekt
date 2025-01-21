@@ -64,31 +64,50 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCurrentUser();
   fetchContactsFromFirebase();
 });
-
 /**
  * Retrieves contacts from Firebase and updates the local contact list.
  */
 function fetchContactsFromFirebase() {
   const contactsRef = database.ref("contacts");
-  contactsRef.on("value", async (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      const entries = Object.entries(data);
-      const updatedContacts = [];
-      for (const [firebaseKey, contact] of entries) {
-        const updatedContact = await ensureContactHasColor(
-          firebaseKey,
-          contact
-        );
-        updatedContacts.push({ firebaseKey, ...updatedContact });
-      }
-      contactsData = updatedContacts;
-      renderSortedContacts(contactsData);
-    } else {
-      contactsData = [];
-      renderSortedContacts(contactsData);
-    }
-  });
+  contactsRef.on("value", handleContactsSnapshot);
+}
+
+/**
+ * Handles the snapshot data from Firebase contacts.
+ * @param {firebase.database.DataSnapshot} snapshot - Firebase data snapshot
+ */
+async function handleContactsSnapshot(snapshot) {
+  const data = snapshot.val();
+  if (data) {
+    const updatedContacts = await processContactsData(data);
+    updateContactsList(updatedContacts);
+  } else {
+    updateContactsList([]);
+  }
+}
+
+/**
+ * Processes raw contacts data and ensures each contact has a color.
+ * @param {Object} data - Raw contacts data from Firebase
+ * @returns {Promise<Array>} Array of processed contacts
+ */
+async function processContactsData(data) {
+  const entries = Object.entries(data);
+  const updatedContacts = [];
+  for (const [firebaseKey, contact] of entries) {
+    const updatedContact = await ensureContactHasColor(firebaseKey, contact);
+    updatedContacts.push({ firebaseKey, ...updatedContact });
+  }
+  return updatedContacts;
+}
+
+/**
+ * Updates the contacts list and renders the changes.
+ * @param {Array} contacts - Array of contacts to update with
+ */
+function updateContactsList(contacts) {
+  contactsData = contacts;
+  renderSortedContacts(contactsData);
 }
 
 /**
