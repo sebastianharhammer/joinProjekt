@@ -79,8 +79,6 @@ function hideProgressDisplay(renderCompleted, progressBar) {
   progressBar.style.display = "none";
 }
 
-
-
 /**
  * Determines the number of subtasks a task has.
  *
@@ -119,15 +117,7 @@ function createTaskHTML(task) {
  */
 function showTaskCard(id) {
   const task = taskArray.find((task) => task.id === id);
-  if (!task) {
-    console.error(`Task with ID ${id} not found.`);
-    return;
-  }
   const taskCardOverlay = document.getElementById("taskDetailView");
-  if (!taskCardOverlay) {
-    console.error("Element with ID 'taskDetailView' not found.");
-    return;
-  }
   taskCardOverlay.innerHTML = "";
   taskCardOverlay.classList.remove("d-none");
   taskCardOverlay.innerHTML += showTaskCardHTML(task);
@@ -253,7 +243,6 @@ async function deleteTask(taskId) {
   }
 }
 
-
 /**
  * Closes the delete confirmation prompt.
  *
@@ -355,76 +344,5 @@ function removeHighlight(id) {
   }
 }
 
-/**
- * Moves a task one category up (e.g., from "done" to "feedback").
- *
- * @async
- * @function moveTaskUp
- * @param {string} taskId - The ID of the task to be moved.
- * @param {Event} event - The triggering event.
- * @returns {Promise<void>}
- */
-async function moveTaskUp(taskId, event) {
-  event.stopPropagation();
-  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
-  if (taskIndex === -1) {
-    console.error(`Task with ID ${taskId} not found.`);
-    return;
-  }
 
-  const task = taskArray[taskIndex];
 
-  if (task.status === "done") {
-    task.status = "feedback";
-  } else if (task.status === "feedback") {
-    task.status = "inProgress";
-  } else if (task.status === "inProgress") {
-    task.status = "todo";
-  } else {
-    return;
-  }
-
-  try {
-    await updateTaskInFirebase(task);
-    updateTaskHTML();
-  } catch (error) {
-    console.error("Error moving task up:", error);
-  }
-}
-
-/**
- * Moves a task one category down (e.g., from "todo" to "inProgress").
- *
- * @async
- * @function moveTaskDown
- * @param {string} taskId - The ID of the task to be moved.
- * @param {Event} event - The triggering event.
- * @returns {Promise<void>}
- */
-async function moveTaskDown(taskId, event) {
-  event.stopPropagation();
-  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
-  if (taskIndex === -1) {
-    console.error(`Task with ID ${taskId} not found.`);
-    return;
-  }
-
-  const task = taskArray[taskIndex];
-
-  if (task.status === "todo") {
-    task.status = "inProgress";
-  } else if (task.status === "inProgress") {
-    task.status = "feedback";
-  } else if (task.status === "feedback") {
-    task.status = "done";
-  } else {
-    return;
-  }
-
-  try {
-    await updateTaskInFirebase(task);
-    updateTaskHTML();
-  } catch (error) {
-    console.error("Error moving task down:", error);
-  }
-}

@@ -153,7 +153,6 @@ function toggleNoResultsMessage(tasksFound, myFilter, inputId) {
     console.error(`Element 'noResults' next to '#${inputId}' not found.`);
     return;
   }
-
   if (!tasksFound && myFilter.length > 0) {
     noResultsMessage.style.display = "block";
   } else {
@@ -257,6 +256,145 @@ function checkAndCreateNoTasksDiv(tasks, status) {
       done: "NO TASKS DONE"
     };
     createNoTasksDiv(status, statusMessages[status]);
+  }
+}
+
+/**
+ * Finds a task in the task array by its ID, using a more descriptive name.
+ *
+ * @param {string} taskId - The ID of the task to be found.
+ * @returns {Object|null} - The found task or null if not found.
+ */
+function findTaskByIdInArrayForMoveUp(taskId) {
+  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
+  if (taskIndex === -1) {
+    console.error(`Task with ID ${taskId} not found.`);
+    return null;
+  }
+  return taskArray[taskIndex];
+}
+
+/**
+ * Moves the task status to the previous stage.
+ *
+ * @param {Object} task - The task whose status will be updated.
+ * @returns {boolean} - True if the task status was updated, false otherwise.
+ */
+function moveStatusUp(task) {
+  if (task.status === "done") {
+    task.status = "feedback";
+  } else if (task.status === "feedback") {
+    task.status = "inProgress";
+  } else if (task.status === "inProgress") {
+    task.status = "todo";
+  } else {
+    return false; // Return false if no valid status change can be made
+  }
+  return true;
+}
+
+/**
+ * Updates the task's status in Firebase and refreshes the HTML.
+ *
+ * @param {Object} task - The task to be updated.
+ * @returns {Promise<void>}
+ */
+async function updateTaskInFirebaseAndRefreshHTMLForMoveUp(task) {
+  try {
+    await updateTaskInFirebase(task);
+    updateTaskHTML();
+  } catch (error) {
+    console.error("Error moving task up:", error);
+  }
+}
+
+/**
+ * Main function that moves a task one category up.
+ *
+ * @async
+ * @function moveTaskUp
+ * @param {string} taskId - The ID of the task to be moved.
+ * @param {Event} event - The triggering event.
+ * @returns {Promise<void>}
+ */
+async function moveTaskUp(taskId, event) {
+  event.stopPropagation();
+  const task = findTaskByIdInArrayForMoveUp(taskId);
+  if (!task) {
+    return; // Task was not found
+  }
+  if (moveStatusUp(task)) {
+    await updateTaskInFirebaseAndRefreshHTMLForMoveUp(task);
+  }
+}
+
+
+/**
+ * Finds a task in the task array by its ID, using a more descriptive name.
+ *
+ * @param {string} taskId - The ID of the task to be found.
+ * @returns {Object|null} - The found task or null if not found.
+ */
+function findTaskByIdInArray(taskId) {
+  const taskIndex = taskArray.findIndex((task) => task.id === taskId);
+  if (taskIndex === -1) {
+    console.error(`Task with ID ${taskId} not found.`);
+    return null;
+  }
+  return taskArray[taskIndex];
+}
+
+/**
+ * Moves the task status to the next stage.
+ *
+ * @param {Object} task - The task whose status will be updated.
+ * @returns {boolean} - True if the task status was updated, false otherwise.
+ */
+function moveStatusDown(task) {
+  if (task.status === "todo") {
+    task.status = "inProgress";
+  } else if (task.status === "inProgress") {
+    task.status = "feedback";
+  } else if (task.status === "feedback") {
+    task.status = "done";
+  } else {
+    return false; // Return false if no valid status change can be made
+  }
+  return true;
+}
+
+/**
+ * Updates the task's status in Firebase and refreshes the HTML.
+ *
+ * @param {Object} task - The task to be updated.
+ * @returns {Promise<void>}
+ */
+async function updateTaskInFirebaseAndRefreshHTML(task) {
+  try {
+    await updateTaskInFirebase(task);
+    updateTaskHTML();
+  } catch (error) {
+    console.error("Error moving task down:", error);
+  }
+}
+
+/**
+ * Main function that moves a task one category down.
+ *
+ * @async
+ * @function moveTaskDown
+ * @param {string} taskId - The ID of the task to be moved.
+ * @param {Event} event - The triggering event.
+ * @returns {Promise<void>}
+ */
+async function moveTaskDown(taskId, event) {
+  event.stopPropagation();
+  const task = findTaskByIdInArray(taskId);
+  if (!task) {
+    return;
+  }
+  if (moveStatusDown(task)) {
+    await updateTaskInFirebaseAndRefreshHTML(task);
   }
 }
 
