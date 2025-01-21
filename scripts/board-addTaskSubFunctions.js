@@ -25,26 +25,37 @@ async function getTasks() {
 }
 
 /**
+ * Fetches data from Firebase.
+ * 
+ * @async
+ * @function fetchFromFirebase
+ * @param {string} endpoint - The endpoint to fetch from
+ * @returns {Promise<any>} The parsed response data
+ * @throws {Error} If the HTTP request fails
+ */
+async function AddTaskfetchFromFirebase(endpoint) {
+  const response = await fetch(`${ADD_TASK_BASE_URL}/${endpoint}/.json`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+  return await response.json();
+}
+
+/**
  * Fetches user contacts from Firebase.
  *
  * @async
  * @function getUsers
  * @returns {Promise<void>}
  */
-async function getUsers() {
+async function AddTaskGetUsers() {
   try {
-    const response = await fetch(`${ADD_TASK_BASE_URL}/contacts/.json`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const responseToJson = await response.json();
-
-    finalContacts = responseToJson || {};
+    finalContacts = await AddTaskfetchFromFirebase('contacts') || {};
   } catch (error) {
     console.error("Error fetching contacts:", error);
   }

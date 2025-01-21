@@ -15,7 +15,7 @@ function showAddTask(status) {
   document.body.classList.add("overflow-hidden");
   addTaskContent.classList.add("position-static");
   addTaskContent.innerHTML = addTaskOverlayHTML();
-  getUsers();
+  AddTaskGetUsers();
   handleDropdownInteraction();
   setPriority("medium");
   window.scrollTo(0, 0);
