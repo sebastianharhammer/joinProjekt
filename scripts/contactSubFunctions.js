@@ -103,26 +103,6 @@ function updateLocalContact(index, updatedContact) {
 }
 
 /**
- * Edits an existing contact. For guest users, the contact is updated locally; otherwise, it's updated in Firebase.
- * @param {string} firebaseKey - The Firebase key of the contact to edit.
- */
-async function editContact(firebaseKey) {
-  const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
-  if (index === -1) return;
-  const contact = contactsData[index];
-  const updates = getUpdatedContactInfo(contact);
-  if (!updates) return;
-  const updatedContact = createUpdatedContact(contact, updates);
-  if (isGuestUser()) {
-    updateLocalContact(index, updatedContact);
-  } else {
-    await updateFirebaseContact(firebaseKey, updatedContact);
-  }
-  const item = document.getElementById(`contact-item-${firebaseKey}`);
-  if (item) item.classList.remove("selected");
-}
-
-/**
  * Deletes a contact. For guest users, the contact is deleted locally; otherwise, it's deleted from Firebase.
  * @param {string} firebaseKey - The Firebase key of the contact to delete.
  */
