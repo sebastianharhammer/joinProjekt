@@ -26,7 +26,6 @@ function init() {
  * @type {URLSearchParams}
  */
 let urlParams = new URLSearchParams(window.location.search);
-
 /**
  * Message from the URL parameters.
  * @type {string|null}
@@ -60,28 +59,62 @@ function loadLoginContent() {
 }
 
 /**
- * Displays the start animation of the logo and the header logo.
+ * Überprüft, ob die notwendigen Elemente vorhanden sind.
+ *
+ * @function checkElementsExist
+ * @param {HTMLElement} logoElement - Das Logo-Element.
+ * @param {HTMLElement} headerLogo - Das Header-Logo-Element.
+ * @returns {boolean} - Gibt `true` zurück, wenn beide Elemente vorhanden sind, andernfalls `false`.
+ */
+function checkElementsExist(logoElement, headerLogo) {
+  if (!logoElement || !headerLogo) {
+    console.error("Logo oder Header-Logo nicht gefunden.");
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Zeigt die Startanimation der Logos an.
  *
  * @function showStartSlide
  * @returns {void}
  */
 function showStartSlide() {
-  const l = document.getElementById("logo"),
-    h = document.querySelector(".v-hidden");
-  if (!l || !h) return console.error("Logo or header logo element not found.");
-  setTimeout(() => l.classList.add("animate"), 700);
-  l.classList.remove("d-none");
+  const logoElement = document.getElementById("logo");
+  const headerLogo = document.querySelector(".v-hidden");
+  if (!checkElementsExist(logoElement, headerLogo)) return;
+  setTimeout(() => logoElement.classList.add("animate"), 700);
+  logoElement.classList.remove("d-none");
   setTimeout(() => {
-    h.style.transition = "none";
-    void h.offsetHeight; // Reflow erzwingen
-    h.style.transition = "opacity 2.5s ease-in-out";
-    h.classList.remove("v-hidden");
-    h.classList.add("fade-in");
+    headerLogo.style.transition = "none";
+    void headerLogo.offsetHeight;
+    headerLogo.style.transition = "opacity 2.5s ease-in-out";
+    headerLogo.classList.remove("v-hidden");
+    headerLogo.classList.add("fade-in");
   }, 1200);
 }
 
+
 /**
- * Loads the remembered user from Local Storage and fills in the login fields.
+ * Überprüft, ob die notwendigen Formularelemente vorhanden sind.
+ *
+ * @function checkFormElementsExist
+ * @param {HTMLElement} emailElement - Das Eingabefeld für die E-Mail.
+ * @param {HTMLElement} passwordElement - Das Eingabefeld für das Passwort.
+ * @param {HTMLElement} checkboxElement - Das Kontrollkästchen für "Remember Me".
+ * @returns {boolean} - Gibt `true` zurück, wenn alle Elemente vorhanden sind, andernfalls `false`.
+ */
+function checkFormElementsExist(emailElement, passwordElement, checkboxElement) {
+  if (!emailElement || !passwordElement || !checkboxElement) {
+    console.error("Ein oder mehrere Formularelemente fehlen.");
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Lädt den gespeicherten Benutzer aus dem Local Storage und füllt die Login-Felder aus.
  *
  * @function loadRememberedUser
  * @returns {void}
@@ -91,18 +124,18 @@ function loadRememberedUser() {
   if (!data) return;
   try {
     const { email, password } = JSON.parse(data);
-    const e = document.getElementById("loginMailUser"),
-      p = document.getElementById("loginPasswordUser"),
-      c = document.getElementById("checkboxLogin");
-    if (!e || !p || !c)
-      return console.error("One of the login form elements was not found.");
-    e.value = email;
-    p.value = password;
-    c.checked = true;
+    const emailElement = document.getElementById("loginMailUser");
+    const passwordElement = document.getElementById("loginPasswordUser");
+    const checkboxElement = document.getElementById("checkboxLogin");
+    if (!checkFormElementsExist(emailElement, passwordElement, checkboxElement)) return;
+    emailElement.value = email;
+    passwordElement.value = password;
+    checkboxElement.checked = true;
   } catch (err) {
-    console.error("Error parsing the remembered user:", err);
+    console.error("Fehler beim Parsen des gespeicherten Benutzers:", err);
   }
 }
+
 
 /**
  * Loads the signed-in users from the Firebase database.
