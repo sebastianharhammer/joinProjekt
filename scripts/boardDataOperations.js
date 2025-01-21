@@ -277,17 +277,11 @@ function createNoToDosdiv() {
  */
 function createOwnerCircles(task) {
   const userNameCircles = document.getElementById(`userNameCircles-${task.id}`);
-  if (!userNameCircles) {
-    console.error("Owner circles container not found!");
-    return;
-  }
   userNameCircles.innerHTML = "";
-
   if (!task.owner || task.owner.length === 0) {
     userNameCircles.innerHTML = generateNoOwnerCircle();
     return;
   }
-
   const ownersToShow = task.owner.slice(0, 2);
   const extraOwnersCount = task.owner.length - 2;
   ownersToShow.forEach((owner) => {
@@ -311,15 +305,12 @@ function findClassOfTaskCat(task) {
     console.error(`Task button for Task ID '${task.id}' not found.`);
     return;
   }
-
   const category = task.taskCategory || "Undefined Category";
-
   taskButton.classList.remove(
     "task-category-technicalTask",
     "task-category-userExperience",
     "task-category-undefined"
   );
-
   if (category === "Technical Task") {
     taskButton.classList.add("task-category-technicalTask");
   } else if (category === "User Story") {
@@ -343,7 +334,6 @@ function findPrioIcon(task) {
     console.error(`Priority icon for Task ID '${task.id}' not found.`);
     return;
   }
-
   switch (task.prio) {
     case "urgent":
       prioIcon.src = "./img/prio-high.png";
@@ -355,7 +345,6 @@ function findPrioIcon(task) {
       prioIcon.src = "./img/prio-low.png";
       break;
     default:
-      // Fallback icon in case an unknown priority value is received
       prioIcon.src = "./img/placeholder-icon.png";
   }
 }
