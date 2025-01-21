@@ -313,18 +313,19 @@ function toggleMenu() {
   const menu = document.getElementById("dropdown-menu");
   const button = document.getElementById("menu-button");
   if (!menu) return;
+  
   if (menu.classList.contains("hidden")) {
     menu.style.display = "block";
     setTimeout(() => {
       menu.classList.remove("hidden");
     }, 10);
-    document.addEventListener("click", closeMenuOnOutsideClick);
+    document.addEventListener("click", (event) => closeMenuOnOutsideClick(event, menu, button));
   } else {
     menu.classList.add("hidden");
     setTimeout(() => {
       menu.style.display = "none";
     }, 300);
-    document.removeEventListener("click", closeMenuOnOutsideClick);
+    document.removeEventListener("click", (event) => closeMenuOnOutsideClick(event, menu, button));
   }
 }
 
@@ -332,13 +333,13 @@ function toggleMenu() {
  * Closes the dropdown menu if clicked outside.
  * @param {Event} event - The triggering click event.
  */
-function closeMenuOnOutsideClick(event) {
+function closeMenuOnOutsideClick(event, menu, button) {
   if (!menu.contains(event.target) && !button.contains(event.target)) {
     menu.classList.add("hidden");
     setTimeout(() => {
       menu.style.display = "none";
     }, 300);
-    document.removeEventListener("click", closeMenuOnOutsideClick);
+    document.removeEventListener("click", (event) => closeMenuOnOutsideClick(event, menu, button));
   }
 }
 
