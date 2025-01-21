@@ -172,11 +172,10 @@ function getColumns(content) {
   content.innerHTML += getColumnsHTML();
 }
 
+
 /**
- * Updates the HTML display of tasks in the corresponding columns.
- *
- * @function updateTaskHTML
- * @returns {void}
+ * Updates the HTML content of task columns based on task status.
+ * Clears the columns and re-renders tasks into the appropriate columns.
  */
 function updateTaskHTML() {
   const columns = {
@@ -186,14 +185,18 @@ function updateTaskHTML() {
     done: document.getElementById("done")
   };
 
+  // Check if all the required column elements are available
   if (Object.values(columns).includes(null)) {
     console.error("One or more column elements not found.");
     return;
   }
+
   resetColumns(columns);
-  
+
+  // Group tasks by their status
   const tasksByStatus = groupTasksByStatus();
-  
+
+  // Process each column and add the tasks to the column
   Object.keys(columns).forEach((status) => {
     const tasks = tasksByStatus[status];
     addTasksToColumn(tasks, columns[status], status);
@@ -201,12 +204,20 @@ function updateTaskHTML() {
   });
 }
 
+/**
+ * Resets the inner HTML content of each column to an empty string.
+ * @param {Object} columns - An object with column IDs as keys and column elements as values.
+ */
 function resetColumns(columns) {
   Object.values(columns).forEach(column => {
     column.innerHTML = "";
   });
 }
 
+/**
+ * Groups tasks by their status into categories: todo, inProgress, feedback, done.
+ * @returns {Object} An object with statuses as keys and an array of tasks as values.
+ */
 function groupTasksByStatus() {
   return {
     todo: taskArray.filter(task => task.status === "todo"),
@@ -216,6 +227,12 @@ function groupTasksByStatus() {
   };
 }
 
+/**
+ * Adds tasks to the appropriate column in the HTML and includes additional task details.
+ * @param {Array} tasks - Array of tasks to be displayed in the column.
+ * @param {HTMLElement} column - The HTML element representing the column to which tasks will be added.
+ * @param {string} status - The status of the tasks (e.g., 'todo', 'inProgress').
+ */
 function addTasksToColumn(tasks, column, status) {
   tasks.forEach((task) => {
     column.innerHTML += createTaskHTML(task);
@@ -226,6 +243,11 @@ function addTasksToColumn(tasks, column, status) {
   });
 }
 
+/**
+ * Checks if there are no tasks in a given column and creates a 'No tasks' message if the column is empty.
+ * @param {Array} tasks - Array of tasks in the column.
+ * @param {string} status - The status of the tasks (e.g., 'todo', 'inProgress').
+ */
 function checkAndCreateNoTasksDiv(tasks, status) {
   if (tasks.length === 0) {
     const statusMessages = {
