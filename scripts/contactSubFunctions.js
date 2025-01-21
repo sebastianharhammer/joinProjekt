@@ -1,146 +1,108 @@
 /**
- * Firebase configuration object.
- * @constant {Object}
+ * Creates a contact object with the provided information.
+ * @param {Object} contactInfo - Basic contact information
+ * @returns {Object} Complete contact object with color
  */
-const firebaseConfig = {
-  databaseURL:
-    "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/",
-};
-
-/**
- * Base URL for Firebase database operations.
- * @constant {string}
- */
-const BASE_URL = firebaseConfig.databaseURL;
-
-/**
- * Initializes the Firebase app.
- * @constant {firebase.app.App}
- */
-const app = firebase.initializeApp(firebaseConfig);
-
-/**
- * Reference to the Firebase database.
- * @constant {firebase.database.Database}
- */
-const database = firebase.database();
-
-/**
- * The currently logged-in user.
- * @type {Object|null}
- */
-let currentUser = null;
-
-/**
- * Array for storing contact data.
- * @type {Array<Object>}
- */
-let contactsData = [];
-
-/**
- * Loads the currently logged-in user from Local Storage.
- */
-function loadCurrentUser() {
-  const storedUser = localStorage.getItem("currentUser");
-  if (storedUser) {
-    currentUser = JSON.parse(storedUser);
-  }
+function createContactObject(contactInfo) {
+  return {
+    firstName: contactInfo.firstName,
+    lastName: contactInfo.lastName,
+    email: contactInfo.email || "",
+    phone: contactInfo.phone || "",
+    color: getRandomColor(),
+  };
 }
 
 /**
- * Checks if the current user is a guest user.
- * @returns {boolean} Returns true if the user is a guest, otherwise false.
+ * Adds contact for guest user locally.
+ * @param {Object} newContact - The contact object to add
  */
-function isGuestUser() {
-  return (
-    currentUser &&
-    currentUser.firstName === "Guest" &&
-    currentUser.lastName === "User"
-  );
+function addGuestContact(newContact) {
+  const pseudoKey = `guest-${Date.now()}`;
+  contactsData.push({ firebaseKey: pseudoKey, ...newContact });
+  renderSortedContacts(contactsData);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  includeHTML();
-  loadCurrentUser();
-  fetchContactsFromFirebase();
-});
-
 /**
- * Retrieves contacts from Firebase and updates the local contact list.
+ * Adds contact to Firebase database.
+ * @param {Object} newContact - The contact object to add
  */
-function fetchContactsFromFirebase() {
-  const contactsRef = database.ref("contacts");
-  contactsRef.on("value", async (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      const entries = Object.entries(data);
-      const updatedContacts = [];
-      for (const [firebaseKey, contact] of entries) {
-        const updatedContact = await ensureContactHasColor(
-          firebaseKey,
-          contact
-        );
-        updatedContacts.push({ firebaseKey, ...updatedContact });
-      }
-      contactsData = updatedContacts;
-      renderSortedContacts(contactsData);
-    } else {
-      contactsData = [];
-      renderSortedContacts(contactsData);
-    }
+async function addFirebaseContact(newContact) {
+  await fetch(`${BASE_URL}/contacts.json`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newContact),
   });
-}
-
-/**
- * Ensures that a contact has a color. Adds a random color if not present.
- * @param {string} firebaseKey - The Firebase key of the contact.
- * @param {Object} contact - The contact object.
- * @returns {Promise<Object>} The updated contact object.
- */
-async function ensureContactHasColor(firebaseKey, contact) {
-  if (isGuestUser()) {
-    if (!contact.color) contact.color = getRandomColor();
-    return contact;
-  }
-  if (!contact.color) {
-    const updatedContact = { ...contact, color: getRandomColor() };
-    await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedContact),
-    });
-    return updatedContact;
-  }
-  return contact;
 }
 
 /**
  * Adds a new contact. For guest users, the contact is added locally; otherwise, it's added to Firebase.
  */
 async function addContact() {
-  const firstName = prompt("First name of the new contact?");
-  const lastName = prompt("Last name of the new contact?");
-  const email = prompt("Email of the new contact?");
-  const phone = prompt("Phone number of the new contact?");
-  if (!firstName || !lastName) return;
-  const newContact = {
-    firstName,
-    lastName,
-    email: email || "",
-    phone: phone || "",
-    color: getRandomColor(),
-  };
+  const contactInfo = collectContactInfo();
+  if (!contactInfo) return;
+
+  const newContact = createContactObject(contactInfo);
+
   if (isGuestUser()) {
-    const pseudoKey = `guest-${Date.now()}`;
-    contactsData.push({ firebaseKey: pseudoKey, ...newContact });
-    renderSortedContacts(contactsData);
+    addGuestContact(newContact);
   } else {
-    await fetch(`${BASE_URL}/contacts.json`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newContact),
-    });
+    await addFirebaseContact(newContact);
   }
+}
+
+/**
+ * Gets updated contact information via prompts.
+ * @param {Object} currentContact - The current contact data
+ * @returns {Object|null} Updated contact info or null if cancelled
+ */
+function getUpdatedContactInfo(currentContact) {
+  const newFirstName = prompt("New first name:", currentContact.firstName);
+  const newLastName = prompt("New last name:", currentContact.lastName);
+  if (!newFirstName || !newLastName) return null;
+
+  return {
+    firstName: newFirstName,
+    lastName: newLastName,
+    email: prompt("New email:", currentContact.email) || "",
+    phone: prompt("New phone number:", currentContact.phone) || "",
+  };
+}
+
+/**
+ * Creates an updated contact object with all properties.
+ * @param {Object} contact - Original contact
+ * @param {Object} updates - Updated fields
+ * @returns {Object} Complete updated contact
+ */
+function createUpdatedContact(contact, updates) {
+  return {
+    ...contact,
+    ...updates,
+  };
+}
+
+/**
+ * Updates contact in Firebase database.
+ * @param {string} firebaseKey - Contact's Firebase key
+ * @param {Object} updatedContact - Updated contact data
+ */
+async function updateFirebaseContact(firebaseKey, updatedContact) {
+  await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedContact),
+  });
+}
+
+/**
+ * Updates contact locally in contactsData array.
+ * @param {number} index - Index in contactsData
+ * @param {Object} updatedContact - Updated contact data
+ */
+function updateLocalContact(index, updatedContact) {
+  contactsData[index] = updatedContact;
+  renderSortedContacts(contactsData);
 }
 
 /**
@@ -151,27 +113,13 @@ async function editContact(firebaseKey) {
   const index = contactsData.findIndex((c) => c.firebaseKey === firebaseKey);
   if (index === -1) return;
   const contact = contactsData[index];
-  const newFirstName = prompt("New first name:", contact.firstName);
-  const newLastName = prompt("New last name:", contact.lastName);
-  const newEmail = prompt("New email:", contact.email);
-  const newPhone = prompt("New phone number:", contact.phone);
-  if (!newFirstName || !newLastName) return;
-  const updatedLocalContact = {
-    ...contact,
-    firstName: newFirstName,
-    lastName: newLastName,
-    email: newEmail || "",
-    phone: newPhone || "",
-  };
+  const updates = getUpdatedContactInfo(contact);
+  if (!updates) return;
+  const updatedContact = createUpdatedContact(contact, updates);
   if (isGuestUser()) {
-    contactsData[index] = updatedLocalContact;
-    renderSortedContacts(contactsData);
+    updateLocalContact(index, updatedContact);
   } else {
-    await fetch(`${BASE_URL}/contacts/${firebaseKey}.json`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedLocalContact),
-    });
+    await updateFirebaseContact(firebaseKey, updatedContact);
   }
   const item = document.getElementById(`contact-item-${firebaseKey}`);
   if (item) item.classList.remove("selected");
@@ -217,23 +165,18 @@ function groupContactsByLetter(contacts) {
 function renderSortedContacts(contacts) {
   const content = document.getElementById("contact-content");
   content.innerHTML = "";
-
   const sortedContacts = sortContacts(contacts);
   const groupedContacts = groupContactsByLetter(sortedContacts);
-
   let contactsHTML = `<div id="contact-side-panel">`;
-  contactsHTML += addContactButtonTemplate(); // Button aus contact-template.js
-
+  contactsHTML += addContactButtonTemplate(); 
   for (const letter in groupedContacts) {
     const contactsForLetter = groupedContacts[letter]
-      .map((contact) => contactsTemplate(contact)) // Template für jeden Kontakt
+      .map((contact) => contactsTemplate(contact)) 
       .join("");
-    contactsHTML += letterSectionTemplate(letter, contactsForLetter); // Template für Buchstabensektion
+    contactsHTML += letterSectionTemplate(letter, contactsForLetter); 
   }
-
   contactsHTML += `</div>`;
   content.innerHTML = contactsHTML;
-
   renderRightSideContainer();
 }
 
@@ -244,12 +187,9 @@ function renderSortedContacts(contacts) {
 function toggleContactDetail(firebaseKey) {
   const contactItems = document.querySelectorAll(".contact-item");
   const detailViews = getDetailViews();
-
   const selectedContact = findContactByFirebaseKey(firebaseKey);
   const clickedItem = document.getElementById(`contact-item-${firebaseKey}`);
-
   if (!selectedContact || !clickedItem) return;
-
   if (isSelected(clickedItem)) {
     deselectContact(clickedItem, detailViews);
   } else {
