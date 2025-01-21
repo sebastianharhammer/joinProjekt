@@ -299,21 +299,6 @@ function attachContactEventListeners() {
   });
 }
 
-/**
- * Shows an error message in the edit contact form.
- * @param {string} message - The error message to display.
- */
-function showEditErrorMessage(message) {
-  // Note: This function is referenced but not implemented in the shown code
-}
-
-/**
- * Toggles the menu visibility.
- */
-function toggleMenu() {
-  // Note: This function is referenced but not implemented in the shown code
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   loadCurrentUser();
   renderSortedContacts(contactsData);
