@@ -177,31 +177,52 @@ function getColumns(content) {
  * Clears the columns and re-renders tasks into the appropriate columns.
  */
 function updateTaskHTML() {
-  const columns = {
+  const columns = getTaskColumns();
+  
+  if (!checkColumnsExist(columns)) return;
+
+  resetColumns(columns);
+  
+  const tasksByStatus = groupTasksByStatus();
+
+  updateEachColumnWithTasks(columns, tasksByStatus);
+}
+
+/**
+ * Returns the DOM elements for each task column.
+ */
+function getTaskColumns() {
+  return {
     todo: document.getElementById("todo"),
     inProgress: document.getElementById("inProgress"),
     feedback: document.getElementById("feedback"),
     done: document.getElementById("done")
   };
+}
 
-  // Check if all the required column elements are available
+/**
+ * Checks if all the required column elements exist in the DOM.
+ * Returns true if all columns are found, otherwise logs an error.
+ */
+function checkColumnsExist(columns) {
   if (Object.values(columns).includes(null)) {
     console.error("One or more column elements not found.");
-    return;
+    return false;
   }
+  return true;
+}
 
-  resetColumns(columns);
-
-  // Group tasks by their status
-  const tasksByStatus = groupTasksByStatus();
-
-  // Process each column and add the tasks to the column
+/**
+ * Loops over each column and adds the tasks to the respective column.
+ */
+function updateEachColumnWithTasks(columns, tasksByStatus) {
   Object.keys(columns).forEach((status) => {
     const tasks = tasksByStatus[status];
     addTasksToColumn(tasks, columns[status], status);
     checkAndCreateNoTasksDiv(tasks, status);
   });
 }
+
 
 /**
  * Resets the inner HTML content of each column to an empty string.
