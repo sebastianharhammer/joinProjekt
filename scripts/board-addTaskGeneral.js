@@ -82,7 +82,7 @@ function resetFormInputs() {
  */
 function resetArrays() {
   subtasksArr = [];
-  assignedUserArr = [];
+  assignedUserArr = [];  // Stellen sicher, dass das Array immer zurückgesetzt wird
   categoryObject = "";
   selectedPriority = "";
   document.getElementById("assigned-users-short").innerHTML = "";
@@ -114,23 +114,34 @@ function resetUserSelections() {
  * @param {Event} event - The triggering event.
  * @returns {Promise<void>}
  */
-/**
- * Erzeugt einen Task mit den eingegebenen Formulardaten und weicht fehlerhaften Eingaben aus.
- */
 async function createTask(event) {
   event.preventDefault();
+  
+  // 1. Leere das Array der zugewiesenen Benutzer, bevor ein neuer Task erstellt wird
   assignedUserArr = [];
+
+  // 2. Hole die Formulardaten
   const taskData = getTaskFormData();
+
+  // 3. Verhindere, dass leere `assignedUsers` zugewiesen werden
+  if (taskData.assignedUsers.length === 0) {
+    taskData.assignedUsers = [];  // Stellen sicher, dass keine "leeren" Besitzer zugewiesen werden
+  } else {
+    // Filtere ungültige Benutzer
+    taskData.assignedUsers = taskData.assignedUsers.filter(userId => {
+      return finalContacts.some(contact => contact.firstName === userId.firstName && contact.lastName === userId.lastName);
+    });
+  }
+
+  // 4. Validierung der Formulardaten
   if (validateTask(taskData.title, taskData.date, taskData.category)) {
     return;
   }
-  taskData.assignedUsers = taskData.assignedUsers.filter(userId => {
-    return finalContacts.some(contact => contact.firstName === userId.firstName && contact.lastName === userId.lastName);
-  });
+
   try {
     const newTask = await buildNewTask(taskData);
-    await saveTask(newTask);
-    handleSuccessfulTaskCreation();
+    await saveTask(newTask);  // Speichern des neuen Tasks in Firebase
+    handleSuccessfulTaskCreation();  // Erfolgshandling nach dem Speichern
   } catch (error) {
     console.error("Failed to create the task:", error);
   }

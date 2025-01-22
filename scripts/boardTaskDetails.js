@@ -291,8 +291,9 @@ async function toggleSubtaskCheckbox(taskId, subtaskIndex) {
  * @returns {string} The generated HTML for the assigned owners.
  */
 function getAssignedOwnersHTML(task) {
+  // Wenn keine Besitzer zugewiesen wurden, gib leer zurück, sonst render die Kreise
   if (!task.owner || task.owner.length === 0) {
-    return getNoOwnersHTML();
+    return '';  // Keine Besitzer, also keine Kreise rendern
   }
   return task.owner.map(getOwnerItemHTML).join("\n");
 }
