@@ -6,6 +6,7 @@
  * @returns {void}
  */
 function showAddTask(status) {
+  assignedUserArr = [];
   localStatus = status;
   getTasks();
   const addTaskContent = document.getElementById("add-task-content");
