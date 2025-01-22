@@ -27,84 +27,95 @@ function setupEditValidation() {
   const emailInput = document.getElementById("edit-contact-email");
   const phoneInput = document.getElementById("edit-contact-phone");
   const saveButton = document.getElementById("edit-contact-create");
+  const nameError = document.getElementById("edit-name-error");
+  const emailError = document.getElementById("edit-email-error");
+  const phoneError = document.getElementById("edit-phone-error");
+  if (!nameInput || !emailInput || !phoneInput || !saveButton) return;
+  nameInput.addEventListener("input", () => validateEditInputs(nameInput, emailInput, phoneInput, saveButton));
+  emailInput.addEventListener("input", () => validateEditInputs(nameInput, emailInput, phoneInput, saveButton));
+  phoneInput.addEventListener("input", () => validateEditInputs(nameInput, emailInput, phoneInput, saveButton));
+  validateEditInputs(nameInput, emailInput, phoneInput, saveButton);
+}
 
+/**
+ * Validates the name input field.
+ * @param {HTMLInputElement} nameInput The name input element.
+ * @param {HTMLElement} nameError The error message element for name.
+ * @returns {boolean} True if name is valid, false otherwise.
+ */
+function validateName(nameInput, nameError) {
+  if (!nameInput.value.trim()) {
+    nameError.textContent = "Name is required.";
+    nameError.style.display = "block";
+    return false;
+  }
+  nameError.textContent = "";
+  nameError.style.display = "none";
+  return true;
+}
+
+/**
+ * Validates the email input field.
+ * @param {HTMLInputElement} emailInput The email input element.
+ * @param {HTMLElement} emailError The error message element for email.
+ * @returns {boolean} True if email is valid, false otherwise.
+ */
+function validateEmail(emailInput, emailError) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailInput.value.trim()) {
+    emailError.textContent = "Email is required.";
+    emailError.style.display = "block";
+    return false;
+  }
+  if (!emailRegex.test(emailInput.value.trim())) {
+    emailError.textContent = "Invalid Email Address.";
+    emailError.style.display = "block";
+    return false;
+  }
+  emailError.textContent = "";
+  emailError.style.display = "none";
+  return true;
+}
+
+/**
+ * Validates the phone input field.
+ * @param {HTMLInputElement} phoneInput The phone input element.
+ * @param {HTMLElement} phoneError The error message element for phone.
+ * @returns {boolean} True if phone number is valid, false otherwise.
+ */
+function validatePhone(phoneInput, phoneError) {
+  const phoneRegex = /^[0-9+ ]*$/;
+  if (!phoneInput.value.trim()) {
+    phoneError.textContent = "Phone number is required.";
+    phoneError.style.display = "block";
+    return false;
+  }
+  if (!phoneRegex.test(phoneInput.value.trim())) {
+    phoneError.textContent = "Only numbers and + are allowed.";
+    phoneError.style.display = "block";
+    return false;
+  }
+  phoneError.textContent = "";
+  phoneError.style.display = "none";
+  return true;
+}
+
+/**
+ * Validates all input fields and enables/disables the save button accordingly.
+ * @param {HTMLInputElement} nameInput The name input element.
+ * @param {HTMLInputElement} emailInput The email input element.
+ * @param {HTMLInputElement} phoneInput The phone input element.
+ * @param {HTMLButtonElement} saveButton The save button element.
+ */
+function validateEditInputs(nameInput, emailInput, phoneInput, saveButton) {
   const nameError = document.getElementById("edit-name-error");
   const emailError = document.getElementById("edit-email-error");
   const phoneError = document.getElementById("edit-phone-error");
 
-  if (!nameInput || !emailInput || !phoneInput || !saveButton) return;
-
-  /**
-   * Validates the name input field.
-   * @returns {boolean} True if name is valid, false otherwise.
-   */
-  function validateName() {
-    if (!nameInput.value.trim()) {
-      nameError.textContent = "Name is required.";
-      nameError.style.display = "block";
-      return false;
-    }
-    nameError.textContent = "";
-    nameError.style.display = "none";
-    return true;
-  }
-
-  /**
-   * Validates the email input field.
-   * @returns {boolean} True if email is valid, false otherwise.
-   */
-  function validateEmail() {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailInput.value.trim()) {
-      emailError.textContent = "Email is required.";
-      emailError.style.display = "block";
-      return false;
-    }
-    if (!emailRegex.test(emailInput.value.trim())) {
-      emailError.textContent = "Invalid Email Address.";
-      emailError.style.display = "block";
-      return false;
-    }
-    emailError.textContent = "";
-    emailError.style.display = "none";
-    return true;
-  }
-
-  /**
-   * Validates the phone input field.
-   * @returns {boolean} True if phone number is valid, false otherwise.
-   */
-  function validatePhone() {
-    const phoneRegex = /^[0-9+ ]*$/;
-    if (!phoneInput.value.trim()) {
-      phoneError.textContent = "Phone number is required.";
-      phoneError.style.display = "block";
-      return false;
-    }
-    if (!phoneRegex.test(phoneInput.value.trim())) {
-      phoneError.textContent = "Only numbers and + are allowed.";
-      phoneError.style.display = "block";
-      return false;
-    }
-    phoneError.textContent = "";
-    phoneError.style.display = "none";
-    return true;
-  }
-
-  /**
-   * Validates all input fields and enables/disables the save button accordingly.
-   */
-  function validateEditInputs() {
-    const isValid = validateName() && validateEmail() && validatePhone();
-    saveButton.disabled = !isValid;
-  }
-
-  nameInput.addEventListener("input", validateEditInputs);
-  emailInput.addEventListener("input", validateEditInputs);
-  phoneInput.addEventListener("input", validateEditInputs);
-
-  validateEditInputs();
+  const isValid = validateName(nameInput, nameError) && validateEmail(emailInput, emailError) && validatePhone(phoneInput, phoneError);
+  saveButton.disabled = !isValid;
 }
+
 
 /**
  * Opens the contact editing overlay for a specific contact.
@@ -165,12 +176,10 @@ function getUpdatedContactData() {
   const nameInput = document.getElementById("edit-contact-name").value.trim();
   const emailInput = document.getElementById("edit-contact-email").value.trim();
   const phoneInput = document.getElementById("edit-contact-phone").value.trim();
-
   if (!nameInput || !emailInput) {
     showEditErrorMessage("Name and email are required.");
     return null;
   }
-
   const [firstName, ...rest] = nameInput.split(" ");
   const lastName = rest.join(" ");
   return { firstName, lastName, email: emailInput, phone: phoneInput };
