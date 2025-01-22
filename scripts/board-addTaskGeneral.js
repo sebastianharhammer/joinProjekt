@@ -32,10 +32,12 @@ function showAddTask(status) {
 function hideAddTask() {
   const addTaskContent = document.getElementById("add-task-content");
   const background = document.getElementById("add-task-background");
+  assignedUserArr = [];
   addTaskContent.classList.remove("show-add-task");
   document.body.classList.remove("overflow-hidden");
   document.documentElement.style.overflow = "scroll";
   document.body.scroll = "yes";
+
   setTimeout(() => {
     background.classList.add("d-none");
     init();
@@ -52,7 +54,7 @@ function hideAddTask() {
 function handleCancel(event) {
   event.preventDefault();
   resetFormInputs();
-  resetArrays();
+  resetArrays();  // Arrays werden hier ebenfalls zurückgesetzt
   resetUserSelections();
   setPriority("medium");
 }
