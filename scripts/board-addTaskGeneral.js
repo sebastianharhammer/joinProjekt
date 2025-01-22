@@ -112,22 +112,28 @@ function resetUserSelections() {
  * @param {Event} event - The triggering event.
  * @returns {Promise<void>}
  */
-async function createTask(status, event) {
+/**
+ * Erzeugt einen Task mit den eingegebenen Formulardaten und weicht fehlerhaften Eingaben aus.
+ */
+async function createTask(event) {
   event.preventDefault();
+  assignedUserArr = [];
   const taskData = getTaskFormData();
   if (validateTask(taskData.title, taskData.date, taskData.category)) {
     return;
   }
+  taskData.assignedUsers = taskData.assignedUsers.filter(userId => {
+    return finalContacts.some(contact => contact.firstName === userId.firstName && contact.lastName === userId.lastName);
+  });
   try {
-    const nextId = await getNextTaskId();
-    const newTask = createTaskObject(nextId, taskData);
-    taskArray.push(newTask);
-    await pushTaskToFirebase(newTask);
-    handleTaskCreationSuccess();
+    const newTask = await buildNewTask(taskData);
+    await saveTask(newTask);
+    handleSuccessfulTaskCreation();
   } catch (error) {
     console.error("Failed to create the task:", error);
   }
 }
+
 
 /**
  * Retrieves the form data for the new task.
