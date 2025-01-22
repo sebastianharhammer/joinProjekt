@@ -119,35 +119,53 @@ function removeActiveNav() {
  * @param {string} site - The name of the current page (e.g., 'summary', 'addTask').
  */
 function navLinksOnFocus(site) {
-  let summary = document.getElementById("nav-summary");
-  let addTask = document.getElementById("nav-add-task");
-  let board = document.getElementById("nav-board");
-  let contacts = document.getElementById("nav-contacts");
-  let policy = document.getElementById("nav-privacy-policy");
-  let legalNotice = document.getElementById("nav-legal-notice");
+  const navLinks = getNavLinks(); 
+  saveActiveNavToLocalStorage(site);
+  const activeLink = getActiveNavFromLocalStorage();
+  highlightActiveNavLink(navLinks, activeLink);
+}
 
+/**
+ * Returns the DOM elements for each navigation link.
+ */
+function getNavLinks() {
+  return {
+    summary: document.getElementById("nav-summary"),
+    addTask: document.getElementById("nav-add-task"),
+    board: document.getElementById("nav-board"),
+    contacts: document.getElementById("nav-contacts"),
+    policy: document.getElementById("nav-privacy-policy"),
+    legalNotice: document.getElementById("nav-legal-notice")
+  };
+}
+
+/**
+ * Saves the active navigation link to local storage.
+ * @param {string} site - The name of the current page.
+ */
+function saveActiveNavToLocalStorage(site) {
   localStorage.setItem("activeNav", site);
+}
 
-  let localStorageGetItem = localStorage.getItem("activeNav");
+/**
+ * Retrieves the active navigation link from local storage.
+ * @returns {string} - The name of the active page.
+ */
+function getActiveNavFromLocalStorage() {
+  return localStorage.getItem("activeNav");
+}
 
-  if (localStorageGetItem === "summary") {
-    summary.classList.add("link-active");
-  }
-  if (localStorageGetItem === "addTask") {
-    addTask.classList.add("link-active");
-  }
-  if (localStorageGetItem === "board") {
-    board.classList.add("link-active");
-  }
-  if (localStorageGetItem === "contacts") {
-    contacts.classList.add("link-active");
-  }
-  if (localStorageGetItem === "policy") {
-    policy.classList.add("link-active");
-  }
-  if (localStorageGetItem === "legalNotice") {
-    legalNotice.classList.add("link-active");
-  }
+/**
+ * Highlights the active navigation link.
+ * @param {Object} navLinks - The object containing navigation links.
+ * @param {string} activeLink - The active link to be highlighted.
+ */
+function highlightActiveNavLink(navLinks, activeLink) {
+  Object.keys(navLinks).forEach((key) => {
+    if (key === activeLink) {
+      navLinks[key].classList.add("link-active");
+    }
+  });
 }
 
 /**
