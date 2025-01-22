@@ -455,4 +455,8 @@
   #contact-panel {
     align-items: center;
   }
+
+  #input-fields{
+    gap: 12px;
+  }
 }

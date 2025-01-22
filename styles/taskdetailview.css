@@ -436,4 +436,20 @@ body.no-scroll {
     .deleteConfirmation {
         width: 270px;
     }
+
+    .task-category-userExperience-taskCard {
+        height: 48px;
+        width: 180px;
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+}
+
+@media(max-width: 390px){
+.task-category-userExperience-taskCard {
+    height: 42px;
+    width: 148px;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
 }

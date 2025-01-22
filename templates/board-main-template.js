@@ -281,7 +281,7 @@ function getColumnsHTML() {
                   ondrop="moveTo('feedback')" 
                   ondragleave="removeHighlight('feedback')" 
                   ondragover="allowDrop(event); highlight('feedback')"></div>
-             </div>
+              </div>
 
               <div class="column-header">
                   <span class="headline-done-responsive">DONE</span>

@@ -179,8 +179,8 @@ function getTaskCategoryButtonHTML(task) {
   )}">
         ${task.taskCategory}
         </div>
-        <div class="closeCardParent">
-            <img class="closeCard" onclick="closeDetailView()" src="./img/close.svg" alt="Close">
+        <div onclick="closeDetailView()" class="closeCardParent">
+            <img class="closeCard" src="./img/close.svg" alt="Close">
         </div>
     </div>
     `;
