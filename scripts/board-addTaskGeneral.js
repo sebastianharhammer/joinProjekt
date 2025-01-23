@@ -107,6 +107,19 @@ function resetUserSelections() {
 }
 
 /**
+ * Creates a new task object with a unique ID.
+ *
+ * @async
+ * @function buildNewTask
+ * @param {Object} taskData - The task data from the form.
+ * @returns {Promise<Object>} The newly created task object.
+ */
+async function buildNewTask(taskData) {
+  const id = await getNextTaskId();
+  return createTaskObject(id, taskData);
+}
+
+/**
  * Creates a new task and adds it to Firebase.
  *
  * @async
@@ -115,29 +128,22 @@ function resetUserSelections() {
  * @param {Event} event - The triggering event.
  * @returns {Promise<void>}
  */
-async function createTask(event) {
+async function createTask(status, event) {
   event.preventDefault();
-  assignedUserArr = [];
   const taskData = getTaskFormData();
-  if (taskData.assignedUsers.length === 0) {
-    taskData.assignedUsers = [];
-  } else {
-    taskData.assignedUsers = taskData.assignedUsers.filter(userId => {
-      return finalContacts.some(contact => contact.firstName === userId.firstName && contact.lastName === userId.lastName);
-    });
-  }
   if (validateTask(taskData.title, taskData.date, taskData.category)) {
     return;
   }
   try {
-    const newTask = await buildNewTask(taskData);
-    await saveTask(newTask);
-    handleSuccessfulTaskCreation(); 
+    const nextId = await getNextTaskId();
+    const newTask = createTaskObject(nextId, taskData);
+    taskArray.push(newTask);
+    await pushTaskToFirebase(newTask);
+    handleTaskCreationSuccess();
   } catch (error) {
     console.error("Failed to create the task:", error);
   }
 }
-
 
 /**
  * Retrieves the form data for the new task.
