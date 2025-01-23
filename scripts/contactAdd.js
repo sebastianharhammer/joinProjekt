@@ -193,19 +193,10 @@ async function addContactToFirebase(contact) {
  * @returns {string} A randomly selected color in HEX format.
  */
 function getRandomColor() {
-  const colors = [
-    "#FF5733",
-    "#33A1FF",
-    "#33FF99",
-    "#FF33A8",
-    "#FFC300",
-    "#8C33FF",
-    "#FF6F61",
-    "#33FFC6",
-    "#FF9F1C",
-    "#5CDB95",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
+  let hue = Math.floor(Math.random() * 359);
+  console.log(`hsl(${hue}, 75%, 75%)`)
+  return `hsl(${hue}, 75%, 75%)`;
+
 }
 
 /**
