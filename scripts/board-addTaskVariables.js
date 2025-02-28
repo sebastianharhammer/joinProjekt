@@ -3,7 +3,7 @@
  * @constant {string}
  */
 const ADD_TASK_BASE_URL =
-  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+  "https://eigenesjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
  * Indicates whether the categories container was clicked.

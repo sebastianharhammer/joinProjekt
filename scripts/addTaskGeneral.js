@@ -1,5 +1,5 @@
 const BASE_URL =
-  "https://join-c80fa-default-rtdb.europe-west1.firebasedatabase.app/";
+  "https://eigenesjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 /**
