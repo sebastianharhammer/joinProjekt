@@ -348,9 +348,15 @@ function closeMenuOnOutsideClick(event, menu, button) {
  * @returns {string} A randomly selected color in HEX format.
  */
 function getRandomColor() {
-  const colors = ["orange", "purple", "blue", "red", "green", "teal"];
+  const colors = [
+    "orange", "purple", "blue", "red", "green", "teal",
+    "yellow", "pink", "cyan", "magenta", "lime", "brown",
+    "black", "white", "gray", "indigo", "violet", "gold",
+    "silver", "maroon", "navy", "turquoise", "coral", "beige"
+  ];
   return colors[Math.floor(Math.random() * colors.length)];
 }
+
 
 /**
  * Retrieves the initials of a user.
