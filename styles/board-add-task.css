@@ -32,6 +32,8 @@ body {
 #addTaskOverlayClose {
   cursor: pointer;
   padding: 7px;
+  background-color: lightgray;
+  border-radius: 45px;
 }
 #addTaskOverlayClose:hover {
   background-color: #e5efff;
@@ -938,7 +940,7 @@ ul {
     gap: 32px;
   }
   .addtask-buttons {
-    justify-content: flex-end;
+    justify-content: center;
   }
 }
 @media (max-width: 830px) {
